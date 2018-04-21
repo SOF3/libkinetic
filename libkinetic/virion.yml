@@ -1,0 +1,6 @@
+name: libkinetic
+version: 0.0.1
+antigen: SOFe\libkinetic
+author: SOFe
+api:
+- 3.0.0-ALPHA12

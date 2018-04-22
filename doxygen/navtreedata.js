@@ -27,7 +27,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_command_entry_node_8php.html"
+"_after_list_node_8php.html",
+"class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#af890fff659097c3a7a1f8942e70375b7"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,8 +1,5 @@
 var dir_ecf5089ef649451d88840322de10969f =
 [
-    [ "DropdownLikeNode.php", "_dropdown_like_node_8php.html", [
-      [ "DropdownLikeNode", "class_s_o_fe_1_1libkinetic_1_1_nodes_1_1_element_1_1_dropdown_like_node.html", "class_s_o_fe_1_1libkinetic_1_1_nodes_1_1_element_1_1_dropdown_like_node" ]
-    ] ],
     [ "DropdownNode.php", "_dropdown_node_8php.html", [
       [ "DropdownNode", "class_s_o_fe_1_1libkinetic_1_1_nodes_1_1_element_1_1_dropdown_node.html", "class_s_o_fe_1_1libkinetic_1_1_nodes_1_1_element_1_1_dropdown_node" ]
     ] ],

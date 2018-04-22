@@ -20,11 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Element;
 
-class ActionNode{
-	/** @var ActionNode|null */
-	public $parent;
-	/** @var ActionNode[] */
-	public $children = [];
+class LabelNode extends ElementNode{
+
 }

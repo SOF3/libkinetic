@@ -20,27 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Window;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use SOFe\libkinetic\Nodes\KineticNode;
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	private $actionManager;
+class SynopsisNode extends KineticNode{
+	protected $text;
 
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
+	public function acceptText(string $text) : void{
+		$this->text = $text;
 	}
 
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
-		}
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"text" => $this->text,
+			];
 	}
 }

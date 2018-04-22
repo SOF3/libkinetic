@@ -20,8 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Window;
 
-class IndexActionNode{
+class InfoNode extends CommandEntryNode{
 
 }

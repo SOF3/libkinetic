@@ -20,27 +20,26 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Window;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use SOFe\libkinetic\Nodes\Element\ElementNode;
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	private $actionManager;
+class ConfigNode extends WindowNode{
+	/** @var bool */
+	protected $required = false;
+	/** @var ElementNode[] */
+	protected $elements = [];
 
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
-	}
-
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
 		}
+
+		if($name === "REQUIRED"){
+			$this->required = self::parseBoolean($value);
+			return true;
+		}
+
+		return false;
 	}
 }

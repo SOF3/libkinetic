@@ -22,25 +22,22 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-use LogicException;
 use pocketmine\plugin\Plugin;
-use function fclose;
 use function feof;
 use function fread;
 use function xml_error_string;
-use function xml_get_current_column_number;
-use function xml_get_current_line_number;
 use function xml_get_error_code;
-use const XML_OPTION_CASE_FOLDING;
-use const XML_OPTION_SKIP_WHITE;
 use function xml_parse;
 use function xml_parser_create;
 use function xml_parser_set_option;
-use function xml_set_element_handler;
+use const XML_OPTION_CASE_FOLDING;
+use const XML_OPTION_SKIP_WHITE;
 
-class ActionManager{
+class KineticManager{
 	/** @var Plugin */
 	private $plugin;
+	/** @var KineticFileParser */
+	private $parser;
 
 	public function __construct(Plugin $plugin, string $resourceName){
 		$this->plugin = $plugin;
@@ -49,22 +46,33 @@ class ActionManager{
 		$xmlParser = xml_parser_create();
 		xml_parser_set_option($xmlParser, XML_OPTION_CASE_FOLDING, 1);
 		xml_parser_set_option($xmlParser, XML_OPTION_SKIP_WHITE, 1);
-		$parser = new ActionFileParser($xmlParser);
+		$this->parser = new KineticFileParser($xmlParser);
 
 		$fh = $plugin->getResource($resourceName);
-		while(!feof($fh)){
-			$buffer = fread($fh, 4096);
-			if(xml_parse($xmlParser, $buffer, feof($fh)) === 0){
-				$errorCode = xml_get_error_code($xmlParser);
-				$errorLine = xml_get_current_line_number($xmlParser);
-				$errorColumn = xml_get_current_column_number($xmlParser);
-				throw new ParseException("Failed parsing $resourceName: " . xml_error_string($errorCode) . " on line {$errorLine}:{$errorColumn}");
+		try{
+			while(!feof($fh)){
+				$buffer = fread($fh, 4096);
+				if(xml_parse($xmlParser, $buffer, feof($fh)) === 0){
+					$errorCode = xml_get_error_code($xmlParser);
+					throw new ParseException(xml_error_string($errorCode));
+				}
 			}
+		}catch(ParseException $ex){
+			$errorLine = xml_get_current_line_number($xmlParser);
+			$errorColumn = xml_get_current_column_number($xmlParser);
+			throw new ParseException("Failed parsing $resourceName: {$ex->getMessage()} on line {$errorLine}:{$errorColumn}");
+		}finally{
+			fclose($fh);
 		}
-		fclose($fh);
 	}
 
-	public function getPlugin() : Plugin{
+	public
+	function getPlugin() : Plugin{
 		return $this->plugin;
+	}
+
+	public
+	function getParser() : KineticFileParser{
+		return $this->parser;
 	}
 }

@@ -20,32 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Window;
 
-use function xml_set_default_handler;
-use function xml_set_element_handler;
+class ListNode extends CommandEntryNode{
 
-class ActionFileParser{
-	/** @var ActionNode|null */
-	private $root = null;
-	private $leaf = null;
-
-	public function __construct($parser){
-		xml_set_element_handler($parser, [$this, "startElement"], [$this, "endElement"]);
-		xml_set_default_handler($parser, [$this, "parseDefault"]);
-	}
-
-	public function startElement($parser, string $name, array $attr) : void{
-		if($this->root === null){
-			$this->root = ActionNode;
-		}
-	}
-
-	public function endElement($parser, string $name) : void{
-
-	}
-
-	public function parseDefault() : void{
-
-	}
 }

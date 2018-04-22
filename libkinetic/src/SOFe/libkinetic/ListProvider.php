@@ -22,25 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+interface ListProvider{
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	private $actionManager;
-
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
-	}
-
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
-		}
-	}
 }

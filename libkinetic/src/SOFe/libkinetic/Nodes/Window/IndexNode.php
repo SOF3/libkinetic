@@ -20,27 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Window;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use SOFe\libkinetic\Nodes\KineticNode;
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	private $actionManager;
-
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
+/**
+ * Index is displayed as a MenuForm, where options are hardcoded to be links to a child window or a link to a window identified by its ID.
+ */
+class IndexNode extends CommandEntryNode{
+	use WindowParentNode {
+		startChild as protected wpn_startChild;
 	}
 
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
 		}
+
+		if($delegate = $this->wpn_startChild($name)){
+			return $delegate;
+		}
+
+		return null;
 	}
 }

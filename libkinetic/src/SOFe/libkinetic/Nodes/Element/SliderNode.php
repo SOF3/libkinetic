@@ -20,27 +20,33 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Element;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use function strtolower;
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	private $actionManager;
+class SliderNode extends ElementNode{
+	/** @var float */
+	protected $min, $max;
+	/** @var float */
+	protected $step = 1.0;
+	/** @var float|null */
+	protected $default = null;
 
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "MIN" || $name === "MAX" || $name === "STEP" || $name === "DEFAULT"){
+			$this->{strtolower($name)} = (float) $value;
+			return true;
+		}
+
+		return false;
 	}
 
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
-		}
+	public function endAttributes() : void{
+		parent::endAttributes();
+		$this->requireAttribute("min", "max");
 	}
 }

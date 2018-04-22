@@ -20,27 +20,31 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Nodes\Window;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use SOFe\libkinetic\Nodes\KineticNode;
+use SOFe\libkinetic\Nodes\LinkNode;
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	private $actionManager;
+trait WindowParentNode {
+	protected $buttons = [];
 
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
-	}
-
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
+	public function startChild(string $name) : ?KineticNode{
+		if($name === "INDEX"){
+			return $this->buttons[] = new IndexNode();
 		}
+
+		if($name === "LIST"){
+			return $this->buttons[] = new ListNode();
+		}
+
+		if($name === "INFO"){
+			return $this->buttons[] = new InfoNode();
+		}
+
+		if($name === "LINK"){
+			return $this->buttons[] = new LinkNode();
+		}
+
+		return null;
 	}
 }

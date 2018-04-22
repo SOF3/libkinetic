@@ -20,10 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
-class DropdownNode extends DropdownLikeNode{
-	protected function getStepName() : string{
-		return "OPTION";
-	}
+class LabelNode extends ElementNode{
+
 }

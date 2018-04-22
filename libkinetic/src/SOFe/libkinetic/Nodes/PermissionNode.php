@@ -20,54 +20,48 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
+use pocketmine\Player;
 use SOFe\libkinetic\ParseException;
 
-class DropdownOptionNode extends KineticNode{
-	/** @var string */
-	protected $value;
+/**
+ * Describes the permission required for accessing a certain window.
+ *
+ * The attribute <code>NEED</code> is a boolean. If set to true, only those with the permission can access the window. If set to false, <i>only those without</i> the permission can access the window.
+ */
+class PermissionNode extends KineticNode{
 	/** @var bool */
-	protected $default = false;
+	protected $need = true;
+
 	/** @var string */
-	protected $text;
+	protected $permission;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "VALUE"){
-			$this->value = $value;
-			return true;
-		}
-
-		if($name === "DEFAULT"){
-			$this->default = self::parseBoolean($value);
+		if($name === "NEED"){
+			$this->need = self::parseBoolean($value);
 			return true;
 		}
 
 		return false;
 	}
 
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttribute("value");
-	}
-
 	public function acceptText(string $text) : void{
-		$this->text = $text;
+		$this->permission = $text;
 	}
 
 	public function endElement() : void{
 		parent::endElement();
-		if(!isset($this->text)){
-			throw new ParseException("<{$this->name}> must have text");
+		if(empty($this->permission)){
+			throw new ParseException("<{$this->nodeName}> must have text");
 		}
 	}
 
-	public function isDefault() : bool{
-		return $this->default;
+	public function validate(Player $player) : bool{
+		return $player->hasPermission($this->permission) === $this->need;
 	}
 }

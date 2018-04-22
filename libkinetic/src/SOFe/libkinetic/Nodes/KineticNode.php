@@ -24,14 +24,15 @@ namespace SOFe\libkinetic\Nodes;
 
 use JsonSerializable;
 use SOFe\libkinetic\ParseException;
+use SOFe\libkinetic\Parser\KineticFileParser;
 use function strtolower;
 use function strtoupper;
 
 abstract class KineticNode implements JsonSerializable{
 	/** @var string */
-	public $name;
+	public $nodeName;
 	/** @var KineticNode|null */
-	public $parent = null;
+	public $nodeParent = null;
 
 	public function setAttribute(string $name, string $value) : bool{
 		return false;
@@ -50,21 +51,21 @@ abstract class KineticNode implements JsonSerializable{
 	}
 
 	public function acceptText(string $text) : void{
-		throw new ParseException("<$this->name> does not accept cdata");
+		throw new ParseException("<$this->nodeName> does not accept cdata");
 	}
 
-	protected function requireAttribute(string ...$names) : void{
+	protected final function requireAttributes(string ...$names) : void{
 		foreach($names as $name){
 			if(!isset($this->{strtolower($name)})){
-				throw new ParseException("Attribute \"$name\"  is required for <$this->name>");
+				throw new ParseException("Attribute \"$name\"  is required for <$this->nodeName>");
 			}
 		}
 	}
 
-	protected function requireElements(string ...$names) : void{
+	protected final function requireElements(string ...$names) : void{
 		foreach($names as $name){
 			if(!isset($this->{strtolower($name)})){
-				throw new ParseException("Child element <$name>  is required for <$this->name>");
+				throw new ParseException("Child element <$name>  is required for <$this->nodeName>");
 			}
 		}
 	}
@@ -83,9 +84,13 @@ abstract class KineticNode implements JsonSerializable{
 		throw new ParseException("Malformed boolean value \"$boolean\"");
 	}
 
+	protected function getRoot() : IndexNode{
+		return KineticFileParser::getParsingInstance()->getRoot();
+	}
+
 	public function jsonSerialize() : array{
 		return [
-			"name" => $this->name,
+			"nodeName" => $this->nodeName,
 		];
 	}
 }

@@ -22,25 +22,59 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Nodes;
 
-class LinkNode extends KineticNode{
-	protected $target;
+use SOFe\libkinetic\ParseException;
+
+class DropdownOptionNode extends KineticNode{
+	/** @var string */
+	protected $value;
+	/** @var bool */
+	protected $default = false;
+	/** @var string */
+	protected $text;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "VALUE"){
+			$this->value = $value;
+			return true;
+		}
+
+		if($name === "DEFAULT"){
+			$this->default = self::parseBoolean($value);
 			return true;
 		}
 
 		return false;
 	}
 
+	public function endAttributes() : void{
+		parent::endAttributes();
+		$this->requireAttributes("value");
+	}
+
+	public function acceptText(string $text) : void{
+		$this->text = $text;
+	}
+
+	public function endElement() : void{
+		parent::endElement();
+		if(!isset($this->text)){
+			throw new ParseException("<{$this->nodeName}> must have text");
+		}
+	}
+
+	public function isDefault() : bool{
+		return $this->default;
+	}
+
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"target" => $this->target,
+				"value" => $this->value,
+				"default" => $this->default,
+				"text" => $this->text,
 			];
 	}
 }

@@ -22,25 +22,33 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Nodes;
 
-class LinkNode extends KineticNode{
-	protected $target;
+use SOFe\libkinetic\KineticManager;
 
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
+abstract class CommandEntryWindowNode extends WindowNode{
+	/** @var CommandNode|null */
+	protected $cmd = null;
+
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
-			return true;
+		if($name === "COMMAND"){
+			return $this->cmd = new CommandNode();
 		}
 
-		return false;
+		return null;
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"target" => $this->target,
+				"cmd" => $this->cmd,
 			];
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		if($this->cmd !== null){
+			$this->cmd->resolve();
+		}
 	}
 }

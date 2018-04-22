@@ -20,31 +20,26 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
-use SOFe\libkinetic\Nodes\LinkNode;
+use SOFe\libkinetic\ParseException;
 
-trait WindowParentNode {
-	protected $buttons = [];
+class CommandAliasNode extends KineticNode{
+	protected $text;
 
-	public function startChild(string $name) : ?KineticNode{
-		if($name === "INDEX"){
-			return $this->buttons[] = new IndexNode();
+	public function acceptText(string $text) : void{
+		$this->text = $text;
+	}
+
+	public function endElement() : void{
+		if(empty($this->text)){
+			throw new ParseException("<{$this->nodeName}> must have text");
 		}
+	}
 
-		if($name === "LIST"){
-			return $this->buttons[] = new ListNode();
-		}
-
-		if($name === "INFO"){
-			return $this->buttons[] = new InfoNode();
-		}
-
-		if($name === "LINK"){
-			return $this->buttons[] = new LinkNode();
-		}
-
-		return null;
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"text" => $this->text,
+			];
 	}
 }

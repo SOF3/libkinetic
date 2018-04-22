@@ -20,9 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
 use SOFe\libkinetic\ParseException;
 
 abstract class DropdownLikeNode extends ElementNode{
@@ -47,13 +46,13 @@ abstract class DropdownLikeNode extends ElementNode{
 		parent::endElement();
 
 		if(empty($this->options)){
-			throw new ParseException("<{$this->name}> must have at least one <{$this->getStepName()}> child element");
+			throw new ParseException("<{$this->nodeName}> must have at least one <{$this->getStepName()}> child element");
 		}
 
 		foreach($this->options as $i => $option){
 			if($option->isDefault()){
 				if(isset($this->default)){
-					throw new ParseException("Only one <{$this->getStepName()}> can be declared DEFAULT=\"true\" in each <{$this->name}>");
+					throw new ParseException("Only one <{$this->getStepName()}> can be declared DEFAULT=\"true\" in each <{$this->nodeName}>");
 				}
 				$this->default = $i;
 			}
@@ -64,4 +63,11 @@ abstract class DropdownLikeNode extends ElementNode{
 	}
 
 	protected abstract function getStepName() : string;
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"options" => $this->options,
+				"default" => $this->default,
+			];
+	}
 }

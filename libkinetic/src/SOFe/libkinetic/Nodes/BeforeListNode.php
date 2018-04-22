@@ -20,26 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\Element\ElementNode;
-
-class ConfigNode extends WindowNode{
-	/** @var bool */
-	protected $required = false;
-	/** @var ElementNode[] */
-	protected $elements = [];
-
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "REQUIRED"){
-			$this->required = self::parseBoolean($value);
-			return true;
-		}
-
-		return false;
+class BeforeListNode extends BeforeAfterListNode{
+	protected function getIdPart() : string{
+		return "before";
 	}
 }

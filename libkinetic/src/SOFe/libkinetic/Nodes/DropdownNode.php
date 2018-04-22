@@ -20,8 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-class CommandEntryNode extends WindowNode{
-
+class DropdownNode extends DropdownLikeNode{
+	protected function getStepName() : string{
+		return "OPTION";
+	}
 }

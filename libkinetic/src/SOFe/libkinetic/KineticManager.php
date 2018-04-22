@@ -23,15 +23,10 @@ declare(strict_types=1);
 namespace SOFe\libkinetic;
 
 use pocketmine\plugin\Plugin;
-use function feof;
-use function fread;
-use function xml_error_string;
-use function xml_get_error_code;
-use function xml_parse;
-use function xml_parser_create;
-use function xml_parser_set_option;
-use const XML_OPTION_CASE_FOLDING;
-use const XML_OPTION_SKIP_WHITE;
+use SOFe\libkinetic\Parser\JsonFileParser;
+use SOFe\libkinetic\Parser\KineticFileParser;
+use SOFe\libkinetic\Parser\XmlFileParser;
+use function extension_loaded;
 
 class KineticManager{
 	/** @var Plugin */
@@ -39,31 +34,26 @@ class KineticManager{
 	/** @var KineticFileParser */
 	private $parser;
 
-	public function __construct(Plugin $plugin, string $resourceName){
+	public function __construct(Plugin $plugin, string $xmlResource, string $jsonResource){
+		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
 		$plugin->getServer()->getPluginManager()->registerEvents(new FormListener($this), $plugin);
 
-		$xmlParser = xml_parser_create();
-		xml_parser_set_option($xmlParser, XML_OPTION_CASE_FOLDING, 1);
-		xml_parser_set_option($xmlParser, XML_OPTION_SKIP_WHITE, 1);
-		$this->parser = new KineticFileParser($xmlParser);
-
-		$fh = $plugin->getResource($resourceName);
-		try{
-			while(!feof($fh)){
-				$buffer = fread($fh, 4096);
-				if(xml_parse($xmlParser, $buffer, feof($fh)) === 0){
-					$errorCode = xml_get_error_code($xmlParser);
-					throw new ParseException(xml_error_string($errorCode));
-				}
-			}
-		}catch(ParseException $ex){
-			$errorLine = xml_get_current_line_number($xmlParser);
-			$errorColumn = xml_get_current_column_number($xmlParser);
-			throw new ParseException("Failed parsing $resourceName: {$ex->getMessage()} on line {$errorLine}:{$errorColumn}");
-		}finally{
-			fclose($fh);
+		if(extension_loaded("xml")){
+			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");
+			KineticFileParser::$parsingInstance = $this->parser =
+				new XmlFileParser($plugin->getResource($xmlResource), $xmlResource);
+		}else{
+			$plugin->getLogger()->info("Loading JSON kinetic file $xmlResource");
+			KineticFileParser::$parsingInstance = $this->parser =
+				new JsonFileParser($plugin->getResource($xmlResource), $xmlResource);
 		}
+
+		$this->parser->parse();
+
+		$this->parser->getRoot()->resolve();
+
+		KineticFileParser::$parsingInstance = null;
 	}
 
 	public

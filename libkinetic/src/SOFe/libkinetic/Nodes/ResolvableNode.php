@@ -20,10 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
-class StepSliderNode extends DropdownLikeNode{
-	protected function getStepName() : string{
-		return "STEP";
-	}
+use SOFe\libkinetic\KineticManager;
+
+interface ResolvableNode{
+	public function resolve(KineticManager $manager) : void;
 }

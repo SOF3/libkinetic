@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
 use SOFe\libkinetic\ParseException;
 use function is_numeric;

@@ -20,15 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
-class ToggleNode extends ElementNode{
-	/** @var bool */
-	protected $default;
+class InfoNode extends ConfigurableWindowNode{
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"default" => $this->default,
-			];
-	}
 }

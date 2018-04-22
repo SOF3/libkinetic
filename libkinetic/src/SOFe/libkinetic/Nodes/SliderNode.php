@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
 use function strtolower;
 
@@ -47,6 +47,15 @@ class SliderNode extends ElementNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttribute("min", "max");
+		$this->requireAttributes("min", "max");
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"min" => $this->min,
+				"max" => $this->max,
+				"step" => $this->step,
+				"default" => $this->default,
+			];
 	}
 }

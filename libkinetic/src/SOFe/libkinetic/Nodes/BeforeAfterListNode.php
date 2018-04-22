@@ -20,22 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
+use function assert;
 
-class ConfigurableNode extends CommandEntryNode{
-	protected $configs = [];
+abstract class BeforeAfterListNode extends WindowNode{
+	use WindowParentNode;
 
-	public function startChild(string $name) : ?KineticNode{
-		if($delegate = parent::startChild($name)){
-			return $delegate;
+	public function setAttribute(string $name, string $value) : bool{
+		if($name === "ID"){
+			return false;
 		}
 
-		if($name === "CONFIG"){
-			return new ConfigNode();
-		}
-
-		return null;
+		return parent::setAttribute($name, $value);
 	}
+
+	public function endAttributes() : void{
+		assert($this->nodeParent instanceof ListNode);
+		$this->id = $this->nodeParent->id . ".{$this->getIdPart()}";
+
+		parent::endAttributes();
+	}
+
+	protected abstract function getIdPart() : string;
 }

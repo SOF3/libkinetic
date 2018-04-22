@@ -20,8 +20,26 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-class ListNode extends CommandEntryNode{
+abstract class ConfigurableWindowNode extends CommandEntryWindowNode{
+	protected $configs = [];
 
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($name === "CONFIG"){
+			return new ConfigNode();
+		}
+
+		return null;
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"configs" => $this->configs,
+			];
+	}
 }

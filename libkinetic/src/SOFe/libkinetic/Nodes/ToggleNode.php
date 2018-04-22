@@ -20,20 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
-
-class SynopsisNode extends KineticNode{
-	protected $text;
-
-	public function acceptText(string $text) : void{
-		$this->text = $text;
-	}
+class ToggleNode extends ElementNode{
+	/** @var bool */
+	protected $default;
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"text" => $this->text,
+				"default" => $this->default,
 			];
 	}
 }

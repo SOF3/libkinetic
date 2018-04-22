@@ -20,19 +20,32 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Parser;
 
+use InvalidStateException;
+use SOFe\libkinetic\Nodes\IndexNode;
 use SOFe\libkinetic\Nodes\KineticNode;
-use SOFe\libkinetic\Nodes\Window\IndexNode;
+use SOFe\libkinetic\Nodes\KineticNodeWithId;
+use SOFe\libkinetic\ParseException;
 use function strpos;
 use function substr;
 use function trim;
-use function xml_set_character_data_handler;
-use function xml_set_element_handler;
-use function xml_set_object;
 
-class KineticFileParser{
-	/** @var KineticNode|null */
+abstract class KineticFileParser{
+	public static $hasPm = false;
+	public static $parsingInstance = null;
+
+	/** @var KineticNode[]|KineticNodeWithId[] */
+	public $idMap = [];
+
+	public static function getParsingInstance() : KineticFileParser{
+		if(self::$parsingInstance === null){
+			throw new InvalidStateException("Not currently parsing a file");
+		}
+		return self::$parsingInstance;
+	}
+
+	/** @var IndexNode|null */
 	private $root = null;
 	/** @var KineticNode|null */
 	private $leaf = null;
@@ -42,10 +55,7 @@ class KineticFileParser{
 
 	private $dataBuffer = "";
 
-	public function __construct($parser){
-		xml_set_object($parser, $this);
-		xml_set_element_handler($parser, "startElement", "endElement");
-		xml_set_character_data_handler($parser, "parseText");
+	public function __construct(){
 	}
 
 	public function startElement($parser, string $name, array $attrs) : void{
@@ -67,13 +77,13 @@ class KineticFileParser{
 		}else{
 			$leaf = $this->leaf->startChild($name);
 			if($leaf === null){
-				throw new ParseException("<{$this->leaf->name}> does not accept <$name> as a child node");
+				throw new ParseException("<{$this->leaf->nodeName}> does not accept <$name> as a child node");
 			}
-			$leaf->parent = $this->leaf;
+			$leaf->nodeParent = $this->leaf;
 			$this->leaf = $leaf;
 		}
 
-		$this->leaf->name = $name;
+		$this->leaf->nodeName = $name;
 
 		foreach($attrs as $attr => $value){
 			if($attr === "XMLNS" || strpos($attr, "XMLNS:") === 0){
@@ -92,9 +102,10 @@ class KineticFileParser{
 
 	public function endElement($parser, string $name) : void{
 		$this->flushBuffer();
-		if($name !== $this->leaf->name){
-			throw new ParseException("Closing tag </$name> does not match opening tag <{$this->leaf->name}>");
+		if($name !== $this->leaf->nodeName){
+			throw new ParseException("Closing tag </$name> does not match opening tag <{$this->leaf->nodeName}>");
 		}
+		$this->leaf = $this->leaf->nodeParent;
 	}
 
 	private function flushBuffer() : void{
@@ -109,7 +120,13 @@ class KineticFileParser{
 		$this->dataBuffer .= $data;
 	}
 
-	public function getRoot() : ?KineticNode{
+	public function getRoot() : IndexNode{
 		return $this->root;
 	}
+
+	public function getNamespace() : string{
+		return $this->namespace;
+	}
+
+	public abstract function parse();
 }

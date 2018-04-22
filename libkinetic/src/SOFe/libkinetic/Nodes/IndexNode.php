@@ -20,16 +20,17 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
-
-use SOFe\libkinetic\Nodes\KineticNode;
+namespace SOFe\libkinetic\Nodes;
+use SOFe\libkinetic\KineticManager;
 
 /**
  * Index is displayed as a MenuForm, where options are hardcoded to be links to a child window or a link to a window identified by its ID.
  */
-class IndexNode extends CommandEntryNode{
+class IndexNode extends CommandEntryWindowNode{
 	use WindowParentNode {
 		startChild as protected wpn_startChild;
+		jsonSerialize as protected wpn_jsonSerialize;
+		resolve as protected wpn_resolve;
 	}
 
 	public function startChild(string $name) : ?KineticNode{
@@ -42,5 +43,14 @@ class IndexNode extends CommandEntryNode{
 		}
 
 		return null;
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + $this->wpn_jsonSerialize();
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$this->wpn_resolve($manager);
 	}
 }

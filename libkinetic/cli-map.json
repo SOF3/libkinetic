@@ -1,0 +1,4 @@
+{
+	"validate": "cli/validate.php",
+	"x2j": "cli/x2j.php"
+}

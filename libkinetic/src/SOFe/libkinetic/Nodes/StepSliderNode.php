@@ -22,25 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Nodes;
 
-class LinkNode extends KineticNode{
-	protected $target;
-
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "TARGET"){
-			$this->target = $value;
-			return true;
-		}
-
-		return false;
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+class StepSliderNode extends DropdownLikeNode{
+	protected function getStepName() : string{
+		return "STEP";
 	}
 }

@@ -20,25 +20,35 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
 use SOFe\libkinetic\ParseException;
+use SOFe\libkinetic\Parser\KineticFileParser;
 
 /**
  * A window represents a form that can be displayed to the user.
  */
-class WindowNode extends KineticNode{
+abstract class WindowNode extends KineticNode implements KineticNodeWithId, ResolvableNode{
 	/** @var string */
 	protected $id;
 	/** @var string */
 	protected $title;
-	/** @var SynopsisNode */
+
+	/** @var SynopsisNode|null */
 	protected $synopsis;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
-			$this->id = ($this->parent instanceof WindowNode ? ($this->parent->id . ".") : "") . $value;
+			if($this->nodeParent instanceof KineticNodeWithId){
+				$this->id = ($this->nodeParent->getId() . ".") . $value;
+			}else{
+				if($this->nodeParent !== null){
+					throw new ParseException("<$this->nodeName> can only be placed directly under a KineticNodeWithId");
+				}
+				$this->id = $value;
+			}
+
+			KineticFileParser::getParsingInstance()->idMap[$this->id] = $this;
 			return true;
 		}
 
@@ -52,7 +62,7 @@ class WindowNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttribute("id", "title");
+		$this->requireAttributes("id", "title");
 	}
 
 	public function startChild(string $name) : ?KineticNode{
@@ -70,7 +80,15 @@ class WindowNode extends KineticNode{
 	}
 
 	public function getName() : string{
-		return $this->name;
+		return $this->nodeName;
+	}
+
+	public function getSynopsis() : ?SynopsisNode{
+		return $this->synopsis;
+	}
+
+	public function getSynopsisString() : string{
+		return $this->synopsis !== null ? $this->synopsis->getText() : "";
 	}
 
 	public function jsonSerialize() : array{

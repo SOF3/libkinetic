@@ -20,8 +20,21 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+use SOFe\libkinetic\Parser\KineticFileParser;
+use SOFe\libkinetic\Parser\XmlFileParser;
 
-class LabelNode extends ElementNode{
+require_once __DIR__ . "/../cli-autoload.php";
 
+if(!isset($argv[2])){
+	throw new InvalidArgumentException("Usage: php $argv[0] validate <xml file>");
 }
+$file = $argv[2];
+if(!is_file($file)){
+	throw new InvalidArgumentException("$file is not a file");
+}
+
+KineticFileParser::$parsingInstance = $parser =
+	new XmlFileParser(fopen($file, "rb"), basename($file));
+$parser->parse();
+
+echo json_encode($parser->getRoot());

@@ -20,12 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Element;
+namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\Nodes\KineticNode;
-use SOFe\libkinetic\Nodes\Window\WindowNode;
+use SOFe\libkinetic\ParseException;
+use SOFe\libkinetic\Parser\KineticFileParser;
 
-abstract class ElementNode extends KineticNode{
+abstract class ElementNode extends KineticNode implements KineticNodeWithId{
 	/** @var string */
 	protected $id;
 	/** @var string */
@@ -33,7 +33,16 @@ abstract class ElementNode extends KineticNode{
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
-			$this->id = ($this->parent instanceof WindowNode ? ($this->parent->getId() . ".") : "") . $value;
+			if($this->nodeParent instanceof KineticNodeWithId){
+				$this->id = ($this->nodeParent->getId() . ".") . $value;
+			}else{
+				if($this->nodeParent !== null){
+					throw new ParseException("<$this->nodeName> can only be placed directly under a KineticNodeWithId");
+				}
+				$this->id = $value;
+			}
+
+			KineticFileParser::getParsingInstance()->idMap[$this->id] = $this;
 			return true;
 		}
 
@@ -47,7 +56,7 @@ abstract class ElementNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttribute("id", "title");
+		$this->requireAttributes("id", "title");
 	}
 
 	public function jsonSerialize() : array{
@@ -55,6 +64,14 @@ abstract class ElementNode extends KineticNode{
 				"id" => $this->id,
 				"title" => $this->title,
 			];
+	}
+
+	public function getId() : string{
+		return $this->id;
+	}
+
+	public function getTitle() : string{
+		return $this->title;
 	}
 
 	public static function byName(string $name) : ?ElementNode{

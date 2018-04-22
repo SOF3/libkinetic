@@ -20,8 +20,31 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Nodes\Window;
+namespace SOFe\libkinetic\Nodes;
 
-class InfoNode extends CommandEntryNode{
+class ConfigNode extends WindowNode{
+	/** @var bool */
+	protected $required = false;
+	/** @var ElementNode[] */
+	protected $elements = [];
 
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "REQUIRED"){
+			$this->required = self::parseBoolean($value);
+			return true;
+		}
+
+		return false;
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"required" => $this->required,
+				"elements" => $this->elements,
+			];
+	}
 }

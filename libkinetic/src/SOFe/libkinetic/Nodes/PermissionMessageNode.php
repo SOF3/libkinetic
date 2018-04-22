@@ -22,33 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Nodes;
 
-use SOFe\libkinetic\KineticManager;
+class PermissionMessageNode extends KineticNode{
+	/** @var string */
+	protected $message;
 
-abstract class CommandEntryWindowNode extends WindowNode{
-	/** @var CommandNode|null */
-	protected $cmd = null;
-
-	public function startChild(string $name) : ?KineticNode{
-		if($delegate = parent::startChild($name)){
-			return $delegate;
-		}
-
-		if($name === "COMMAND"){
-			return $this->cmd = new CommandNode();
-		}
-
-		return null;
+	public function acceptText(string $text) : void{
+		$this->message = $text;
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"cmd" => $this->cmd,
-			];
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		if($this->cmd !== null){
-			$this->cmd->resolve($manager);
-		}
+	public function getMessage() : string{
+		return $this->message;
 	}
 }

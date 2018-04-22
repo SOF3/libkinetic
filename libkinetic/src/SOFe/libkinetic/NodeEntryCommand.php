@@ -22,32 +22,66 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-use function assert;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\Player;
 use pocketmine\plugin\Plugin;
+use pocketmine\utils\TextFormat;
 use SOFe\libkinetic\Nodes\CommandEntryWindowNode;
 use SOFe\libkinetic\Nodes\CommandNode;
+use function assert;
 
 class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
-	/** @var CommandEntryWindowNode */
-	protected $node;
 
-	public function __construct(KineticManager$manager, CommandNode $command){
+	/** @var KineticManager */
+	protected $manager;
+	/** @var CommandNode */
+	protected $command;
+
+	public function __construct(KineticManager $manager, CommandNode $command){
 		// TODO support simpleConfig
 		assert($command->nodeParent instanceof CommandEntryWindowNode);
 		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(), "/{$command->getName()}", $command->getAliases());
+		$this->manager = $manager;
+		$this->command = $command;
+	}
+
+	public function testPermissionSilent(CommandSender $target) : bool{
+		return $this->internalTestPermission($target) === null;
+	}
+
+	public function testPermission(CommandSender $target) : bool{
+		$message = $this->internalTestPermission($target);
+
+		if($message === null){
+			return true;
+		}
+
+		$target->sendMessage($message);
+		return false;
+	}
+
+	protected function internalTestPermission(CommandSender $target) : ?string{
+		if(!($target instanceof Player)){
+			return "Please run this command in-game.";
+		}
+
+		$parent = $this->command->nodeParent;
+		assert($parent instanceof CommandEntryWindowNode);
+
+		if($parent->getPermission() !== null && !$parent->getPermission()->testPermission($target)){
+			return $parent->getPermission()->getPermissionMessage() ?? $target->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission");
+		}
+
+		return null;
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args){
-
+		// TODO implement
 	}
 
-	/**
-	 * @return Plugin
-	 */
 	public function getPlugin() : Plugin{
-
+		return $this->manager->getPlugin();
 	}
 }

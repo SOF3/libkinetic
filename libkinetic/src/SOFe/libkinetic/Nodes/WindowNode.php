@@ -35,7 +35,9 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 	protected $title;
 
 	/** @var SynopsisNode|null */
-	protected $synopsis;
+	protected $synopsis = null;
+	/** @var PermissionNode|null */
+	protected $permission = null;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
@@ -68,10 +70,18 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "SYNOPSIS"){
 			if($this->synopsis !== null){
-				throw new ParseException("Multiple <SYNOPSIS> tags for window $this->id");
+				throw new ParseException("Multiple <SYNOPSIS> nodes for window $this->id");
 			}
 			return new SynopsisNode();
 		}
+
+		if($name === "PERMISSION"){
+			if($this->permission !== null){
+				throw new ParseException("Multiple <PERMISSION> nodes for window $this->id");
+			}
+			return new PermissionNode();
+		}
+
 		return null;
 	}
 
@@ -89,6 +99,10 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 
 	public function getSynopsisString() : string{
 		return $this->synopsis !== null ? $this->synopsis->getText() : "";
+	}
+
+	public function getPermission() : ?PermissionNode{
+		return $this->permission;
 	}
 
 	public function jsonSerialize() : array{

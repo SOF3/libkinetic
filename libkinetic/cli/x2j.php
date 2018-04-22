@@ -66,5 +66,5 @@ xml_set_character_data_handler($parser, function($parser, $text) use (&$stack){
 xml_parse($parser, file_get_contents($xml), true);
 xml_parser_free($parser);
 
-file_put_contents($json, yaml_emit($last));
+file_put_contents($json, json_encode($last));
 //file_put_contents($json, json_encode($last, JSON_PRETTY_PRINT));

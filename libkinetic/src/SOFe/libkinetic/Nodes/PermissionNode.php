@@ -37,6 +37,9 @@ class PermissionNode extends KineticNode{
 	/** @var string */
 	protected $permission;
 
+	/** @var PermissionMessageNode */
+	protected $message;
+
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
@@ -50,6 +53,18 @@ class PermissionNode extends KineticNode{
 		return false;
 	}
 
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($name === "MESSAGE"){
+			return new PermissionMessageNode();
+		}
+
+		return null;
+	}
+
 	public function acceptText(string $text) : void{
 		$this->permission = $text;
 	}
@@ -61,7 +76,15 @@ class PermissionNode extends KineticNode{
 		}
 	}
 
-	public function validate(Player $player) : bool{
+	public function getPermissionString() : string{
+		return $this->permission;
+	}
+
+	public function getPermissionMessage() : ?string{
+		return $this->message !== null ? $this->message->getMessage() : null;
+	}
+
+	public function testPermission(Player $player) : bool{
 		return $player->hasPermission($this->permission) === $this->need;
 	}
 }

@@ -93,10 +93,26 @@
 
             <table class="table table-condensed">
                     <tr>
-                <td class="type" id="property_node">
-                                        protected                                        <a href="../../SOFe/libkinetic/Nodes/CommandEntryWindowNode.html"><abbr title="SOFe\libkinetic\Nodes\CommandEntryWindowNode">CommandEntryWindowNode</abbr></a>
+                <td class="type" id="property_manager">
+                                        protected                                        <a href="../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a>
                 </td>
-                <td>$node</td>
+                <td>$manager</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_command">
+                                        protected                                        <a href="../../SOFe/libkinetic/Node/Command/CommandNode.html"><abbr title="SOFe\libkinetic\Node\Command\CommandNode">CommandNode</abbr></a>
+                </td>
+                <td>$command</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_args">
+                                        protected                                        <a href="../../SOFe/libkinetic/Node/Config/CommandConfigNode.html"><abbr title="SOFe\libkinetic\Node\Config\CommandConfigNode">CommandConfigNode</abbr></a>[]
+                </td>
+                <td>$args</td>
                 <td class="last"></td>
                 <td></td>
             </tr>
@@ -111,7 +127,40 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<a href="../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager, <a href="../../SOFe/libkinetic/Nodes/CommandNode.html"><abbr title="SOFe\libkinetic\Nodes\CommandNode">CommandNode</abbr></a> $command)
+                    <a href="#method___construct">__construct</a>(<a href="../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager, <a href="../../SOFe/libkinetic/Node/Command/CommandNode.html"><abbr title="SOFe\libkinetic\Node\Command\CommandNode">CommandNode</abbr></a> $command)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_testPermissionSilent">testPermissionSilent</a>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $target)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_testPermission">testPermission</a>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $target)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_internalTestPermission">internalTestPermission</a>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $target)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -130,7 +179,7 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <abbr title="pocketmine\plugin\Plugin">Plugin</abbr>
+                    
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getPlugin">getPlugin</a>()
@@ -147,9 +196,9 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L37">line 37</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L46">line 46</a></div>
         <code>                    
-    <strong>__construct</strong>(<a href="../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager, <a href="../../SOFe/libkinetic/Nodes/CommandNode.html"><abbr title="SOFe\libkinetic\Nodes\CommandNode">CommandNode</abbr></a> $command)
+    <strong>__construct</strong>(<a href="../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager, <a href="../../SOFe/libkinetic/Node/Command/CommandNode.html"><abbr title="SOFe\libkinetic\Node\Command\CommandNode">CommandNode</abbr></a> $command)
         </code>
     </h3>
     <div class="details">
@@ -166,7 +215,7 @@
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../SOFe/libkinetic/Nodes/CommandNode.html"><abbr title="SOFe\libkinetic\Nodes\CommandNode">CommandNode</abbr></a></td>
+                <td><a href="../../SOFe/libkinetic/Node/Command/CommandNode.html"><abbr title="SOFe\libkinetic\Node\Command\CommandNode">CommandNode</abbr></a></td>
                 <td>$command</td>
                 <td></td>
             </tr>
@@ -180,8 +229,95 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_testPermissionSilent">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L77">line 77</a></div>
+        <code>                    
+    <strong>testPermissionSilent</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $target)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="pocketmine\command\CommandSender">CommandSender</abbr></td>
+                <td>$target</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_testPermission">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L81">line 81</a></div>
+        <code>                    
+    <strong>testPermission</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $target)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="pocketmine\command\CommandSender">CommandSender</abbr></td>
+                <td>$target</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_internalTestPermission">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L92">line 92</a></div>
+        <code>            protected        
+    <strong>internalTestPermission</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $target)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="pocketmine\command\CommandSender">CommandSender</abbr></td>
+                <td>$target</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_execute">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L43">line 43</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L107">line 107</a></div>
         <code>                    
     <strong>execute</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $sender, string $commandLabel, array $args)
         </code>
@@ -220,8 +356,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getPlugin">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L50">line 50</a></div>
-        <code>                    <abbr title="pocketmine\plugin\Plugin">Plugin</abbr>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/NodeEntryCommand.php#L111">line 111</a></div>
+        <code>                    
     <strong>getPlugin</strong>()
         </code>
     </h3>
@@ -231,15 +367,6 @@
 
                 <div class="tags">
             
-                            <h4>Return Value</h4>
-
-                    <table class="table table-condensed">
-        <tr>
-            <td><abbr title="pocketmine\plugin\Plugin">Plugin</abbr></td>
-            <td></td>
-        </tr>
-    </table>
-
             
             
                     </div>

@@ -20,9 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node;
 
-use RuntimeException;
+class PermissionMessageNode extends KineticNode{
+	/** @var string */
+	protected $message;
 
-class ParseException extends RuntimeException{
+	public function acceptText(string $text) : void{
+		$this->message = $text;
+	}
+
+	public function getMessage() : string{
+		return $this->message;
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"message" => $this->message,
+			];
+	}
 }

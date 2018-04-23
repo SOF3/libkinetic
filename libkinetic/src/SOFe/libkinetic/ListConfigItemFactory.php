@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-use RuntimeException;
+class ListConfigItemFactory{
 
-class ParseException extends RuntimeException{
 }

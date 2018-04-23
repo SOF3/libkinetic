@@ -20,9 +20,29 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Window\ListWindow;
 
-use RuntimeException;
+use SOFe\libkinetic\Node\Window\WindowNode;
+use SOFe\libkinetic\Node\Window\WindowParentNode;
+use function assert;
 
-class ParseException extends RuntimeException{
+abstract class BeforeAfterListNode extends WindowNode{
+	use WindowParentNode;
+
+	public function setAttribute(string $name, string $value) : bool{
+		if($name === "ID"){
+			return false;
+		}
+
+		return parent::setAttribute($name, $value);
+	}
+
+	public function endAttributes() : void{
+		assert($this->nodeParent instanceof ListNode);
+		$this->id = $this->nodeParent->id . ".{$this->getIdPart()}";
+
+		parent::endAttributes();
+	}
+
+	protected abstract function getIdPart() : string;
 }

@@ -20,9 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Command;
 
-use RuntimeException;
+use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\ParseException;
 
-class ParseException extends RuntimeException{
+class CommandAliasNode extends KineticNode{
+	protected $text;
+
+	public function acceptText(string $text) : void{
+		$this->text = $text;
+	}
+
+	public function endElement() : void{
+		if(empty($this->text)){
+			throw new ParseException("Text content is required", $this);
+		}
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"text" => $this->text,
+			];
+	}
 }

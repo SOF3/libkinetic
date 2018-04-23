@@ -20,9 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Window;
 
-use RuntimeException;
+class InfoNode extends ConfigurableWindowNode{
 
-class ParseException extends RuntimeException{
 }

@@ -20,9 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node;
 
-use RuntimeException;
+class SynopsisNode extends KineticNode{
+	protected $text = "";
 
-class ParseException extends RuntimeException{
+	public function acceptText(string $text) : void{
+		$this->text = $text;
+	}
+
+	public function getText() : string{
+		return $this->text;
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"text" => $this->text,
+			];
+	}
 }

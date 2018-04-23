@@ -20,9 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Element;
 
-use RuntimeException;
-
-class ParseException extends RuntimeException{
+class StepSliderNode extends DropdownLikeNode{
+	protected function getStepName() : string{
+		return "STEP";
+	}
 }

@@ -20,9 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Window\ListWindow;
 
-use RuntimeException;
-
-class ParseException extends RuntimeException{
+class BeforeListNode extends BeforeAfterListNode{
+	protected function getIdPart() : string{
+		return "before";
+	}
 }

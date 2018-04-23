@@ -20,9 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Config;
 
-use RuntimeException;
+use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\Window\WindowNode;
 
-class ParseException extends RuntimeException{
+class ListConfigNode extends WindowNode{
+
+
+	public function resolve(KineticManager $manager) : void{
+
+	}
 }

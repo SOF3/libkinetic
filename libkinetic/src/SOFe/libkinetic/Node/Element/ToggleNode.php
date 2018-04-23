@@ -20,9 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Element;
 
-use RuntimeException;
+class ToggleNode extends EditableElementNode{
+	/** @var bool */
+	protected $default;
 
-class ParseException extends RuntimeException{
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"default" => $this->default,
+			];
+	}
+
+	public function getDefault() : bool{
+		return $this->default;
+	}
+
+	public function getDefaultAsString() : ?string{
+		return $this->default ? "true" : "false";
+	}
 }

@@ -50,10 +50,16 @@ xml_set_element_handler($parser, function($parser, $name, $attrs) use (&$stack){
 	}
 	$stack[] =& $node;
 }, function() use (&$stack, &$last){
+	$tail =& $stack[count($stack) - 1];
+	if(isset($tail["text"]) && $tail["text"] !== ""){
+		$tail["text"] = trim(implode(" ", array_map("trim", explode("\n", $tail["text"]))));
+		if($tail["text"] === ""){
+			unset($tail["text"]);
+		}
+	}
 	$last = array_pop($stack);
 });
 xml_set_character_data_handler($parser, function($parser, $text) use (&$stack){
-	$text = trim($text);
 	if($text !== ""){
 		$tail =& $stack[count($stack) - 1];
 		if(!isset($tail["text"])){
@@ -66,5 +72,4 @@ xml_set_character_data_handler($parser, function($parser, $text) use (&$stack){
 xml_parse($parser, file_get_contents($xml), true);
 xml_parser_free($parser);
 
-file_put_contents($json, json_encode($last));
-//file_put_contents($json, json_encode($last, JSON_PRETTY_PRINT));
+file_put_contents($json, json_encode($last, $argv[4] === "min" ? 0 : JSON_PRETTY_PRINT) . "\n");

@@ -20,9 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node;
 
-use RuntimeException;
-
-class ParseException extends RuntimeException{
+interface KineticNodeWithId{
+	public function getId() : string;
 }

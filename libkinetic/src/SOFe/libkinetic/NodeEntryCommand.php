@@ -28,8 +28,10 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
-use SOFe\libkinetic\Nodes\CommandEntryWindowNode;
-use SOFe\libkinetic\Nodes\CommandNode;
+use SOFe\libkinetic\Node\Command\CommandEntryWindowNode;
+use SOFe\libkinetic\Node\Command\CommandNode;
+use SOFe\libkinetic\Node\Config\SimpleConfigNode;
+use SOFe\libkinetic\Node\Window\ConfigurableWindowNode;
 use function assert;
 
 class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
@@ -39,10 +41,36 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 	/** @var CommandNode */
 	protected $command;
 
+	/** @var \SOFe\libkinetic\Node\Config\SimpleConfigNode[] */
+	protected $args = [];
+
 	public function __construct(KineticManager $manager, CommandNode $command){
-		// TODO support simpleConfig
 		assert($command->nodeParent instanceof CommandEntryWindowNode);
-		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(), "/{$command->getName()}", $command->getAliases());
+
+		$usage = "/{$command->getName()}";
+		if($command->nodeParent instanceof ConfigurableWindowNode){
+			$this->args = $command->nodeParent->getSimpleConfigs();
+			foreach($this->args as $arg){
+				$usage .= " ";
+				$element = $arg->getElement();
+				if($arg->isRequired()){
+					$usage .= "<";
+					$usage .= $arg->getArgName();
+					$usage .= ">";
+				}else{
+					$usage .= "[";
+					$usage .= $arg->getArgName();
+					$default = $element->getDefaultAsString();
+					if($default !== null){
+						$usage .= " = ";
+						$usage .= $default;
+					}
+					$usage .= "]";
+				}
+			}
+		}
+
+		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(), $usage, $command->getAliases());
 		$this->manager = $manager;
 		$this->command = $command;
 	}

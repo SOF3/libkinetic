@@ -20,9 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Element;
 
-use RuntimeException;
+abstract class EditableElementNode extends ElementNode{
+	public abstract function getDefault();
 
-class ParseException extends RuntimeException{
+	public abstract function getDefaultAsString() : ?string;
 }

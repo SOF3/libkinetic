@@ -22,7 +22,13 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-use RuntimeException;
+use pocketmine\Player;
 
-class ParseException extends RuntimeException{
+interface ListConfigProvider{
+	/**
+	 * @param ListConfigItemFactory $factory
+	 * @param Player                $player
+	 * @param array                 $config
+	 */
+	public function provide(ListConfigItemFactory $factory, Player $player, array $config) : void;
 }

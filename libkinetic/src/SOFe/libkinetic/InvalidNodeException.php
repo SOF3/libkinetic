@@ -23,6 +23,10 @@ declare(strict_types=1);
 namespace SOFe\libkinetic;
 
 use RuntimeException;
+use SOFe\libkinetic\Node\KineticNode;
 
-class ParseException extends RuntimeException{
+class InvalidNodeException extends RuntimeException{
+	public function __construct(string $message, KineticNode $node){
+		parent::__construct($message . " in " . $node->getHierarchyName());
+	}
 }

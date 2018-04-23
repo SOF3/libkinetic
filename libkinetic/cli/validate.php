@@ -20,6 +20,8 @@
 
 declare(strict_types=1);
 
+use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\ParseException;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
 
@@ -35,6 +37,14 @@ if(!is_file($file)){
 
 KineticFileParser::$parsingInstance = $parser =
 	new XmlFileParser(fopen($file, "rb"), basename($file));
-$parser->parse();
+try{
+	$parser->parse();
+}catch(InvalidNodeException $e){
+	echo "Invalid: {$e->getMessage()}\n";
+	exit(1);
+}catch(ParseException $e){
+	echo "Parse error: {$e->getMessage()}\n";
+	exit(1);
+}
 
 echo json_encode($parser->getRoot());

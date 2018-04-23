@@ -20,9 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Element;
 
-use RuntimeException;
+class LabelNode extends ElementNode{
 
-class ParseException extends RuntimeException{
 }

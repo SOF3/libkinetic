@@ -23,10 +23,12 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Parser;
 
 use InvalidStateException;
-use SOFe\libkinetic\Nodes\IndexNode;
-use SOFe\libkinetic\Nodes\KineticNode;
-use SOFe\libkinetic\Nodes\KineticNodeWithId;
+use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\KineticNodeWithId;
+use SOFe\libkinetic\Node\Window\IndexNode;
 use SOFe\libkinetic\ParseException;
+use function explode;
 use function strpos;
 use function substr;
 use function trim;
@@ -77,7 +79,7 @@ abstract class KineticFileParser{
 		}else{
 			$leaf = $this->leaf->startChild($name);
 			if($leaf === null){
-				throw new ParseException("<{$this->leaf->nodeName}> does not accept <$name> as a child node");
+				throw new InvalidNodeException("<{$name}> is not a valid child node", $this->leaf);
 			}
 			$leaf->nodeParent = $this->leaf;
 			$this->leaf = $leaf;
@@ -93,7 +95,7 @@ abstract class KineticFileParser{
 				$attr = substr($attr, strpos($attr, ":") + 1);
 			}
 			if(!$this->leaf->setAttribute($attr, $value)){
-				throw new ParseException("<$name> does not accept the attribute $attr");
+				throw new InvalidNodeException("<$name> does not accept the attribute $attr", $this->leaf);
 			}
 		}
 
@@ -109,10 +111,16 @@ abstract class KineticFileParser{
 	}
 
 	private function flushBuffer() : void{
-		$buffer = trim($this->dataBuffer);
+		$buffer = $this->dataBuffer;
 		$this->dataBuffer = "";
-		if($buffer !== ""){
-			$this->leaf->acceptText($buffer);
+
+		$lines = "";
+		foreach(explode("\n", $buffer) as $line){
+			$lines .= trim($line);
+		}
+
+		if($lines !== ""){
+			$this->leaf->acceptText($lines);
 		}
 	}
 

@@ -22,6 +22,13 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-interface ListProvider{
+use pocketmine\Player;
 
+interface ListProvider{
+	/**
+	 * @param Player          $player
+	 * @param array           $config
+	 * @param ListItemFactory $factory
+	 */
+	public function provide(ListItemFactory $factory, Player $player, array $config) : void;
 }

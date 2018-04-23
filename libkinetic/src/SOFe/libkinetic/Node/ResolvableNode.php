@@ -20,9 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node;
 
-use RuntimeException;
+use SOFe\libkinetic\KineticManager;
 
-class ParseException extends RuntimeException{
+interface ResolvableNode{
+	public function resolve(KineticManager $manager) : void;
 }

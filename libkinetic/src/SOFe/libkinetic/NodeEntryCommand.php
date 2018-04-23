@@ -30,7 +30,6 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use SOFe\libkinetic\Node\Command\CommandEntryWindowNode;
 use SOFe\libkinetic\Node\Command\CommandNode;
-use SOFe\libkinetic\Node\Config\SimpleConfigNode;
 use SOFe\libkinetic\Node\Window\ConfigurableWindowNode;
 use function assert;
 
@@ -41,7 +40,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 	/** @var CommandNode */
 	protected $command;
 
-	/** @var \SOFe\libkinetic\Node\Config\SimpleConfigNode[] */
+	/** @var \SOFe\libkinetic\Node\Config\CommandConfigNode[] */
 	protected $args = [];
 
 	public function __construct(KineticManager $manager, CommandNode $command){
@@ -49,7 +48,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 
 		$usage = "/{$command->getName()}";
 		if($command->nodeParent instanceof ConfigurableWindowNode){
-			$this->args = $command->nodeParent->getSimpleConfigs();
+			$this->args = $command->nodeParent->getCommandConfigs();
 			foreach($this->args as $arg){
 				$usage .= " ";
 				$element = $arg->getElement();

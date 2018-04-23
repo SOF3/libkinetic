@@ -23,13 +23,15 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Window;
 
 use SOFe\libkinetic\Node\Command\CommandEntryWindowNode;
+use SOFe\libkinetic\Node\Config\CommandConfigNode;
+use SOFe\libkinetic\Node\Config\ComplexConfigNode;
 use SOFe\libkinetic\Node\Config\ConfigNode;
-use SOFe\libkinetic\Node\Config\SimpleConfigNode;
+use SOFe\libkinetic\Node\Config\ListConfigNode;
 use SOFe\libkinetic\Node\KineticNode;
 
 abstract class ConfigurableWindowNode extends CommandEntryWindowNode{
 	protected $configs = [];
-	protected $simpleConfigs = [];
+	protected $commandConfigs = [];
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
@@ -40,9 +42,18 @@ abstract class ConfigurableWindowNode extends CommandEntryWindowNode{
 			return new ConfigNode();
 		}
 
-		if($name === "SIMPLE"."CONFIG"){
-			return new SimpleConfigNode();
+		if($name === "LIST" . "CONFIG"){
+			return new ListConfigNode();
 		}
+
+		if($name === "COMPLEX" . "CONFIG"){
+			return new ComplexConfigNode();
+		}
+
+		if($name === "COMMAND" . "CONFIG"){
+			return new CommandConfigNode();
+		}
+
 
 		return null;
 	}
@@ -55,10 +66,10 @@ abstract class ConfigurableWindowNode extends CommandEntryWindowNode{
 	}
 
 	/**
-	 * @return SimpleConfigNode[]
+	 * @return CommandConfigNode[]
 	 */
-	public function getSimpleConfigs() : array{
-		return $this->simpleConfigs;
+	public function getCommandConfigs() : array{
+		return $this->commandConfigs;
 	}
 
 	public function jsonSerialize() : array{

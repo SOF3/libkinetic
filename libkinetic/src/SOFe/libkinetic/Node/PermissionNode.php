@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node;
 
 use pocketmine\Player;
-use SOFe\libkinetic\ParseException;
 
 /**
  * Describes the permission required for accessing a certain window.

@@ -33,13 +33,13 @@ use function class_exists;
 use function is_subclass_of;
 
 /**
- * ListNode is displayed as a MenuForm. The buttons consist of three parts: before, list and after.
+ * ListNode is displayed as a MenuForm. The buttons consist of three parts: `<before>`, `<list>` and `<after>`.
  *
- * <code>before</code> and <code>after</code> are specified in the <code>&lt;before&gt;</code> and <code>&lt;after&gt;</code> optional nodes respectively, each behaving as an <code>&lt;index&gt;</code> node.
+ * <code>before</code> and <code>after</code> are specified in the `<before>` and `<after>` optional nodes respectively, each behaving as an `<index>` node.
  *
- * <code>list</code> is a dynamic list of data, provided by the ListProvider implementation class as specified in <code>&lt;provider&gt;</code>. It must be a class instantiable with one argument, the Plugin instance. Each button carries a value whose type is to the ListProvider's favour.
+ * <code>list</code> is a dynamic list of data, provided by the ListProvider implementation class as specified in `<provider>`. It must be a class instantiable with one argument, the Plugin instance. Each button carries a value whose type is to the ListProvider's favour.
  *
- * When a button in <code>list</code> is clicked, the <code>&lt;each&gt;</code> is opened. <code>&lt;each&gt;</code> should be a node that contains exactly one configurable window node, i.e. another <code>&lt;list&gt;</code> or a <code>&lt;info&gt;</code>, or a <code>&lt;link&gt;</code> that points to a configurable window node.
+ * When a button in a `<list>` is clicked, the `<each>` is opened. `<each>` should be a node that contains exactly one configurable window node, i.e. another `<list>` or a `<info>`, or a `<link>` that points to a configurable window node.
  */
 class ListNode extends ConfigurableWindowNode{
 	/** @var string */

@@ -28,7 +28,6 @@ use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\PermissionNode;
 use SOFe\libkinetic\Node\ResolvableNode;
 use SOFe\libkinetic\Node\SynopsisNode;
-use SOFe\libkinetic\ParseException;
 use SOFe\libkinetic\Parser\KineticFileParser;
 
 /**
@@ -48,7 +47,7 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
 			if($this->nodeParent instanceof KineticNodeWithId){
-				$this->id = ($this->nodeParent->getId() . ".") . $value;
+				$this->id = $this->nodeParent->getId() . "." . $value;
 			}else{
 				if($this->nodeParent !== null){
 					throw new InvalidNodeException("Only KineticNodeWithId can have child window node", $this);

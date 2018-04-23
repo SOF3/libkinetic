@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Parser;
 
 use RuntimeException;
-use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\ParseException;
 use function extension_loaded;
 use function fclose;

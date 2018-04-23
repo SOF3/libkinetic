@@ -25,7 +25,6 @@ namespace SOFe\libkinetic\Node\Element;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\ParseException;
 use SOFe\libkinetic\Parser\KineticFileParser;
 
 abstract class ElementNode extends KineticNode implements KineticNodeWithId{
@@ -37,7 +36,7 @@ abstract class ElementNode extends KineticNode implements KineticNodeWithId{
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
 			if($this->nodeParent instanceof KineticNodeWithId){
-				$this->id = ($this->nodeParent->getId() . ".") . $value;
+				$this->id = $this->nodeParent->getId() . "." . $value;
 			}else{
 				if($this->nodeParent !== null){
 					throw new InvalidNodeException("Only KineticNodeWithId can have child element node", $this);

@@ -21,6 +21,7 @@
 declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Window;
+
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\Command\CommandEntryWindowNode;
 use SOFe\libkinetic\Node\KineticNode;

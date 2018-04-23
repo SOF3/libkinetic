@@ -29,16 +29,15 @@ use SOFe\libkinetic\Node\Element\ElementNode;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\Window\ConfigurableWindowNode;
 use SOFe\libkinetic\Node\Window\WindowNode;
-use SOFe\libkinetic\ParseException;
 use function assert;
 use function trim;
 
 /**
- * SimpleConfigNode is a variant of ConfigNode that only allows one child and requires an <code>argName</code> attribute.
+ * CommandConfigNode is a variant of ConfigNode that only allows one child and requires an <code>argName</code> attribute.
  *
- * When a player tries to open a configurable from command, if there are required settings in ConfigNode, a CustomForm will be opened so that the player can edit them from the form. On the other hand, settings in SimpleConfigNode will just go into the command's syntax, i.e. the player will fill the required and optional values from the command.
+ * When a player tries to open a configurable from command, if there are required settings in ConfigNode, a CustomForm will be opened so that the player can edit them from the form. On the other hand, settings in CommandConfigNode will just go into the command's syntax, i.e. the player will fill the required and optional values from the command.
  */
-class SimpleConfigNode extends WindowNode{
+class CommandConfigNode extends WindowNode{
 	/** @var bool */
 	protected $required = false;
 
@@ -69,7 +68,7 @@ class SimpleConfigNode extends WindowNode{
 	public function endAttributes() : void{
 		assert($this->nodeParent instanceof ConfigurableWindowNode);
 		$this->id = $this->nodeParent->id;
-		$this->title = "(the proper title will be set in SimpleConfigNode::endElement())";
+		$this->title = "(the proper title will be set in CommandConfigNode::endElement(), right now let's make endAttribute() assume it has a value)";
 		parent::endAttributes();
 		$this->requireAttributes("argName");
 	}

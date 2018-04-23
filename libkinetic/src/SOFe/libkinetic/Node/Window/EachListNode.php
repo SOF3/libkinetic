@@ -28,7 +28,6 @@ use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\LinkNode;
 use SOFe\libkinetic\Node\ResolvableNode;
 use SOFe\libkinetic\Node\Window\ListWindow\ListNode;
-use SOFe\libkinetic\ParseException;
 
 class EachListNode extends KineticNode implements ResolvableNode{
 	/** @var string */

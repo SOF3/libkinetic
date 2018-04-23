@@ -22,27 +22,26 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Config;
 
-use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\Element\ElementNode;
-use SOFe\libkinetic\Node\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
 
-class ConfigNode extends WindowNode{
-	/** @var bool */
-	protected $required = false;
+/**
+ * `<config>` (ConfigNode) is a CustomForm whose layout is hardcoded in the kinetic file. All ElementNode subclasses are accepted as child nodes.
+ */
+class ConfigNode extends AbstractConfigWindowNode{
 	/** @var ElementNode[] */
 	protected $elements = [];
 
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
 		}
 
-		if($name === "REQUIRED"){
-			$this->required = $this->parseBoolean($value);
-			return true;
+		if($delegate = ElementNode::byName($name)){
+			return $this->elements[] = $delegate;
 		}
 
-		return false;
+		return null;
 	}
 
 	public function jsonSerialize() : array{
@@ -50,9 +49,5 @@ class ConfigNode extends WindowNode{
 				"required" => $this->required,
 				"elements" => $this->elements,
 			];
-	}
-
-	public function resolve(KineticManager $manager) : void{
-
 	}
 }

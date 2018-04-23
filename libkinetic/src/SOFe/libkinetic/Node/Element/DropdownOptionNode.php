@@ -24,7 +24,6 @@ namespace SOFe\libkinetic\Node\Element;
 
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\ParseException;
 
 class DropdownOptionNode extends KineticNode{
 	/** @var string */

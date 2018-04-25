@@ -20,43 +20,33 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Node\Entry\Item;
 
-use SOFe\libkinetic\Node\Window\WindowNode;
-use SOFe\libkinetic\Parser\KineticFileParser;
+use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\KineticNode;
 
-class LinkNode extends KineticNode{
-	protected $target;
+class SimpleItemTouchFilterNode extends KineticNode{
+	use ItemTouchFilterNode;
 
 	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "TARGET"){
-			$this->target = $value;
-			return true;
-		}
-
-		return false;
+		return parent::setAttribute($name, $value) || $this->ifn_setAttribute($name, $value);
 	}
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
+		$this->ifn_endAttributes();
 	}
 
-	public function getTarget() : string{
-		return $this->target;
+	public function startChild(string $name) : ?KineticNode{
+		return ($delegate = parent::startChild($name)) || ($delegate = $this->ifn_startChild($name)) ? $delegate : null;
 	}
 
-	public function findTarget() : WindowNode{
-		return KineticFileParser::getParsingInstance()->idMap[$this->target];
+	public function endElement() : void{
+		parent::endElement();
+		$this->ifn_endElement();
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+	public function resolve(KineticManager $manager) : void{
+		$this->ifn_resolve($manager);
 	}
 }

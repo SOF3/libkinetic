@@ -27,7 +27,7 @@ declare(strict_types=1);
  *
  * A simple summary:
  * - `<config>` is a CustomForm where the number of parameters is fixed, defined in the Kinetic File.
- * - `<listConfig>` is a MenuForm that defines exactly one parameter, with the options either hardcoded or provided by a ListConfigProvider. This is similar to a config with a dropdown/stepSlider, except that it takes up the whole window as a MenuForm.
+ * - `<listConfig>` is a MenuForm that defines exactly one parameter, with the options either hardcoded or provided by a ListProvider. This is similar to a config with a dropdown/stepSlider, except that it takes up the whole window as a MenuForm.
  * - `<complexConfig>` is a CustomForm with self-recurring content, each iteration providing the settings for a fixed number of parameters. The number of iterations is defined dynamically by a ComplexConfigProvider.
  * - `<commandConfig>` is a special single-parameter config whose value can be set from the entry point command. If the user did not provide the arguments in the command, all required incomplete `<commandConfig>`s will be shown up in a CustomForm before the Configurable window is displayed.
  *

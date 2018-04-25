@@ -23,6 +23,8 @@ declare(strict_types=1);
 namespace SOFe\libkinetic;
 
 use pocketmine\plugin\Plugin;
+use SOFe\libkinetic\Listener\InteractListener;
+use SOFe\libkinetic\Node\Entry\Item\ItemFilter;
 use SOFe\libkinetic\Parser\JsonFileParser;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
@@ -30,9 +32,12 @@ use function extension_loaded;
 
 class KineticManager{
 	/** @var Plugin */
-	private $plugin;
+	protected $plugin;
 	/** @var KineticFileParser */
-	private $parser;
+	protected $parser;
+
+	/** @var InteractListener|null */
+	protected $interactListener = null;
 
 	public function __construct(Plugin $plugin, string $xmlResource, string $jsonResource){
 		KineticFileParser::$hasPm = true;
@@ -51,7 +56,7 @@ class KineticManager{
 
 		$this->parser->parse();
 
-		$this->parser->getRoot()->resolve();
+		$this->parser->getRoot()->resolve($this);
 
 		KineticFileParser::$parsingInstance = null;
 	}
@@ -64,5 +69,14 @@ class KineticManager{
 	public
 	function getParser() : KineticFileParser{
 		return $this->parser;
+	}
+
+	public function registerItemHandler(ItemFilter $filter) : void{
+		if($this->interactListener === null){
+			$this->interactListener = new InteractListener($this);
+			$this->plugin->getServer()->getPluginManager()->registerEvents($this->interactListener, $this->plugin);
+		}
+
+		$this->interactListener->filters[] = $filter;
 	}
 }

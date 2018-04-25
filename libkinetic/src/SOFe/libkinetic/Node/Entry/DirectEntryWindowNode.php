@@ -20,40 +20,48 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node\Window;
+namespace SOFe\libkinetic\Node\Entry;
 
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
+use SOFe\libkinetic\Node\Entry\Command\CommandEntryPointNode;
+use SOFe\libkinetic\Node\Entry\Item\ItemEntryPointNode;
 use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\Window\WindowNode;
 
-/**
- * Index is displayed as a MenuForm, where options are hardcoded to be links to a child window or a link to a window identified by its ID.
- */
-class IndexNode extends DirectEntryWindowNode{
-	use WindowParentNode {
-		startChild as protected wpn_startChild;
-		jsonSerialize as protected wpn_jsonSerialize;
-		resolve as protected wpn_resolve;
-	}
+abstract class DirectEntryWindowNode extends WindowNode{
+	/** @var CommandEntryPointNode|null */
+	protected $cmd = null;
+	/** @var ItemEntryPointNode|null */
+	protected $item = null;
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
 			return $delegate;
 		}
 
-		if($delegate = $this->wpn_startChild($name)){
-			return $delegate;
+		if($name === "COMMAND"){
+			return $this->cmd = new CommandEntryPointNode();
+		}
+
+		if($name === "ITEM"){
+			return $this->item = new ItemEntryPointNode();
 		}
 
 		return null;
 	}
 
 	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + $this->wpn_jsonSerialize();
+		return parent::jsonSerialize() + [
+				"cmd" => $this->cmd,
+			];
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		$this->wpn_resolve($manager);
+		if($this->cmd !== null){
+			$this->cmd->resolve($manager);
+		}
+		if($this->item !== null){
+			$this->item->resolve($manager);
+		}
 	}
 }

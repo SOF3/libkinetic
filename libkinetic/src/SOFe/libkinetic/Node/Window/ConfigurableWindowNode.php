@@ -22,14 +22,14 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Window;
 
-use SOFe\libkinetic\Node\Command\CommandEntryWindowNode;
+use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Node\Config\CommandConfigNode;
 use SOFe\libkinetic\Node\Config\ComplexConfigNode;
 use SOFe\libkinetic\Node\Config\ConfigNode;
 use SOFe\libkinetic\Node\Config\ListConfigNode;
 use SOFe\libkinetic\Node\KineticNode;
 
-abstract class ConfigurableWindowNode extends CommandEntryWindowNode{
+abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
 	protected $configs = [];
 	protected $commandConfigs = [];
 

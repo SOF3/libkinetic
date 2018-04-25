@@ -20,8 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Entry\Item;
 
-class ListConfigItemFactory{
+use pocketmine\event\player\PlayerInteractEvent;
 
+interface ItemFilter{
+	public function matches(PlayerInteractEvent $event) : bool;
+
+	public function onUseItem(PlayerInteractEvent $event) : void;
 }

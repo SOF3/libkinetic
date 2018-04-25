@@ -48,14 +48,14 @@ abstract class KineticFileParser{
 	}
 
 	/** @var IndexNode|null */
-	private $root = null;
+	protected $root = null;
 	/** @var KineticNode|null */
-	private $leaf = null;
+	protected $leaf = null;
 
 	/** @var string */
-	private $namespace = "";
+	protected $namespace = "";
 
-	private $dataBuffer = "";
+	protected $dataBuffer = "";
 
 	public function __construct(){
 	}
@@ -110,7 +110,7 @@ abstract class KineticFileParser{
 		$this->leaf = $this->leaf->nodeParent;
 	}
 
-	private function flushBuffer() : void{
+	protected function flushBuffer() : void{
 		$buffer = $this->dataBuffer;
 		$this->dataBuffer = "";
 

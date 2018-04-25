@@ -44,9 +44,9 @@ use const XML_OPTION_SKIP_WHITE;
 
 class XmlFileParser extends KineticFileParser{
 	/** @var resource */
-	private $fh;
+	protected $fh;
 	/** @var string */
-	private $fileName;
+	protected $fileName;
 
 	public function __construct($fh, string $fileName){
 		parent::__construct();

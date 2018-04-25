@@ -20,27 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Node\Entry;
 
-use pocketmine\event\Listener;
-use pocketmine\event\server\DataPacketReceiveEvent;
-use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
+use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\ResolvableNode;
+use function assert;
 
-class FormListener implements Listener{
-	/** @var KineticManager */
-	protected $actionManager;
-
-	public function __construct(KineticManager $actionManager){
-		$this->actionManager = $actionManager;
-	}
-
-	/**
-	 * @param DataPacketReceiveEvent $event
-	 * @ignoreCancelled true
-	 */
-	public function e_packetRecv(DataPacketReceiveEvent $event) : void{
-		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
-
-		}
+abstract class AbstractEntryPointNode extends KineticNode implements ResolvableNode{
+	public function getParent() : DirectEntryWindowNode{
+		assert($this->nodeParent instanceof DirectEntryWindowNode);
+		return $this->nodeParent;
 	}
 }

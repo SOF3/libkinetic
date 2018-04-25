@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Window;
 
+use pocketmine\Player;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
@@ -108,6 +109,10 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 
 	public function getPermission() : ?PermissionNode{
 		return $this->permission;
+	}
+
+	public function testPermission(Player $player, bool $ifUndefined = true) : bool{
+		return $this->permission !== null ? $this->permission->testPermission($player) : $ifUndefined;
 	}
 
 	public function jsonSerialize() : array{

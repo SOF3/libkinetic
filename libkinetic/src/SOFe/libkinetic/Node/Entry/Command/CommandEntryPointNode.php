@@ -20,15 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node\Command;
+namespace SOFe\libkinetic\Node\Entry\Command;
 
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\Entry\AbstractEntryPointNode;
+use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Node\ResolvableNode;
 use SOFe\libkinetic\NodeEntryCommand;
 use function assert;
 
-class CommandNode extends KineticNode implements ResolvableNode{
+class CommandEntryPointNode extends AbstractEntryPointNode{
 	/** @var string */
 	protected $name;
 	/** @var CommandAliasNode[] */
@@ -66,7 +67,7 @@ class CommandNode extends KineticNode implements ResolvableNode{
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		assert($this->nodeParent instanceof CommandEntryWindowNode);
+		assert($this->nodeParent instanceof DirectEntryWindowNode);
 		$manager->getPlugin()->getServer()->getCommandMap()->register($manager->getPlugin()->getName(), new NodeEntryCommand($manager, $this));
 	}
 

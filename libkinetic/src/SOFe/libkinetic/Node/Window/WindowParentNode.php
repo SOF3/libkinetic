@@ -23,14 +23,16 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Window;
 
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\KineticNodeTrait;
 use SOFe\libkinetic\Node\LinkNode;
 use SOFe\libkinetic\Node\Window\ListWindow\ListNode;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use function assert;
 
 trait WindowParentNode{
-	/** @var WindowNode[]|LinkNode[] */
+	use KineticNodeTrait;
+
+		/** @var WindowNode[]|LinkNode[] */
 	protected $buttons = [];
 
 	public function startChild(string $name) : ?KineticNode{
@@ -56,11 +58,12 @@ trait WindowParentNode{
 	public function resolve(KineticManager $manager) : void{
 		foreach($this->buttons as $i => $button){
 			if($button instanceof LinkNode){
-				$this->buttons[$i] = $button = KineticFileParser::getParsingInstance()->idMap[$button->getTarget()];
-			}else{
-				assert($button instanceof WindowNode);
-				$button->resolve($manager);
+				$this->buttons[$i] = $button = $button->findTarget();
 			}
+			if(!($button instanceof DirectEntryWindowNode)){
+				$this->t_throw("Only DirectEntryWindowNode children are allowed");
+			}
+			$button->resolve($manager);
 		}
 	}
 

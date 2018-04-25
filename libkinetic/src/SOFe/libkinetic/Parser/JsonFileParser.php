@@ -30,7 +30,7 @@ use function strtoupper;
 use const CASE_UPPER;
 
 class JsonFileParser extends KineticFileParser{
-	private $json;
+	protected $json;
 
 	public function __construct($fh, string $fileName){
 		parent::__construct();

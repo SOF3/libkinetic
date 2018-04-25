@@ -20,37 +20,28 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node\Command;
+namespace SOFe\libkinetic\Listener;
 
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerInteractEvent;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Node\Window\WindowNode;
+use SOFe\libkinetic\Node\Entry\Item\ItemFilter;
 
-abstract class CommandEntryWindowNode extends WindowNode{
-	/** @var CommandNode|null */
-	protected $cmd = null;
+class InteractListener implements Listener{
+	/** @var KineticManager */
+	protected $manager;
+	/** @var ItemFilter[] */
+	public $filters = [];
 
-	public function startChild(string $name) : ?KineticNode{
-		if($delegate = parent::startChild($name)){
-			return $delegate;
-		}
-
-		if($name === "COMMAND"){
-			return $this->cmd = new CommandNode();
-		}
-
-		return null;
+	public function __construct(KineticManager $manager){
+		$this->manager = $manager;
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"cmd" => $this->cmd,
-			];
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		if($this->cmd !== null){
-			$this->cmd->resolve($manager);
+	public function e_interact(PlayerInteractEvent $event) : void{
+		foreach($this->filters as $filter){
+			if($filter->matches($event)){
+				$filter->onUseItem($event);
+			}
 		}
 	}
 }

@@ -25,9 +25,10 @@ namespace SOFe\libkinetic\Node;
 use JsonSerializable;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\Window\IndexNode;
-use SOFe\libkinetic\ParseException;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use function array_unshift;
+use function assert;
+use function is_numeric;
 use function strtoupper;
 
 abstract class KineticNode implements JsonSerializable{
@@ -72,7 +73,7 @@ abstract class KineticNode implements JsonSerializable{
 		}
 	}
 
-	protected function parseBoolean(string $boolean) : bool{
+	public function parseBoolean(string $boolean) : bool{
 		$boolean = strtoupper($boolean);
 
 		if($boolean === "TRUE" || $boolean === "1"){
@@ -83,7 +84,26 @@ abstract class KineticNode implements JsonSerializable{
 			return false;
 		}
 
-		throw new ParseException("Malformed boolean value \"$boolean\"", $this);
+		throw new InvalidNodeException("Malformed boolean value \"$boolean\"", $this);
+	}
+
+	public function parseInt(string $int) : int{
+		if(!is_numeric($int)){
+			throw new InvalidNodeException("Malformed int value \"$int\"", $this);
+		}
+
+		/** @noinspection TypeUnsafeComparisonInspection */
+		assert(((float) $int) != ((int) $int));
+
+		return (int) $int;
+	}
+
+	public function parseFloat(string $float) : float{
+		if(!is_numeric($float)){
+			throw new InvalidNodeException("Malformed float value \"$float\"", $this);
+		}
+
+		return (float) $float;
 	}
 
 	protected function getRoot() : IndexNode{

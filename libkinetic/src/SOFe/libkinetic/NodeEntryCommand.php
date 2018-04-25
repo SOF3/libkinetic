@@ -28,8 +28,8 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
-use SOFe\libkinetic\Node\Command\CommandEntryWindowNode;
-use SOFe\libkinetic\Node\Command\CommandNode;
+use SOFe\libkinetic\Node\Entry\Command\CommandEntryPointNode;
+use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Node\Window\ConfigurableWindowNode;
 use function assert;
 
@@ -37,14 +37,14 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 
 	/** @var KineticManager */
 	protected $manager;
-	/** @var CommandNode */
+	/** @var CommandEntryPointNode */
 	protected $command;
 
 	/** @var \SOFe\libkinetic\Node\Config\CommandConfigNode[] */
 	protected $args = [];
 
-	public function __construct(KineticManager $manager, CommandNode $command){
-		assert($command->nodeParent instanceof CommandEntryWindowNode);
+	public function __construct(KineticManager $manager, CommandEntryPointNode $command){
+		assert($command->nodeParent instanceof DirectEntryWindowNode);
 
 		$usage = "/{$command->getName()}";
 		if($command->nodeParent instanceof ConfigurableWindowNode){
@@ -95,7 +95,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 		}
 
 		$parent = $this->command->nodeParent;
-		assert($parent instanceof CommandEntryWindowNode);
+		assert($parent instanceof DirectEntryWindowNode);
 
 		if($parent->getPermission() !== null && !$parent->getPermission()->testPermission($target)){
 			return $parent->getPermission()->getPermissionMessage() ?? $target->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission");

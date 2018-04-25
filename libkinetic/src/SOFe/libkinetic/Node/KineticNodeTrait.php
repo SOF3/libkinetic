@@ -20,27 +20,21 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node\Command;
+namespace SOFe\libkinetic\Node;
 
-use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\ParseException;
+use LogicException;
+use SOFe\libkinetic\InvalidNodeException;
 
-class CommandAliasNode extends KineticNode{
-	protected $text;
-
-	public function acceptText(string $text) : void{
-		$this->text = $text;
-	}
-
-	public function endElement() : void{
-		if(empty($this->text)){
-			throw new ParseException("Text content is required", $this);
+trait KineticNodeTrait{
+	public function t_typeFix() : KineticNode{
+		if($this instanceof KineticNode){
+			return $this;
 		}
+
+		throw new LogicException("Only KineticNode classes can use a KineticNodeTrait");
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"text" => $this->text,
-			];
+	public function t_throw(string $message) : InvalidNodeException{
+		throw new InvalidNodeException($message,$this->t_typeFix());
 	}
 }

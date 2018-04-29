@@ -13,6 +13,9 @@ var dir_4845e1083ed5dc5732f424662c390f53 =
     [ "InfoNode.php", "_info_node_8php.html", [
       [ "InfoNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_info_node.html", null ]
     ] ],
+    [ "TextNode.php", "_text_node_8php.html", [
+      [ "TextNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_text_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_text_node" ]
+    ] ],
     [ "WindowNode.php", "_window_node_8php.html", [
       [ "WindowNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_window_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_window_node" ]
     ] ],

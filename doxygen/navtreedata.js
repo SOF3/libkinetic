@@ -38,7 +38,7 @@ var NAVTREE =
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", null ],
+        [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
@@ -51,7 +51,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_config_node_8php.html",
-"class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#abf17cb2dba2ed17cb28aa5f37deb5293"
+"class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_slider_node.html",
+"functions_i.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -7,6 +7,7 @@ var class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node =
     [ "getValue", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#ac0bc18784b182c89fcfd276625aef435", null ],
     [ "isDefault", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#a087ac7a1de40f76639dfc225e6e3f8ca", null ],
     [ "jsonSerialize", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#ad402d8679325bc514874370f02b5c2ac", null ],
+    [ "resolve", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#ad83d3a577b8774ec8f94516cdd1188e8", null ],
     [ "setAttribute", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#ad91b3468f18c5c5aaacd38643a6df559", null ],
     [ "$default", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#a9df479534ecf05fd7575c6275d381687", null ],
     [ "$text", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_element_1_1_dropdown_option_node.html#adf95f30eaafccead90ab5e2cdb55e9b9", null ],

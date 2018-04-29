@@ -114,11 +114,11 @@ Data Structures</h2></td></tr>
 <p>There are 4 types of configs: config, listConfig, complexConfig, commandConfig.</p>
 <p>A simple summary:</p><ul>
 <li><code>&lt;config&gt;</code> is a CustomForm where the number of parameters is fixed, defined in the Kinetic File.</li>
-<li><code>&lt;listConfig&gt;</code> is a MenuForm that defines exactly one parameter, with the options either hardcoded or provided by a <a class="el" href="interface_s_o_fe_1_1libkinetic_1_1_list_config_provider.html">ListConfigProvider</a>. This is similar to a config with a dropdown/stepSlider, except that it takes up the whole window as a MenuForm.</li>
+<li><code>&lt;listConfig&gt;</code> is a MenuForm that defines exactly one parameter, with the options either hardcoded or provided by a <a class="el" href="interface_s_o_fe_1_1libkinetic_1_1_list_provider.html">ListProvider</a>. This is similar to a config with a dropdown/stepSlider, except that it takes up the whole window as a MenuForm.</li>
 <li><code>&lt;complexConfig&gt;</code> is a CustomForm with self-recurring content, each iteration providing the settings for a fixed number of parameters. The number of iterations is defined dynamically by a ComplexConfigProvider.</li>
 <li><code>&lt;commandConfig&gt;</code> is a special single-parameter config whose value can be set from the entry point command. If the user did not provide the arguments in the command, all required incomplete <code>&lt;commandConfig&gt;</code>s will be shown up in a CustomForm before the Configurable window is displayed.</li>
 </ul>
-<p>A config is either required or optional (default optional), set through the <code>required</code> boolean attribute. If the <code>&lt;config&gt;</code> is required, and it is not given in the Intent that opens the Configurable window, the config will be displayed as a form first. </p>
+<p>A config is either required or optional (default optional), set through the <code>required</code> boolean attribute. If the <code>&lt;config&gt;</code> is required, and it is not given in the <a class="el" href="class_s_o_fe_1_1libkinetic_1_1_intent.html">Intent</a> that opens the Configurable window, the config will be displayed as a form first. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

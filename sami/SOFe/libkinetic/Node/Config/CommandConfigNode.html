@@ -79,7 +79,8 @@
     </div>
 
     <p>    class
-    <strong>CommandConfigNode</strong>        extends <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php">View source</a>)
+    <strong>CommandConfigNode</strong>        extends <a href="../../../../SOFe/libkinetic/Node/Config/AbstractConfigNode.html"><abbr title="SOFe\libkinetic\Node\Config\AbstractConfigNode">AbstractConfigNode</abbr></a>        implements
+        <a href="../../../../SOFe/libkinetic/Node/KineticNodeWithId.html"><abbr title="SOFe\libkinetic\Node\KineticNodeWithId">KineticNodeWithId</abbr></a>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php">View source</a>)
 </p>
 
         
@@ -115,31 +116,7 @@
                 </td>
                 <td>$id</td>
                 <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#property_id"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></td>
-            </tr>
-                    <tr>
-                <td class="type" id="property_title">
-                                        protected                                        string
-                </td>
-                <td>$title</td>
-                <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#property_title"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></td>
-            </tr>
-                    <tr>
-                <td class="type" id="property_synopsis">
-                                        protected                                        <a href="../../../../SOFe/libkinetic/Node/SynopsisNode.html"><abbr title="SOFe\libkinetic\Node\SynopsisNode">SynopsisNode</abbr></a>|null
-                </td>
-                <td>$synopsis</td>
-                <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#property_synopsis"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></td>
-            </tr>
-                    <tr>
-                <td class="type" id="property_permission">
-                                        protected                                        <a href="../../../../SOFe/libkinetic/Node/PermissionNode.html"><abbr title="SOFe\libkinetic\Node\PermissionNode">PermissionNode</abbr></a>|null
-                </td>
-                <td>$permission</td>
-                <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#property_permission"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></td>
+                <td><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Config/AbstractConfigNode.html#property_id"><abbr title="SOFe\libkinetic\Node\Config\AbstractConfigNode">AbstractConfigNode</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type" id="property_required">
@@ -231,6 +208,17 @@
                     
                 </div>
                 <div class="col-md-8 type">
+                    <a href="#method_resolve">resolve</a>(<a href="../../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_requireAttributes">requireAttributes</a>(string ...$names)
         
                                             <p class="no-description">No description</p>
@@ -264,6 +252,28 @@
                     
                 </div>
                 <div class="col-md-8 type">
+                    <a href="#method_parseInt">parseInt</a>(string $int)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_parseInt"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_parseFloat">parseFloat</a>(string $float)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_parseFloat"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a></small></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_getRoot">getRoot</a>()
         
                                             <p class="no-description">No description</p>
@@ -290,7 +300,7 @@
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -301,51 +311,7 @@
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getId"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getName">getName</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getName"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getSynopsis">getSynopsis</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getSynopsis"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getSynopsisString">getSynopsisString</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getSynopsisString"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_getPermission">getPermission</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getPermission"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a></small></div>
+                <div class="col-md-2"></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -375,17 +341,6 @@
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getElement">getElement</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_resolve">resolve</a>(<a href="../../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -433,7 +388,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startChild">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L76">line 76</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L73">line 73</a></div>
         <code>                    
     <strong>startChild</strong>(string $name)
         </code>
@@ -481,7 +436,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_endElement">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L94">line 94</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L91">line 91</a></div>
         <code>                    
     <strong>endElement</strong>()
         </code>
@@ -500,7 +455,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_acceptText">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_acceptText"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L55">line 55</a></div>
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_acceptText"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L57">line 57</a></div>
         <code>                    
     <strong>acceptText</strong>(string $text)
         </code>
@@ -528,8 +483,37 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_resolve">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L99">line 99</a></div>
+        <code>                    
+    <strong>resolve</strong>(<a href="../../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a></td>
+                <td>$manager</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_requireAttributes">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_requireAttributes"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L59">line 59</a></div>
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_requireAttributes"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L65">line 65</a></div>
         <code>final            protected        
     <strong>requireAttributes</strong>(string ...$names)
         </code>
@@ -558,7 +542,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_requireElements">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_requireElements"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L67">line 67</a></div>
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_requireElements"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L73">line 73</a></div>
         <code>final            protected        
     <strong>requireElements</strong>(string ...$names)
         </code>
@@ -587,8 +571,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_parseBoolean">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_parseBoolean"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L75">line 75</a></div>
-        <code>            protected        
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_parseBoolean"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L81">line 81</a></div>
+        <code>                    
     <strong>parseBoolean</strong>(string $boolean)
         </code>
     </h3>
@@ -615,8 +599,66 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_parseInt">
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_parseInt"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L95">line 95</a></div>
+        <code>                    
+    <strong>parseInt</strong>(string $int)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$int</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_parseFloat">
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_parseFloat"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L106">line 106</a></div>
+        <code>                    
+    <strong>parseFloat</strong>(string $float)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td>string</td>
+                <td>$float</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_getRoot">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_getRoot"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L89">line 89</a></div>
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_getRoot"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L114">line 114</a></div>
         <code>            protected        
     <strong>getRoot</strong>()
         </code>
@@ -635,7 +677,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getHierarchyName">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_getHierarchyName"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L93">line 93</a></div>
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_getHierarchyName"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L118">line 118</a></div>
         <code>                    
     <strong>getHierarchyName</strong>()
         </code>
@@ -654,7 +696,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_jsonSerialize">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Window/WindowNode.php#L113">line 113</a></div>
+        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/KineticNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L128">line 128</a></div>
         <code>                    
     <strong>jsonSerialize</strong>()
         </code>
@@ -673,7 +715,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getId">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getId"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Window/WindowNode.php#L93">line 93</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L117">line 117</a></div>
         <code>                    
     <strong>getId</strong>()
         </code>
@@ -691,84 +733,8 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getName">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getName"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Window/WindowNode.php#L97">line 97</a></div>
-        <code>                    
-    <strong>getName</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_getSynopsis">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getSynopsis"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Window/WindowNode.php#L101">line 101</a></div>
-        <code>                    
-    <strong>getSynopsis</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_getSynopsisString">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getSynopsisString"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Window/WindowNode.php#L105">line 105</a></div>
-        <code>                    
-    <strong>getSynopsisString</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_getPermission">
-        <div class="location">in <a href="../../../../SOFe/libkinetic/Node/Window/WindowNode.html#method_getPermission"><abbr title="SOFe\libkinetic\Node\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Window/WindowNode.php#L109">line 109</a></div>
-        <code>                    
-    <strong>getPermission</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
                     <h3 id="method_isRequired">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L103">line 103</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L105">line 105</a></div>
         <code>                    
     <strong>isRequired</strong>()
         </code>
@@ -787,7 +753,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getArgName">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L107">line 107</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L109">line 109</a></div>
         <code>                    
     <strong>getArgName</strong>()
         </code>
@@ -806,7 +772,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getElement">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L111">line 111</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L113">line 113</a></div>
         <code>                    
     <strong>getElement</strong>()
         </code>
@@ -816,35 +782,6 @@
     
 
                 <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_resolve">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/Config/CommandConfigNode.php#L115">line 115</a></div>
-        <code>                    
-    <strong>resolve</strong>(<a href="../../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-                            <h4>Parameters</h4>
-
-                    <table class="table table-condensed">
-                    <tr>
-                <td><a href="../../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a></td>
-                <td>$manager</td>
-                <td></td>
-            </tr>
-            </table>
-
             
             
             

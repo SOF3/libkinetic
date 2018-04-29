@@ -5,5 +5,6 @@ var namespace_s_o_fe_1_1libkinetic_1_1_node_1_1_window =
     [ "EachListNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_each_list_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_each_list_node" ],
     [ "IndexNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_index_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_index_node" ],
     [ "InfoNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_info_node.html", null ],
+    [ "TextNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_text_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_text_node" ],
     [ "WindowNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_window_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_window_1_1_window_node" ]
 ];

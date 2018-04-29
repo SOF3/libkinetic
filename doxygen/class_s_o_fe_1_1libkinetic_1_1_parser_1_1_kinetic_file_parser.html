@@ -91,7 +91,9 @@ $(document).ready(function(){initNavTree('class_s_o_fe_1_1libkinetic_1_1_parser_
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#pub-attribs">Data Fields</a> &#124;
-<a href="#pub-static-attribs">Static Public Attributes</a>  </div>
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">KineticFileParser Class Reference</div>  </div>
 </div><!--header-->
@@ -140,6 +142,22 @@ Static Public Attributes</h2></td></tr>
 <tr class="separator:adc21a1f4fc096a6c960255e4ef1a2396"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a77d4286add6b914e7c54bbf61ffc03ac"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a77d4286add6b914e7c54bbf61ffc03ac">$parsingInstance</a> = null</td></tr>
 <tr class="separator:a77d4286add6b914e7c54bbf61ffc03ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a09d689c8a47b12ccabd772c5a62de3c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a09d689c8a47b12ccabd772c5a62de3c3">flushBuffer</a> ()</td></tr>
+<tr class="separator:a09d689c8a47b12ccabd772c5a62de3c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ab37f7c32f41c3c61ed940887453767f4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#ab37f7c32f41c3c61ed940887453767f4">$root</a> = null</td></tr>
+<tr class="separator:ab37f7c32f41c3c61ed940887453767f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5640ca8695325fb20c62d22b890612"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#aae5640ca8695325fb20c62d22b890612">$leaf</a> = null</td></tr>
+<tr class="separator:aae5640ca8695325fb20c62d22b890612"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3825c9b9060c2d6ef594385997cd60aa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a3825c9b9060c2d6ef594385997cd60aa">$namespace</a> = &quot;&quot;</td></tr>
+<tr class="separator:a3825c9b9060c2d6ef594385997cd60aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99aabf093eb207cff295aff9798b2f0a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a99aabf093eb207cff295aff9798b2f0a">$dataBuffer</a> = &quot;&quot;</td></tr>
+<tr class="separator:a99aabf093eb207cff295aff9798b2f0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -192,6 +210,33 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00105">105</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a09d689c8a47b12ccabd772c5a62de3c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09d689c8a47b12ccabd772c5a62de3c3">&#9670;&nbsp;</a></span>flushBuffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">flushBuffer </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00113">113</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
 
 </div>
 </div>
@@ -352,6 +397,30 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
+<a id="a99aabf093eb207cff295aff9798b2f0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99aabf093eb207cff295aff9798b2f0a">&#9670;&nbsp;</a></span>$dataBuffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$dataBuffer = &quot;&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00058">58</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
+
+</div>
+</div>
 <a id="adc21a1f4fc096a6c960255e4ef1a2396"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc21a1f4fc096a6c960255e4ef1a2396">&#9670;&nbsp;</a></span>$hasPm</h2>
 
@@ -392,6 +461,54 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aae5640ca8695325fb20c62d22b890612"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae5640ca8695325fb20c62d22b890612">&#9670;&nbsp;</a></span>$leaf</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$leaf = null</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00053">53</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
+
+</div>
+</div>
+<a id="a3825c9b9060c2d6ef594385997cd60aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3825c9b9060c2d6ef594385997cd60aa">&#9670;&nbsp;</a></span>$namespace</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$namespace = &quot;&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00056">56</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
+
+</div>
+</div>
 <a id="a77d4286add6b914e7c54bbf61ffc03ac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a77d4286add6b914e7c54bbf61ffc03ac">&#9670;&nbsp;</a></span>$parsingInstance</h2>
 
@@ -413,6 +530,30 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00038">38</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
+
+</div>
+</div>
+<a id="ab37f7c32f41c3c61ed940887453767f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab37f7c32f41c3c61ed940887453767f4">&#9670;&nbsp;</a></span>$root</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$root = null</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_file_parser_8php_source.html#l00051">51</a> of file <a class="el" href="_kinetic_file_parser_8php_source.html">KineticFileParser.php</a>.</p>
 
 </div>
 </div>

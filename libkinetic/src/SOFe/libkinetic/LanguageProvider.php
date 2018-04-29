@@ -20,10 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic;
 
-use SOFe\libkinetic\KineticManager;
+use InvalidArgumentException;
+use pocketmine\Player;
 
-interface ResolvableNode{
-	public function resolve(KineticManager $manager) : void;
+interface LanguageProvider{
+	/**
+	 * @param string $identifier
+	 *
+	 * @return bool
+	 */
+	public function hasMessage(string $identifier) : bool;
+
+	/**
+	 * @param Player|null $player
+	 * @param string      $identifier
+	 * @param mixed[]     $parameters
+	 *
+	 * @return string
+	 *
+	 * @throws InvalidArgumentException
+	 */
+	public function getMessage(?Player $player, string $identifier, array $parameters) : string;
 }

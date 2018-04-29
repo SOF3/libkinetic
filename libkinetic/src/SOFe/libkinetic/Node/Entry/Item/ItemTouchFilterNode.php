@@ -28,7 +28,9 @@ use function count;
 
 trait ItemTouchFilterNode{
 	use ItemFilterNode {
-		matches as ifn_matches;
+		matches as private ifn_matches;
+		ifn_startChild as private parent_startChild;
+		ifn_endElement as private parent_endElement;
 	}
 
 	/** @var array */
@@ -37,7 +39,7 @@ trait ItemTouchFilterNode{
 	protected $touchModeNodes = [];
 
 	public function ifn_startChild(string $name) : ?KineticNode{
-		if($delegate = parent::ifn_startChild($name)){
+		if($delegate = $this->parent_startChild($name)){
 			return $delegate;
 		}
 
@@ -49,7 +51,7 @@ trait ItemTouchFilterNode{
 	}
 
 	public function ifn_endElement() : void{
-		parent::ifn_endElement();
+		$this->parent_endElement();
 
 		$this->touchMode = 0;
 		foreach($this->touchModeNodes as $node){

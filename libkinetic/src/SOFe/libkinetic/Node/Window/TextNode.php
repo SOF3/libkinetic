@@ -20,23 +20,26 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Node\Window;
 
-use InvalidStateException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\Window\WindowNode;
-use SOFe\libkinetic\Parser\KineticFileParser;
+use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
 
-class LinkNode extends KineticNode{
-	protected $target;
+/**
+ * TextNode is displayed as a ModalForm that renders the translated message specified in the `content` attribute.. The child nodes `<button1>` and `<button2>` can be specified to change the messages and behaviour. By default, they are "Back" and "Quit".
+ *
+ * Note that there is no button to close a ModalForm, so the player must either click button1 or button2, unless they quit the game.
+ */
+class TextNode extends DirectEntryWindowNode{
+	protected $content;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "CONTENT"){
+			$this->content = $value;
 			return true;
 		}
 
@@ -45,24 +48,12 @@ class LinkNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
+
+		$this->requireAttributes("content");
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget() : WindowNode{
-		return KineticFileParser::getParsingInstance()->idMap[$this->target];
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->content);
 	}
 }

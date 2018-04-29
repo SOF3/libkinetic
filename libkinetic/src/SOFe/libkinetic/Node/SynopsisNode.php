@@ -22,6 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node;
 
+use pocketmine\Player;
+use SOFe\libkinetic\KineticManager;
+
 class SynopsisNode extends KineticNode{
 	protected $text = "";
 
@@ -29,13 +32,23 @@ class SynopsisNode extends KineticNode{
 		$this->text = $text;
 	}
 
-	public function getText() : string{
+	public function getTextId() : string{
 		return $this->text;
+	}
+
+	public function getText(KineticManager $manager, ?Player $player) : string{
+		return $manager->getLanguageProvider()->getMessage($player, $this->text, []);
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
 				"text" => $this->text,
 			];
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		if($this->text !== ""){
+			$manager->requireTranslation($this, $this->text);
+		}
 	}
 }

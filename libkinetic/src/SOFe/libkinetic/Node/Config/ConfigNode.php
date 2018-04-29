@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Config;
 
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\Element\ElementNode;
 use SOFe\libkinetic\Node\KineticNode;
 
@@ -42,6 +43,13 @@ class ConfigNode extends AbstractConfigWindowNode{
 		}
 
 		return null;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		foreach($this->elements as $node){
+			$node->resolve($manager);
+		}
 	}
 
 	public function jsonSerialize() : array{

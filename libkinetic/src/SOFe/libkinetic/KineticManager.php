@@ -25,6 +25,7 @@ namespace SOFe\libkinetic;
 use pocketmine\plugin\Plugin;
 use SOFe\libkinetic\Listener\InteractListener;
 use SOFe\libkinetic\Node\Entry\Item\ItemFilter;
+use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Parser\JsonFileParser;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
@@ -33,15 +34,18 @@ use function extension_loaded;
 class KineticManager{
 	/** @var Plugin */
 	protected $plugin;
+	/** @var LanguageProvider */
+	protected $provider;
 	/** @var KineticFileParser */
 	protected $parser;
 
 	/** @var InteractListener|null */
 	protected $interactListener = null;
 
-	public function __construct(Plugin $plugin, string $xmlResource, string $jsonResource){
+	public function __construct(Plugin $plugin, LanguageProvider $provider, string $xmlResource, string $jsonResource){
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
+		$this->provider = $provider;
 		$plugin->getServer()->getPluginManager()->registerEvents(new FormListener($this), $plugin);
 
 		if(extension_loaded("xml")){
@@ -61,13 +65,21 @@ class KineticManager{
 		KineticFileParser::$parsingInstance = null;
 	}
 
-	public
-	function getPlugin() : Plugin{
+	public function getPlugin() : Plugin{
 		return $this->plugin;
 	}
 
-	public
-	function getParser() : KineticFileParser{
+	public function getLanguageProvider() : LanguageProvider{
+		return $this->provider;
+	}
+
+	public function requireTranslation(KineticNode $node, string $key) : void{
+		if(!$this->provider->hasMessage($key)){
+			throw new InvalidNodeException("The translation $key is undefined", $node);
+		}
+	}
+
+	public function getParser() : KineticFileParser{
 		return $this->parser;
 	}
 

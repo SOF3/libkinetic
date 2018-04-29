@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Config;
 
 /**
- * `<listConfig>` (ListConfig) is a variant of `<list>` as a Config. It is MenuForm whose buttons are provided through a ListProvider implementation. The whole config only outputs one value, which is the chosen button.
+ * `<listConfig>` (ListConfig) is a variant of `<list>` as a Config. It is a MenuForm whose buttons are provided through a ListProvider implementation. The whole config only outputs one value, which is the chosen button.
  */
 class ListConfigNode extends AbstractConfigWindowNode{
 }

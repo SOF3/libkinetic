@@ -57,6 +57,7 @@ abstract class DirectEntryWindowNode extends WindowNode{
 	}
 
 	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
 		if($this->cmd !== null){
 			$this->cmd->resolve($manager);
 		}

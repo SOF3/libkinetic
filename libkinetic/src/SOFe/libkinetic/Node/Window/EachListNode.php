@@ -26,10 +26,9 @@ use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\LinkNode;
-use SOFe\libkinetic\Node\ResolvableNode;
 use SOFe\libkinetic\Node\Window\ListWindow\ListNode;
 
-class EachListNode extends KineticNode implements ResolvableNode{
+class EachListNode extends KineticNode{
 	/** @var string */
 	protected $configName;
 

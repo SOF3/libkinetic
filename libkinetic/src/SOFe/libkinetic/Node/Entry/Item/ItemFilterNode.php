@@ -26,18 +26,26 @@ use pocketmine\event\player\PlayerInteractEvent;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeTrait;
+use function array_change_key_case;
+use function is_array;
 use function strtoupper;
+use const CASE_LOWER;
 
 trait ItemFilterNode{
 	use KineticNodeTrait;
 
 	/** @var bool */
 	protected $ifn_aggregate = true;
+	/** @var bool */
+	protected $ifn_fromConfig;// PHP why no trait constants
 
 	/** @var int */
 	protected $ifn_id;
 	/** @var int */
-	protected $ifn_damage;
+	protected $ifn_damage = -1;
+
+	/** @var string */
+	protected $ifn_configKey;
 
 	/** @var SimpleItemFilterNode[] */
 	protected $ifn_union = [];
@@ -45,11 +53,20 @@ trait ItemFilterNode{
 	public function ifn_setAttribute(string $name, string $value) : bool{
 		if($name === "ITEM" . "ID"){
 			$this->ifn_aggregate = false;
+			if(!empty($this->ifn_fromConfig)){ // returns true for false
+				throw $this->t_throw("Either declare \"fromConfig\" or \"itemId\"+\"itemDamage\", not both");
+			}
+			$this->ifn_fromConfig = false;
 			$this->ifn_id = $this->t_typeFix()->parseInt($value);
 			return true;
 		}
+
 		if($name === "ITEM" . "DAMAGE"){
 			$this->ifn_aggregate = false;
+			if(!empty($this->ifn_fromConfig)){ // returns true for false
+				throw $this->t_throw("Either declare \"fromConfig\" or \"itemId\"+\"itemDamage\", not both");
+			}
+			$this->ifn_fromConfig = false;
 			if($value === "*" || $value === "-1" || strtoupper($value) === "ANY"){
 				$this->ifn_damage = -1;
 			}else{
@@ -61,11 +78,21 @@ trait ItemFilterNode{
 			return true;
 		}
 
+		if($name === "FROM" . "CONFIG"){
+			$this->ifn_aggregate = false;
+			if(isset($this->ifn_fromConfig) && !$this->ifn_fromConfig){
+				throw $this->t_throw("Either declare \"fromConfig\" or \"itemId\"+\"itemDamage\", not both");
+			}
+			$this->ifn_fromConfig = true;
+			$this->ifn_configKey = $value;
+			return true;
+		}
+
 		return false;
 	}
 
 	public function ifn_endAttributes() : void{
-		if(!$this->ifn_aggregate && !isset($this->ifn_id)){
+		if(!$this->ifn_aggregate && !$this->ifn_configKey && !isset($this->ifn_id)){
 			$this->t_throw("\"itemDamage\" is set, but \"itemId\" is not set");
 		}
 	}
@@ -89,7 +116,15 @@ trait ItemFilterNode{
 	}
 
 	public function ifn_resolve(KineticManager $manager) : void{
-
+		if($this->ifn_fromConfig){
+			$config = $manager->getPlugin()->getConfig()->getNested($this->ifn_configKey);
+			if(is_array($config)){
+				$config = array_change_key_case($config, CASE_LOWER);
+				if(isset($config["id"])){
+					$this->ifn_id = $this->t_typeFix()->parseInt($config["id"]);
+				}
+			}
+		}
 	}
 
 	public function matches(PlayerInteractEvent $event) : bool{

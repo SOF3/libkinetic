@@ -106,6 +106,8 @@ class ListNode extends ConfigurableWindowNode{
 			throw new InvalidNodeException("The provider class $this->provider does not implement " . ListProvider::class, $this);
 		}
 
+		$this->before->resolve($manager);
+		$this->after->resolve($manager);
 		$this->each->resolve($manager);
 	}
 

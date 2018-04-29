@@ -32,7 +32,7 @@ use SOFe\libkinetic\Node\Window\ListWindow\ListNode;
 trait WindowParentNode{
 	use KineticNodeTrait;
 
-		/** @var WindowNode[]|LinkNode[] */
+	/** @var WindowNode[]|LinkNode[] */
 	protected $buttons = [];
 
 	public function startChild(string $name) : ?KineticNode{

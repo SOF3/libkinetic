@@ -40,7 +40,7 @@ class InteractListener implements Listener{
 	public function e_interact(PlayerInteractEvent $event) : void{
 		foreach($this->filters as $filter){
 			if($filter->matches($event)){
-				$filter->onUseItem($event);
+				$filter->onUseItem($this->manager, $event);
 			}
 		}
 	}

@@ -23,9 +23,10 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Entry\Item;
 
 use pocketmine\event\player\PlayerInteractEvent;
+use SOFe\libkinetic\KineticManager;
 
 interface ItemFilter{
 	public function matches(PlayerInteractEvent $event) : bool;
 
-	public function onUseItem(PlayerInteractEvent $event) : void;
+	public function onUseItem(KineticManager $manager, PlayerInteractEvent $event) : void;
 }

@@ -58,12 +58,12 @@ class ItemEntryPointNode extends AbstractEntryPointNode implements ItemFilter{
 	}
 
 	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
 		$this->ifn_resolve($manager);
-
 		$manager->registerItemHandler($this);
 	}
 
-	public function onUseItem(PlayerInteractEvent $event) : void{
+	public function onUseItem(KineticManager $manager, PlayerInteractEvent $event) : void{
 		if(!$this->getParent()->testPermission($event->getPlayer())){
 			return;
 		}
@@ -73,6 +73,7 @@ class ItemEntryPointNode extends AbstractEntryPointNode implements ItemFilter{
 			"touchVector" => $event->getTouchVector(),
 		];
 
-		$intent = new Intent($event->getPlayer(), $this->getParent()->getId(),$data);
+		$intent = new Intent($event->getPlayer(), $this->getParent()->getId(), $data);
+
 	}
 }

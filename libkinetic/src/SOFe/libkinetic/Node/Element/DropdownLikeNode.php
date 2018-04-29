@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Element;
 
 use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 
 abstract class DropdownLikeNode extends EditableElementNode{
@@ -60,6 +61,13 @@ abstract class DropdownLikeNode extends EditableElementNode{
 		}
 		if(!isset($this->default)){
 			$this->default = 0;
+		}
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		foreach($this->options as $node){
+			$node->resolve($manager);
 		}
 	}
 

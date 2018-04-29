@@ -24,17 +24,17 @@ namespace SOFe\libkinetic\Node\Window;
 
 use pocketmine\Player;
 use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\PermissionNode;
-use SOFe\libkinetic\Node\ResolvableNode;
 use SOFe\libkinetic\Node\SynopsisNode;
 use SOFe\libkinetic\Parser\KineticFileParser;
 
 /**
  * A window represents a form that can be displayed to the user.
  */
-abstract class WindowNode extends KineticNode implements KineticNodeWithId, ResolvableNode{
+abstract class WindowNode extends KineticNode implements KineticNodeWithId{
 	/** @var string */
 	protected $id;
 	/** @var string */
@@ -103,8 +103,8 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 		return $this->synopsis;
 	}
 
-	public function getSynopsisString() : string{
-		return $this->synopsis !== null ? $this->synopsis->getText() : "";
+	public function getSynopsisString(KineticManager $manager, ?Player $player) : string{
+		return $this->synopsis !== null ? $this->synopsis->getText($manager, $player) : "";
 	}
 
 	public function getPermission() : ?PermissionNode{
@@ -113,6 +113,17 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId, Reso
 
 	public function testPermission(Player $player, bool $ifUndefined = true) : bool{
 		return $this->permission !== null ? $this->permission->testPermission($player) : $ifUndefined;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->title);
+		if($this->synopsis !== null){
+			$this->synopsis->resolve($manager);
+		}
+		if($this->permission !== null){
+			$this->permission->resolve($manager);
+		}
 	}
 
 	public function jsonSerialize() : array{

@@ -35,6 +35,6 @@ trait KineticNodeTrait{
 	}
 
 	public function t_throw(string $message) : InvalidNodeException{
-		throw new InvalidNodeException($message,$this->t_typeFix());
+		throw new InvalidNodeException($message, $this->t_typeFix());
 	}
 }

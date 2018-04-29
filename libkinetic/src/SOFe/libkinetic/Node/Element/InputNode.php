@@ -24,6 +24,7 @@ namespace SOFe\libkinetic\Node\Element;
 
 use InvalidArgumentException;
 use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 use function is_numeric;
 use function strtoupper;
 use function trim;
@@ -69,6 +70,11 @@ class InputNode extends EditableElementNode{
 		}
 
 		return false;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->placeholder);
 	}
 
 	public function getDefault(){

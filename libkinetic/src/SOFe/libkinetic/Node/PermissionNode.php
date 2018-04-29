@@ -23,6 +23,8 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node;
 
 use pocketmine\Player;
+use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 
 /**
  * Describes the permission required for accessing a certain window.
@@ -63,10 +65,21 @@ class PermissionNode extends KineticNode{
 		}
 
 		if($name === "MESSAGE"){
-			return new PermissionMessageNode();
+			if(isset($this->message)){
+				throw new InvalidNodeException("Only one or zero child <message> is allowed", $this);
+			}
+			return $this->message = new PermissionMessageNode();
 		}
 
 		return null;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->permission);
+		if($this->message !== null){
+			$this->message->resolve($manager);
+		}
 	}
 
 	public function getPermissionString() : string{

@@ -24,6 +24,7 @@ namespace SOFe\libkinetic\Node;
 
 use JsonSerializable;
 use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\Window\IndexNode;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use function array_unshift;
@@ -55,6 +56,10 @@ abstract class KineticNode implements JsonSerializable{
 
 	public function acceptText(string $text) : void{
 		throw new InvalidNodeException("Text content is not allowed", $this);
+	}
+
+	public function resolve(KineticManager $manager) : void{
+
 	}
 
 	protected final function requireAttributes(string ...$names) : void{

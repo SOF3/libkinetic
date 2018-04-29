@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Element;
 
 use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Parser\KineticFileParser;
@@ -74,6 +75,11 @@ abstract class ElementNode extends KineticNode implements KineticNodeWithId{
 
 	public function getTitle() : string{
 		return $this->title;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->title);
 	}
 
 	public static function byName(string $name) : ?ElementNode{

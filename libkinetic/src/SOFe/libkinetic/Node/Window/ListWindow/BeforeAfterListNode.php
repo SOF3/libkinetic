@@ -22,12 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Window\ListWindow;
 
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\Window\WindowNode;
 use SOFe\libkinetic\Node\Window\WindowParentNode;
 use function assert;
 
 abstract class BeforeAfterListNode extends WindowNode{
-	use WindowParentNode;
+	use WindowParentNode {
+		resolve as private wpn_resolve;
+	}
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
@@ -42,6 +45,11 @@ abstract class BeforeAfterListNode extends WindowNode{
 		$this->id = $this->nodeParent->id . ".{$this->getIdPart()}";
 
 		parent::endAttributes();
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$this->wpn_resolve($manager);
 	}
 
 	protected abstract function getIdPart() : string;

@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Config;
 
+use SOFe\libkinetic\KineticManager;
+
 class AbstractConfigWindowNode extends AbstractConfigNode{
 	/** @var string */
 	protected $title;
@@ -42,5 +44,9 @@ class AbstractConfigWindowNode extends AbstractConfigNode{
 	public function endAttributes() : void{
 		parent::endAttributes();
 		$this->requireAttributes("title");
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		$manager->requireTranslation($this, $this->title);
 	}
 }

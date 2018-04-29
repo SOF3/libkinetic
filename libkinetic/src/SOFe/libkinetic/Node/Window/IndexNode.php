@@ -31,9 +31,9 @@ use SOFe\libkinetic\Node\KineticNode;
  */
 class IndexNode extends DirectEntryWindowNode{
 	use WindowParentNode {
-		startChild as protected wpn_startChild;
-		jsonSerialize as protected wpn_jsonSerialize;
-		resolve as protected wpn_resolve;
+		startChild as private wpn_startChild;
+		jsonSerialize as private wpn_jsonSerialize;
+		resolve as private wpn_resolve;
 	}
 
 	public function startChild(string $name) : ?KineticNode{

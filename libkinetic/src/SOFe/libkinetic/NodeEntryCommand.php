@@ -69,7 +69,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 			}
 		}
 
-		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(), $usage, $command->getAliases());
+		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString($manager, null), $usage, $command->getAliases()); // TODO make translated description into the client
 		$this->manager = $manager;
 		$this->command = $command;
 	}

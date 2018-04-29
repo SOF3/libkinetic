@@ -27,8 +27,8 @@ use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\Element\EditableElementNode;
 use SOFe\libkinetic\Node\Element\ElementNode;
 use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\Window\ConfigurableWindowNode;
-use SOFe\libkinetic\Node\Window\WindowNode;
 use function assert;
 use function trim;
 
@@ -37,7 +37,7 @@ use function trim;
  *
  * When a player tries to open a configurable from command, if there are required settings in ConfigNode, a CustomForm will be opened so that the player can edit them from the form. On the other hand, settings in CommandConfigNode will just go into the command's syntax, i.e. the player will fill the required and optional values from the command.
  */
-class CommandConfigNode extends WindowNode{
+class CommandConfigNode extends AbstractConfigNode implements KineticNodeWithId{
 	/** @var bool */
 	protected $required = false;
 
@@ -66,9 +66,6 @@ class CommandConfigNode extends WindowNode{
 	}
 
 	public function endAttributes() : void{
-		assert($this->nodeParent instanceof ConfigurableWindowNode);
-		$this->id = $this->nodeParent->id;
-		$this->title = "(the proper title will be set in CommandConfigNode::endElement(), right now let's make endAttribute() assume it has a value)";
 		parent::endAttributes();
 		$this->requireAttributes("argName");
 	}
@@ -97,7 +94,12 @@ class CommandConfigNode extends WindowNode{
 		if(!isset($this->element)){
 			throw new InvalidNodeException("Exactly one child node is accepted", $this);
 		}
-		$this->title = $this->element->getTitle();
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->argName);
+		$this->element->resolve($manager);
 	}
 
 	public function isRequired() : bool{
@@ -112,7 +114,8 @@ class CommandConfigNode extends WindowNode{
 		return $this->element;
 	}
 
-	public function resolve(KineticManager $manager) : void{
-
+	public function getId() : string{
+		assert($this->nodeParent instanceof ConfigurableWindowNode);
+		return $this->nodeParent->getId();
 	}
 }

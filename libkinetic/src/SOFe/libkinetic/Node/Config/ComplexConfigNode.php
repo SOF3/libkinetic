@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Config;
 
 /**
- * `<complexConfig>` (ComplexConfigNode) is powered by a ComplexConfigProvider. Each element is displayed as one or multiple ElementNode.
+ * `<complexConfig>` (ComplexConfigNode) is powered by a ComplexConfigProvider. Each element is displayed as one or multiple ElementNode.$
  */
 class ComplexConfigNode extends AbstractConfigWindowNode{
 

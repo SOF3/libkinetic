@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Element;
 
 use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 
 class DropdownOptionNode extends KineticNode{
@@ -65,6 +66,11 @@ class DropdownOptionNode extends KineticNode{
 		if(!isset($this->text)){
 			throw new InvalidNodeException("Text content is required", $this);
 		}
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->text);
 	}
 
 	public function getValue() : string{

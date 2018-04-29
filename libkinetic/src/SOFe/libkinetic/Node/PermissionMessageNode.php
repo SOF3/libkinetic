@@ -22,12 +22,19 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node;
 
+use SOFe\libkinetic\KineticManager;
+
 class PermissionMessageNode extends KineticNode{
 	/** @var string */
 	protected $message;
 
 	public function acceptText(string $text) : void{
 		$this->message = $text;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->message);
 	}
 
 	public function getMessage() : string{

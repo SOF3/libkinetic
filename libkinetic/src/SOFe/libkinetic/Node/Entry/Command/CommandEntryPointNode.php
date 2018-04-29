@@ -68,6 +68,9 @@ class CommandEntryPointNode extends AbstractEntryPointNode{
 
 	public function resolve(KineticManager $manager) : void{
 		assert($this->nodeParent instanceof DirectEntryWindowNode);
+		foreach($this->aliases as $node){
+			$node->resolve($manager);
+		}
 		$manager->getPlugin()->getServer()->getCommandMap()->register($manager->getPlugin()->getName(), new NodeEntryCommand($manager, $this));
 	}
 

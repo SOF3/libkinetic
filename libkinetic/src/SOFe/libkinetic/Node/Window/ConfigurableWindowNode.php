@@ -22,15 +22,19 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Window;
 
-use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
+use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\Config\AbstractConfigWindowNode;
 use SOFe\libkinetic\Node\Config\CommandConfigNode;
 use SOFe\libkinetic\Node\Config\ComplexConfigNode;
 use SOFe\libkinetic\Node\Config\ConfigNode;
 use SOFe\libkinetic\Node\Config\ListConfigNode;
+use SOFe\libkinetic\Node\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Node\KineticNode;
 
 abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
-	protected $configs = [];
+	/** @var AbstractConfigWindowNode[] */
+	protected $windowConfigs = [];
+	/** @var CommandConfigNode[] */
 	protected $commandConfigs = [];
 
 	public function startChild(string $name) : ?KineticNode{
@@ -39,30 +43,40 @@ abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
 		}
 
 		if($name === "CONFIG"){
-			return new ConfigNode();
+			return $this->windowConfigs[] = new ConfigNode();
 		}
 
 		if($name === "LIST" . "CONFIG"){
-			return new ListConfigNode();
+			return $this->windowConfigs[] = new ListConfigNode();
 		}
 
 		if($name === "COMPLEX" . "CONFIG"){
-			return new ComplexConfigNode();
+			return $this->windowConfigs[] = new ComplexConfigNode();
 		}
 
 		if($name === "COMMAND" . "CONFIG"){
-			return new CommandConfigNode();
+			return $this->commandConfigs[] = new CommandConfigNode();
 		}
 
 
 		return null;
 	}
 
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		foreach($this->windowConfigs as $config){
+			$config->resolve($manager);
+		}
+		foreach($this->commandConfigs as $config){
+			$config->resolve($manager);
+		}
+	}
+
 	/**
 	 * @return ConfigNode[]
 	 */
-	public function getConfigs() : array{
-		return $this->configs;
+	public function getWindowConfigs() : array{
+		return $this->windowConfigs;
 	}
 
 	/**
@@ -74,7 +88,8 @@ abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"configs" => $this->configs,
+				"windowConfigs" => $this->windowConfigs,
+				"commandConfigs" => $this->commandConfigs,
 			];
 	}
 }

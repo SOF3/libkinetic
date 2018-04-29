@@ -23,10 +23,9 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Entry;
 
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Node\ResolvableNode;
 use function assert;
 
-abstract class AbstractEntryPointNode extends KineticNode implements ResolvableNode{
+abstract class AbstractEntryPointNode extends KineticNode{
 	public function getParent() : DirectEntryWindowNode{
 		assert($this->nodeParent instanceof DirectEntryWindowNode);
 		return $this->nodeParent;

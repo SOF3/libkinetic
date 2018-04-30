@@ -23,5 +23,23 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Window;
 
 class InfoNode extends ConfigurableWindowNode{
+	/** @var string */
+	protected $populator;
 
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "POPULATOR"){
+			$this->populator = $value;return true;
+		}
+
+		return false;
+	}
+
+	public function endAttributes() : void{
+		parent::endAttributes();
+		$this->requireAttributes("populator");
+	}
 }

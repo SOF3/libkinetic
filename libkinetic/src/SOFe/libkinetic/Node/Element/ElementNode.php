@@ -26,7 +26,6 @@ use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\Parser\KineticFileParser;
 
 abstract class ElementNode extends KineticNode implements KineticNodeWithId{
 	/** @var string */
@@ -45,7 +44,6 @@ abstract class ElementNode extends KineticNode implements KineticNodeWithId{
 				$this->id = $value;
 			}
 
-			KineticFileParser::getParsingInstance()->idMap[$this->id] = $this;
 			return true;
 		}
 

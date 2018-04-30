@@ -98,7 +98,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 		assert($parent instanceof DirectEntryWindowNode);
 
 		if($parent->getPermission() !== null && !$parent->getPermission()->testPermission($target)){
-			return $parent->getPermission()->getPermissionMessage() ?? $target->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission");
+			return $parent->getPermission()->getPermissionMessage($this->manager, $target) ?? $target->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission");
 		}
 
 		return null;

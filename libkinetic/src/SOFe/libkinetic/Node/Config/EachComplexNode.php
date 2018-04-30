@@ -20,30 +20,39 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Node\Config;
 
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\Element\ElementNode;
+use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\KineticNodeWithId;
+use function assert;
 
-class PermissionMessageNode extends KineticNode{
-	/** @var string */
-	protected $message;
+class EachComplexNode extends KineticNode implements KineticNodeWithId{
+	/** @var ElementNode[] */
+	protected $elements = [];
 
-	public function acceptText(string $text) : void{
-		$this->message = $text;
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($delegate = ElementNode::byName($name)){
+			return $this->elements[] = $delegate;
+		}
+
+		return null;
 	}
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->message);
+		foreach($this->elements as $node){
+			$node->resolve($manager);
+		}
 	}
 
-	public function getMessage() : string{
-		return $this->message;
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"message" => $this->message,
-			];
+	public function getId() : string{
+		assert($this->nodeParent instanceof ComplexConfigNode);
+		return $this->nodeParent->getId() . ".each";
 	}
 }

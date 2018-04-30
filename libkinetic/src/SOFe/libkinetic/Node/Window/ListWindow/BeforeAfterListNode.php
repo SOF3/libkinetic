@@ -23,33 +23,24 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node\Window\ListWindow;
 
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\Window\WindowParentNode;
 use function assert;
 
-abstract class BeforeAfterListNode extends WindowNode{
+abstract class BeforeAfterListNode extends KineticNode implements KineticNodeWithId{
 	use WindowParentNode {
 		resolve as private wpn_resolve;
-	}
-
-	public function setAttribute(string $name, string $value) : bool{
-		if($name === "ID"){
-			return false;
-		}
-
-		return parent::setAttribute($name, $value);
-	}
-
-	public function endAttributes() : void{
-		assert($this->nodeParent instanceof ListNode);
-		$this->id = $this->nodeParent->id . ".{$this->getIdPart()}";
-
-		parent::endAttributes();
 	}
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 		$this->wpn_resolve($manager);
+	}
+
+	public function getId() : string{
+		assert($this->nodeParent instanceof ListNode);
+		return $this->nodeParent->getId() . "." . $this->getIdPart();
 	}
 
 	protected abstract function getIdPart() : string;

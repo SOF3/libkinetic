@@ -26,4 +26,24 @@ namespace SOFe\libkinetic\Node\Config;
  * `<listConfig>` (ListConfig) is a variant of `<list>` as a Config. It is a MenuForm whose buttons are provided through a ListProvider implementation. The whole config only outputs one value, which is the chosen button.
  */
 class ListConfigNode extends AbstractConfigWindowNode{
+	/** @var string */
+	protected $provider;
+
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "PROVIDER"){
+			$this->provider = $value;
+			return true;
+		}
+
+		return false;
+	}
+
+	public function endAttributes() : void{
+		parent::endAttributes();
+		$this->requireAttributes("provider");
+	}
 }

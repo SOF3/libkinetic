@@ -29,7 +29,6 @@ use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\PermissionNode;
 use SOFe\libkinetic\Node\SynopsisNode;
-use SOFe\libkinetic\Parser\KineticFileParser;
 
 /**
  * A window represents a form that can be displayed to the user.
@@ -56,7 +55,6 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId{
 				$this->id = $value;
 			}
 
-			KineticFileParser::getParsingInstance()->idMap[$this->id] = $this;
 			return true;
 		}
 

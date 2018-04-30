@@ -89,6 +89,9 @@ class InputNode extends EditableElementNode{
 		switch(strtoupper($type)){
 			case "INT":
 			case "INTEGER":
+				if($value === ""){
+					return 0;
+				}
 				if(!is_numeric(trim($value))){
 					throw new InvalidArgumentException("Not an integer");
 				}
@@ -96,6 +99,9 @@ class InputNode extends EditableElementNode{
 
 			case "FLOAT":
 			case "DOUBLE":
+				if($value === ""){
+					return 0.0;
+				}
 				if(!is_numeric(trim($value))){
 					throw new InvalidArgumentException("Not a number");
 				}

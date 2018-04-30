@@ -37,7 +37,7 @@ abstract class KineticFileParser{
 	public static $hasPm = false;
 	public static $parsingInstance = null;
 
-	/** @var KineticNode[]|KineticNodeWithId[] */
+	/** @var KineticNode|KineticNodeWithId[] */
 	public $idMap = [];
 
 	public static function getParsingInstance() : KineticFileParser{
@@ -100,6 +100,13 @@ abstract class KineticFileParser{
 		}
 
 		$this->leaf->endAttributes();
+
+		if($this->leaf instanceof KineticNodeWithId){
+			if(isset($this->idMap[$this->leaf->getId()])){
+				throw new InvalidNodeException("Duplicate ID {$this->leaf->getId()}", $this->leaf);
+			}
+			$this->idMap[$this->leaf->getId()] = $this->leaf;
+		}
 	}
 
 	public function endElement($parser, string $name) : void{

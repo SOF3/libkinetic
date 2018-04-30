@@ -48,6 +48,10 @@ trait WindowParentNode{
 			return $this->buttons[] = new InfoNode();
 		}
 
+		if($name === "TEXT"){
+			return $this->buttons[] = new TextNode();
+		}
+
 		if($name === "LINK"){
 			return $this->buttons[] = new LinkNode();
 		}

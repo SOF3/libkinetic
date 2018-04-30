@@ -27,6 +27,6 @@ use SOFe\libkinetic\Node\KineticNode;
 
 class InvalidNodeException extends RuntimeException{
 	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName());
+		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
 	}
 }

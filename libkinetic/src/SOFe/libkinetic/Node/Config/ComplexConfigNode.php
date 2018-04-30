@@ -22,9 +22,49 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node\Config;
 
+use SOFe\libkinetic\Node\KineticNode;
+
 /**
- * `<complexConfig>` (ComplexConfigNode) is powered by a ComplexConfigProvider. Each element is displayed as one or multiple ElementNode.$
+ * `<complexConfig>` (ComplexConfigNode) is powered by a ComplexConfigProvider. Each element is displayed as one or multiple ElementNode.
  */
 class ComplexConfigNode extends AbstractConfigWindowNode{
+	/** @var string */
+	protected $provider;
+	/** @var EachComplexNode */
+	protected $each;
 
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "PROVIDER"){
+			$this->provider = $value;
+			return true;
+		}
+
+		return false;
+	}
+
+	public function endAttributes() : void{
+		parent::endAttributes();
+		$this->requireAttributes("provider");
+	}
+
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($name === "EACH"){
+			return $this->each = new EachComplexNode();
+		}
+
+		return null;
+	}
+
+	public function endElement() : void{
+		parent::endElement();
+		$this->requireElements("each");
+	}
 }

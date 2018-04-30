@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node;
 
 use pocketmine\Player;
-use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 
 /**
@@ -35,11 +34,13 @@ class PermissionNode extends KineticNode{
 	/** @var bool */
 	protected $need = true;
 
+	/** @var bool */
+	protected $predicate = false;
 	/** @var string */
 	protected $permission;
 
-	/** @var PermissionMessageNode */
-	protected $message;
+	/** @var string|null */
+	protected $message = null;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -56,29 +57,24 @@ class PermissionNode extends KineticNode{
 			return true;
 		}
 
-		return false;
-	}
-
-	public function startChild(string $name) : ?KineticNode{
-		if($delegate = parent::startChild($name)){
-			return $delegate;
-		}
-
 		if($name === "MESSAGE"){
-			if(isset($this->message)){
-				throw new InvalidNodeException("Only one or zero child <message> is allowed", $this);
-			}
-			return $this->message = new PermissionMessageNode();
+			$this->message = $value;
+			return true;
 		}
 
-		return null;
+		if($name === "PREDICATE"){
+			$this->predicate = true;
+			$this->permission = $value;
+			return true;
+		}
+
+		return false;
 	}
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->permission);
 		if($this->message !== null){
-			$this->message->resolve($manager);
+			$manager->requireTranslation($this, $this->message);
 		}
 	}
 
@@ -86,8 +82,8 @@ class PermissionNode extends KineticNode{
 		return $this->permission;
 	}
 
-	public function getPermissionMessage() : ?string{
-		return $this->message !== null ? $this->message->getMessage() : null;
+	public function getPermissionMessage(KineticManager $manager, Player $target) : ?string{
+		return $this->message !== null ? $manager->getLanguageProvider()->getMessage($target, $this->message, []) : null;
 	}
 
 	public function testPermission(Player $player) : bool{

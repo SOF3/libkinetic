@@ -26,6 +26,19 @@ class ToggleNode extends EditableElementNode{
 	/** @var bool */
 	protected $default;
 
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "DEFAULT"){
+			$this->default = $value;
+			return true;
+		}
+
+		return false;
+	}
+
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
 				"default" => $this->default,

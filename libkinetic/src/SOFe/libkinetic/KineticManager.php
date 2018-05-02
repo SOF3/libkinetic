@@ -45,7 +45,7 @@ class KineticManager{
 	/** @var InteractListener|null */
 	protected $interactListener = null;
 
-	public function __construct(Plugin $plugin, KineticAdapter $provider, string $xmlResource, string $jsonResource){
+	public function __construct(Plugin $plugin, KineticAdapter $provider, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
 		$this->adapter = $provider;

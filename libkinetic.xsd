@@ -1,46 +1,346 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd">
+  <xs:annotation>
+    <xs:documentation>libkinetic kinetic.xml schema</xs:documentation>
+  </xs:annotation>
+
+  <!-- root element -->
+  <xs:complexType name="RootType">
     <xs:annotation>
-        <xs:documentation>The schema for libkinetic action files</xs:documentation>
+      <xs:documentation>The root element of kinetic.xml</xs:documentation>
     </xs:annotation>
+    <xs:attribute name="namespace">
+      <xs:annotation>
+        <xs:documentation>
+          Instantiables starting with `\` will be resolved as absolute FQNs. Those starting with `$` will be decided by
+          `KineticAdapter::getInstantiable()`. Those starting with `!` will be prepended with the libkinetic namespace
+          (might be shaded)
+        </xs:documentation>
+      </xs:annotation>
+      <xs:simpleType>
+        <xs:restriction base="PhpFqn"/>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:sequence>
+      <xs:group ref="DirectEntryWindowNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-    <!-- root element -->
-    <xs:element name="index">
+  <xs:element name="root" type="RootType"/>
+  <xs:element name="kinetic" type="RootType"/>
+
+  <!-- string types -->
+  <xs:simpleType name="MessageRef">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="PhpFqn">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[a-zA-Z_]\w+(\\[a-zA-Z_]\w+)+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Instantiable">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([\\!]?[a-zA-Z_]\w+(\\[a-zA-Z_]\w+)*)|(\$.*)"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IdPart">
+    <xs:restriction base="IdFull"/>
+  </xs:simpleType>
+  <xs:simpleType name="IdFull">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\w+(\.\w+)+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CommandName">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[^: ]+"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PermissionName">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+
+  <xs:attributeGroup name="IdTitle">
+    <xs:attribute name="id" type="IdPart" use="required"/>
+    <xs:attribute name="title" type="MessageRef" use="required"/>
+  </xs:attributeGroup>
+
+  <!-- direct-entry window types -->
+  <xs:group name="NextStep">
+    <xs:group ref="DirectEntryWindowNodeGroup"/>
+    <xs:element name="exit" type="ExitNode"/>
+    <xs:element name="link" type="LinkNode"/>
+  </xs:group>
+
+  <xs:complexType name="ExitNode">
+    <xs:attribute name="title" type="MessageRef" use="required"/>
+  </xs:complexType>
+  <xs:complexType name="LinkNode">
+    <xs:attribute name="target" type="IdFull" use="required"/>
+  </xs:complexType>
+
+  <xs:group name="DirectEntryWindowNodeGroup">
+    <xs:element name="index" type="IndexNode"/>
+    <xs:group ref="ConfigurableWindowNodeGroup"/>
+  </xs:group>
+
+  <xs:group name="ConfigurableWindowNodeGroup">
+    <xs:element name="list" type="ListNode"/>
+    <xs:element name="info" type="InfoNode"/>
+  </xs:group>
+
+  <xs:complexType name="DirectEntryWindowNodeBase">
+    <xs:attributeGroup ref="IdTitle"/>
+    <xs:attribute name="synopsis" type="MessageRef"/>
+
+    <xs:sequence>
+      <xs:element name="permission" minOccurs="0" maxOccurs="1">
         <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="Index">
-                    <xs:attribute name="namespace" type="PhpFqn" use="required"/>
-                </xs:extension>
-            </xs:complexContent>
+          <xs:attribute name="need" type="xs:boolean" default="true"/>
+          <xs:attribute name="name" type="PermissionName"/>
+          <xs:attribute name="predicate" type="Instantiable"/>
+          <xs:attribute name="message" type="MessageRef"/>
         </xs:complexType>
-    </xs:element>
+      </xs:element>
 
-    <!-- string patterns -->
-    <xs:simpleType name="PhpFqn">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[a-zA-Z_]\w+(\\[a-zA-Z_]\w+)+"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="IdPart">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="\w+"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="IdFull">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="\w+(\.\w+)+"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="CommandName">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[^: ]+"/>
-        </xs:restriction>
-    </xs:simpleType>
-    
-    <xs:complexType name="Index">
+      <xs:element name="command" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="name" type="CommandName" use="required"/>
+          <xs:sequence>
+            <xs:element name="alias" minOccurs="0" maxOccurs="unbounded" type="CommandName"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
 
-    </xs:complexType>
+      <xs:element name="item" type="ItemTouchFilter" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
-    <!-- TODO -->
+  <xs:complexType name="ItemTouchFilter">
+    <xs:attribute name="itemId" type="xs:unsignedInt"/>
+    <xs:attribute name="itemDamage" type="xs:unsignedInt"/>
+    <xs:attribute name="fromConfig" type="xs:string"/>
+    <xs:sequence>
+      <xs:element name="item" type="ItemTouchFilter" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="touchMode" minOccurs="0" maxOccurs="5">
+        <xs:complexType>
+          <xs:attribute name="type">
+            <xs:simpleType>
+              <xs:restriction>
+                <xs:pattern value="PHYSICAL"/>
+                <xs:pattern value="LEFT_CLICK_BLOCK"/>
+                <xs:pattern value="RIGHT_CLICK_BLOCK"/>
+                <xs:pattern value="LEFT_CLICK_AIR"/>
+                <xs:pattern value="RIGHT_CLICK_AIR"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="IndexNode">
+    <xs:complexContent>
+      <xs:extension base="DirectEntryWindowNodeBase">
+        <xs:sequence>
+          <xs:group ref="NextStep" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ConfigurableWindowNodeBase">
+    <xs:complexContent>
+      <xs:extension base="DirectEntryWindowNodeBase">
+        <xs:sequence>
+          <xs:group ref="AbstractConfigNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ListNode">
+    <xs:complexContent>
+      <xs:extension base="ConfigurableWindowNodeBase">
+        <xs:attribute name="provider" type="Instantiable" use="required"/>
+        <xs:sequence>
+          <xs:element name="before" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:group ref="NextStep" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="each">
+            <xs:complexType>
+              <xs:attribute name="configName" type="IdPart"/>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="after" minOccurs="0">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:group ref="NextStep" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="InfoNode">
+    <xs:complexContent>
+      <xs:extension base="ConfigurableWindowNodeBase">
+        <xs:attribute name="content" type="MessageRef" use="required"/>
+        <xs:attribute name="populator" type="Instantiable"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:group name="AbstractConfigNodeGroup">
+    <xs:element name="commandConfig" type="CommandConfigNode"/>
+    <xs:group ref="AbstractConfigWindowNodeGroup"/>
+  </xs:group>
+
+  <xs:group name="AbstractConfigWindowNodeGroup">
+    <xs:element name="config" type="ConfigNode"/>
+    <xs:element name="listConfig" type="ListConfigNode"/>
+    <xs:element name="complexConfig" type="ComplexConfigNode"/>
+  </xs:group>
+
+  <xs:complexType name="AbstractConfigNodeBase">
+    <xs:attribute name="id" type="IdPart" use="required"/>
+    <xs:attribute name="required" type="xs:boolean" default="false"/>
+  </xs:complexType>
+  <xs:complexType name="CommandConfigNode">
+    <xs:complexContent>
+      <xs:extension base="AbstractConfigNodeBase">
+        <xs:attribute name="id" use="prohibited"/>
+        <xs:attribute name="argName" type="MessageRef" use="required"/>
+        <xs:sequence>
+          <xs:group ref="EditableElementNodeGroup"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="AbstractConfigWindowNodeBase">
+    <xs:complexContent>
+      <xs:extension base="AbstractConfigNodeBase">
+        <xs:attribute name="title" type="MessageRef" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ConfigNode">
+    <xs:complexContent>
+      <xs:extension base="AbstractConfigWindowNodeBase">
+        <xs:sequence>
+          <xs:group ref="ElementNodeGroup" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ListConfigNode">
+    <xs:complexContent>
+      <xs:extension base="AbstractConfigWindowNodeBase">
+        <xs:attribute name="provider" type="Instantiable" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ComplexConfigNode">
+    <xs:complexContent>
+      <xs:extension base="AbstractConfigWindowNodeBase">
+        <xs:attribute name="provider" type="Instantiable" use="required"/>
+        <xs:sequence>
+          <xs:element name="each">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:group ref="ElementNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:group name="ElementNodeGroup">
+    <xs:element name="label" type="LabelNode"/>
+    <xs:group ref="EditableElementNodeGroup"/>
+  </xs:group>
+
+  <xs:group name="EditableElementNodeGroup">
+    <xs:element name="input" type="InputNode"/>
+    <xs:element name="toggle" type="ToggleNode"/>
+    <xs:element name="slider" type="SliderNode"/>
+    <xs:element name="dropdown" type="DropdownNode"/>
+    <xs:element name="stepSlider" type="StepSliderNode"/>
+  </xs:group>
+
+  <xs:complexType name="ElementNode">
+    <xs:attributeGroup ref="IdTitle"/>
+  </xs:complexType>
+  <xs:complexType name="LabelNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InputNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="placeholder" type="MessageRef"/>
+        <xs:attribute name="default" type="xs:string"/>
+        <xs:attribute name="typeCast" default="">
+          <xs:simpleType>
+            <xs:restriction>
+              <xs:enumeration value="int"/>
+              <xs:enumeration value="integer"/>
+              <xs:enumeration value="float"/>
+              <xs:enumeration value="double"/>
+              <xs:enumeration value="string"/>
+              <xs:enumeration value=""/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ToggleNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="default" type="xs:boolean"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SliderNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="min" type="xs:float" use="required"/>
+        <xs:attribute name="max" type="xs:float" use="required"/>
+        <xs:attribute name="step" type="xs:float" default="1.0"/>
+        <xs:attribute name="default" type="xs:float"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DropdownOptionNode">
+    <xs:attribute name="default" type="xs:boolean" default="false"/>
+    <xs:simpleContent>
+      <xs:restriction base="MessageRef"/>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="DropdownNode">
+    <xs:attribute name="provider" type="Instantiable"/>
+    <xs:sequence>
+      <xs:element name="option" type="DropdownOptionNode" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="StepSliderNode">
+    <xs:attribute name="provider" type="Instantiable"/>
+    <xs:sequence>
+      <xs:element name="step" type="DropdownOptionNode" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>

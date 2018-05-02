@@ -62,6 +62,11 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId{
 			return true;
 		}
 
+		if($name === "SYNOPSIS"){
+			$this->synopsis = $value;
+			return true;
+		}
+
 		return false;
 	}
 

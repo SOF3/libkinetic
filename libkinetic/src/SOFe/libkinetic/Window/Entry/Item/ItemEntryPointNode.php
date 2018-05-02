@@ -32,7 +32,11 @@ class ItemEntryPointNode extends AbstractEntryPointNode implements ItemFilter{
 	use ItemTouchFilterNode;
 
 	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value) || $this->ifn_setAttribute($name, $value)){
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($this->ifn_setAttribute($name, $value)){
 			return true;
 		}
 

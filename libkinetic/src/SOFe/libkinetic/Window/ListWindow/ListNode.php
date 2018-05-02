@@ -38,9 +38,9 @@ use SOFe\libkinetic\Window\ConfigurableWindowNode;
  */
 class ListNode extends ConfigurableWindowNode{
 	/** @var string */
-	protected $providerClass;
-	/** @var ListProvider */
 	protected $provider;
+	/** @var ListProvider */
+	protected $providerObject;
 	/** @var BeforeAfterListNode|null */
 	protected $before, $after;
 	/** @var EachListNode */
@@ -52,7 +52,7 @@ class ListNode extends ConfigurableWindowNode{
 		}
 
 		if($name === "PROVIDER"){
-			$this->providerClass = $value;
+			$this->provider = $value;
 			return true;
 		}
 
@@ -94,7 +94,7 @@ class ListNode extends ConfigurableWindowNode{
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 
-		$this->provider = $manager->resolveClass($this, $this->providerClass, ListProvider::class);
+		$this->providerObject = $manager->resolveClass($this, $this->provider, ListProvider::class);
 
 		if($this->before !== null){
 			$this->before->resolve($manager);
@@ -108,7 +108,7 @@ class ListNode extends ConfigurableWindowNode{
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"provider" => $this->providerClass,
+				"provider" => $this->provider,
 				"before" => $this->before,
 				"after" => $this->after,
 				"each" => $this->each

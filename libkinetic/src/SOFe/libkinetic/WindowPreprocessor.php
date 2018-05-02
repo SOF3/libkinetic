@@ -20,34 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Config;
+namespace SOFe\libkinetic;
 
-use SOFe\libkinetic\KineticManager;
+interface WindowPreprocessor{
 
-class AbstractConfigWindowNode extends AbstractConfigNode{
-	/** @var string */
-	protected $title;
-
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "TITLE"){
-			$this->title = $value;
-			return true;
-		}
-
-		return false;
-	}
-
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("title");
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->title);
-	}
 }

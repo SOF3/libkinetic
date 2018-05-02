@@ -20,34 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Config;
-
-use SOFe\libkinetic\KineticManager;
-
-class AbstractConfigWindowNode extends AbstractConfigNode{
-	/** @var string */
-	protected $title;
-
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "TITLE"){
-			$this->title = $value;
-			return true;
-		}
-
-		return false;
-	}
-
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("title");
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->title);
+namespace pocketmine\event\player {
+	class PlayerInteractEvent{
+		public const LEFT_CLICK_BLOCK = 0;
+		public const RIGHT_CLICK_BLOCK = 1;
+		public const LEFT_CLICK_AIR = 2;
+		public const RIGHT_CLICK_AIR = 3;
+		public const PHYSICAL = 4;
 	}
 }

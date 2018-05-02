@@ -1,6 +1,6 @@
 #!/bin/bash
 cd "$(dirname "$0")"
+rm -r docs/doxygen docs/sami 2>/dev/null
 doxygen Doxyfile
-rm -r docs/doxygen docs/sami
 php docs/bin/sami.phar update sami.php
 rm -r ./.sami/cache 2>/dev/null

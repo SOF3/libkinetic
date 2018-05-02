@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Window\Entry\Item;
 
+use pocketmine\event\player\PlayerInteractEvent;
 use SOFe\libkinetic\Node\KineticNode;
 
 class TouchModeNode extends KineticNode{
@@ -35,19 +36,19 @@ class TouchModeNode extends KineticNode{
 		if($name === "TYPE"){
 			switch(strtoupper($value)){
 				case "LEFT_CLICK_BLOCK":
-					$this->type = 0;
+					$this->type = PlayerInteractEvent::LEFT_CLICK_BLOCK;
 					break;
 				case "RIGHT_CLICK_BLOCK":
-					$this->type = 1;
+					$this->type = PlayerInteractEvent::RIGHT_CLICK_BLOCK;
 					break;
 				case "LEFT_CLICK_AIR":
-					$this->type = 2;
+					$this->type = PlayerInteractEvent::LEFT_CLICK_AIR;
 					break;
 				case "RIGHT_CLICK_AIR":
-					$this->type = 3;
+					$this->type = PlayerInteractEvent::RIGHT_CLICK_AIR;
 					break;
 				case "PHYSICAL":
-					$this->type = 4;
+					$this->type = PlayerInteractEvent::PHYSICAL;
 					break;
 			}
 		}

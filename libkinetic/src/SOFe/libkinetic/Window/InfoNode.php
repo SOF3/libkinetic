@@ -22,17 +22,29 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Window;
 
+use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\WindowPreprocessor;
+
 class InfoNode extends ConfigurableWindowNode{
 	/** @var string */
-	protected $populator;
+	protected $content;
+	/** @var string|null */
+	protected $populator = null;
+	/** @var WindowPreprocessor|null */
+	protected $populatorObj;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
+		if($name === "CONTENT"){
+			$this->content = $value;
+			return true;
+		}
+
 		if($name === "POPULATOR"){
-			$this->populator = $value;return true;
+			$this->populator = $value;
 		}
 
 		return false;
@@ -40,6 +52,12 @@ class InfoNode extends ConfigurableWindowNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("populator");
+		$this->requireAttributes("content");
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->content);
+		$this->populatorObj = $manager->resolveClass($this, $this->populator, WindowPreprocessor::class);
 	}
 }

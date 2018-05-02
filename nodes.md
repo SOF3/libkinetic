@@ -1,4 +1,4 @@
-# Index
+# Nodes Index
 This file provides a both hierarchical and relational index for libkinetic nodes.
 
 Keywords:
@@ -11,7 +11,7 @@ Keywords:
 Index:
 
 - RootNode (`<kinetic>`/`<root>`)
-  - Declares `namespace`: default namespace. Instantiables starting with `\` will be resolved as absolute FQNs. Those starting with `$` will be decided by `KineticAdapter::getInstantiable()`. Thoes starting with `!` will be prepended with the libkinetic namespace (might be shaded)
+  - Declares `namespace`: default namespace. Instantiables starting with `\` will be resolved as absolute FQNs. Those starting with `$` will be decided by `KineticAdapter::getInstantiable()`. Those starting with `!` will be prepended with the libkinetic namespace (might be shaded)
   - Contains `[0, ∞)` WindowNode/DirectEntryWindowNode (may be merged in the future), each of which can be displayed as a form window independently
     - Contains `[0, 1]` PermissionNode for declaring permissions, either by permission name or by a predicate class
     - Contains `[0, ∞)` AbstractEntryPointNode for declaring entry points
@@ -40,7 +40,7 @@ Index:
                 - Subclass `[0, ∞)` SliderNode (`<slider>`): represents a `slider` CustomForm element
                 - Abstract subclass `[0, ∞)` DropdownLikeNode
                   - Either
-                    - Contains `[1, ∞)` DropdownOptionNode (`<option>`), representing options of the DropdownLikeNode
+                    - Contains `[1, ∞)` DropdownOptionNode (`<option>`/`<step>`), representing options of the DropdownLikeNode
                   - Or
                     - Declares `provider`, an instantiable DropdownOptionProvider responsible for providing options to this provider
                   - Subclass `[0, ∞)` DropdownNode (`<dropdown>`): represents a `dropdown` CustomForm element
@@ -65,5 +65,5 @@ Index:
         - Contains ButtonNode (`<button1>`, `<button2>`): the two buttons in the ModalForm
           - Declares `onClick`, an instantiable ClickListener for handling the button click
           - Contains `[0, 1]` DirectEntryWindowNode: the next window to display upon clicking the button
-    - Subclass `[0, ∞)` ExitNode (`<exit>`): upon clicking the button, the window chain will complete and no more forms will be immediately shown (this should usually be made an optional element instead)
-  - Contains `[0, ∞)` LinkNode (`<link>`), each pointing to another DirectEntryWindowNode
+    - And `[0, ∞)` ExitNode (`<exit>`), which will not show any form windows
+    - And `[0, ∞)` LinkNode (`<link>`), each pointing to another DirectEntryWindowNode

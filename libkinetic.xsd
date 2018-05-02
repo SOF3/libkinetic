@@ -68,7 +68,7 @@
 
   <!-- direct-entry window types -->
   <xs:group name="NextStep">
-    <xs:group ref="DirectEntryWindowNodeGroup"/>
+      <xs:group ref="DirectEntryWindowNodeGroup"/>
     <xs:element name="exit" type="ExitNode"/>
     <xs:element name="link" type="LinkNode"/>
   </xs:group>
@@ -176,6 +176,9 @@
           <xs:element name="each">
             <xs:complexType>
               <xs:attribute name="configName" type="IdPart"/>
+              <xs:sequence>
+                <xs:group ref="NextStep"/>
+              </xs:sequence>
             </xs:complexType>
           </xs:element>
           <xs:element name="after" minOccurs="0">

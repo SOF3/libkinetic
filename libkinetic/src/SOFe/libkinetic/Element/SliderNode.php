@@ -20,23 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Element;
 
-use InvalidStateException;
-use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use function strtolower;
 
-class LinkNode extends KineticNode{
-	protected $target;
+class SliderNode extends EditableElementNode{
+	/** @var float */
+	protected $min, $max;
+	/** @var float */
+	protected $step = 1.0;
+	/** @var float|null */
+	protected $default = null;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "MIN" || $name === "MAX" || $name === "STEP" || $name === "DEFAULT"){
+			$this->{strtolower($name)} = (float) $value;
 			return true;
 		}
 
@@ -45,24 +47,23 @@ class LinkNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
+		$this->requireAttributes("min", "max");
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"target" => $this->target,
+				"min" => $this->min,
+				"max" => $this->max,
+				"step" => $this->step,
+				"default" => $this->default,
 			];
+	}
+
+	public function getDefault(){
+		return $this->default;
+	}
+
+	public function getDefaultAsString() : ?string{
+		return $this->default !== null ? (string) $this->default : null;
 	}
 }

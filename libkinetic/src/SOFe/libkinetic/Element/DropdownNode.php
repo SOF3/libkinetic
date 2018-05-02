@@ -20,33 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Element;
 
-use pocketmine\Player;
-
-class Intent{
-	/** @var Player */
-	protected $player;
-	/** @var string */
-	protected $nodeId;
-	/** @var mixed[] */
-	protected $data;
-
-	public function __construct(Player $player, string $nodeId, array $data){
-		$this->player = $player;
-		$this->nodeId = $nodeId;
-		$this->data = $data;
-	}
-
-	public function getPlayer() : Player{
-		return $this->player;
-	}
-
-	public function getNodeId() : string{
-		return $this->nodeId;
-	}
-
-	public function getData() : array{
-		return $this->data;
+class DropdownNode extends DropdownLikeNode{
+	protected function getStepName() : string{
+		return "OPTION";
 	}
 }

@@ -83,7 +83,7 @@ class PermissionNode extends KineticNode{
 	}
 
 	public function getPermissionMessage(KineticManager $manager, Player $target) : ?string{
-		return $this->message !== null ? $manager->getLanguageProvider()->getMessage($target, $this->message, []) : null;
+		return $this->message !== null ? $manager->translate($target, $this->message, []) : null;
 	}
 
 	public function testPermission(Player $player) : bool{

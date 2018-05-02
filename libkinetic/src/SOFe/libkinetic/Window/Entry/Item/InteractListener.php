@@ -20,33 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Window\Entry\Item;
 
-use pocketmine\Player;
+use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerInteractEvent;
+use SOFe\libkinetic\KineticManager;
 
-class Intent{
-	/** @var Player */
-	protected $player;
-	/** @var string */
-	protected $nodeId;
-	/** @var mixed[] */
-	protected $data;
+class InteractListener implements Listener{
+	/** @var KineticManager */
+	protected $manager;
+	/** @var ItemFilter[] */
+	public $filters = [];
 
-	public function __construct(Player $player, string $nodeId, array $data){
-		$this->player = $player;
-		$this->nodeId = $nodeId;
-		$this->data = $data;
+	public function __construct(KineticManager $manager){
+		$this->manager = $manager;
 	}
 
-	public function getPlayer() : Player{
-		return $this->player;
-	}
-
-	public function getNodeId() : string{
-		return $this->nodeId;
-	}
-
-	public function getData() : array{
-		return $this->data;
+	public function e_interact(PlayerInteractEvent $event) : void{
+		foreach($this->filters as $filter){
+			if($filter->matches($event)){
+				$filter->onUseItem($this->manager, $event);
+			}
+		}
 	}
 }

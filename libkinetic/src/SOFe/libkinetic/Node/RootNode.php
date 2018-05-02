@@ -22,47 +22,30 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node;
 
-use InvalidStateException;
-use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use function rtrim;
 
-class LinkNode extends KineticNode{
-	protected $target;
+class RootNode extends KineticNode{
+	/** @var string */
+	protected $namespace = "";
+	protected $roots = [];
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "NAMESPACE"){
+			$this->namespace = rtrim($value, "\\");
+			if($this->namespace !== ""){
+				$this->namespace .= "\\";
+			}
 			return true;
 		}
 
 		return false;
 	}
 
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("target");
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+	public function getNamespace() : string{
+		return $this->namespace;
 	}
 }

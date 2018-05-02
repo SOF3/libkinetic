@@ -20,24 +20,36 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Window\Entry\Item;
 
-use InvalidStateException;
-use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
 
-class LinkNode extends KineticNode{
-	protected $target;
+class TouchModeNode extends KineticNode{
+	protected $type;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
-			return true;
+		if($name === "TYPE"){
+			switch(strtoupper($value)){
+				case "LEFT_CLICK_BLOCK":
+					$this->type = 0;
+					break;
+				case "RIGHT_CLICK_BLOCK":
+					$this->type = 1;
+					break;
+				case "LEFT_CLICK_AIR":
+					$this->type = 2;
+					break;
+				case "RIGHT_CLICK_AIR":
+					$this->type = 3;
+					break;
+				case "PHYSICAL":
+					$this->type = 4;
+					break;
+			}
 		}
 
 		return false;
@@ -45,24 +57,10 @@ class LinkNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
+		$this->requireAttributes("type");
 	}
 
-	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+	public function getType() : int{
+		return $this->type;
 	}
 }

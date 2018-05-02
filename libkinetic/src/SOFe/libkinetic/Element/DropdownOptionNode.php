@@ -20,23 +20,32 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Element;
 
-use InvalidStateException;
+use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
 
-class LinkNode extends KineticNode{
-	protected $target;
+class DropdownOptionNode extends KineticNode{
+	/** @var string */
+	protected $value;
+	/** @var bool */
+	protected $default = false;
+	/** @var string */
+	protected $text;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "VALUE"){
+			$this->value = $value;
+			return true;
+		}
+
+		if($name === "DEFAULT"){
+			$this->default = $this->parseBoolean($value);
 			return true;
 		}
 
@@ -45,24 +54,42 @@ class LinkNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
+		$this->requireAttributes("value");
+	}
+
+	public function acceptText(string $text) : void{
+		$this->text = $text;
+	}
+
+	public function endElement() : void{
+		parent::endElement();
+		if(!isset($this->text)){
+			throw new InvalidNodeException("Text content is required", $this);
+		}
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
+		parent::resolve($manager);
+		$manager->requireTranslation($this, $this->text);
 	}
 
-	public function getTarget() : string{
-		return $this->target;
+	public function getValue() : string{
+		return $this->value;
 	}
 
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
+	public function isDefault() : bool{
+		return $this->default;
+	}
+
+	public function getText() : string{
+		return $this->text;
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"target" => $this->target,
+				"value" => $this->value,
+				"default" => $this->default,
+				"text" => $this->text,
 			];
 	}
 }

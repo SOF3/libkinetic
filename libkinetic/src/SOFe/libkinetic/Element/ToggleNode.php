@@ -20,33 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic;
+namespace SOFe\libkinetic\Element;
 
-use pocketmine\Player;
+class ToggleNode extends EditableElementNode{
+	/** @var bool */
+	protected $default;
 
-class Intent{
-	/** @var Player */
-	protected $player;
-	/** @var string */
-	protected $nodeId;
-	/** @var mixed[] */
-	protected $data;
-
-	public function __construct(Player $player, string $nodeId, array $data){
-		$this->player = $player;
-		$this->nodeId = $nodeId;
-		$this->data = $data;
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"default" => $this->default,
+			];
 	}
 
-	public function getPlayer() : Player{
-		return $this->player;
+	public function getDefault() : bool{
+		return $this->default;
 	}
 
-	public function getNodeId() : string{
-		return $this->nodeId;
-	}
-
-	public function getData() : array{
-		return $this->data;
+	public function getDefaultAsString() : ?string{
+		return $this->default ? "true" : "false";
 	}
 }

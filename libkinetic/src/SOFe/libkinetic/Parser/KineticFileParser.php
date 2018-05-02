@@ -26,7 +26,7 @@ use InvalidStateException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\Node\Window\IndexNode;
+use SOFe\libkinetic\Node\RootNode;
 use SOFe\libkinetic\ParseException;
 use function explode;
 use function strpos;
@@ -37,8 +37,10 @@ abstract class KineticFileParser{
 	public static $hasPm = false;
 	public static $parsingInstance = null;
 
-	/** @var KineticNode|KineticNodeWithId[] */
+	/** @var KineticNode[]|KineticNodeWithId[] */
 	public $idMap = [];
+	/** @var KineticNode[] */
+	public $allNodes = [];
 
 	public static function getParsingInstance() : KineticFileParser{
 		if(self::$parsingInstance === null){
@@ -47,13 +49,10 @@ abstract class KineticFileParser{
 		return self::$parsingInstance;
 	}
 
-	/** @var IndexNode|null */
+	/** @var RootNode|null */
 	protected $root = null;
 	/** @var KineticNode|null */
 	protected $leaf = null;
-
-	/** @var string */
-	protected $namespace = "";
 
 	protected $dataBuffer = "";
 
@@ -63,18 +62,13 @@ abstract class KineticFileParser{
 	public function startElement($parser, string $name, array $attrs) : void{
 		$this->flushBuffer();
 		if($this->leaf === null){
-			if($name === "INDEX"){
-				$this->leaf = $this->root = new IndexNode();
-			}else{
+			if($name !== "KINETIC" && $name !== "ROOT"){
 				throw new ParseException("<$name> is not an acceptable root element");
 			}
 
-			if(isset($attrs["NAMESPACE"])){
-				$this->namespace = trim($attrs["NAMESPACE"], "\\");
-				if($this->namespace !== null){
-					$this->namespace .= "\\";
-				}
-				unset($attrs["NAMESPACE"]);
+			$this->leaf = $this->root = new RootNode();
+			foreach($attrs as $k => $v){
+				$this->leaf->setAttribute($k, $v);
 			}
 		}else{
 			$leaf = $this->leaf->startChild($name);
@@ -135,12 +129,12 @@ abstract class KineticFileParser{
 		$this->dataBuffer .= $data;
 	}
 
-	public function getRoot() : IndexNode{
+	public function getRoot() : RootNode{
 		return $this->root;
 	}
 
 	public function getNamespace() : string{
-		return $this->namespace;
+		return $this->root->getNamespace();
 	}
 
 	public abstract function parse();

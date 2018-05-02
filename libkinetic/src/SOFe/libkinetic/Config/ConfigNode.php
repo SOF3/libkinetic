@@ -20,49 +20,42 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Config;
 
-use InvalidStateException;
+use SOFe\libkinetic\Element\ElementNode;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
 
-class LinkNode extends KineticNode{
-	protected $target;
+/**
+ * `<config>` (ConfigNode) is a CustomForm whose layout is hardcoded in the kinetic file. All ElementNode subclasses are accepted as child nodes.
+ */
+class ConfigNode extends AbstractConfigWindowNode{
+	/** @var ElementNode[] */
+	protected $elements = [];
 
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
-			return true;
+		if($delegate = ElementNode::byName($name)){
+			return $this->elements[] = $delegate;
 		}
 
-		return false;
-	}
-
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("target");
+		return null;
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
+		parent::resolve($manager);
+		foreach($this->elements as $node){
+			$node->resolve($manager);
+		}
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"target" => $this->target,
+				"required" => $this->required,
+				"elements" => $this->elements,
 			];
 	}
 }

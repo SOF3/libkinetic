@@ -23,20 +23,26 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node;
 
 use JsonSerializable;
+use LogicException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\Window\IndexNode;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use function array_unshift;
 use function assert;
+use function get_class;
 use function is_numeric;
 use function strtoupper;
 
 abstract class KineticNode implements JsonSerializable{
+	protected $manager;
 	/** @var string */
 	public $nodeName;
 	/** @var KineticNode|null */
 	public $nodeParent = null;
+
+	public function __construct(){
+		KineticFileParser::getParsingInstance()->allNodes[] = $this;
+	}
 
 	public function setAttribute(string $name, string $value) : bool{
 		return false;
@@ -59,7 +65,13 @@ abstract class KineticNode implements JsonSerializable{
 	}
 
 	public function resolve(KineticManager $manager) : void{
+		$this->manager = $manager;
+	}
 
+	public final function throwUnresolved() : void{
+		if(!isset($this->manager) && !($this instanceof LinkNode)){
+			throw new LogicException(get_class($this) . " has not been resolved: " . $this->getHierarchyName());
+		}
 	}
 
 	protected final function requireAttributes(string ...$names) : void{
@@ -109,10 +121,6 @@ abstract class KineticNode implements JsonSerializable{
 		}
 
 		return (float) $float;
-	}
-
-	protected function getRoot() : IndexNode{
-		return KineticFileParser::getParsingInstance()->getRoot();
 	}
 
 	public function getHierarchyName() : string{

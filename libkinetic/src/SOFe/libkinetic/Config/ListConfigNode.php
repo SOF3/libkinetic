@@ -20,23 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Config;
 
-use InvalidStateException;
-use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
-
-class LinkNode extends KineticNode{
-	protected $target;
+/**
+ * `<listConfig>` (ListConfig) is a variant of `<list>` as a Config. It is a MenuForm whose buttons are provided through a ListProvider implementation. The whole config only outputs one value, which is the chosen button.
+ */
+class ListConfigNode extends AbstractConfigWindowNode{
+	/** @var string */
+	protected $provider;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "PROVIDER"){
+			$this->provider = $value;
 			return true;
 		}
 
@@ -45,24 +44,6 @@ class LinkNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+		$this->requireAttributes("provider");
 	}
 }

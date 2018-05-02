@@ -20,23 +20,26 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Config;
 
-use InvalidStateException;
-use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
 
-class LinkNode extends KineticNode{
-	protected $target;
+/**
+ * `<complexConfig>` (ComplexConfigNode) is powered by a ComplexConfigProvider. Each element is displayed as one or multiple ElementNode.
+ */
+class ComplexConfigNode extends AbstractConfigWindowNode{
+	/** @var string */
+	protected $provider;
+	/** @var EachComplexNode */
+	protected $each;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "PROVIDER"){
+			$this->provider = $value;
 			return true;
 		}
 
@@ -45,24 +48,23 @@ class LinkNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("target");
+		$this->requireAttributes("provider");
 	}
 
-	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($name === "EACH"){
+			return $this->each = new EachComplexNode();
+		}
+
+		return null;
 	}
 
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
+	public function endElement() : void{
+		parent::endElement();
+		$this->requireElements("each");
 	}
 }

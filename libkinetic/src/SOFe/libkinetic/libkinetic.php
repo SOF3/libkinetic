@@ -22,31 +22,20 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-use pocketmine\Player;
+final class libkinetic{
+	private static $raw;
 
-class Intent{
-	/** @var Player */
-	protected $player;
-	/** @var string */
-	protected $nodeId;
-	/** @var mixed[] */
-	protected $data;
-
-	public function __construct(Player $player, string $nodeId, array $data){
-		$this->player = $player;
-		$this->nodeId = $nodeId;
-		$this->data = $data;
+	public static function isRaw() : bool{
+		return self::$raw;
 	}
 
-	public function getPlayer() : Player{
-		return $this->player;
+	public static function internalInit() : void{
+		self::$raw = self::class !== "SOFe\\libkinetic\\libkinetic";
 	}
 
-	public function getNodeId() : string{
-		return $this->nodeId;
-	}
-
-	public function getData() : array{
-		return $this->data;
+	public static function getNamespace() : string{
+		return __NAMESPACE__;
 	}
 }
+
+libkinetic::internalInit();

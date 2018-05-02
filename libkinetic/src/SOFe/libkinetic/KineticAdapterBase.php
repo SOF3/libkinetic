@@ -22,31 +22,20 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
+use InvalidArgumentException;
 use pocketmine\Player;
+use function sprintf;
 
-class Intent{
-	/** @var Player */
-	protected $player;
-	/** @var string */
-	protected $nodeId;
-	/** @var mixed[] */
-	protected $data;
-
-	public function __construct(Player $player, string $nodeId, array $data){
-		$this->player = $player;
-		$this->nodeId = $nodeId;
-		$this->data = $data;
+trait KineticAdapterBase{
+	public function hasMessage(string $identifier) : bool{
+		return true;
 	}
 
-	public function getPlayer() : Player{
-		return $this->player;
+	public function getMessage(?Player $player, string $identifier, array $parameters) : string{
+		return sprintf($identifier, $parameters);
 	}
 
-	public function getNodeId() : string{
-		return $this->nodeId;
-	}
-
-	public function getData() : array{
-		return $this->data;
+	public function getInstantiable(string $name) : object{
+		throw new InvalidArgumentException("Nonexistent instantiable \"$name\"");
 	}
 }

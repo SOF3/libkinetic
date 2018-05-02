@@ -93,6 +93,14 @@
 
             <table class="table table-condensed">
                     <tr>
+                <td class="type" id="property_manager">
+                                        protected                                        
+                </td>
+                <td>$manager</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
                 <td class="type" id="property_nodeName">
                                                                                 string
                 </td>
@@ -114,6 +122,17 @@
             <h2>Methods</h2>
 
             <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method___construct">__construct</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
                     <div class="row">
                 <div class="col-md-2 type">
                     
@@ -185,6 +204,17 @@
                     
                 </div>
                 <div class="col-md-8 type">
+                    <a href="#method_throwUnresolved">throwUnresolved</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
                     <a href="#method_requireAttributes">requireAttributes</a>(string ...$names)
         
                                             <p class="no-description">No description</p>
@@ -240,17 +270,6 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_getRoot">getRoot</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
                     <a href="#method_getHierarchyName">getHierarchyName</a>()
         
                                             <p class="no-description">No description</p>
@@ -275,8 +294,27 @@
 
             <div id="method-details">
                     <div class="method-item">
+                    <h3 id="method___construct">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L43">line 43</a></div>
+        <code>                    
+    <strong>__construct</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_setAttribute">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L41">line 41</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L47">line 47</a></div>
         <code>                    
     <strong>setAttribute</strong>(string $name, string $value)
         </code>
@@ -310,7 +348,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startChild">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L45">line 45</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L51">line 51</a></div>
         <code>                    
     <strong>startChild</strong>(string $name)
         </code>
@@ -339,7 +377,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_endAttributes">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L49">line 49</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L55">line 55</a></div>
         <code>                    
     <strong>endAttributes</strong>()
         </code>
@@ -358,7 +396,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_endElement">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L53">line 53</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L59">line 59</a></div>
         <code>                    
     <strong>endElement</strong>()
         </code>
@@ -377,7 +415,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_acceptText">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L57">line 57</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L63">line 63</a></div>
         <code>                    
     <strong>acceptText</strong>(string $text)
         </code>
@@ -406,7 +444,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_resolve">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L61">line 61</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L67">line 67</a></div>
         <code>                    
     <strong>resolve</strong>(<a href="../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
         </code>
@@ -434,8 +472,27 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_throwUnresolved">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L71">line 71</a></div>
+        <code>final                    
+    <strong>throwUnresolved</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_requireAttributes">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L65">line 65</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L77">line 77</a></div>
         <code>final            protected        
     <strong>requireAttributes</strong>(string ...$names)
         </code>
@@ -464,7 +521,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_requireElements">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L73">line 73</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L85">line 85</a></div>
         <code>final            protected        
     <strong>requireElements</strong>(string ...$names)
         </code>
@@ -493,7 +550,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_parseBoolean">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L81">line 81</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L93">line 93</a></div>
         <code>                    
     <strong>parseBoolean</strong>(string $boolean)
         </code>
@@ -522,7 +579,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_parseInt">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L95">line 95</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L107">line 107</a></div>
         <code>                    
     <strong>parseInt</strong>(string $int)
         </code>
@@ -551,7 +608,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_parseFloat">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L106">line 106</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L118">line 118</a></div>
         <code>                    
     <strong>parseFloat</strong>(string $float)
         </code>
@@ -579,27 +636,8 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getRoot">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L114">line 114</a></div>
-        <code>            protected        
-    <strong>getRoot</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
                     <h3 id="method_getHierarchyName">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L118">line 118</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L126">line 126</a></div>
         <code>                    
     <strong>getHierarchyName</strong>()
         </code>
@@ -618,7 +656,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_jsonSerialize">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L128">line 128</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/KineticNode.php#L136">line 136</a></div>
         <code>                    
     <strong>jsonSerialize</strong>()
         </code>

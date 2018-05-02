@@ -116,8 +116,16 @@
                 <td></td>
             </tr>
                     <tr>
+                <td class="type" id="property_allNodes">
+                                                                                <a href="../../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a>[]
+                </td>
+                <td>$allNodes</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
                 <td class="type" id="property_root">
-                                        protected                                        <a href="../../../SOFe/libkinetic/Node/Window/IndexNode.html"><abbr title="SOFe\libkinetic\Node\Window\IndexNode">IndexNode</abbr></a>|null
+                                        protected                                        <a href="../../../SOFe/libkinetic/Node/RootNode.html"><abbr title="SOFe\libkinetic\Node\RootNode">RootNode</abbr></a>|null
                 </td>
                 <td>$root</td>
                 <td class="last"></td>
@@ -128,14 +136,6 @@
                                         protected                                        <a href="../../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a>|null
                 </td>
                 <td>$leaf</td>
-                <td class="last"></td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td class="type" id="property_namespace">
-                                        protected                                        string
-                </td>
-                <td>$namespace</td>
                 <td class="last"></td>
                 <td></td>
             </tr>
@@ -260,7 +260,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_getParsingInstance">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L43">line 43</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L45">line 45</a></div>
         <code>        static            
     <strong>getParsingInstance</strong>()
         </code>
@@ -279,7 +279,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L60">line 60</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L59">line 59</a></div>
         <code>                    
     <strong>__construct</strong>()
         </code>
@@ -298,7 +298,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_startElement">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L63">line 63</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L62">line 62</a></div>
         <code>                    
     <strong>startElement</strong>($parser, string $name, array $attrs)
         </code>
@@ -337,7 +337,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_endElement">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L105">line 105</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L106">line 106</a></div>
         <code>                    
     <strong>endElement</strong>($parser, string $name)
         </code>
@@ -371,7 +371,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_flushBuffer">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L113">line 113</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L114">line 114</a></div>
         <code>            protected        
     <strong>flushBuffer</strong>()
         </code>
@@ -390,7 +390,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_parseText">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L127">line 127</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L128">line 128</a></div>
         <code>                    
     <strong>parseText</strong>($parser, string $data)
         </code>
@@ -424,7 +424,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getRoot">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L131">line 131</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L132">line 132</a></div>
         <code>                    
     <strong>getRoot</strong>()
         </code>
@@ -443,7 +443,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getNamespace">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L135">line 135</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L136">line 136</a></div>
         <code>                    
     <strong>getNamespace</strong>()
         </code>
@@ -462,7 +462,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_parse">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L139">line 139</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Parser/KineticFileParser.php#L140">line 140</a></div>
         <code>    abstract                
     <strong>parse</strong>()
         </code>

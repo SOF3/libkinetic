@@ -100,10 +100,10 @@
                 <td></td>
             </tr>
                     <tr>
-                <td class="type" id="property_provider">
-                                        protected                                        <a href="../../SOFe/libkinetic/LanguageProvider.html"><abbr title="SOFe\libkinetic\LanguageProvider">LanguageProvider</abbr></a>
+                <td class="type" id="property_adapter">
+                                        protected                                        <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a>
                 </td>
-                <td>$provider</td>
+                <td>$adapter</td>
                 <td class="last"></td>
                 <td></td>
             </tr>
@@ -117,7 +117,7 @@
             </tr>
                     <tr>
                 <td class="type" id="property_interactListener">
-                                        protected                                        <a href="../../SOFe/libkinetic/Listener/InteractListener.html"><abbr title="SOFe\libkinetic\Listener\InteractListener">InteractListener</abbr></a>|null
+                                        protected                                        <a href="../../SOFe/libkinetic/Window/Entry/Item/InteractListener.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\InteractListener">InteractListener</abbr></a>|null
                 </td>
                 <td>$interactListener</td>
                 <td class="last"></td>
@@ -134,7 +134,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/LanguageProvider.html"><abbr title="SOFe\libkinetic\LanguageProvider">LanguageProvider</abbr></a> $provider, string $xmlResource, string $jsonResource)
+                    <a href="#method___construct">__construct</a>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a> $provider, string $xmlResource, string $jsonResource)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -156,18 +156,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_getLanguageProvider">getLanguageProvider</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
-                    <a href="#method_requireTranslation">requireTranslation</a>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $key)
+                    <a href="#method_getAdapter">getAdapter</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -189,7 +178,40 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_registerItemHandler">registerItemHandler</a>(<a href="../../SOFe/libkinetic/Node/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Node\Entry\Item\ItemFilter">ItemFilter</abbr></a> $filter)
+                    <a href="#method_registerItemHandler">registerItemHandler</a>(<a href="../../SOFe/libkinetic/Window/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\ItemFilter">ItemFilter</abbr></a> $filter)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_translate">translate</a>(<abbr title="pocketmine\Player">Player</abbr>|null $context, string $identifier, array $args = [])
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_requireTranslation">requireTranslation</a>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $key)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_resolveClass">resolveClass</a>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $fqn, string|null $super = null)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -203,9 +225,9 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L45">line 45</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L48">line 48</a></div>
         <code>                    
-    <strong>__construct</strong>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/LanguageProvider.html"><abbr title="SOFe\libkinetic\LanguageProvider">LanguageProvider</abbr></a> $provider, string $xmlResource, string $jsonResource)
+    <strong>__construct</strong>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a> $provider, string $xmlResource, string $jsonResource)
         </code>
     </h3>
     <div class="details">
@@ -222,7 +244,7 @@
                 <td></td>
             </tr>
                     <tr>
-                <td><a href="../../SOFe/libkinetic/LanguageProvider.html"><abbr title="SOFe\libkinetic\LanguageProvider">LanguageProvider</abbr></a></td>
+                <td><a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a></td>
                 <td>$provider</td>
                 <td></td>
             </tr>
@@ -247,7 +269,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getPlugin">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L68">line 68</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L75">line 75</a></div>
         <code>                    
     <strong>getPlugin</strong>()
         </code>
@@ -265,10 +287,10 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getLanguageProvider">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L72">line 72</a></div>
+                    <h3 id="method_getAdapter">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L79">line 79</a></div>
         <code>                    
-    <strong>getLanguageProvider</strong>()
+    <strong>getAdapter</strong>()
         </code>
     </h3>
     <div class="details">
@@ -284,8 +306,95 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_getParser">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L83">line 83</a></div>
+        <code>                    
+    <strong>getParser</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_registerItemHandler">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L87">line 87</a></div>
+        <code>                    
+    <strong>registerItemHandler</strong>(<a href="../../SOFe/libkinetic/Window/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\ItemFilter">ItemFilter</abbr></a> $filter)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../SOFe/libkinetic/Window/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\ItemFilter">ItemFilter</abbr></a></td>
+                <td>$filter</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_translate">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L97">line 97</a></div>
+        <code>                    
+    <strong>translate</strong>(<abbr title="pocketmine\Player">Player</abbr>|null $context, string $identifier, array $args = [])
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="pocketmine\Player">Player</abbr>|null</td>
+                <td>$context</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$identifier</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$args</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_requireTranslation">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L76">line 76</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L102">line 102</a></div>
         <code>                    
     <strong>requireTranslation</strong>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $key)
         </code>
@@ -318,29 +427,10 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getParser">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L82">line 82</a></div>
+                    <h3 id="method_resolveClass">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L108">line 108</a></div>
         <code>                    
-    <strong>getParser</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
-                    <h3 id="method_registerItemHandler">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L86">line 86</a></div>
-        <code>                    
-    <strong>registerItemHandler</strong>(<a href="../../SOFe/libkinetic/Node/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Node\Entry\Item\ItemFilter">ItemFilter</abbr></a> $filter)
+    <strong>resolveClass</strong>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $fqn, string|null $super = null)
         </code>
     </h3>
     <div class="details">
@@ -352,8 +442,18 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../SOFe/libkinetic/Node/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Node\Entry\Item\ItemFilter">ItemFilter</abbr></a></td>
-                <td>$filter</td>
+                <td><a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a></td>
+                <td>$node</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$fqn</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>string|null</td>
+                <td>$super</td>
                 <td></td>
             </tr>
             </table>

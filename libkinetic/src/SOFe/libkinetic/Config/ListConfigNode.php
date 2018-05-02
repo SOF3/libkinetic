@@ -22,12 +22,17 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Config;
 
+use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\ListProvider;
+
 /**
  * `<listConfig>` (ListConfig) is a variant of `<list>` as a Config. It is a MenuForm whose buttons are provided through a ListProvider implementation. The whole config only outputs one value, which is the chosen button.
  */
 class ListConfigNode extends AbstractConfigWindowNode{
 	/** @var string */
 	protected $provider;
+	/** @var ListProvider */
+	protected $providerObject;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -45,5 +50,10 @@ class ListConfigNode extends AbstractConfigWindowNode{
 	public function endAttributes() : void{
 		parent::endAttributes();
 		$this->requireAttributes("provider");
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$this->providerObject = $manager->resolveClass($this, $this->provider, ListProvider::class);
 	}
 }

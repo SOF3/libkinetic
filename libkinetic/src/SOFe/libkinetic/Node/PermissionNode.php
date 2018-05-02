@@ -52,7 +52,7 @@ class PermissionNode extends KineticNode{
 			return true;
 		}
 
-		if($name === "VALUE"){
+		if($name === "NAME"){
 			$this->permission = $value;
 			return true;
 		}

@@ -20,12 +20,11 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Node;
+namespace SOFe\libkinetic\Window;
 
 use InvalidStateException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
-use SOFe\libkinetic\Window\WindowNode;
+use SOFe\libkinetic\Node\KineticNode;
 
 class LinkNode extends KineticNode{
 	protected $target;

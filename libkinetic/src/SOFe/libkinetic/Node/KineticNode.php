@@ -27,6 +27,7 @@ use LogicException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Parser\KineticFileParser;
+use SOFe\libkinetic\Window\LinkNode;
 use function array_unshift;
 use function assert;
 use function get_class;

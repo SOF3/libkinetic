@@ -25,7 +25,6 @@ namespace SOFe\libkinetic\Window;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeTrait;
-use SOFe\libkinetic\Node\LinkNode;
 use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Window\ListWindow\ListNode;
 

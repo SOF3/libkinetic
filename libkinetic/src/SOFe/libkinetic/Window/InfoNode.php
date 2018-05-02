@@ -31,7 +31,7 @@ class InfoNode extends ConfigurableWindowNode{
 	/** @var string|null */
 	protected $populator = null;
 	/** @var WindowPreprocessor|null */
-	protected $populatorObj;
+	protected $populatorObject;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -58,6 +58,6 @@ class InfoNode extends ConfigurableWindowNode{
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 		$manager->requireTranslation($this, $this->content);
-		$this->populatorObj = $manager->resolveClass($this, $this->populator, WindowPreprocessor::class);
+		$this->populatorObject = $manager->resolveClass($this, $this->populator, WindowPreprocessor::class);
 	}
 }

@@ -25,15 +25,15 @@ namespace SOFe\libkinetic\Window\ListWindow;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Node\LinkNode;
 use SOFe\libkinetic\Window\ConfigurableWindowNode;
 use SOFe\libkinetic\Window\InfoNode;
+use SOFe\libkinetic\Window\LinkNode;
 
 class EachListNode extends KineticNode{
 	/** @var string */
 	protected $configName;
 
-	/** @var ConfigurableWindowNode|LinkNode */
+	/** @var ConfigurableWindowNode|\SOFe\libkinetic\Window\LinkNode */
 	protected $child;
 
 	public function setAttribute(string $name, string $value) : bool{

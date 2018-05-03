@@ -5,6 +5,12 @@ var dir_8f8981b912b9eb7fbec41599250f1e31 =
     [ "Node", "dir_fd1e9083f0791488690623f366d586c6.html", "dir_fd1e9083f0791488690623f366d586c6" ],
     [ "Parser", "dir_9c1732ee0427a8f03061cdab9209dbbc.html", "dir_9c1732ee0427a8f03061cdab9209dbbc" ],
     [ "Window", "dir_3eadba117792fc7ab1016b399bac03a1.html", "dir_3eadba117792fc7ab1016b399bac03a1" ],
+    [ "ClickHandler.php", "_click_handler_8php.html", [
+      [ "ClickHandler", "interface_s_o_fe_1_1libkinetic_1_1_click_handler.html", null ]
+    ] ],
+    [ "ComplexConfigProvider.php", "_complex_config_provider_8php.html", [
+      [ "ComplexConfigProvider", "interface_s_o_fe_1_1libkinetic_1_1_complex_config_provider.html", null ]
+    ] ],
     [ "FormListener.php", "_form_listener_8php.html", [
       [ "FormListener", "class_s_o_fe_1_1libkinetic_1_1_form_listener.html", "class_s_o_fe_1_1libkinetic_1_1_form_listener" ]
     ] ],
@@ -32,6 +38,9 @@ var dir_8f8981b912b9eb7fbec41599250f1e31 =
     ] ],
     [ "ParseException.php", "_parse_exception_8php.html", [
       [ "ParseException", "class_s_o_fe_1_1libkinetic_1_1_parse_exception.html", null ]
+    ] ],
+    [ "PermissionPredicate.php", "_permission_predicate_8php.html", [
+      [ "PermissionPredicate", "interface_s_o_fe_1_1libkinetic_1_1_permission_predicate.html", "interface_s_o_fe_1_1libkinetic_1_1_permission_predicate" ]
     ] ],
     [ "WindowPreprocessor.php", "_window_preprocessor_8php.html", [
       [ "WindowPreprocessor", "interface_s_o_fe_1_1libkinetic_1_1_window_preprocessor.html", null ]

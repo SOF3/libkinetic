@@ -5,7 +5,7 @@ var searchData=
   ['labelnode_2ephp',['LabelNode.php',['../_label_node_8php.html',1,'']]],
   ['libkinetic',['libkinetic',['../class_s_o_fe_1_1libkinetic_1_1libkinetic.html',1,'SOFe::libkinetic']]],
   ['libkinetic_2ephp',['libkinetic.php',['../libkinetic_8php.html',1,'']]],
-  ['linknode',['LinkNode',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_link_node.html',1,'SOFe::libkinetic::Node']]],
+  ['linknode',['LinkNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_link_node.html',1,'SOFe::libkinetic::Window']]],
   ['linknode_2ephp',['LinkNode.php',['../_link_node_8php.html',1,'']]],
   ['listconfignode',['ListConfigNode',['../class_s_o_fe_1_1libkinetic_1_1_config_1_1_list_config_node.html',1,'SOFe::libkinetic::Config']]],
   ['listconfignode_2ephp',['ListConfigNode.php',['../_list_config_node_8php.html',1,'']]],

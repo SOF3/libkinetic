@@ -9,5 +9,6 @@ var class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node =
     [ "$message", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#abf17cb2dba2ed17cb28aa5f37deb5293", null ],
     [ "$need", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#ad292af3ec0d58b396d226b91ba73749c", null ],
     [ "$permission", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#aad04b6f3304fe6a13d5be37f7cd28938", null ],
-    [ "$predicate", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#a1d8123699d1a4446cb3724972b1ce65d", null ]
+    [ "$predicate", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#a1d8123699d1a4446cb3724972b1ce65d", null ],
+    [ "$predicateObject", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html#a854952eed207e30c0f17d7ae71be9179", null ]
 ];

@@ -9,5 +9,7 @@ var searchData=
   ['parsetext',['parseText',['../class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#aaeeed829feb8a2160d27eaf49d7b5415',1,'SOFe::libkinetic::Parser::KineticFileParser']]],
   ['permissionnode',['PermissionNode',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html',1,'SOFe::libkinetic::Node']]],
   ['permissionnode_2ephp',['PermissionNode.php',['../_permission_node_8php.html',1,'']]],
+  ['permissionpredicate',['PermissionPredicate',['../interface_s_o_fe_1_1libkinetic_1_1_permission_predicate.html',1,'SOFe::libkinetic']]],
+  ['permissionpredicate_2ephp',['PermissionPredicate.php',['../_permission_predicate_8php.html',1,'']]],
   ['provide',['provide',['../interface_s_o_fe_1_1libkinetic_1_1_list_provider.html#ac791dea924effdb374ab07b308585119',1,'SOFe::libkinetic::ListProvider']]]
 ];

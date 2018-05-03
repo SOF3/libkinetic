@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['simpleitemfilternode_2ephp',['SimpleItemFilterNode.php',['../_simple_item_filter_node_8php.html',1,'']]],
-  ['simpleitemtouchfilternode_2ephp',['SimpleItemTouchFilterNode.php',['../_simple_item_touch_filter_node_8php.html',1,'']]],
-  ['slidernode_2ephp',['SliderNode.php',['../_slider_node_8php.html',1,'']]],
-  ['stepslidernode_2ephp',['StepSliderNode.php',['../_step_slider_node_8php.html',1,'']]]
+  ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
+  ['rootnode_2ephp',['RootNode.php',['../_root_node_8php.html',1,'']]]
 ];

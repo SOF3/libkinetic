@@ -12,6 +12,5 @@ var class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node =
     [ "testPermission", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#aa8be696f4f882b8035afcf34eb7060dd", null ],
     [ "$id", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ae97941710d863131c700f069b109991e", null ],
     [ "$permission", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#aad04b6f3304fe6a13d5be37f7cd28938", null ],
-    [ "$synopsis", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ab2de55d7654d4c57dfdc7ebd784df7aa", null ],
-    [ "$title", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ada57e7bb7c152edad18fe2f166188691", null ]
+    [ "$synopsis", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ab2de55d7654d4c57dfdc7ebd784df7aa", null ]
 ];

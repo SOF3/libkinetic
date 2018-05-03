@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>SOFe\libkinetic\Window\WindowParentNode | libkinetic v0.0.1</title>
+    <title>SOFe\libkinetic\Window\SingleClickableHolderNode | libkinetic v0.0.1</title>
 
             <link rel="stylesheet" type="text/css" href="../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../css/bootstrap-theme.min.css">
@@ -19,7 +19,7 @@
     
     </head>
 
-    <body id="class" data-name="class:SOFe_libkinetic_Window_WindowParentNode" data-root-path="../../../">
+    <body id="class" data-name="class:SOFe_libkinetic_Window_SingleClickableHolderNode" data-root-path="../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
@@ -66,20 +66,20 @@
                         <div class="namespace-breadcrumbs">
             <ol class="breadcrumb">
                 <li><span class="label label-default">trait</span></li>
-                        <li><a href="../../../SOFe.html">SOFe</a></li><li class="backslash">\</li><li><a href="../../../SOFe/libkinetic.html">libkinetic</a></li><li class="backslash">\</li><li><a href="../../../SOFe/libkinetic/Window.html">Window</a></li><li class="backslash">\</li><li>WindowParentNode</li>
+                        <li><a href="../../../SOFe.html">SOFe</a></li><li class="backslash">\</li><li><a href="../../../SOFe/libkinetic.html">libkinetic</a></li><li class="backslash">\</li><li><a href="../../../SOFe/libkinetic/Window.html">Window</a></li><li class="backslash">\</li><li>SingleClickableHolderNode</li>
             </ol>
         </div>
                 <div id="page-content">
                 
     <div class="page-header">
         <h1>
-            WindowParentNode
+            SingleClickableHolderNode
                 
         </h1>
     </div>
 
     <p>    trait
-    <strong>WindowParentNode</strong>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowParentNode.php">View source</a>)
+    <strong>SingleClickableHolderNode</strong>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/SingleClickableHolderNode.php">View source</a>)
 </p>
 
         
@@ -106,10 +106,10 @@
 
             <table class="table table-condensed">
                     <tr>
-                <td class="type" id="property_buttons">
-                                        protected                                        <a href="../../../SOFe/libkinetic/Window/WindowNode.html"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a>[]|<a href="../../../SOFe/libkinetic/Node/LinkNode.html"><abbr title="SOFe\libkinetic\Node\LinkNode">LinkNode</abbr></a>[]
+                <td class="type" id="property_child">
+                                        protected                                        <a href="../../../SOFe/libkinetic/Node/ClickableNode.html"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a>
                 </td>
-                <td>$buttons</td>
+                <td>$child</td>
                 <td class="last"></td>
                 <td></td>
             </tr>
@@ -146,7 +146,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_startChild">startChild</a>(string $name)
+                    <a href="#method_schn_startChild">schn_startChild</a>(string $name)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -157,7 +157,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_resolve">resolve</a>(<a href="../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
+                    <a href="#method_schn_endElement">schn_endElement</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -168,7 +168,18 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_jsonSerialize">jsonSerialize</a>()
+                    <a href="#method_schn_resolve">schn_resolve</a>(<a href="../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_schn_jsonSerialize">schn_jsonSerialize</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -229,10 +240,10 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_startChild">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowParentNode.php#L38">line 38</a></div>
+                    <h3 id="method_schn_startChild">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/SingleClickableHolderNode.php#L38">line 38</a></div>
         <code>                    
-    <strong>startChild</strong>(string $name)
+    <strong>schn_startChild</strong>(string $name)
         </code>
     </h3>
     <div class="details">
@@ -258,10 +269,29 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_resolve">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowParentNode.php#L58">line 58</a></div>
+                    <h3 id="method_schn_endElement">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/SingleClickableHolderNode.php#L65">line 65</a></div>
         <code>                    
-    <strong>resolve</strong>(<a href="../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
+    <strong>schn_endElement</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_schn_resolve">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/SingleClickableHolderNode.php#L71">line 71</a></div>
+        <code>                    
+    <strong>schn_resolve</strong>(<a href="../../../SOFe/libkinetic/KineticManager.html"><abbr title="SOFe\libkinetic\KineticManager">KineticManager</abbr></a> $manager)
         </code>
     </h3>
     <div class="details">
@@ -287,10 +317,10 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_jsonSerialize">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowParentNode.php#L70">line 70</a></div>
+                    <h3 id="method_schn_jsonSerialize">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/SingleClickableHolderNode.php#L81">line 81</a></div>
         <code>                    
-    <strong>jsonSerialize</strong>()
+    <strong>schn_jsonSerialize</strong>()
         </code>
     </h3>
     <div class="details">

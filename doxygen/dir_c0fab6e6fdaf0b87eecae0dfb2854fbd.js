@@ -19,7 +19,7 @@ var dir_c0fab6e6fdaf0b87eecae0dfb2854fbd =
       [ "InputNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_input_node.html", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_input_node" ]
     ] ],
     [ "LabelNode.php", "_label_node_8php.html", [
-      [ "LabelNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_label_node.html", null ]
+      [ "LabelNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_label_node.html", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_label_node" ]
     ] ],
     [ "SliderNode.php", "_slider_node_8php.html", [
       [ "SliderNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node.html", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node" ]

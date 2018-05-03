@@ -20,43 +20,50 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Window\ListWindow;
+namespace SOFe\libkinetic\Window;
 
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\Window\ClickableParentNode;
-use function assert;
 
-abstract class BeforeAfterListNode extends KineticNode implements KineticNodeWithId{
-	use ClickableParentNode;
+class ModalButtonNode extends KineticNode implements KineticNodeWithId{
+	use SingleClickableHolderNode;
+
+	protected $id;
+
+	public function __construct(string $id){
+		parent::__construct();
+		$this->id = $id;
+	}
+
+	public function getId() : string{
+		return $this->id;
+	}
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
 			return $delegate;
 		}
 
-		if($delegate = $this->cpn_startChild($name)){
+		if($delegate = $this->schn_startChild($name)){
 			return $delegate;
 		}
 
 		return null;
 	}
 
+	public function endElement() : void{
+		parent::endElement();
+		$this->schn_endElement();
+	}
+
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
-		$this->cpn_resolve($manager);
+		$this->schn_resolve($manager);
 	}
 
 	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + $this->cpn_jsonSerialize() + [
+		return parent::jsonSerialize() + $this->schn_jsonSerialize() + [
 			];
 	}
-
-	public function getId() : string{
-		assert($this->nodeParent instanceof ListNode);
-		return $this->nodeParent->getId() . "." . $this->getIdPart();
-	}
-
-	protected abstract function getIdPart() : string;
 }

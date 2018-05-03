@@ -25,18 +25,18 @@ namespace SOFe\libkinetic\Window;
 use pocketmine\Player;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\ClickableNode;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\PermissionNode;
+use SOFe\libkinetic\Node\RootNode;
 
 /**
  * A window represents a form that can be displayed to the user.
  */
-abstract class WindowNode extends KineticNode implements KineticNodeWithId{
+abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 	/** @var string */
 	protected $id;
-	/** @var string */
-	protected $title;
 
 	/** @var string|null */
 	protected $synopsis = null;
@@ -44,21 +44,20 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId{
 	protected $permission = null;
 
 	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
 		if($name === "ID"){
 			if($this->nodeParent instanceof KineticNodeWithId){
 				$this->id = $this->nodeParent->getId() . "." . $value;
 			}else{
-				if($this->nodeParent !== null){
+				if(!($this->nodeParent instanceof RootNode)){
 					throw new InvalidNodeException("Only KineticNodeWithId can have child window node", $this);
 				}
 				$this->id = $value;
 			}
 
-			return true;
-		}
-
-		if($name === "TITLE"){
-			$this->title = $value;
 			return true;
 		}
 
@@ -72,19 +71,47 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("id", "title");
+		$this->requireAttributes("id");
 	}
 
 	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
 		if($name === "PERMISSION"){
 			if($this->permission !== null){
 				throw new InvalidNodeException("Only one <PERMISSION> node is allowed", $this);
 			}
-			return new PermissionNode();
+			return $this->permission = new PermissionNode();
 		}
 
 		return null;
 	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+
+		$manager->requireTranslation($this, $this->title);
+
+		if($this->synopsis !== null){
+			$manager->requireTranslation($this, $this->synopsis);
+		}
+
+		if($this->permission !== null){
+			$this->permission->resolve($manager);
+		}
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"id" => $this->id,
+				"title" => $this->title,
+				"synopsis" => $this->synopsis,
+				"permission" => $this->permission,
+			];
+	}
+
 
 	public function getId() : string{
 		return $this->id;
@@ -104,24 +131,5 @@ abstract class WindowNode extends KineticNode implements KineticNodeWithId{
 
 	public function testPermission(Player $player, bool $ifUndefined = true) : bool{
 		return $this->permission !== null ? $this->permission->testPermission($player) : $ifUndefined;
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->title);
-		if($this->synopsis !== null){
-			$manager->requireTranslation($this, $this->synopsis);
-		}
-		if($this->permission !== null){
-			$this->permission->resolve($manager);
-		}
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"id" => $this->id,
-				"title" => $this->title,
-				"synopsis" => $this->synopsis,
-			];
 	}
 }

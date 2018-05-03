@@ -26,4 +26,9 @@ abstract class EditableElementNode extends ElementNode{
 	public abstract function getDefault();
 
 	public abstract function getDefaultAsString() : ?string;
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+			];
+	}
 }

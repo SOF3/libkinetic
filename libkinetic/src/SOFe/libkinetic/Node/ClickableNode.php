@@ -20,55 +20,44 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Window;
+namespace SOFe\libkinetic\Node;
 
-use InvalidStateException;
+use SOFe\libkinetic\ClickHandler;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\ClickableNode;
 
-class LinkNode extends ClickableNode{
-	protected $title = "(prohibited attribute)";
-
+abstract class ClickableNode extends KineticNode{
 	/** @var string */
-	protected $target;
+	protected $title;
+
+	/** @var string|null */
+	protected $onClick = null;
+	/** @var ClickHandler|null */
+	protected $onClickHandler = null;
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "TITLE"){
-			return false;
-		}
-
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "TARGET"){
-			$this->target = $value;
+		if($name === "TITLE"){
+			$this->title = $value;
+			return true;
+		}
+
+		if($name === "ON" . "CLICK"){
+			$this->onClick = $value;
 			return true;
 		}
 
 		return false;
 	}
 
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("target");
-	}
-
 	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
+		parent::resolve($manager);
+		$this->onClickHandler = $manager->resolveClass($this, $this->onClick, ClickHandler::class);
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"target" => $this->target,
-			];
-	}
-
-	public function getTarget() : string{
-		return $this->target;
-	}
-
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
+	public function getOnClickHandler() : ?ClickHandler{
+		return $this->onClickHandler;
 	}
 }

@@ -24,6 +24,7 @@ namespace SOFe\libkinetic\Node;
 
 use pocketmine\Player;
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\PermissionPredicate;
 
 /**
  * Describes the permission required for accessing a certain window.
@@ -38,6 +39,9 @@ class PermissionNode extends KineticNode{
 	protected $predicate = false;
 	/** @var string */
 	protected $permission;
+
+	/** @var PermissionPredicate */
+	protected $predicateObject;
 
 	/** @var string|null */
 	protected $message = null;
@@ -57,14 +61,14 @@ class PermissionNode extends KineticNode{
 			return true;
 		}
 
-		if($name === "MESSAGE"){
-			$this->message = $value;
-			return true;
-		}
-
 		if($name === "PREDICATE"){
 			$this->predicate = true;
 			$this->permission = $value;
+			return true;
+		}
+
+		if($name === "MESSAGE"){
+			$this->message = $value;
 			return true;
 		}
 
@@ -76,6 +80,9 @@ class PermissionNode extends KineticNode{
 		if($this->message !== null){
 			$manager->requireTranslation($this, $this->message);
 		}
+		$this->predicateObject = $this->predicate ?
+			$manager->resolveClass($this, $this->permission, PermissionPredicate::class) :
+			new NamedPermissionPredicate($this->permission, $this->need);
 	}
 
 	public function getPermissionString() : string{

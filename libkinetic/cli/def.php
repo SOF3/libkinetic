@@ -37,7 +37,7 @@ if(!is_file($file)){
 	throw new InvalidArgumentException("$file is not a file");
 }
 
-KineticFileParser::$parsingInstance = $parser = new XmlFileParser(fopen($file, "rb"), basename($file));
+$parser = new XmlFileParser(fopen($file, "rb"), basename($file));
 
 try{
 	$parser->parse();

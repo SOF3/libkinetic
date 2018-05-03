@@ -23,18 +23,19 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window;
 
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\ClickableNode;
+use SOFe\libkinetic\Node\ExitNode;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeTrait;
-use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
 use SOFe\libkinetic\Window\ListWindow\ListNode;
 
-trait WindowParentNode{
+trait ClickableParentNode{
 	use KineticNodeTrait;
 
-	/** @var WindowNode[]|LinkNode[] */
+	/** @var ClickableNode[] */
 	protected $buttons = [];
 
-	public function startChild(string $name) : ?KineticNode{
+	public function cpn_startChild(string $name) : ?KineticNode{
 		if($name === "INDEX"){
 			return $this->buttons[] = new IndexNode();
 		}
@@ -51,22 +52,28 @@ trait WindowParentNode{
 			return $this->buttons[] = new LinkNode();
 		}
 
+		if($name === "EXIT"){
+			return $this->buttons[] = new ExitNode();
+		}
+
 		return null;
 	}
 
-	public function resolve(KineticManager $manager) : void{
+	public function cpn_resolve(KineticManager $manager) : void{
 		foreach($this->buttons as $i => $button){
 			if($button instanceof LinkNode){
 				$this->buttons[$i] = $button = $button->findTarget($manager);
 			}
-			if(!($button instanceof DirectEntryWindowNode)){
-				$this->t_throw("Only DirectEntryWindowNode children are allowed");
+			if(!($button instanceof ClickableNode)){
+				$this->t_throw("Only ClickableNode children are allowed");
 			}
 			$button->resolve($manager);
 		}
 	}
 
-	public function jsonSerialize() : array{
-		return $this->buttons;
+	public function cpn_jsonSerialize() : array{
+		return [
+			"buttons" => $this->buttons
+		];
 	}
 }

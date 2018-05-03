@@ -53,23 +53,19 @@ class KineticManager{
 
 		if(extension_loaded("xml")){
 			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");
-			KineticFileParser::$parsingInstance = $this->parser =
-				new XmlFileParser($plugin->getResource($xmlResource), $xmlResource);
+			$this->parser = new XmlFileParser($plugin->getResource($xmlResource), $xmlResource);
 		}else{
 			$plugin->getLogger()->info("Loading JSON kinetic file $xmlResource");
-			KineticFileParser::$parsingInstance = $this->parser =
-				new JsonFileParser($plugin->getResource($xmlResource), $xmlResource);
+			$this->parser = new JsonFileParser($plugin->getResource($xmlResource), $xmlResource);
 		}
 
 		$this->parser->parse();
 
-		$this->parser->getRoot()->resolve($this);
+		$this->parser->getRoot()->cpn_resolve($this);
 
 		foreach($this->parser->allNodes as $node){
 			$node->throwUnresolved();
 		}
-
-		KineticFileParser::$parsingInstance = null;
 	}
 
 	public function getPlugin() : Plugin{
@@ -105,7 +101,7 @@ class KineticManager{
 		}
 	}
 
-	public function resolveClass(KineticNode $node, string $fqn, ?string $super = null) : object{
+	public function resolveClass(KineticNode $node, string $fqn, ?string $super) : object{
 		if($fqn{0} === '$'){
 			$object = $this->adapter->getInstantiable(substr($fqn, 1));
 			if($super !== null && !($object instanceof $super)){

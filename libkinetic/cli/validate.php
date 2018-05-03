@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\ParseException;
-use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
 
 require_once __DIR__ . "/../cli-autoload.php";
@@ -35,8 +34,7 @@ if(!is_file($file)){
 	throw new InvalidArgumentException("$file is not a file");
 }
 
-KineticFileParser::$parsingInstance = $parser =
-	new XmlFileParser(fopen($file, "rb"), basename($file));
+$parser = new XmlFileParser(fopen($file, "rb"), basename($file));
 try{
 	$parser->parse();
 }catch(InvalidNodeException $e){
@@ -47,4 +45,4 @@ try{
 	exit(1);
 }
 
-echo json_encode($parser->getRoot());
+echo yaml_emit(json_decode(json_encode($parser->getRoot()), true));

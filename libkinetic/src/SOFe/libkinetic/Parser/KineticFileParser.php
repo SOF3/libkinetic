@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Parser;
 
-use InvalidStateException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
@@ -35,19 +34,11 @@ use function trim;
 
 abstract class KineticFileParser{
 	public static $hasPm = false;
-	public static $parsingInstance = null;
 
 	/** @var KineticNode[]|KineticNodeWithId[] */
 	public $idMap = [];
 	/** @var KineticNode[] */
 	public $allNodes = [];
-
-	public static function getParsingInstance() : KineticFileParser{
-		if(self::$parsingInstance === null){
-			throw new InvalidStateException("Not currently parsing a file");
-		}
-		return self::$parsingInstance;
-	}
 
 	/** @var RootNode|null */
 	protected $root = null;
@@ -66,7 +57,7 @@ abstract class KineticFileParser{
 				throw new ParseException("<$name> is not an acceptable root element");
 			}
 
-			$this->leaf = $this->root = new RootNode();
+			$this->allNodes[] = $this->leaf = $this->root = new RootNode();
 			foreach($attrs as $k => $v){
 				$this->leaf->setAttribute($k, $v);
 			}
@@ -76,7 +67,7 @@ abstract class KineticFileParser{
 				throw new InvalidNodeException("<{$name}> is not a valid child node", $this->leaf);
 			}
 			$leaf->nodeParent = $this->leaf;
-			$this->leaf = $leaf;
+			$this->allNodes[] = $this->leaf = $leaf;
 		}
 
 		$this->leaf->nodeName = $name;

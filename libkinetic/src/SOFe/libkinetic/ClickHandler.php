@@ -20,19 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Window\Entry;
+namespace SOFe\libkinetic;
 
-use SOFe\libkinetic\Node\KineticNode;
-use function assert;
+interface ClickHandler{
 
-abstract class AbstractEntryPointNode extends KineticNode{
-	public function getParent() : DirectEntryWindowNode{
-		assert($this->nodeParent instanceof DirectEntryWindowNode);
-		return $this->nodeParent;
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
-	}
 }

@@ -56,4 +56,10 @@ class ListConfigNode extends AbstractConfigWindowNode{
 		parent::resolve($manager);
 		$this->providerObject = $manager->resolveClass($this, $this->provider, ListProvider::class);
 	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"provider" => $this->provider,
+			];
+	}
 }

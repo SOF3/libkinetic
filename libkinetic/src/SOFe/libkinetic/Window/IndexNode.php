@@ -30,18 +30,14 @@ use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
  * Index is displayed as a MenuForm, where options are hardcoded to be links to a child window or a link to a window identified by its ID.
  */
 class IndexNode extends DirectEntryWindowNode{
-	use WindowParentNode {
-		startChild as private wpn_startChild;
-		jsonSerialize as private wpn_jsonSerialize;
-		resolve as private wpn_resolve;
-	}
+	use ClickableParentNode;
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
 			return $delegate;
 		}
 
-		if($delegate = $this->wpn_startChild($name)){
+		if($delegate = $this->cpn_startChild($name)){
 			return $delegate;
 		}
 
@@ -49,11 +45,12 @@ class IndexNode extends DirectEntryWindowNode{
 	}
 
 	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + $this->wpn_jsonSerialize();
+		return parent::jsonSerialize() + $this->cpn_jsonSerialize() + [
+			];
 	}
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
-		$this->wpn_resolve($manager);
+		$this->cpn_resolve($manager);
 	}
 }

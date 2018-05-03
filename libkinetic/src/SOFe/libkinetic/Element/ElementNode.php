@@ -22,28 +22,22 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Element;
 
-use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Node\KineticNodeWithId;
 
-abstract class ElementNode extends KineticNode implements KineticNodeWithId{
+abstract class ElementNode extends KineticNode{
 	/** @var string */
 	protected $id;
 	/** @var string */
 	protected $title;
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "ID"){
-			if($this->nodeParent instanceof KineticNodeWithId){
-				$this->id = $this->nodeParent->getId() . "." . $value;
-			}else{
-				if($this->nodeParent !== null){
-					throw new InvalidNodeException("Only KineticNodeWithId can have child element node", $this);
-				}
-				$this->id = $value;
-			}
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
 
+		if($name === "ID"){
+			$this->id = $value;
 			return true;
 		}
 

@@ -67,4 +67,11 @@ class ComplexConfigNode extends AbstractConfigWindowNode{
 		parent::endElement();
 		$this->requireElements("each");
 	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"provider" => $this->provider,
+				"each" => $this->each,
+			];
+	}
 }

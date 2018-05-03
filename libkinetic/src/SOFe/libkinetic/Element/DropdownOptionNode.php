@@ -73,6 +73,14 @@ class DropdownOptionNode extends KineticNode{
 		$manager->requireTranslation($this, $this->text);
 	}
 
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"value" => $this->value,
+				"default" => $this->default,
+				"text" => $this->text,
+			];
+	}
+
 	public function getValue() : string{
 		return $this->value;
 	}
@@ -83,13 +91,5 @@ class DropdownOptionNode extends KineticNode{
 
 	public function getText() : string{
 		return $this->text;
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"value" => $this->value,
-				"default" => $this->default,
-				"text" => $this->text,
-			];
 	}
 }

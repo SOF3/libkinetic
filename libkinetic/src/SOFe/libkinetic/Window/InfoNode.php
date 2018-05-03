@@ -23,41 +23,39 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window;
 
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\WindowPreprocessor;
+use SOFe\libkinetic\Node\KineticNode;
 
 class InfoNode extends ConfigurableWindowNode{
-	/** @var string */
-	protected $content;
-	/** @var string|null */
-	protected $populator = null;
-	/** @var WindowPreprocessor|null */
-	protected $populatorObject;
+	/** @var ModalButtonNode|null */
+	protected $button1;
+	/** @var ModalButtonNode|null */
+	protected $button2;
 
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
 		}
 
-		if($name === "CONTENT"){
-			$this->content = $value;
-			return true;
+		if($name === "BUTTON1"){
+			return $this->button1 = new ModalButtonNode($this->getId() . ".button1");
 		}
 
-		if($name === "POPULATOR"){
-			$this->populator = $value;
+		if($name === "BUTTON2"){
+			return $this->button1 = new ModalButtonNode($this->getId() . ".button2");
 		}
 
-		return false;
-	}
-
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("content");
+		return null;
 	}
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->content);
-		$this->populatorObject = $manager->resolveClass($this, $this->populator, WindowPreprocessor::class);
+
+		if($this->button1 !== null){
+			$this->button1->resolve($manager);
+		}
+
+		if($this->button2 !== null){
+			$this->button2->resolve($manager);
+		}
 	}
 }

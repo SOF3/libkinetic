@@ -48,8 +48,6 @@ class CommandConfigNode extends AbstractConfigNode{
 			return true;
 		}
 
-		$this->id = "(to be set in CommandConfigNode::endElement())";
-
 		if($name === "ARG" . "NAME"){
 			$this->argName = trim($value);
 			return true;
@@ -59,6 +57,7 @@ class CommandConfigNode extends AbstractConfigNode{
 	}
 
 	public function endAttributes() : void{
+		assert($this->nodeParent instanceof ConfigurableWindowNode);
 		parent::endAttributes();
 		$this->requireAttributes("argName");
 	}
@@ -87,14 +86,19 @@ class CommandConfigNode extends AbstractConfigNode{
 		if(!isset($this->element)){
 			throw new InvalidNodeException("Exactly one child node is accepted", $this);
 		}
-
-		$this->id = $this->element->getId();
 	}
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 		$manager->requireTranslation($this, $this->argName);
 		$this->element->resolve($manager);
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"argName" => $this->argName,
+				"element" => $this->element,
+			];
 	}
 
 	public function isRequired() : bool{
@@ -107,10 +111,5 @@ class CommandConfigNode extends AbstractConfigNode{
 
 	public function getElement() : EditableElementNode{
 		return $this->element;
-	}
-
-	public function getId() : string{
-		assert($this->nodeParent instanceof ConfigurableWindowNode);
-		return $this->nodeParent->getId() . ".__commandArgs";
 	}
 }

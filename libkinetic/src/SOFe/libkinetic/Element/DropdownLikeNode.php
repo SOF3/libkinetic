@@ -71,6 +71,13 @@ abstract class DropdownLikeNode extends EditableElementNode{
 		}
 	}
 
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"options" => $this->options,
+				"default" => $this->default,
+			];
+	}
+
 	protected abstract function getStepName() : string;
 
 	public function getDefault(){
@@ -79,12 +86,5 @@ abstract class DropdownLikeNode extends EditableElementNode{
 
 	public function getDefaultAsString() : ?string{
 		return $this->options[$this->default]->getText();
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"options" => $this->options,
-				"default" => $this->default,
-			];
 	}
 }

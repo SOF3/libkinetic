@@ -73,6 +73,13 @@ class CommandEntryPointNode extends AbstractEntryPointNode{
 		$manager->getPlugin()->getServer()->getCommandMap()->register($manager->getPlugin()->getName(), new NodeEntryCommand($manager, $this));
 	}
 
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"name" => $this->name,
+				"aliases" => $this->aliases,
+			];
+	}
+
 	public function getName() : string{
 		return $this->name;
 	}

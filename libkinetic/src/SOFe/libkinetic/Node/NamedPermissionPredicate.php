@@ -20,19 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Window\Entry;
+namespace SOFe\libkinetic\Node;
 
-use SOFe\libkinetic\Node\KineticNode;
-use function assert;
+use pocketmine\command\CommandSender;
+use SOFe\libkinetic\PermissionPredicate;
 
-abstract class AbstractEntryPointNode extends KineticNode{
-	public function getParent() : DirectEntryWindowNode{
-		assert($this->nodeParent instanceof DirectEntryWindowNode);
-		return $this->nodeParent;
+class NamedPermissionPredicate implements PermissionPredicate{
+	/** @var string */
+	protected $permissionName;
+	/** @var bool */
+	protected $need;
+
+	public function __construct(string $permissionName, bool $need){
+		$this->permissionName = $permissionName;
+		$this->need = $need;
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
+	public function hasPermission(CommandSender $sender) : bool{
+		return $sender->hasPermission($this->permissionName) === $this->need;
 	}
 }

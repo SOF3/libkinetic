@@ -72,6 +72,13 @@ abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
 		}
 	}
 
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"windowConfigs" => $this->windowConfigs,
+				"commandConfigs" => $this->commandConfigs,
+			];
+	}
+
 	/**
 	 * @return ConfigNode[]
 	 */
@@ -84,12 +91,5 @@ abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
 	 */
 	public function getCommandConfigs() : array{
 		return $this->commandConfigs;
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"windowConfigs" => $this->windowConfigs,
-				"commandConfigs" => $this->commandConfigs,
-			];
 	}
 }

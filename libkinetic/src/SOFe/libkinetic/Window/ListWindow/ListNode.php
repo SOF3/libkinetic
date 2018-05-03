@@ -42,7 +42,9 @@ class ListNode extends ConfigurableWindowNode{
 	/** @var ListProvider */
 	protected $providerObject;
 	/** @var BeforeAfterListNode|null */
-	protected $before, $after;
+	protected $before = null;
+	/** @var BeforeAfterListNode|null */
+	protected $after = null;
 	/** @var EachListNode */
 	protected $each;
 
@@ -97,10 +99,10 @@ class ListNode extends ConfigurableWindowNode{
 		$this->providerObject = $manager->resolveClass($this, $this->provider, ListProvider::class);
 
 		if($this->before !== null){
-			$this->before->resolve($manager);
+			$this->before->cpn_resolve($manager);
 		}
 		if($this->after !== null){
-			$this->after->resolve($manager);
+			$this->after->cpn_resolve($manager);
 		}
 
 		$this->each->resolve($manager);

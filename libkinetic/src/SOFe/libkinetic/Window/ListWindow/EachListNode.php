@@ -26,15 +26,14 @@ use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Window\ConfigurableWindowNode;
-use SOFe\libkinetic\Window\InfoNode;
 use SOFe\libkinetic\Window\LinkNode;
+use SOFe\libkinetic\Window\SingleClickableHolderNode;
 
 class EachListNode extends KineticNode{
+	use SingleClickableHolderNode;
+
 	/** @var string */
 	protected $configName;
-
-	/** @var ConfigurableWindowNode|\SOFe\libkinetic\Window\LinkNode */
-	protected $child;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -56,38 +55,34 @@ class EachListNode extends KineticNode{
 	}
 
 	public function startChild(string $name) : ?KineticNode{
-		if($this->child !== null){
-			throw new InvalidNodeException("Only one child node is allowed", $this);
+		if($delegate = parent::startChild($name)){
+			return $delegate;
 		}
 
-		if($name === "LIST"){
-			return $this->child = new ListNode();
-		}
+		if($delegate = $this->schn_startChild($name)){
+			if(!($delegate instanceof ConfigurableWindowNode) && !($delegate instanceof LinkNode)){
+				throw new InvalidNodeException("The child must be a configurable node or a link to a configurable node, got a <{$this->child->nodeName}>", $this);
+			}
 
-		if($name === "INFO"){
-			return $this->child = new InfoNode();
-		}
-
-		if($name === "LINK"){
-			return $this->child = new LinkNode();
+			return $delegate;
 		}
 
 		return null;
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		if($this->child instanceof LinkNode){
-			$this->child = $this->child->findTarget($manager);
-			if(!($this->child instanceof ConfigurableWindowNode)){
-				throw new InvalidNodeException("The child of <EACH> in <LIST> must be a configurable node or a link to a configurable node, got a link to a <{$this->child->nodeName}> ({$this->child->getHierarchyName()})", $this);
-			}
+		parent::resolve($manager);
+
+		$this->schn_resolve($manager);
+
+		if(!($this->child instanceof ConfigurableWindowNode)){
+			throw new InvalidNodeException("The child must be a configurable node or a link to a configurable node, got a <{$this->child->nodeName}>", $this);
 		}
-		$this->child->resolve($manager);
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"child" => $this->child,
+				"configName" => $this->configName,
 			];
 	}
 }

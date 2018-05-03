@@ -51,6 +51,12 @@ class EachComplexNode extends KineticNode implements KineticNodeWithId{
 		}
 	}
 
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"elements" => $this->elements,
+			];
+	}
+
 	public function getId() : string{
 		assert($this->nodeParent instanceof ComplexConfigNode);
 		return $this->nodeParent->getId() . ".each";

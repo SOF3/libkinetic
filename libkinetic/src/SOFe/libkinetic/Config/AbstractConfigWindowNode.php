@@ -22,14 +22,26 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Config;
 
+use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\KineticNodeWithId;
+use SOFe\libkinetic\Window\ConfigurableWindowNode;
 
-class AbstractConfigWindowNode extends AbstractConfigNode{
+class AbstractConfigWindowNode extends AbstractConfigNode implements KineticNodeWithId{
+	/** @var string */
+	protected $id;
 	/** @var string */
 	protected $title;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+		if($name === "ID"){
+			if(!($this->nodeParent instanceof ConfigurableWindowNode)){
+				throw new InvalidNodeException("Only ConfigurableWindowNode can have AbstractConfigWindowNode children", $this);
+			}
+			$this->id = $this->nodeParent->getId() . "." . $value;
 			return true;
 		}
 
@@ -49,5 +61,16 @@ class AbstractConfigWindowNode extends AbstractConfigNode{
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 		$manager->requireTranslation($this, $this->title);
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"id" => $this->id,
+				"title" => $this->title,
+			];
+	}
+
+	public function getId() : string{
+		return $this->id;
 	}
 }

@@ -26,7 +26,6 @@ use JsonSerializable;
 use LogicException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Window\LinkNode;
 use function array_unshift;
 use function assert;
@@ -42,7 +41,6 @@ abstract class KineticNode implements JsonSerializable{
 	public $nodeParent = null;
 
 	public function __construct(){
-		KineticFileParser::getParsingInstance()->allNodes[] = $this;
 	}
 
 	public function setAttribute(string $name, string $value) : bool{

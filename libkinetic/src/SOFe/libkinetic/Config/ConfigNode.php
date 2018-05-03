@@ -54,7 +54,6 @@ class ConfigNode extends AbstractConfigWindowNode{
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"required" => $this->required,
 				"elements" => $this->elements,
 			];
 	}

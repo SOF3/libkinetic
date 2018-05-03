@@ -77,6 +77,18 @@ class InputNode extends EditableElementNode{
 		$manager->requireTranslation($this, $this->placeholder);
 	}
 
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"placeholder" => $this->placeholder,
+				"default" => $this->default,
+				"typeCast" => $this->typeCast,
+			];
+	}
+
+	public function getPlaceholder() : string{
+		return $this->placeholder;
+	}
+
 	public function getDefault(){
 		return $this->default;
 	}
@@ -85,7 +97,11 @@ class InputNode extends EditableElementNode{
 		return $this->default ? (string) $this->default : null;
 	}
 
-	protected static function typeCast(string $value, string $type){
+	public function getTypeCast() : string{
+		return $this->typeCast;
+	}
+
+	public static function typeCast(string $value, string $type){
 		switch(strtoupper($type)){
 			case "INT":
 			case "INTEGER":
@@ -113,13 +129,5 @@ class InputNode extends EditableElementNode{
 		}
 
 		throw new InvalidArgumentException("Invalid typeCast type \"$type\"");
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"placeholder" => $this->placeholder,
-				"default" => $this->default,
-				"typeCast" => $this->typeCast,
-			];
 	}
 }

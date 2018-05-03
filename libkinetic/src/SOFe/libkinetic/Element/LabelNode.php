@@ -23,5 +23,8 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Element;
 
 class LabelNode extends ElementNode{
-
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+			];
+	}
 }

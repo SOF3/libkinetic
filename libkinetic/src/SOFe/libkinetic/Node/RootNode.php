@@ -22,18 +22,21 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node;
 
+use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Window\ClickableParentNode;
+use SOFe\libkinetic\Window\WindowNode;
 use function rtrim;
 
 class RootNode extends KineticNode{
+	use ClickableParentNode;
+
 	/** @var string */
 	protected $namespace = "";
-	protected $roots = [];
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
-
 		if($name === "NAMESPACE"){
 			$this->namespace = rtrim($value, "\\");
 			if($this->namespace !== ""){
@@ -45,7 +48,38 @@ class RootNode extends KineticNode{
 		return false;
 	}
 
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($delegate = $this->cpn_startChild($name)){
+			return $delegate instanceof WindowNode ? $delegate : null;
+		}
+
+		return null;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		$this->cpn_resolve($manager);
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"namespace" => $this->namespace,
+				"roots" => $this->buttons,
+			];
+	}
+
 	public function getNamespace() : string{
 		return $this->namespace;
+	}
+
+	/**
+	 * @return WindowNode[]
+	 */
+	public function getRoots() : array{
+		return $this->buttons;
 	}
 }

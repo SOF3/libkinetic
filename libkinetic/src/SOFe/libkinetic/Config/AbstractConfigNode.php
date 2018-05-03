@@ -36,45 +36,37 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Config;
 
-use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\Window\WindowNode;
 
-class AbstractConfigNode extends KineticNode implements KineticNodeWithId{
-	/** @var string */
-	protected $id;
+class AbstractConfigNode extends KineticNode{
 	/** @var bool */
 	protected $required = false;
+	/** @var bool */
+	protected $local = true;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
 
-		if($name === "ID"){
-			if(!($this->nodeParent instanceof WindowNode)){
-				throw new InvalidNodeException("Only WindowNode can have AbstractConfigNode children", $this);
-			}
-			$this->id = $this->nodeParent->getId() . "." . $value;
-			return true;
-		}
 
 		if($name === "REQUIRED"){
 			$this->required = $this->parseBoolean($value);
 			return true;
 		}
 
+		if($name === "LOCAL"){
+			$this->local = $this->parseBoolean($value);
+			return true;
+		}
+
 		return false;
 	}
 
-	public function endAttributes() : void{
-		parent::endAttributes();
-
-		$this->requireAttributes("id");
-	}
-
-	public function getId() : string{
-		return $this->id;
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"required" => $this->required,
+				"local" => $this->local,
+			];
 	}
 }

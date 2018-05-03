@@ -23,7 +23,7 @@ var dir_8f8981b912b9eb7fbec41599250f1e31 =
     [ "KineticAdapter.php", "_kinetic_adapter_8php.html", [
       [ "KineticAdapter", "interface_s_o_fe_1_1libkinetic_1_1_kinetic_adapter.html", "interface_s_o_fe_1_1libkinetic_1_1_kinetic_adapter" ]
     ] ],
-    [ "KineticAdapterBase.php", "_kinetic_adapter_base_8php.html", null ],
+    [ "KineticAdapterBase.php", "_kinetic_adapter_base_8php.html", "_kinetic_adapter_base_8php" ],
     [ "KineticManager.php", "_kinetic_manager_8php.html", [
       [ "KineticManager", "class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html", "class_s_o_fe_1_1libkinetic_1_1_kinetic_manager" ]
     ] ],

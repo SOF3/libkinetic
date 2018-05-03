@@ -5,6 +5,7 @@ Keywords:
 - Verbs
   - "Declares": attributes of the node
   - "Contains": child nodes of the node
+  - "Accepts": text content of the node
   - "Subclass": subclasses of the node
   - "Abstract subclass": a subset of the subclasses of the node
   - "Uses": traits used by the node
@@ -37,12 +38,18 @@ Index:
         - Declares `name`, string: the command name (no leading slash; with the leading slash it becomes `//` for players)
         - Contains `[0, ∞)` **CommandAliasNode** (`<alias>`), declaring individual aliases
           - The alias name is in the cdata content of the tag
-      - Subclass `[0, ∞)` **ItemEntryPointNode** (`<item>`) for declaring entry items <!-- TODO: change structure -->
-        - Uses **ItemFilter**/**ItemFilterNode** for item filtering
-          - ~~Contains **SimpleItemFilterNode** (`<item>`) for multi-item-type filters~~
-        - Uses **ItemTouchFilterNode** for touch mode filtering
-          - Contains `[0, ∞]` **SimpleItemTouchFilterNode** for multi-match filters
-          - Contains `[0, 5]` **TouchModeNode** (`<touchMode>`) for specifying touch modes
+      - Subclass `[0, ∞)` **InteractEntryPointNode** (`<interact>`) for declaring entry PlayerInteractEvent rules
+        - Contains `[0, ∞]` **InteractFilterNode** for specifying rules
+          - Subclass `[0, ∞]` **ItemFilterNode** (`<item>`) for specifying item types
+            - Declares `itemId`, string/int: item name or ID
+            - Declares `itemDamage`, string/int: item damage or `*`
+          - Subclass `[0, ∞]` **BlockFilterNode** (`<block>`) for specifying block types
+            - Declares `blockId`, string/int: block name or ID
+            - Declares `blockDamage`, string/int: block damage or `*`
+          - Subclass `[0, ∞]` **TouchModeFilterNode** (`<touchMode>`) for specifying touch mode
+            - Accepts a constant name in `PlayerInteractEvent`
+          - Subclass `[0, ∞]` **FaceFilterNode** (`<face>`) for specifying touch face
+            - Accepts `up`/`down`/`east`/`west`/`north`/`south`
     - Subclass `[0, ∞)` **IndexNode** (`<index>`): a hardcoded MenuForm
       - Contains `[1, ∞)` **ClickableNode** children
         - Declares `title`, MessageRef: the name of the form window, also used as button name in *IndexNode*, required

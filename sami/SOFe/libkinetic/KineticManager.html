@@ -117,7 +117,7 @@
             </tr>
                     <tr>
                 <td class="type" id="property_interactListener">
-                                        protected                                        <a href="../../SOFe/libkinetic/Window/Entry/Item/InteractListener.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\InteractListener">InteractListener</abbr></a>|null
+                                        protected                                        <a href="../../SOFe/libkinetic/Window/Entry/Interact/InteractListener.html"><abbr title="SOFe\libkinetic\Window\Entry\Interact\InteractListener">InteractListener</abbr></a>|null
                 </td>
                 <td>$interactListener</td>
                 <td class="last"></td>
@@ -134,7 +134,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method___construct">__construct</a>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a> $provider, string $xmlResource = &quot;kinetic.xml&quot;, string $jsonResource = &quot;kinetic.json&quot;)
+                    <a href="#method___construct">__construct</a>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a> $adapter, string $xmlResource = &quot;kinetic.xml&quot;, string $jsonResource = &quot;kinetic.json&quot;)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -178,7 +178,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_registerItemHandler">registerItemHandler</a>(<a href="../../SOFe/libkinetic/Window/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\ItemFilter">ItemFilter</abbr></a> $filter)
+                    <a href="#method_registerItemHandler">registerItemHandler</a>(<a href="../../SOFe/libkinetic/Window/Entry/Interact/InteractEntryPointNode.html"><abbr title="SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode">InteractEntryPointNode</abbr></a> $filter)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -225,9 +225,9 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L48">line 48</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L50">line 50</a></div>
         <code>                    
-    <strong>__construct</strong>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a> $provider, string $xmlResource = &quot;kinetic.xml&quot;, string $jsonResource = &quot;kinetic.json&quot;)
+    <strong>__construct</strong>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a> $adapter, string $xmlResource = &quot;kinetic.xml&quot;, string $jsonResource = &quot;kinetic.json&quot;)
         </code>
     </h3>
     <div class="details">
@@ -245,7 +245,7 @@
             </tr>
                     <tr>
                 <td><a href="../../SOFe/libkinetic/KineticAdapter.html"><abbr title="SOFe\libkinetic\KineticAdapter">KineticAdapter</abbr></a></td>
-                <td>$provider</td>
+                <td>$adapter</td>
                 <td></td>
             </tr>
                     <tr>
@@ -269,7 +269,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getPlugin">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L71">line 71</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L77">line 77</a></div>
         <code>                    
     <strong>getPlugin</strong>()
         </code>
@@ -288,7 +288,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getAdapter">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L75">line 75</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L81">line 81</a></div>
         <code>                    
     <strong>getAdapter</strong>()
         </code>
@@ -307,7 +307,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getParser">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L79">line 79</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L85">line 85</a></div>
         <code>                    
     <strong>getParser</strong>()
         </code>
@@ -326,9 +326,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_registerItemHandler">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L83">line 83</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L89">line 89</a></div>
         <code>                    
-    <strong>registerItemHandler</strong>(<a href="../../SOFe/libkinetic/Window/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\ItemFilter">ItemFilter</abbr></a> $filter)
+    <strong>registerItemHandler</strong>(<a href="../../SOFe/libkinetic/Window/Entry/Interact/InteractEntryPointNode.html"><abbr title="SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode">InteractEntryPointNode</abbr></a> $filter)
         </code>
     </h3>
     <div class="details">
@@ -340,7 +340,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../SOFe/libkinetic/Window/Entry/Item/ItemFilter.html"><abbr title="SOFe\libkinetic\Window\Entry\Item\ItemFilter">ItemFilter</abbr></a></td>
+                <td><a href="../../SOFe/libkinetic/Window/Entry/Interact/InteractEntryPointNode.html"><abbr title="SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode">InteractEntryPointNode</abbr></a></td>
                 <td>$filter</td>
                 <td></td>
             </tr>
@@ -355,7 +355,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_translate">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L93">line 93</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L99">line 99</a></div>
         <code>                    
     <strong>translate</strong>(<abbr title="pocketmine\Player">Player</abbr>|null $context, string $identifier, array $args = [])
         </code>
@@ -394,7 +394,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_requireTranslation">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L98">line 98</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L104">line 104</a></div>
         <code>                    
     <strong>requireTranslation</strong>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $key)
         </code>
@@ -428,7 +428,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_resolveClass">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L104">line 104</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/KineticManager.php#L110">line 110</a></div>
         <code>                    
     <strong>resolveClass</strong>(<a href="../../SOFe/libkinetic/Node/KineticNode.html"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a> $node, string $fqn, string|null $super)
         </code>

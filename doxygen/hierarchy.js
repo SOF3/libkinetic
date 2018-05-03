@@ -3,9 +3,6 @@ var hierarchy =
     [ "ClickHandler", "interface_s_o_fe_1_1libkinetic_1_1_click_handler.html", null ],
     [ "ComplexConfigProvider", "interface_s_o_fe_1_1libkinetic_1_1_complex_config_provider.html", null ],
     [ "Intent", "class_s_o_fe_1_1libkinetic_1_1_intent.html", null ],
-    [ "ItemFilter", "interface_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_item_filter.html", [
-      [ "ItemEntryPointNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_item_entry_point_node.html", null ]
-    ] ],
     [ "KineticAdapter", "interface_s_o_fe_1_1libkinetic_1_1_kinetic_adapter.html", null ],
     [ "KineticFileParser", "class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html", [
       [ "JsonFileParser", "class_s_o_fe_1_1libkinetic_1_1_parser_1_1_json_file_parser.html", null ],
@@ -73,12 +70,15 @@ var hierarchy =
         [ "RootNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_root_node.html", null ],
         [ "AbstractEntryPointNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_abstract_entry_point_node.html", [
           [ "CommandEntryPointNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command_1_1_command_entry_point_node.html", null ],
-          [ "ItemEntryPointNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_item_entry_point_node.html", null ]
+          [ "InteractEntryPointNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_interact_entry_point_node.html", null ]
         ] ],
         [ "CommandAliasNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command_1_1_command_alias_node.html", null ],
-        [ "SimpleItemFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_simple_item_filter_node.html", null ],
-        [ "SimpleItemTouchFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_simple_item_touch_filter_node.html", null ],
-        [ "TouchModeNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_touch_mode_node.html", null ],
+        [ "InteractFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_interact_filter_node.html", [
+          [ "BlockFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_block_filter_node.html", null ],
+          [ "FaceFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_face_filter_node.html", null ],
+          [ "ItemFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_item_filter_node.html", null ],
+          [ "TouchModeFilterNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_touch_mode_filter_node.html", null ]
+        ] ],
         [ "BeforeAfterListNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_before_after_list_node.html", null ],
         [ "EachListNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_each_list_node.html", null ],
         [ "ModalButtonNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_modal_button_node.html", null ]
@@ -86,7 +86,7 @@ var hierarchy =
     ] ],
     [ "Listener", null, [
       [ "FormListener", "class_s_o_fe_1_1libkinetic_1_1_form_listener.html", null ],
-      [ "InteractListener", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_item_1_1_interact_listener.html", null ]
+      [ "InteractListener", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_interact_listener.html", null ]
     ] ],
     [ "PluginIdentifiableCommand", null, [
       [ "NodeEntryCommand", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command_1_1_node_entry_command.html", null ]

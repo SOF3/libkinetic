@@ -29,9 +29,11 @@ use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Parser\JsonFileParser;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
-use SOFe\libkinetic\Window\Entry\Item\InteractListener;
-use SOFe\libkinetic\Window\Entry\Item\ItemFilter;
+use SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode;
+use SOFe\libkinetic\Window\Entry\Interact\InteractListener;
+use function class_uses;
 use function extension_loaded;
+use function in_array;
 use function substr;
 
 class KineticManager{
@@ -45,10 +47,14 @@ class KineticManager{
 	/** @var InteractListener|null */
 	protected $interactListener = null;
 
-	public function __construct(Plugin $plugin, KineticAdapter $provider, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
+	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
-		$this->adapter = $provider;
+		if(in_array(KineticAdapterBase::class, class_uses($adapter), true)){
+			/** @var KineticAdapterBase $adapter */
+			$adapter->kinetic_setPlugin($plugin);
+		}
+		$this->adapter = $adapter;
 		$plugin->getServer()->getPluginManager()->registerEvents(new FormListener($this), $plugin);
 
 		if(extension_loaded("xml")){
@@ -80,7 +86,7 @@ class KineticManager{
 		return $this->parser;
 	}
 
-	public function registerItemHandler(ItemFilter $filter) : void{
+	public function registerItemHandler(InteractEntryPointNode $filter) : void{
 		if($this->interactListener === null){
 			$this->interactListener = new InteractListener($this);
 			$this->plugin->getServer()->getPluginManager()->registerEvents($this->interactListener, $this->plugin);

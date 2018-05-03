@@ -45,4 +45,10 @@ interface KineticAdapter{
 	public function getMessage(?Player $player, string $identifier, array $parameters) : string;
 
 	public function getInstantiable(string $name) : object;
+
+	/**
+	 * @param string $key
+	 * @return mixed|null
+	 */
+	public function getKineticConfig(string $key);
 }

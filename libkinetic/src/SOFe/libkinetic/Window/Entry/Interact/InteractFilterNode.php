@@ -20,13 +20,9 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Window\Entry\Item;
+namespace SOFe\libkinetic\Window\Entry\Interact;
 
-use pocketmine\event\player\PlayerInteractEvent;
-use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\Node\KineticNode;
 
-interface ItemFilter{
-	public function matches(PlayerInteractEvent $event) : bool;
-
-	public function onUseItem(KineticManager $manager, PlayerInteractEvent $event) : void;
+abstract class InteractFilterNode extends KineticNode{
 }

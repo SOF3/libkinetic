@@ -24,7 +24,6 @@ use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\ParseException;
-use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
 
 require_once __DIR__ . "/../cli-autoload.php";

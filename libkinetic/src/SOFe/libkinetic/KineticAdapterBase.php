@@ -24,9 +24,21 @@ namespace SOFe\libkinetic;
 
 use InvalidArgumentException;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use function sprintf;
 
 trait KineticAdapterBase{
+	/** @var Plugin */
+	private $plugin;
+
+	/**
+	 * @param Plugin $plugin
+	 * @internal Only to be called by KineticManager
+	 */
+	public final function kinetic_setPlugin(Plugin $plugin) : void{
+		$this->plugin = $plugin;
+	}
+
 	public function hasMessage(string $identifier) : bool{
 		return true;
 	}
@@ -37,5 +49,9 @@ trait KineticAdapterBase{
 
 	public function getInstantiable(string $name) : object{
 		throw new InvalidArgumentException("Nonexistent instantiable \"$name\"");
+	}
+
+	public function getKineticConfig(string $key){
+		return $this->plugin->getConfig()->getNested($key);
 	}
 }

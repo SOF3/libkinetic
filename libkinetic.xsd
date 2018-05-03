@@ -2,7 +2,10 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd">
   <xs:annotation>
-    <xs:documentation>libkinetic kinetic.xml schema</xs:documentation>
+    <xs:documentation><![CDATA[
+      libkinetic kinetic.xml schema.
+      This XSD file is actually invalid. It is designed only so that it fulfills simple auto-completion and validation with PhpStorm.
+    ]]></xs:documentation>
   </xs:annotation>
 
   <!-- root element -->
@@ -124,35 +127,87 @@
             </xs:complexType>
           </xs:element>
 
-          <xs:element name="item" type="ItemTouchFilter" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:element name="interact" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+              <xs:attribute name="fromConfig" type="xs:string"/>
+
+              <xs:sequence>
+                <xs:group ref="InteractFilter" minOccurs="0" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:complexType>
+          </xs:element>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ItemTouchFilter">
-    <xs:attribute name="itemId" type="xs:unsignedInt"/>
-    <xs:attribute name="itemDamage" type="xs:unsignedInt"/>
-    <xs:attribute name="fromConfig" type="xs:string"/>
-    <xs:sequence>
-      <xs:element name="item" type="ItemTouchFilter" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="touchMode" minOccurs="0" maxOccurs="5">
-        <xs:complexType>
-          <xs:attribute name="type">
-            <xs:simpleType>
-              <xs:restriction>
-                <xs:pattern value="PHYSICAL"/>
-                <xs:pattern value="LEFT_CLICK_BLOCK"/>
-                <xs:pattern value="RIGHT_CLICK_BLOCK"/>
-                <xs:pattern value="LEFT_CLICK_AIR"/>
-                <xs:pattern value="RIGHT_CLICK_AIR"/>
-              </xs:restriction>
-            </xs:simpleType>
-          </xs:attribute>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-  </xs:complexType>
+  <xs:group name="InteractFilter">
+    <xs:element name="item">
+      <xs:complexType>
+        <xs:attribute name="fromConfig" type="xs:string"/>
+
+        <xs:attribute name="itemId">
+          <xs:simpleType>
+            <xs:union memberTypes="xs:string xs:unsignedInt"/>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="itemDamage" default="any">
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedInt">
+              <xs:enumeration value="*"/>
+              <xs:enumeration value="any"/>
+              <xs:enumeration value="-1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:complexType>
+    </xs:element>
+
+    <xs:element name="touchMode">
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:enumeration value="PHYSICAL"/>
+          <xs:enumeration value="LEFT_CLICK_BLOCK"/>
+          <xs:enumeration value="RIGHT_CLICK_BLOCK"/>
+          <xs:enumeration value="LEFT_CLICK_AIR"/>
+          <xs:enumeration value="RIGHT_CLICK_AIR"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="block">
+      <xs:complexType>
+        <xs:attribute name="fromConfig" type="xs:string"/>
+
+        <xs:attribute name="blockId" type="xs:unsignedInt"/>
+        <xs:attribute name="blockDamage" default="any">
+          <xs:simpleType>
+            <xs:restriction base="xs:unsignedInt">
+              <xs:enumeration value="*"/>
+              <xs:enumeration value="any"/>
+              <xs:enumeration value="-1"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:complexType>
+    </xs:element>
+
+    <xs:element name="face">
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:enumeration value="up"/>
+          <xs:enumeration value="top"/>
+          <xs:enumeration value="down"/>
+          <xs:enumeration value="bottom"/>
+          <xs:enumeration value="north"/>
+          <xs:enumeration value="south"/>
+          <xs:enumeration value="east"/>
+          <xs:enumeration value="west"/>
+          <xs:pattern value="config:.+"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:group>
 
   <xs:complexType name="IndexNode">
     <xs:complexContent>

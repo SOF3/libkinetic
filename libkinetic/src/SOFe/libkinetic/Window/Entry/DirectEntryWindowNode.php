@@ -25,14 +25,14 @@ namespace SOFe\libkinetic\Window\Entry;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Window\Entry\Command\CommandEntryPointNode;
-use SOFe\libkinetic\Window\Entry\Item\ItemEntryPointNode;
+use SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode;
 use SOFe\libkinetic\Window\WindowNode;
 
 abstract class DirectEntryWindowNode extends WindowNode{
 	/** @var CommandEntryPointNode[] */
 	protected $cmds = [];
-	/** @var ItemEntryPointNode[] */
-	protected $items = [];
+	/** @var InteractEntryPointNode[] */
+	protected $interacts = [];
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
@@ -44,7 +44,7 @@ abstract class DirectEntryWindowNode extends WindowNode{
 		}
 
 		if($name === "ITEM"){
-			return $this->items[] = new ItemEntryPointNode();
+			return $this->interacts[] = new InteractEntryPointNode();
 		}
 
 		return null;
@@ -53,7 +53,7 @@ abstract class DirectEntryWindowNode extends WindowNode{
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
 				"cmds" => $this->cmds,
-				"items" => $this->items,
+				"interacts" => $this->interacts,
 			];
 	}
 
@@ -62,8 +62,8 @@ abstract class DirectEntryWindowNode extends WindowNode{
 		foreach($this->cmds as $cmd){
 			$cmd->resolve($manager);
 		}
-		foreach($this->items as $item){
-			$item->resolve($manager);
+		foreach($this->interacts as $interact){
+			$interact->resolve($manager);
 		}
 	}
 }

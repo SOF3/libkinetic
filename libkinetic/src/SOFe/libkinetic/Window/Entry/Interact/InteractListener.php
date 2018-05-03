@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Window\Entry\Item;
+namespace SOFe\libkinetic\Window\Entry\Interact;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
@@ -29,7 +29,7 @@ use SOFe\libkinetic\KineticManager;
 class InteractListener implements Listener{
 	/** @var KineticManager */
 	protected $manager;
-	/** @var ItemFilter[] */
+	/** @var InteractEntryPointNode[] */
 	public $filters = [];
 
 	public function __construct(KineticManager $manager){
@@ -38,8 +38,8 @@ class InteractListener implements Listener{
 
 	public function e_interact(PlayerInteractEvent $event) : void{
 		foreach($this->filters as $filter){
-			if($filter->matches($event)){
-				$filter->onUseItem($this->manager, $event);
+			if($filter->isValid($event)){
+				$filter->onUseItem($event);
 			}
 		}
 	}

@@ -51,8 +51,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_config_node_8php.html",
-"class_s_o_fe_1_1libkinetic_1_1_element_1_1_label_node.html",
-"class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_before_after_list_node.html#ad83d3a577b8774ec8f94516cdd1188e8"
+"class_s_o_fe_1_1libkinetic_1_1_element_1_1_input_node.html#ad402d8679325bc514874370f02b5c2ac",
+"class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_touch_mode_filter_node.html#ad402d8679325bc514874370f02b5c2ac"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

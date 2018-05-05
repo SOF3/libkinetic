@@ -15,7 +15,11 @@ var class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node =
     [ "setAttribute", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#ad91b3468f18c5c5aaacd38643a6df559", null ],
     [ "startChild", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a69fb3f4df6426a9852d9642c9586af8e", null ],
     [ "throwUnresolved", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a2681405ddd217adf70dcad8d4c450d36", null ],
+    [ "validateParentsCalled", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a13c057fc55aa642c73461144d317089e", null ],
+    [ "$endAttributesCalled", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#adf6c40cb131592d62e505e7b76d7808e", null ],
+    [ "$endElementCalled", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#aeca4948adf2a6450876f2c6d98104398", null ],
     [ "$manager", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a4621b1cd69b1417c9fb966c825299de1", null ],
     [ "$nodeName", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a76e04ac0636b0a3f1b820b18f58b3324", null ],
-    [ "$nodeParent", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#aa9b48142cdd4b3e612f7f92abdff7fa6", null ]
+    [ "$nodeParent", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#aa9b48142cdd4b3e612f7f92abdff7fa6", null ],
+    [ "$startChildCalled", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a4e84c998f2dba79dd1a2a1a86d810d9e", null ]
 ];

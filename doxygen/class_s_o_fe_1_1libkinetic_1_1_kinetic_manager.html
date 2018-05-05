@@ -89,6 +89,7 @@ $(document).ready(function(){initNavTree('class_s_o_fe_1_1libkinetic_1_1_kinetic
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">KineticManager Class Reference</div>  </div>
@@ -111,6 +112,17 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4cfaf01b880d42abeb219b15c480b7d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cc67329d8a06013504cbdbcbd3c79fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a7cc67329d8a06013504cbdbcbd3c79fc">resolveClass</a> (<a class="el" href="class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html">KineticNode</a> $node, string $fqn, ?string $super)</td></tr>
 <tr class="separator:a7cc67329d8a06013504cbdbcbd3c79fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38bd20e035f4283be6cf61de62584fca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a38bd20e035f4283be6cf61de62584fca">sendForm</a> (Player $target, array $formData, callable $handler)</td></tr>
+<tr class="separator:a38bd20e035f4283be6cf61de62584fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a279fc25af1b4dce04794975d5a5489d4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a279fc25af1b4dce04794975d5a5489d4">handleFormResponse</a> (Player $player, int $formId, array $response)</td></tr>
+<tr class="separator:a279fc25af1b4dce04794975d5a5489d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbcbabb6ac1b2dad9dee0d4820e9da4c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#adbcbabb6ac1b2dad9dee0d4820e9da4c">cleanExpiredForms</a> ()</td></tr>
+<tr class="separator:adbcbabb6ac1b2dad9dee0d4820e9da4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a45b62b79275ea68493165e5f885c3ca4"><td class="memItemLeft" align="right" valign="top">static&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a45b62b79275ea68493165e5f885c3ca4">$FORM_RESEND_TIME</a> = 10.0</td></tr>
+<tr class="separator:a45b62b79275ea68493165e5f885c3ca4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -120,13 +132,34 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:a3b91361f38329fa658ca89426078d7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a147a766daa03d52576c7345fea31c945"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a147a766daa03d52576c7345fea31c945">$parser</a></td></tr>
 <tr class="separator:a147a766daa03d52576c7345fea31c945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dcd469e6c336555e43c3003b0a0da54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a8dcd469e6c336555e43c3003b0a0da54">$forms</a> = []</td></tr>
+<tr class="separator:a8dcd469e6c336555e43c3003b0a0da54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa973f04e7f68be6d533436f25f3ecb62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#aa973f04e7f68be6d533436f25f3ecb62">$interactListener</a> = null</td></tr>
 <tr class="separator:aa973f04e7f68be6d533436f25f3ecb62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00039">39</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00044">44</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="adbcbabb6ac1b2dad9dee0d4820e9da4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbcbabb6ac1b2dad9dee0d4820e9da4c">&#9670;&nbsp;</a></span>cleanExpiredForms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">cleanExpiredForms </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00216">216</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+
+</div>
+</div>
 <a id="a23a4c71383d4d2dfc4ccade9fc78e5b9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a23a4c71383d4d2dfc4ccade9fc78e5b9">&#9670;&nbsp;</a></span>getAdapter()</h2>
 
@@ -142,7 +175,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00081">81</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00095">95</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -161,7 +194,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00085">85</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00099">99</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -180,7 +213,43 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00077">77</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00091">91</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a279fc25af1b4dce04794975d5a5489d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a279fc25af1b4dce04794975d5a5489d4">&#9670;&nbsp;</a></span>handleFormResponse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">handleFormResponse </td>
+          <td>(</td>
+          <td class="paramtype">Player&#160;</td>
+          <td class="paramname"><em>$player</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>$formId</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$response</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00197">197</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -200,7 +269,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00089">89</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00103">103</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -230,7 +299,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00104">104</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00118">118</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -266,7 +335,43 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00110">110</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00124">124</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a38bd20e035f4283be6cf61de62584fca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38bd20e035f4283be6cf61de62584fca">&#9670;&nbsp;</a></span>sendForm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">sendForm </td>
+          <td>(</td>
+          <td class="paramtype">Player&#160;</td>
+          <td class="paramname"><em>$target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$formData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">callable&#160;</td>
+          <td class="paramname"><em>$handler</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00185">185</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -302,7 +407,7 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00099">99</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00113">113</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -327,7 +432,55 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00043">43</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00050">50</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a45b62b79275ea68493165e5f885c3ca4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45b62b79275ea68493165e5f885c3ca4">&#9670;&nbsp;</a></span>$FORM_RESEND_TIME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$FORM_RESEND_TIME = 10.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00045">45</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+
+</div>
+</div>
+<a id="a8dcd469e6c336555e43c3003b0a0da54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8dcd469e6c336555e43c3003b0a0da54">&#9670;&nbsp;</a></span>$forms</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">$forms = []</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00055">55</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -351,7 +504,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00048">48</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00058">58</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -375,7 +528,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00045">45</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00052">52</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>
@@ -399,7 +552,7 @@ Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00041">41</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_kinetic_manager_8php_source.html#l00048">48</a> of file <a class="el" href="_kinetic_manager_8php_source.html">KineticManager.php</a>.</p>
 
 </div>
 </div>

@@ -6,6 +6,9 @@ var dir_fd1e9083f0791488690623f366d586c6 =
     [ "ExitNode.php", "_exit_node_8php.html", [
       [ "ExitNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_exit_node.html", null ]
     ] ],
+    [ "IconNode.php", "_icon_node_8php.html", [
+      [ "IconNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_icon_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_icon_node" ]
+    ] ],
     [ "KineticNode.php", "_kinetic_node_8php.html", [
       [ "KineticNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node" ]
     ] ],

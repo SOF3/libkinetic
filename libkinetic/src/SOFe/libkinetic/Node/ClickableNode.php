@@ -22,12 +22,22 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Node;
 
+use pocketmine\Player;
 use SOFe\libkinetic\ClickHandler;
+use SOFe\libkinetic\ClickInterruptedException;
+use SOFe\libkinetic\ConfigStack;
+use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 
 abstract class ClickableNode extends KineticNode{
 	/** @var string */
 	protected $title;
+
+	/** @var PermissionNode|null */
+	protected $permission = null;
+
+	/** @var IconNode|null */
+	protected $icon = null;
 
 	/** @var string|null */
 	protected $onClick = null;
@@ -52,12 +62,70 @@ abstract class ClickableNode extends KineticNode{
 		return false;
 	}
 
+	public function endAttributes() : void{
+		parent::endAttributes();
+		$this->requireAttributes("title");
+	}
+
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($name === "PERMISSION"){
+			if($this->permission !== null){
+				throw new InvalidNodeException("Only one <PERMISSION> node is allowed", $this);
+			}
+			return $this->permission = new PermissionNode();
+		}
+
+		if($name === "ICON"){
+			return $this->icon = new IconNode();
+		}
+
+		return null;
+	}
+
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
+
+		if($this->permission !== null){
+			$this->permission->resolve($manager);
+		}
+
 		$this->onClickHandler = $manager->resolveClass($this, $this->onClick, ClickHandler::class);
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"title" => $this->title,
+				"permission" => $this->permission,
+				"icon" => $this->icon,
+				"onClick" => $this->onClick,
+			];
 	}
 
 	public function getOnClickHandler() : ?ClickHandler{
 		return $this->onClickHandler;
+	}
+
+	public function getPermission() : ?PermissionNode{
+		return $this->permission;
+	}
+
+	public function testPermission(Player $player, bool $ifUndefined = true) : bool{
+		return $this->permission !== null ? $this->permission->testPermission($player) : $ifUndefined;
+	}
+
+
+	public function onClick(Player $player, ConfigStack $config) : void{
+		if($this->permission !== null && !$this->permission->testPermission($player)){
+			$player->sendMessage($this->permission->getPermissionMessage($this->manager, $player));
+			throw new ClickInterruptedException();
+		}
+
+		if($this->onClickHandler !== null){
+			$this->onClickHandler->onClick($player, $config);
+		}
 	}
 }

@@ -22,6 +22,10 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-interface WindowPreprocessor{
+use RuntimeException;
 
+class ClickInterruptedException extends RuntimeException{
+	public function __construct(){
+		parent::__construct("This exception should have been caught by libkinetic, but for some reason, it didn't");
+	}
 }

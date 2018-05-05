@@ -23,11 +23,12 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window\Entry;
 
 use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\Window\WindowNode;
 use function assert;
 
 abstract class AbstractEntryPointNode extends KineticNode{
-	public function getParent() : DirectEntryWindowNode{
-		assert($this->nodeParent instanceof DirectEntryWindowNode);
+	public function getParent() : WindowNode{
+		assert($this->nodeParent instanceof WindowNode);
 		return $this->nodeParent;
 	}
 

@@ -26,7 +26,6 @@ use JsonSerializable;
 use LogicException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Window\LinkNode;
 use function array_unshift;
 use function assert;
 use function get_class;
@@ -34,7 +33,12 @@ use function is_numeric;
 use function strtoupper;
 
 abstract class KineticNode implements JsonSerializable{
+	/** @var KineticManager */
 	protected $manager;
+
+	/** @var bool */
+	private $setAttributeCalled = false, $endAttributesCalled = false, $startChildCalled = false, $endElementCalled = false;
+
 	/** @var string */
 	public $nodeName;
 	/** @var KineticNode|null */
@@ -44,19 +48,21 @@ abstract class KineticNode implements JsonSerializable{
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
+		$this->setAttributeCalled = true;
 		return false;
 	}
 
+	public function endAttributes() : void{
+		$this->endAttributesCalled = true;
+	}
+
 	public function startChild(string $name) : ?KineticNode{
+		$this->startChildCalled = true;
 		return null;
 	}
 
-	public function endAttributes() : void{
-
-	}
-
 	public function endElement() : void{
-
+		$this->endElementCalled = true;
 	}
 
 	public function acceptText(string $text) : void{
@@ -68,7 +74,7 @@ abstract class KineticNode implements JsonSerializable{
 	}
 
 	public final function throwUnresolved() : void{
-		if(!isset($this->manager) && !($this instanceof LinkNode)){
+		if(!isset($this->manager)){
 			throw new LogicException(get_class($this) . " has not been resolved: " . $this->getHierarchyName());
 		}
 	}
@@ -86,6 +92,21 @@ abstract class KineticNode implements JsonSerializable{
 			if(!isset($this->{$name})){
 				throw new InvalidNodeException("Child element <$name> is required", $this);
 			}
+		}
+	}
+
+	public final function validateParentsCalled() : void{
+		if(!$this->setAttributeCalled){
+			throw new LogicException(get_class($this) . "::setAttribute() could not reach topmost parent level");
+		}
+		if(!$this->endAttributesCalled){
+			throw new LogicException(get_class($this) . "::endAttributes() could not reach topmost parent level");
+		}
+		if(!$this->startChildCalled){
+			throw new LogicException(get_class($this) . "::startChild() could not reach topmost parent level");
+		}
+		if(!$this->endElementCalled){
+			throw new LogicException(get_class($this) . "::endElement() could not reach topmost parent level");
 		}
 	}
 

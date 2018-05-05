@@ -22,21 +22,25 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Window;
 
-use InvalidStateException;
+use pocketmine\Player;
+use SOFe\libkinetic\ConfigStack;
+use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\ClickableNode;
 
 class LinkNode extends ClickableNode{
-	protected $title = "(prohibited attribute)";
-
 	/** @var string */
 	protected $target;
 
-	public function setAttribute(string $name, string $value) : bool{
-		if($name === "TITLE"){
-			return false;
-		}
+	/** @var ClickableNode */
+	protected $delegate;
 
+	public function __construct(){
+		parent::__construct();
+		$this->title = "(fallback to target node)";
+	}
+
+	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
@@ -55,7 +59,12 @@ class LinkNode extends ClickableNode{
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		throw new InvalidStateException("LinkNode should not be replaced before getting resolved");
+		parent::resolve($manager);
+
+		$this->delegate = $manager->getParser()->idMap[$this->target] ?? null;
+		if(!($this->delegate instanceof ClickableNode)){
+			throw new InvalidNodeException("$this->target does not resolve to a clickable node", $this);
+		}
 	}
 
 	public function jsonSerialize() : array{
@@ -68,7 +77,12 @@ class LinkNode extends ClickableNode{
 		return $this->target;
 	}
 
-	public function findTarget(KineticManager $manager) : WindowNode{
-		return $manager->getParser()->idMap[$this->target];
+	public function getDelegateNode() : ClickableNode{
+		return $this->delegate;
+	}
+
+	public function onClick(Player $player, ConfigStack $config) : void{
+		parent::onClick($player, $config);
+		$this->delegate->onClick($player, $config);
 	}
 }

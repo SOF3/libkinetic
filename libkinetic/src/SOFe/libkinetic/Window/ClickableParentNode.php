@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window;
 
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\ClickableNode;
 use SOFe\libkinetic\Node\ExitNode;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeTrait;
@@ -32,7 +31,7 @@ use SOFe\libkinetic\Window\ListWindow\ListNode;
 trait ClickableParentNode{
 	use KineticNodeTrait;
 
-	/** @var ClickableNode[] */
+	/** @var WindowNode[] */
 	protected $buttons = [];
 
 	public function cpn_startChild(string $name) : ?KineticNode{
@@ -61,12 +60,6 @@ trait ClickableParentNode{
 
 	public function cpn_resolve(KineticManager $manager) : void{
 		foreach($this->buttons as $i => $button){
-			if($button instanceof LinkNode){
-				$this->buttons[$i] = $button = $button->findTarget($manager);
-			}
-			if(!($button instanceof ClickableNode)){
-				$this->t_throw("Only ClickableNode children are allowed");
-			}
 			$button->resolve($manager);
 		}
 	}

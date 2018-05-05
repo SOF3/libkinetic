@@ -28,8 +28,9 @@ use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\ClickableNode;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\Node\PermissionNode;
 use SOFe\libkinetic\Node\RootNode;
+use SOFe\libkinetic\Window\Entry\Command\CommandEntryPointNode;
+use SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode;
 
 /**
  * A window represents a form that can be displayed to the user.
@@ -40,8 +41,11 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 
 	/** @var string|null */
 	protected $synopsis = null;
-	/** @var PermissionNode|null */
-	protected $permission = null;
+
+	/** @var CommandEntryPointNode[] */
+	protected $cmds = [];
+	/** @var InteractEntryPointNode[] */
+	protected $interacts = [];
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -79,11 +83,12 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 			return $delegate;
 		}
 
-		if($name === "PERMISSION"){
-			if($this->permission !== null){
-				throw new InvalidNodeException("Only one <PERMISSION> node is allowed", $this);
-			}
-			return $this->permission = new PermissionNode();
+		if($name === "COMMAND"){
+			return $this->cmds[] = new CommandEntryPointNode();
+		}
+
+		if($name === "INTERACT"){
+			return $this->interacts[] = new InteractEntryPointNode();
 		}
 
 		return null;
@@ -98,17 +103,21 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 			$manager->requireTranslation($this, $this->synopsis);
 		}
 
-		if($this->permission !== null){
-			$this->permission->resolve($manager);
+		foreach($this->cmds as $cmd){
+			$cmd->resolve($manager);
+		}
+
+		foreach($this->interacts as $interact){
+			$interact->resolve($manager);
 		}
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
 				"id" => $this->id,
-				"title" => $this->title,
 				"synopsis" => $this->synopsis,
-				"permission" => $this->permission,
+				"cmds" => $this->cmds,
+				"interacts" => $this->interacts,
 			];
 	}
 
@@ -121,15 +130,8 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 		return $this->synopsis;
 	}
 
-	public function getSynopsisString(KineticManager $manager, ?Player $context, array $args = []) : string{
-		return $this->synopsis !== null ? $manager->translate($context, $this->synopsis, $args) : "";
-	}
+	public function getSynopsisString(?Player $context, array $args = []) : string{
 
-	public function getPermission() : ?PermissionNode{
-		return $this->permission;
-	}
-
-	public function testPermission(Player $player, bool $ifUndefined = true) : bool{
-		return $this->permission !== null ? $this->permission->testPermission($player) : $ifUndefined;
+		return $this->synopsis !== null ? $this->manager->translate($context, $this->synopsis, $args) : "";
 	}
 }

@@ -54,7 +54,7 @@ class RootNode extends KineticNode{
 		}
 
 		if($delegate = $this->cpn_startChild($name)){
-			return $delegate instanceof WindowNode ? $delegate : null;
+			return $delegate;
 		}
 
 		return null;

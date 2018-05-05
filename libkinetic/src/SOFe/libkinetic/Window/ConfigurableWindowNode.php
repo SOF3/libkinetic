@@ -29,9 +29,8 @@ use SOFe\libkinetic\Config\ConfigNode;
 use SOFe\libkinetic\Config\ListConfigNode;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
 
-abstract class ConfigurableWindowNode extends DirectEntryWindowNode{
+abstract class ConfigurableWindowNode extends WindowNode{
 	/** @var AbstractConfigWindowNode[] */
 	protected $windowConfigs = [];
 	/** @var CommandConfigNode[] */

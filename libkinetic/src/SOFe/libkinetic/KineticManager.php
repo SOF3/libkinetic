@@ -25,24 +25,34 @@ namespace SOFe\libkinetic;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
+use RuntimeException;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Parser\JsonFileParser;
 use SOFe\libkinetic\Parser\KineticFileParser;
 use SOFe\libkinetic\Parser\XmlFileParser;
 use SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode;
 use SOFe\libkinetic\Window\Entry\Interact\InteractListener;
+use SOFe\libkinetic\Window\WindowNode;
+use TypeError;
 use function class_uses;
 use function extension_loaded;
 use function in_array;
+use function microtime;
+use function random_int;
 use function substr;
 
 class KineticManager{
+	public static $FORM_RESEND_TIME = 10.0;
+
 	/** @var Plugin */
 	protected $plugin;
 	/** @var KineticAdapter */
 	protected $adapter;
 	/** @var KineticFileParser */
 	protected $parser;
+
+	/** @var Form[] formId => Form */
+	protected $forms = [];
 
 	/** @var InteractListener|null */
 	protected $interactListener = null;
@@ -66,6 +76,10 @@ class KineticManager{
 		}
 
 		$this->parser->parse();
+
+		foreach($this->parser->allNodes as $node){
+			$node->validateParentsCalled();
+		}
 
 		$this->parser->getRoot()->cpn_resolve($this);
 
@@ -151,5 +165,64 @@ class KineticManager{
 		}
 
 		return $class->newInstance($this->plugin);
+	}
+
+
+	public function clickWindow(Player $player, string $id, ConfigStack $config) : void{
+		if(!isset($this->parser->idMap[$id]) || !($this->parser->idMap[$id] instanceof WindowNode)){
+			throw new \InvalidArgumentException("$id does not exist or is not a window node");
+		}
+
+		/** @var WindowNode $window */
+		$window = $this->parser->idMap[$id];
+		try{
+			$window->onClick($player, $config);
+		}/** @noinspection BadExceptionsProcessingInspection */catch(ClickInterruptedException $ex){
+		}
+	}
+
+
+	public function sendForm(Player $target, array $formData, callable $handler) : int{
+		$form = new Form();
+		$form->formId = random_int(0, 0x7FFFFFFF);
+		$form->formData = $formData;
+		$form->onReceive = $handler;
+		$form->target = $target;
+
+		$this->forms[$form->formId] = $form;
+		$form->sendPacket();
+		return $form->formId;
+	}
+
+	public function handleFormResponse(Player $player, int $formId, array $response) : void{
+		if(!isset($this->forms[$formId])){
+			return;
+		}
+
+		$form = $this->forms[$formId];
+		unset($this->forms[$formId]);
+		if($player !== $form->target){
+			// SECURITY ERROR!
+			return;
+		}
+
+		try{
+			($form->onReceive)($response, $player);
+		}catch(TypeError $error){
+			throw new RuntimeException("{$player->getName()} responded to a form with invalid data types. Is the plugin using an outdated version of libkinetic?", 0, $error);
+		}
+	}
+
+	public function cleanExpiredForms() : void{
+		foreach($this->forms as $formId => $form){
+			if(!$form->target->isOnline()){
+				unset($this->forms[$formId]);
+				continue;
+			}
+
+			if($form->sendTime + self::$FORM_RESEND_TIME < microtime(true)){
+				$form->sendPacket();
+			}
+		}
 	}
 }

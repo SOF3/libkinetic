@@ -69,12 +69,6 @@ trait SingleClickableHolderNode{
 	}
 
 	public function schn_resolve(KineticManager $manager) : void{
-		if($this->child instanceof LinkNode){
-			$this->child = $this->child->findTarget($manager);
-			if(!($this->child instanceof ClickableNode)){
-				$this->t_throw("The child must be a clickable node or a link to a clickable node, got a link to a <{$this->child->nodeName}> ({$this->child->getHierarchyName()})");
-			}
-		}
 		$this->child->resolve($manager);
 	}
 

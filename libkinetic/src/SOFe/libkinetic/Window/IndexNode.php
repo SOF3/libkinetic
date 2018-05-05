@@ -22,14 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Window;
 
+use pocketmine\Player;
+use SOFe\libkinetic\ConfigStack;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
 
 /**
  * Index is displayed as a MenuForm, where options are hardcoded to be links to a child window or a link to a window identified by its ID.
  */
-class IndexNode extends DirectEntryWindowNode{
+class IndexNode extends WindowNode{
 	use ClickableParentNode;
 
 	public function startChild(string $name) : ?KineticNode{
@@ -52,5 +53,48 @@ class IndexNode extends DirectEntryWindowNode{
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 		$this->cpn_resolve($manager);
+	}
+
+	public function onClick(Player $player, ConfigStack $config) : void{
+		parent::onClick($player, $config);
+
+		$buttons = [];
+		/** @var WindowNode[] $buttonNodes */
+		$buttonNodes = [];
+
+		foreach($this->buttons as $node){
+			if(!$node->testPermission($player)){
+				continue;
+			}
+
+			$button = [
+				"text" => $this->manager->translate($player, $node->title),
+			];
+			if($node->icon !== null){
+				$buttons["icon"] = [
+					"type" => $node->icon->getType(),
+					"data" => $node->icon->getValue(),
+				];
+			}
+
+			$buttons[] = $button;
+			$buttonNodes[] = $node;
+		}
+
+		$form = [
+			"type" => "form",
+			"title" => $this->manager->translate($player, $this->title, $config),
+			"content" => $this->getSynopsisString($player, $config),
+			"buttons" => $buttons,
+		];
+
+		$this->manager->sendForm($player, $form, function(?int $button, Player $player) use ($buttonNodes, $config){
+			if($button === null){
+				return;
+			}
+			if(isset($buttonNodes[$button])){
+				$buttonNodes[$button]->onClick($player, $config);
+			}
+		});
 	}
 }

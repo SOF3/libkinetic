@@ -25,7 +25,7 @@ namespace SOFe\libkinetic\Window\Entry\Command;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Window\Entry\AbstractEntryPointNode;
-use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
+use SOFe\libkinetic\Window\WindowNode;
 use function assert;
 
 class CommandEntryPointNode extends AbstractEntryPointNode{
@@ -66,7 +66,7 @@ class CommandEntryPointNode extends AbstractEntryPointNode{
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		assert($this->nodeParent instanceof DirectEntryWindowNode);
+		assert($this->nodeParent instanceof WindowNode);
 		foreach($this->aliases as $node){
 			$node->resolve($manager);
 		}

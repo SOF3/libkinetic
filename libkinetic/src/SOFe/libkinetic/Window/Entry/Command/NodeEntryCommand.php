@@ -30,7 +30,7 @@ use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Window\ConfigurableWindowNode;
-use SOFe\libkinetic\Window\Entry\DirectEntryWindowNode;
+use SOFe\libkinetic\Window\WindowNode;
 use function assert;
 
 class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
@@ -44,7 +44,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 	protected $args = [];
 
 	public function __construct(KineticManager $manager, CommandEntryPointNode $command){
-		assert($command->nodeParent instanceof DirectEntryWindowNode);
+		assert($command->nodeParent instanceof WindowNode);
 
 		$usage = "/{$command->getName()}";
 		if($command->nodeParent instanceof ConfigurableWindowNode){
@@ -69,7 +69,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 			}
 		}
 
-		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString($manager, null), $usage, $command->getAliases()); // TODO make translated description into the client
+		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(null), $usage, $command->getAliases()); // TODO make translated description into the client
 		$this->manager = $manager;
 		$this->command = $command;
 	}
@@ -95,7 +95,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 		}
 
 		$parent = $this->command->nodeParent;
-		assert($parent instanceof DirectEntryWindowNode);
+		assert($parent instanceof WindowNode);
 
 		if($parent->getPermission() !== null && !$parent->getPermission()->testPermission($target)){
 			return $parent->getPermission()->getPermissionMessage($this->manager, $target) ?? $target->getServer()->getLanguage()->translateString(TextFormat::RED . "%commands.generic.permission");

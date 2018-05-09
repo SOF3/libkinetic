@@ -61,13 +61,13 @@ Index:
           - `title` does not need to be declared, because it will be replaced by its referenced node during the resolve phase.
       - Uses **WindowParentNode** for accepting ClickableNode children
     - Abstract subclass `[0, ∞)` **ConfigurableWindowNode**: dynamic forms whose values can be configured
-      - Contains `[0, ∞)` **AbstractConfigNode** for configuration
+      - Contains `[0, ∞)` **ArgsNode** for configuration
         - Declares `id`, IDPart: required
         - Declares `required`, boolean: whether this configuration must be set, default `false`
         - Declares `local`, boolean: whether (`true`) this configuration is local or (`false`) should be further forwarded to child windows (if any), default `true`
-        - Abstract subclass `[0, ∞)` **AbstractConfigWindowNode**: provides configurations that can be displayed as a form window
+        - Abstract subclass `[0, ∞)` **ArgsWindowNode**: provides configurations that can be displayed as a form window
           - Declares `title`, MessageRef: the name of the form window displaying this configuration, required
-          - Subclass `[0, ∞)` **ConfigNode** (`<config>`): hardcoded config elements in a single CustomForm, outputs a fixed set of configuration values (`Map<NodeIDPart, ElementNode.Result>`)
+          - Subclass `[0, ∞)` **SimpleArgsNode** (`<simpleArgs>`): hardcoded config elements in a single CustomForm, outputs a fixed set of configuration values (`Map<NodeIDPart, ElementNode.Result>`)
             - Contains `[1, ∞)` **ElementNode**, CustomForm elements
               - Declares `id`, IDPart: required
               - Declares `title`, MessageRef: the text associated with the element, required
@@ -83,16 +83,16 @@ Index:
                     - Declares `provider`, an instantiable DropdownOptionProvider responsible for providing options to this provider
                   - Subclass `[0, ∞)` **DropdownNode** (`<dropdown>`): represents a `dropdown` CustomForm element
                   - Subclass `[0, ∞)` **StepSliderNode** (`<stepSlider>`): represents a `step_slider` CustomForm element
-          - Subclass `[0, ∞)` **ListConfigNode** (`<listConfig>`): options listed in a MenuForm, outputs a single configuration value (`ListProvider.ItemID`)
-            - Declares `provider`, ListProvider instantiable: provides options to the list, required
-          - Subclass `[0, ∞)` **ComplexConfigNode** (`<complexConfig>`): a big CustomForm with recurring config elements, each recurrence contains a hardcoded set of config elements, the number of recurrences and parameters to each recurrence provided by a ComplexConfigProvider, outputs a list of a a fixed set of configuration values (`Map<ComplexConfigProvider.ItemID, Map<NodeIDPart, ElementNode.Result>>`)
-            - Declares `provider`, ComplexConfigProvider instantiable: provides number of recurrences and parameters to each occurrence
+          - Subclass `[0, ∞)` **MenuArgsNode** (`<menuArgs>`): options listed in a MenuForm, outputs a single configuration value (`MenuProvider.ItemID`)
+            - Declares `provider`, MenuProvider instantiable: provides options to the list, required
+          - Subclass `[0, ∞)` **CycleArgsNode** (`<cycleArgs>`): a big CustomForm with recurring config elements, each recurrence contains a hardcoded set of config elements, the number of recurrences and parameters to each recurrence provided by a ComplexConfigProvider, outputs a list of a a fixed set of configuration values (`Map<CycleArgsProvider.ItemID, Map<NodeIDPart, ElementNode.Result>>`)
+            - Declares `provider`, ComplexProvider instantiable: provides number of recurrences and parameters to each occurrence
             - Contains `1` **EachComplexNode** (`<each>`), defining the config elements of each recurrence
               - Contains `[1, ∞)` *ElementNode*
-        - Subclass `[0, ∞)` **CommandConfigNode** (`<commandConfig>`): a single-CustomForm-element configuration, may be specified as required arguments in CustomForm
+        - Subclass `[0, ∞)` **CommandConfigNode** (`<commandArg>`): a single-CustomForm-element configuration, may be specified as required arguments in CustomForm
           - Declares `argName`, MessageRef: the argument name in the usage message of the command
-      - Subclass `[0, ∞)` **ListNode** (`<list>`): a dynamic MenuForm whose values are provided by a ListProvider
-        - Declares `provider`, an instantiable ListProvider
+      - Subclass `[0, ∞)` **ListNode** (`<list>`): a dynamic MenuForm whose values are provided by a MenuProvider
+        - Declares `provider`, an instantiable MenuProvider
         - Contains `[0, 2]` **BeforeAfterListNode**: header/footer buttons for this list
           - Contains `1` *ClickableNode*
           - Uses **WindowParentNode** for accepting the ClickableNode child

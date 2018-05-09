@@ -1,12 +1,16 @@
 var searchData=
 [
-  ['abstractconfignode',['AbstractConfigNode',['../class_s_o_fe_1_1libkinetic_1_1_config_1_1_abstract_config_node.html',1,'SOFe::libkinetic::Config']]],
-  ['abstractconfignode_2ephp',['AbstractConfigNode.php',['../_abstract_config_node_8php.html',1,'']]],
-  ['abstractconfigwindownode',['AbstractConfigWindowNode',['../class_s_o_fe_1_1libkinetic_1_1_config_1_1_abstract_config_window_node.html',1,'SOFe::libkinetic::Config']]],
-  ['abstractconfigwindownode_2ephp',['AbstractConfigWindowNode.php',['../_abstract_config_window_node_8php.html',1,'']]],
   ['abstractentrypointnode',['AbstractEntryPointNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_abstract_entry_point_node.html',1,'SOFe::libkinetic::Window::Entry']]],
   ['abstractentrypointnode_2ephp',['AbstractEntryPointNode.php',['../_abstract_entry_point_node_8php.html',1,'']]],
   ['accepttext',['acceptText',['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_dropdown_option_node.html#ac86779d3b41cbe74f96de353d48c586b',1,'SOFe\libkinetic\Element\DropdownOptionNode\acceptText()'],['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#ac86779d3b41cbe74f96de353d48c586b',1,'SOFe\libkinetic\Node\KineticNode\acceptText()'],['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command_1_1_command_alias_node.html#ac86779d3b41cbe74f96de353d48c586b',1,'SOFe\libkinetic\Window\Entry\Command\CommandAliasNode\acceptText()'],['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_face_filter_node.html#ac86779d3b41cbe74f96de353d48c586b',1,'SOFe\libkinetic\Window\Entry\Interact\FaceFilterNode\acceptText()'],['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_touch_mode_filter_node.html#ac86779d3b41cbe74f96de353d48c586b',1,'SOFe\libkinetic\Window\Entry\Interact\TouchModeFilterNode\acceptText()']]],
+  ['additem',['addItem',['../class_s_o_fe_1_1libkinetic_1_1_complex_item_factory.html#a5dd155e00eaf6d74463a955a521ce272',1,'SOFe\libkinetic\ComplexItemFactory\addItem()'],['../class_s_o_fe_1_1libkinetic_1_1_menu_item_factory.html#a150021af5305bad28754eaaf072afdd6',1,'SOFe\libkinetic\MenuItemFactory\addItem()']]],
   ['afterlistnode',['AfterListNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_after_list_node.html',1,'SOFe::libkinetic::Window::ListWindow']]],
-  ['afterlistnode_2ephp',['AfterListNode.php',['../_after_list_node_8php.html',1,'']]]
+  ['afterlistnode_2ephp',['AfterListNode.php',['../_after_list_node_8php.html',1,'']]],
+  ['argsnode',['ArgsNode',['../class_s_o_fe_1_1libkinetic_1_1_args_1_1_args_node.html',1,'SOFe::libkinetic::Args']]],
+  ['argsnode_2ephp',['ArgsNode.php',['../_args_node_8php.html',1,'']]],
+  ['argswindownode',['ArgsWindowNode',['../class_s_o_fe_1_1libkinetic_1_1_args_1_1_args_window_node.html',1,'SOFe::libkinetic::Args']]],
+  ['argswindownode_2ephp',['ArgsWindowNode.php',['../_args_window_node_8php.html',1,'']]],
+  ['arguedwindownode',['ArguedWindowNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_argued_window_node.html',1,'SOFe::libkinetic::Window']]],
+  ['arguedwindownode_2ephp',['ArguedWindowNode.php',['../_argued_window_node_8php.html',1,'']]],
+  ['asformcomponent',['asFormComponent',['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_dropdown_like_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f',1,'SOFe\libkinetic\Element\DropdownLikeNode\asFormComponent()'],['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_element_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f',1,'SOFe\libkinetic\Element\ElementNode\asFormComponent()'],['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_input_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f',1,'SOFe\libkinetic\Element\InputNode\asFormComponent()'],['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_label_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f',1,'SOFe\libkinetic\Element\LabelNode\asFormComponent()'],['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f',1,'SOFe\libkinetic\Element\SliderNode\asFormComponent()'],['../class_s_o_fe_1_1libkinetic_1_1_element_1_1_toggle_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f',1,'SOFe\libkinetic\Element\ToggleNode\asFormComponent()']]]
 ];

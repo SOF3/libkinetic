@@ -79,7 +79,7 @@
     </div>
 
     <p>    class
-    <strong>InfoNode</strong>        extends <a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/InfoNode.php">View source</a>)
+    <strong>InfoNode</strong>        extends <a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/InfoNode.php">View source</a>)
 </p>
 
         
@@ -116,12 +116,12 @@
                 <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Node/KineticNode.html#property_nodeParent"><abbr title="SOFe\libkinetic\Node\KineticNode">KineticNode</abbr></a></small></td>
             </tr>
                     <tr>
-                <td class="type" id="property_title">
+                <td class="type" id="property_indexName">
                                         protected                                        string
                 </td>
-                <td>$title</td>
+                <td>$indexName</td>
                 <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Node/ClickableNode.html#property_title"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a></small></td>
+                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Node/ClickableNode.html#property_indexName"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type" id="property_permission">
@@ -164,6 +164,14 @@
                 <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/WindowNode.html#property_id"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a></small></td>
             </tr>
                     <tr>
+                <td class="type" id="property_title">
+                                        protected                                        string
+                </td>
+                <td>$title</td>
+                <td class="last"></td>
+                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/WindowNode.html#property_title"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a></small></td>
+            </tr>
+                    <tr>
                 <td class="type" id="property_synopsis">
                                         protected                                        string|null
                 </td>
@@ -189,19 +197,19 @@
             </tr>
                     <tr>
                 <td class="type" id="property_windowConfigs">
-                                        protected                                        <a href="../../../SOFe/libkinetic/Config/AbstractConfigWindowNode.html"><abbr title="SOFe\libkinetic\Config\AbstractConfigWindowNode">AbstractConfigWindowNode</abbr></a>[]
+                                        protected                                        <a href="../../../SOFe/libkinetic/Args/ArgsWindowNode.html"><abbr title="SOFe\libkinetic\Args\ArgsWindowNode">ArgsWindowNode</abbr></a>[]
                 </td>
                 <td>$windowConfigs</td>
                 <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#property_windowConfigs"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a></small></td>
+                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#property_windowConfigs"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type" id="property_commandConfigs">
-                                        protected                                        <a href="../../../SOFe/libkinetic/Config/CommandConfigNode.html"><abbr title="SOFe\libkinetic\Config\CommandConfigNode">CommandConfigNode</abbr></a>[]
+                                        protected                                        <a href="../../../SOFe/libkinetic/Args/CommandArgNode.html"><abbr title="SOFe\libkinetic\Args\CommandArgNode">CommandArgNode</abbr></a>[]
                 </td>
                 <td>$commandConfigs</td>
                 <td class="last"></td>
-                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#property_commandConfigs"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a></small></td>
+                <td><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#property_commandConfigs"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a></small></td>
             </tr>
                     <tr>
                 <td class="type" id="property_button1">
@@ -399,7 +407,7 @@
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
@@ -439,7 +447,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_onClick">onClick</a>(<abbr title="pocketmine\Player">Player</abbr> $player, <a href="../../../SOFe/libkinetic/ConfigStack.html"><abbr title="SOFe\libkinetic\ConfigStack">ConfigStack</abbr></a> $config)
+                    <a href="#method_onClick">onClick</a>(<a href="../../../SOFe/libkinetic/WindowRequest.html"><abbr title="SOFe\libkinetic\WindowRequest">WindowRequest</abbr></a> $request)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -480,25 +488,25 @@
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../SOFe/libkinetic/Config/ConfigNode.html"><abbr title="SOFe\libkinetic\Config\ConfigNode">ConfigNode</abbr></a>[]
+                    <a href="../../../SOFe/libkinetic/Args/SimpleArgsNode.html"><abbr title="SOFe\libkinetic\Args\SimpleArgsNode">SimpleArgsNode</abbr></a>[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getWindowConfigs">getWindowConfigs</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#method_getWindowConfigs"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#method_getWindowConfigs"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a></small></div>
             </div>
                     <div class="row">
                 <div class="col-md-2 type">
-                    <a href="../../../SOFe/libkinetic/Config/CommandConfigNode.html"><abbr title="SOFe\libkinetic\Config\CommandConfigNode">CommandConfigNode</abbr></a>[]
+                    <a href="../../../SOFe/libkinetic/Args/CommandArgNode.html"><abbr title="SOFe\libkinetic\Args\CommandArgNode">CommandArgNode</abbr></a>[]
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_getCommandConfigs">getCommandConfigs</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
-                <div class="col-md-2"><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#method_getCommandConfigs"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a></small></div>
+                <div class="col-md-2"><small>from&nbsp;<a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#method_getCommandConfigs"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a></small></div>
             </div>
             </div>
 
@@ -527,7 +535,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_setAttribute">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_setAttribute"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L50">line 50</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_setAttribute"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L53">line 53</a></div>
         <code>                    
     <strong>setAttribute</strong>(string $name, string $value)
         </code>
@@ -561,7 +569,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_endAttributes">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_endAttributes"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L76">line 76</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_endAttributes"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L84">line 84</a></div>
         <code>                    
     <strong>endAttributes</strong>()
         </code>
@@ -888,7 +896,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_jsonSerialize">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/ConfigurableWindowNode.php#L74">line 74</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#method_jsonSerialize"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/ArguedWindowNode.php#L74">line 74</a></div>
         <code>                    
     <strong>jsonSerialize</strong>()
         </code>
@@ -907,7 +915,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getOnClickHandler">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_getOnClickHandler"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L108">line 108</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_getOnClickHandler"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L110">line 110</a></div>
         <code>                    
     <strong>getOnClickHandler</strong>()
         </code>
@@ -926,7 +934,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getPermission">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_getPermission"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L112">line 112</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_getPermission"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L114">line 114</a></div>
         <code>                    
     <strong>getPermission</strong>()
         </code>
@@ -945,7 +953,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_testPermission">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_testPermission"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L116">line 116</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_testPermission"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L118">line 118</a></div>
         <code>                    
     <strong>testPermission</strong>(<abbr title="pocketmine\Player">Player</abbr> $player, bool $ifUndefined = true)
         </code>
@@ -979,9 +987,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_onClick">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_onClick"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L121">line 121</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Node/ClickableNode.html#method_onClick"><abbr title="SOFe\libkinetic\Node\ClickableNode">ClickableNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Node/ClickableNode.php#L123">line 123</a></div>
         <code>                    
-    <strong>onClick</strong>(<abbr title="pocketmine\Player">Player</abbr> $player, <a href="../../../SOFe/libkinetic/ConfigStack.html"><abbr title="SOFe\libkinetic\ConfigStack">ConfigStack</abbr></a> $config)
+    <strong>onClick</strong>(<a href="../../../SOFe/libkinetic/WindowRequest.html"><abbr title="SOFe\libkinetic\WindowRequest">WindowRequest</abbr></a> $request)
         </code>
     </h3>
     <div class="details">
@@ -993,13 +1001,8 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><abbr title="pocketmine\Player">Player</abbr></td>
-                <td>$player</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td><a href="../../../SOFe/libkinetic/ConfigStack.html"><abbr title="SOFe\libkinetic\ConfigStack">ConfigStack</abbr></a></td>
-                <td>$config</td>
+                <td><a href="../../../SOFe/libkinetic/WindowRequest.html"><abbr title="SOFe\libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td>$request</td>
                 <td></td>
             </tr>
             </table>
@@ -1013,7 +1016,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getId">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_getId"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L125">line 125</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_getId"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L137">line 137</a></div>
         <code>                    
     <strong>getId</strong>()
         </code>
@@ -1032,7 +1035,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSynopsis">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_getSynopsis"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L129">line 129</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_getSynopsis"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L141">line 141</a></div>
         <code>                    
     <strong>getSynopsis</strong>()
         </code>
@@ -1051,7 +1054,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getSynopsisString">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_getSynopsisString"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L133">line 133</a></div>
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/WindowNode.html#method_getSynopsisString"><abbr title="SOFe\libkinetic\Window\WindowNode">WindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/WindowNode.php#L145">line 145</a></div>
         <code>                    
     <strong>getSynopsisString</strong>(<abbr title="pocketmine\Player">Player</abbr>|null $context, array $args = [])
         </code>
@@ -1085,8 +1088,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getWindowConfigs">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#method_getWindowConfigs"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/ConfigurableWindowNode.php#L84">line 84</a></div>
-        <code>                    <a href="../../../SOFe/libkinetic/Config/ConfigNode.html"><abbr title="SOFe\libkinetic\Config\ConfigNode">ConfigNode</abbr></a>[]
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#method_getWindowConfigs"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/ArguedWindowNode.php#L84">line 84</a></div>
+        <code>                    <a href="../../../SOFe/libkinetic/Args/SimpleArgsNode.html"><abbr title="SOFe\libkinetic\Args\SimpleArgsNode">SimpleArgsNode</abbr></a>[]
     <strong>getWindowConfigs</strong>()
         </code>
     </h3>
@@ -1100,7 +1103,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../SOFe/libkinetic/Config/ConfigNode.html"><abbr title="SOFe\libkinetic\Config\ConfigNode">ConfigNode</abbr></a>[]</td>
+            <td><a href="../../../SOFe/libkinetic/Args/SimpleArgsNode.html"><abbr title="SOFe\libkinetic\Args\SimpleArgsNode">SimpleArgsNode</abbr></a>[]</td>
             <td></td>
         </tr>
     </table>
@@ -1113,8 +1116,8 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getCommandConfigs">
-        <div class="location">in <a href="../../../SOFe/libkinetic/Window/ConfigurableWindowNode.html#method_getCommandConfigs"><abbr title="SOFe\libkinetic\Window\ConfigurableWindowNode">ConfigurableWindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/ConfigurableWindowNode.php#L91">line 91</a></div>
-        <code>                    <a href="../../../SOFe/libkinetic/Config/CommandConfigNode.html"><abbr title="SOFe\libkinetic\Config\CommandConfigNode">CommandConfigNode</abbr></a>[]
+        <div class="location">in <a href="../../../SOFe/libkinetic/Window/ArguedWindowNode.html#method_getCommandConfigs"><abbr title="SOFe\libkinetic\Window\ArguedWindowNode">ArguedWindowNode</abbr></a> at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/libkinetic/Window/ArguedWindowNode.php#L91">line 91</a></div>
+        <code>                    <a href="../../../SOFe/libkinetic/Args/CommandArgNode.html"><abbr title="SOFe\libkinetic\Args\CommandArgNode">CommandArgNode</abbr></a>[]
     <strong>getCommandConfigs</strong>()
         </code>
     </h3>
@@ -1128,7 +1131,7 @@
 
                     <table class="table table-condensed">
         <tr>
-            <td><a href="../../../SOFe/libkinetic/Config/CommandConfigNode.html"><abbr title="SOFe\libkinetic\Config\CommandConfigNode">CommandConfigNode</abbr></a>[]</td>
+            <td><a href="../../../SOFe/libkinetic/Args/CommandArgNode.html"><abbr title="SOFe\libkinetic\Args\CommandArgNode">CommandArgNode</abbr></a>[]</td>
             <td></td>
         </tr>
     </table>

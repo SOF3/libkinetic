@@ -1,9 +1,13 @@
 var hierarchy =
 [
     [ "ClickHandler", "interface_s_o_fe_1_1libkinetic_1_1_click_handler.html", null ],
-    [ "ComplexConfigProvider", "interface_s_o_fe_1_1libkinetic_1_1_complex_config_provider.html", null ],
-    [ "ConfigStack", "class_s_o_fe_1_1libkinetic_1_1_config_stack.html", null ],
+    [ "ComplexItemFactory", "class_s_o_fe_1_1libkinetic_1_1_complex_item_factory.html", null ],
+    [ "ComplexProvider", "interface_s_o_fe_1_1libkinetic_1_1_complex_provider.html", null ],
     [ "Form", "class_s_o_fe_1_1libkinetic_1_1_form.html", null ],
+    [ "Icon", "interface_s_o_fe_1_1libkinetic_1_1_icon.html", [
+      [ "IconNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_icon_node.html", null ],
+      [ "SimpleIcon", "class_s_o_fe_1_1libkinetic_1_1_simple_icon.html", null ]
+    ] ],
     [ "KineticAdapter", "interface_s_o_fe_1_1libkinetic_1_1_kinetic_adapter.html", null ],
     [ "KineticFileParser", "class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html", [
       [ "JsonFileParser", "class_s_o_fe_1_1libkinetic_1_1_parser_1_1_json_file_parser.html", null ],
@@ -11,19 +15,13 @@ var hierarchy =
     ] ],
     [ "KineticManager", "class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html", null ],
     [ "KineticNodeWithId", "interface_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node_with_id.html", [
-      [ "AbstractConfigWindowNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_abstract_config_window_node.html", [
-        [ "ComplexConfigNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_complex_config_node.html", null ],
-        [ "ConfigNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_config_node.html", null ],
-        [ "ListConfigNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_list_config_node.html", null ]
-      ] ],
-      [ "EachComplexNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_each_complex_node.html", null ],
       [ "BeforeAfterListNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_before_after_list_node.html", [
         [ "AfterListNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_after_list_node.html", null ],
         [ "BeforeListNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_before_list_node.html", null ]
       ] ],
       [ "ModalButtonNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_modal_button_node.html", null ],
       [ "WindowNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html", [
-        [ "ConfigurableWindowNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_configurable_window_node.html", [
+        [ "ArguedWindowNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_argued_window_node.html", [
           [ "InfoNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_info_node.html", null ],
           [ "ListNode", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_list_node.html", null ]
         ] ],
@@ -31,21 +29,32 @@ var hierarchy =
       ] ]
     ] ],
     [ "libkinetic", "class_s_o_fe_1_1libkinetic_1_1libkinetic.html", null ],
-    [ "ListItemFactory", "class_s_o_fe_1_1libkinetic_1_1_list_item_factory.html", null ],
-    [ "ListProvider", "interface_s_o_fe_1_1libkinetic_1_1_list_provider.html", null ],
+    [ "MenuItemFactory", "class_s_o_fe_1_1libkinetic_1_1_menu_item_factory.html", null ],
+    [ "MenuProvider", "interface_s_o_fe_1_1libkinetic_1_1_menu_provider.html", null ],
     [ "PermissionPredicate", "interface_s_o_fe_1_1libkinetic_1_1_permission_predicate.html", [
       [ "NamedPermissionPredicate", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_named_permission_predicate.html", null ]
+    ] ],
+    [ "WindowRequest", "class_s_o_fe_1_1libkinetic_1_1_window_request.html", null ],
+    [ "ArrayAccess", null, [
+      [ "BinaryArrayWrapper", "class_s_o_fe_1_1libkinetic_1_1_binary_array_wrapper.html", null ]
     ] ],
     [ "Command", null, [
       [ "NodeEntryCommand", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command_1_1_node_entry_command.html", null ]
     ] ],
+    [ "Iterator", null, [
+      [ "BinaryArrayWrapper", "class_s_o_fe_1_1libkinetic_1_1_binary_array_wrapper.html", null ]
+    ] ],
     [ "JsonSerializable", null, [
       [ "KineticNode", "class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html", [
-        [ "AbstractConfigNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_abstract_config_node.html", [
-          [ "AbstractConfigWindowNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_abstract_config_window_node.html", null ],
-          [ "CommandConfigNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_command_config_node.html", null ]
+        [ "ArgsNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_args_node.html", [
+          [ "ArgsWindowNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_args_window_node.html", [
+            [ "CycleArgsNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_cycle_args_node.html", null ],
+            [ "MenuArgsNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_menu_args_node.html", null ],
+            [ "SimpleArgsNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_simple_args_node.html", null ]
+          ] ],
+          [ "CommandArgNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_command_arg_node.html", null ]
         ] ],
-        [ "EachComplexNode", "class_s_o_fe_1_1libkinetic_1_1_config_1_1_each_complex_node.html", null ],
+        [ "EachCycleNode", "class_s_o_fe_1_1libkinetic_1_1_args_1_1_each_cycle_node.html", null ],
         [ "DropdownOptionNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_dropdown_option_node.html", null ],
         [ "ElementNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_element_node.html", [
           [ "EditableElementNode", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_editable_element_node.html", [
@@ -90,9 +99,14 @@ var hierarchy =
     [ "PluginIdentifiableCommand", null, [
       [ "NodeEntryCommand", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command_1_1_node_entry_command.html", null ]
     ] ],
+    [ "PluginTask", null, [
+      [ "CallbackTask", "class_s_o_fe_1_1libkinetic_1_1_callback_task.html", null ]
+    ] ],
     [ "RuntimeException", null, [
       [ "ClickInterruptedException", "class_s_o_fe_1_1libkinetic_1_1_click_interrupted_exception.html", null ],
+      [ "InvalidFormResponseException", "class_s_o_fe_1_1libkinetic_1_1_invalid_form_response_exception.html", null ],
       [ "InvalidNodeException", "class_s_o_fe_1_1libkinetic_1_1_invalid_node_exception.html", null ],
-      [ "ParseException", "class_s_o_fe_1_1libkinetic_1_1_parse_exception.html", null ]
+      [ "ParseException", "class_s_o_fe_1_1libkinetic_1_1_parse_exception.html", null ],
+      [ "ResendFormException", "class_s_o_fe_1_1libkinetic_1_1_resend_form_exception.html", null ]
     ] ]
 ];

@@ -1,7 +1,7 @@
 var searchData=
 [
+  ['args',['Args',['../namespace_s_o_fe_1_1libkinetic_1_1_args.html',1,'SOFe::libkinetic']]],
   ['command',['Command',['../namespace_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_command.html',1,'SOFe::libkinetic::Window::Entry']]],
-  ['config',['Config',['../namespace_s_o_fe_1_1libkinetic_1_1_config.html',1,'SOFe::libkinetic']]],
   ['element',['Element',['../namespace_s_o_fe_1_1libkinetic_1_1_element.html',1,'SOFe::libkinetic']]],
   ['entry',['Entry',['../namespace_s_o_fe_1_1libkinetic_1_1_window_1_1_entry.html',1,'SOFe::libkinetic::Window']]],
   ['interact',['Interact',['../namespace_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact.html',1,'SOFe::libkinetic::Window::Entry']]],

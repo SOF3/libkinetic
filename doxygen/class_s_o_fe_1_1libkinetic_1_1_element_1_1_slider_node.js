@@ -1,5 +1,6 @@
 var class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node =
 [
+    [ "asFormComponent", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node.html#a71fe2eb1ebfc6370381bb291d77b5b0f", null ],
     [ "endAttributes", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node.html#a9df4621bcaabdfc2d6eceff43b4653b3", null ],
     [ "getDefault", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node.html#adc30a2a4d3e48cb6aee21562afbc4022", null ],
     [ "getDefaultAsString", "class_s_o_fe_1_1libkinetic_1_1_element_1_1_slider_node.html#a5d474faa199b6cb3d6b496294300b869", null ],

@@ -11,5 +11,6 @@ var class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node =
     [ "$cmds", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#a08d04676e534e87acfe2583d56d2143c", null ],
     [ "$id", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ae97941710d863131c700f069b109991e", null ],
     [ "$interacts", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#afea8c7d927663fd3a7dc7585d3cb705d", null ],
-    [ "$synopsis", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ab2de55d7654d4c57dfdc7ebd784df7aa", null ]
+    [ "$synopsis", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ab2de55d7654d4c57dfdc7ebd784df7aa", null ],
+    [ "$title", "class_s_o_fe_1_1libkinetic_1_1_window_1_1_window_node.html#ada57e7bb7c152edad18fe2f166188691", null ]
 ];

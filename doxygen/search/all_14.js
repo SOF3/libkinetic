@@ -7,7 +7,7 @@ var searchData=
   ['togglenode_2ephp',['ToggleNode.php',['../_toggle_node_8php.html',1,'']]],
   ['touchmodefilternode',['TouchModeFilterNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_touch_mode_filter_node.html',1,'SOFe::libkinetic::Window::Entry::Interact']]],
   ['touchmodefilternode_2ephp',['TouchModeFilterNode.php',['../_touch_mode_filter_node_8php.html',1,'']]],
-  ['translate',['translate',['../class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a9d0d4ffd980c5bcd751aedb802bdf9e9',1,'SOFe::libkinetic::KineticManager']]],
+  ['translate',['translate',['../class_s_o_fe_1_1libkinetic_1_1_kinetic_manager.html#a9d0d4ffd980c5bcd751aedb802bdf9e9',1,'SOFe\libkinetic\KineticManager\translate()'],['../class_s_o_fe_1_1libkinetic_1_1_window_request.html#a80e38ea3c3b2c4e3a344201f3f8a1cd3',1,'SOFe\libkinetic\WindowRequest\translate()']]],
   ['traversenode',['traverseNode',['../class_s_o_fe_1_1libkinetic_1_1_parser_1_1_json_file_parser.html#a120cd9231de70418f6cf4aa64b95a27c',1,'SOFe::libkinetic::Parser::JsonFileParser']]],
   ['type_5fconfig',['TYPE_CONFIG',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_icon_node.html#abd033ea1df195efaeb2f346cd62a8908',1,'SOFe::libkinetic::Node::IconNode']]],
   ['type_5fpath',['TYPE_PATH',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_icon_node.html#ac6059f1891f70905157a341b95d9db75',1,'SOFe::libkinetic::Node::IconNode']]],

@@ -11,5 +11,7 @@ var searchData=
   ['permissionnode_2ephp',['PermissionNode.php',['../_permission_node_8php.html',1,'']]],
   ['permissionpredicate',['PermissionPredicate',['../interface_s_o_fe_1_1libkinetic_1_1_permission_predicate.html',1,'SOFe::libkinetic']]],
   ['permissionpredicate_2ephp',['PermissionPredicate.php',['../_permission_predicate_8php.html',1,'']]],
-  ['provide',['provide',['../interface_s_o_fe_1_1libkinetic_1_1_list_provider.html#ac791dea924effdb374ab07b308585119',1,'SOFe::libkinetic::ListProvider']]]
+  ['provide',['provide',['../interface_s_o_fe_1_1libkinetic_1_1_complex_provider.html#a4e6d22adadf43aa629199b12d79957a2',1,'SOFe\libkinetic\ComplexProvider\provide()'],['../interface_s_o_fe_1_1libkinetic_1_1_menu_provider.html#aa8c30b33b0d372e2318e68e1883b63a7',1,'SOFe\libkinetic\MenuProvider\provide()']]],
+  ['push',['push',['../class_s_o_fe_1_1libkinetic_1_1_window_request.html#aa9e892cf9ba1a191af9fe1157a783490',1,'SOFe::libkinetic::WindowRequest']]],
+  ['put',['put',['../class_s_o_fe_1_1libkinetic_1_1_window_request.html#ad5603bce1e774afd9476f634c38b8d50',1,'SOFe::libkinetic::WindowRequest']]]
 ];

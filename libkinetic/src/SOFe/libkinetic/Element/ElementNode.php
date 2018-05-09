@@ -24,12 +24,17 @@ namespace SOFe\libkinetic\Element;
 
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\WindowRequest;
 
 abstract class ElementNode extends KineticNode{
 	/** @var string */
 	protected $id;
 	/** @var string */
 	protected $title;
+
+	public static function cat($value){
+		return $value;
+	}
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -101,4 +106,6 @@ abstract class ElementNode extends KineticNode{
 
 		return null;
 	}
+
+	public abstract function asFormComponent(WindowRequest $request, callable &$adapter) : array;
 }

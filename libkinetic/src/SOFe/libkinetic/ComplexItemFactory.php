@@ -20,20 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Element;
+namespace SOFe\libkinetic;
 
-use SOFe\libkinetic\WindowRequest;
+class ComplexItemFactory{
+	protected $items = [];
 
-class LabelNode extends ElementNode{
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
+	public function addItem($key, array $arguments) : void{
+		$this->items[] = [$key, $arguments];
 	}
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		return [
-			"type" => "label",
-			"text" => $request->translate($this->title),
-		];
+	public function getItems() : array{
+		return $this->items;
 	}
 }

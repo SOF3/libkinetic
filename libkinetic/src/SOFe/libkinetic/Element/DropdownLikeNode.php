@@ -25,6 +25,8 @@ namespace SOFe\libkinetic\Element;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
+use SOFe\libkinetic\WindowRequest;
+use function array_map;
 
 abstract class DropdownLikeNode extends EditableElementNode{
 	/** @var DropdownOptionNode[] */
@@ -78,8 +80,6 @@ abstract class DropdownLikeNode extends EditableElementNode{
 			];
 	}
 
-	protected abstract function getStepName() : string;
-
 	public function getDefault(){
 		return $this->options[$this->default]->getValue();
 	}
@@ -87,4 +87,21 @@ abstract class DropdownLikeNode extends EditableElementNode{
 	public function getDefaultAsString() : ?string{
 		return $this->options[$this->default]->getText();
 	}
+
+	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
+		return [
+			"type" => $this->getFormType(),
+			"text" => $request->translate($this->title),
+			$this->getFormStepKey() => array_map(function(DropdownOptionNode $node) use ($request){
+				return $request->translate($node->getText());
+			}, $this->options),
+			"default" => $this->default,
+		];
+	}
+
+	protected abstract function getStepName() : string;
+
+	protected abstract function getFormType() : string;
+
+	protected abstract function getFormStepKey() : string;
 }

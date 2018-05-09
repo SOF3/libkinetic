@@ -23,23 +23,23 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window\ListWindow;
 
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\ListProvider;
+use SOFe\libkinetic\MenuProvider;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Window\ConfigurableWindowNode;
+use SOFe\libkinetic\Window\ArguedWindowNode;
 
 /**
  * ListNode is displayed as a MenuForm. The buttons consist of three parts: `<before>`, `<list>` and `<after>`.
  *
  * <code>before</code> and <code>after</code> are specified in the `<before>` and `<after>` optional nodes respectively, each behaving as an `<index>` node.
  *
- * <code>list</code> is a dynamic list of data, provided by the ListProvider implementation class as specified in `<provider>`. It must be a class instantiable with one argument, the Plugin instance. Each button carries a value whose type is to the ListProvider's favour.
+ * <code>list</code> is a dynamic list of data, provided by the MenuProvider implementation class as specified in `<provider>`. It must be a class instantiable with one argument, the Plugin instance. Each button carries a value whose type is to the MenuProvider's favour.
  *
  * When a button in a `<list>` is clicked, the `<each>` is opened. `<each>` should be a node that contains exactly one configurable window node, i.e. another `<list>` or a `<info>`, or a `<link>` that points to a configurable window node.
  */
-class ListNode extends ConfigurableWindowNode{
+class ListNode extends ArguedWindowNode{
 	/** @var string */
 	protected $provider;
-	/** @var ListProvider */
+	/** @var MenuProvider */
 	protected $providerObject;
 	/** @var BeforeAfterListNode|null */
 	protected $before = null;
@@ -96,7 +96,7 @@ class ListNode extends ConfigurableWindowNode{
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 
-		$this->providerObject = $manager->resolveClass($this, $this->provider, ListProvider::class);
+		$this->providerObject = $manager->resolveClass($this, $this->provider, MenuProvider::class);
 
 		if($this->before !== null){
 			$this->before->cpn_resolve($manager);

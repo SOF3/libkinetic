@@ -29,7 +29,7 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Window\ConfigurableWindowNode;
+use SOFe\libkinetic\Window\ArguedWindowNode;
 use SOFe\libkinetic\Window\WindowNode;
 use function assert;
 
@@ -40,14 +40,14 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 	/** @var CommandEntryPointNode */
 	protected $command;
 
-	/** @var \SOFe\libkinetic\Config\CommandConfigNode[] */
+	/** @var \SOFe\libkinetic\Args\CommandArgNode[] */
 	protected $args = [];
 
 	public function __construct(KineticManager $manager, CommandEntryPointNode $command){
 		assert($command->nodeParent instanceof WindowNode);
 
 		$usage = "/{$command->getName()}";
-		if($command->nodeParent instanceof ConfigurableWindowNode){
+		if($command->nodeParent instanceof ArguedWindowNode){
 			$this->args = $command->nodeParent->getCommandConfigs();
 			foreach($this->args as $arg){
 				$usage .= " ";

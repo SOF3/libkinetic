@@ -25,13 +25,13 @@ namespace SOFe\libkinetic\Node;
 use pocketmine\Player;
 use SOFe\libkinetic\ClickHandler;
 use SOFe\libkinetic\ClickInterruptedException;
-use SOFe\libkinetic\ConfigStack;
+use SOFe\libkinetic\WindowRequest;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 
 abstract class ClickableNode extends KineticNode{
 	/** @var string */
-	protected $title;
+	protected $indexName;
 
 	/** @var PermissionNode|null */
 	protected $permission = null;
@@ -49,8 +49,8 @@ abstract class ClickableNode extends KineticNode{
 			return true;
 		}
 
-		if($name === "TITLE"){
-			$this->title = $value;
+		if($name === "INDEX"."NAME"){
+			$this->indexName = $value;
 			return true;
 		}
 
@@ -64,7 +64,7 @@ abstract class ClickableNode extends KineticNode{
 
 	public function endAttributes() : void{
 		parent::endAttributes();
-		$this->requireAttributes("title");
+		$this->requireAttributes("indexName");
 	}
 
 	public function startChild(string $name) : ?KineticNode{
@@ -89,6 +89,8 @@ abstract class ClickableNode extends KineticNode{
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
 
+		$manager->requireTranslation($this, $this->indexName);
+
 		if($this->permission !== null){
 			$this->permission->resolve($manager);
 		}
@@ -98,7 +100,7 @@ abstract class ClickableNode extends KineticNode{
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"title" => $this->title,
+				"indexName" => $this->indexName,
 				"permission" => $this->permission,
 				"icon" => $this->icon,
 				"onClick" => $this->onClick,
@@ -118,14 +120,15 @@ abstract class ClickableNode extends KineticNode{
 	}
 
 
-	public function onClick(Player $player, ConfigStack $config) : void{
+	public function onClick(WindowRequest $request) : void{
+		$player = $request->getPlayer();
 		if($this->permission !== null && !$this->permission->testPermission($player)){
 			$player->sendMessage($this->permission->getPermissionMessage($this->manager, $player));
 			throw new ClickInterruptedException();
 		}
 
 		if($this->onClickHandler !== null){
-			$this->onClickHandler->onClick($player, $config);
+			$this->onClickHandler->onClick($player, $request);
 		}
 	}
 }

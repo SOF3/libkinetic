@@ -30,6 +30,7 @@ use SOFe\libkinetic\Node\KineticNode;
 use SOFe\libkinetic\Window\Entry\AbstractEntryPointNode;
 use function array_merge;
 use function is_array;
+use SOFe\libkinetic\WindowRequest;
 
 class InteractEntryPointNode extends AbstractEntryPointNode{
 	/** @var string|null */
@@ -43,6 +44,8 @@ class InteractEntryPointNode extends AbstractEntryPointNode{
 	protected $touchModes = [];
 	/** @var FaceFilterNode[] */
 	protected $faces = [];
+
+
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -170,6 +173,8 @@ class InteractEntryPointNode extends AbstractEntryPointNode{
 	}
 
 	public function onUseItem(PlayerInteractEvent $event) : void{
+		$request = new WindowRequest($this->manager, $event->getPlayer());
+
 		// TODO implement
 	}
 

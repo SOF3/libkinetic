@@ -20,20 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Element;
+namespace SOFe\libkinetic;
 
-use SOFe\libkinetic\WindowRequest;
+use RuntimeException;
 
-class LabelNode extends ElementNode{
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
-	}
+class InvalidFormResponseException extends RuntimeException{
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		return [
-			"type" => "label",
-			"text" => $request->translate($this->title),
-		];
-	}
 }

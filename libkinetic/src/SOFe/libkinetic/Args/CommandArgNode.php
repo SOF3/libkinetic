@@ -20,23 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Config;
+namespace SOFe\libkinetic\Args;
 
 use SOFe\libkinetic\Element\EditableElementNode;
 use SOFe\libkinetic\Element\ElementNode;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Window\ConfigurableWindowNode;
+use SOFe\libkinetic\Window\ArguedWindowNode;
 use function assert;
 use function trim;
 
 /**
- * CommandConfigNode is a variant of ConfigNode that only allows one child and requires an <code>argName</code> attribute.
+ * CommandArgNode is a variant of ArgsNode that only allows one child and requires an <code>argName</code> attribute.
  *
- * When a player tries to open a configurable from command, if there are required settings in ConfigNode, a CustomForm will be opened so that the player can edit them from the form. On the other hand, settings in CommandConfigNode will just go into the command's syntax, i.e. the player will fill the required and optional values from the command.
+ * When a player tries to open a Argued from command, if there are required settings in ConfigNode, a CustomForm will be opened so that the player can edit them from the form. On the other hand, settings in CommandConfigNode will just go into the command's syntax, i.e. the player will fill the required and optional values from the command.
  */
-class CommandConfigNode extends AbstractConfigNode{
+class CommandArgNode extends ArgsNode{
 	/** @var string */
 	protected $argName;
 
@@ -57,7 +57,7 @@ class CommandConfigNode extends AbstractConfigNode{
 	}
 
 	public function endAttributes() : void{
-		assert($this->nodeParent instanceof ConfigurableWindowNode);
+		assert($this->nodeParent instanceof ArguedWindowNode);
 		parent::endAttributes();
 		$this->requireAttributes("argName");
 	}
@@ -99,10 +99,6 @@ class CommandConfigNode extends AbstractConfigNode{
 				"argName" => $this->argName,
 				"element" => $this->element,
 			];
-	}
-
-	public function isRequired() : bool{
-		return $this->required;
 	}
 
 	public function getArgName() : string{

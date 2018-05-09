@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<root xmlns="https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd">
+  <info id="count-blocks" title="Count number of blocks in region" synopsis="">
+    <enumConfig id="blockTypes" title="Block Types" required="true">
+      <each title="Choose block" format="${blockId}:${blockDamage}">
+        <input id="blockId" title="Block ID"/>
+        <input id="blockDamage" title="Block damage"/>
+        <toggle id="ignoreDamage" title="Ignore block damage"/>
+      </each>
+    </enumConfig>
+  </info>
+</root>

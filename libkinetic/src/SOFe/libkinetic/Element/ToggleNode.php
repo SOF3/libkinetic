@@ -22,9 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Element;
 
+use SOFe\libkinetic\WindowRequest;
+
 class ToggleNode extends EditableElementNode{
 	/** @var bool */
-	protected $default;
+	protected $default = false;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -51,5 +53,17 @@ class ToggleNode extends EditableElementNode{
 
 	public function getDefaultAsString() : ?string{
 		return $this->default ? "true" : "false";
+	}
+
+	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
+		$adapter = function(bool $value) : bool{
+			return $value;
+		};
+
+		return [
+			"type" => "toggle",
+			"text" => $request->translate($this->title),
+			"default" => $this->default,
+		];
 	}
 }

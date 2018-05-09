@@ -25,7 +25,7 @@ namespace SOFe\libkinetic\Window;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 
-class InfoNode extends ConfigurableWindowNode{
+class InfoNode extends ArguedWindowNode{
 	/** @var ModalButtonNode|null */
 	protected $button1;
 	/** @var ModalButtonNode|null */

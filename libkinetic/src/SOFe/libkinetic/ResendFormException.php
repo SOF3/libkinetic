@@ -22,6 +22,10 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-class ConfigStack{
+use RuntimeException;
 
+class ResendFormException extends RuntimeException{
+	public function __construct(){
+		parent::__construct("ResendFormException should have been caught by KineticManager");
+	}
 }

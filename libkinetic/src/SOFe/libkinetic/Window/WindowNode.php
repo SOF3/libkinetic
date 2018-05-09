@@ -39,6 +39,9 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 	/** @var string */
 	protected $id;
 
+	/** @var string */
+	protected $title;
+
 	/** @var string|null */
 	protected $synopsis = null;
 
@@ -65,6 +68,11 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 			return true;
 		}
 
+		if($name === "TITLE"){
+			$this->title = $value;
+			return true;
+		}
+
 		if($name === "SYNOPSIS"){
 			$this->synopsis = $value;
 			return true;
@@ -76,6 +84,9 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 	public function endAttributes() : void{
 		parent::endAttributes();
 		$this->requireAttributes("id");
+		if(!isset($this->title)){
+			$this->title = $this->indexName;
+		}
 	}
 
 	public function startChild(string $name) : ?KineticNode{
@@ -115,6 +126,7 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
 				"id" => $this->id,
+				"title" => $this->title,
 				"synopsis" => $this->synopsis,
 				"cmds" => $this->cmds,
 				"interacts" => $this->interacts,

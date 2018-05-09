@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Node;
 
 use pocketmine\plugin\PluginException;
+use SOFe\libkinetic\Icon;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use function implode;
@@ -30,7 +31,7 @@ use function is_array;
 use function is_string;
 use function strtolower;
 
-class IconNode extends KineticNode{
+class IconNode extends KineticNode implements Icon{
 	public const TYPE_CONFIG = "CONFIG";
 	public const TYPE_URL = "URL";
 	public const TYPE_PATH = "PATH";

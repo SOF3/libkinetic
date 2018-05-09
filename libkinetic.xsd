@@ -94,10 +94,10 @@
 
   <xs:group name="DirectEntryWindowNodeGroup">
     <xs:element name="index" type="IndexNode"/>
-    <xs:group ref="ConfigurableWindowNodeGroup"/>
+    <xs:group ref="ArguedWindowNodeGroup"/>
   </xs:group>
 
-  <xs:group name="ConfigurableWindowNodeGroup">
+  <xs:group name="ArguedWindowNodeGroup">
     <xs:element name="list" type="ListNode"/>
     <xs:element name="info" type="InfoNode"/>
   </xs:group>
@@ -219,11 +219,11 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ConfigurableWindowNodeBase">
+  <xs:complexType name="ArguedWindowNodeBase">
     <xs:complexContent>
       <xs:extension base="DirectEntryWindowNodeBase">
         <xs:sequence>
-          <xs:group ref="AbstractConfigNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
+          <xs:group ref="ArgNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -231,7 +231,7 @@
 
   <xs:complexType name="ListNode">
     <xs:complexContent>
-      <xs:extension base="ConfigurableWindowNodeBase">
+      <xs:extension base="ArguedWindowNodeBase">
         <xs:attribute name="provider" type="Instantiable" use="required"/>
         <xs:sequence>
           <xs:element name="before" minOccurs="0">
@@ -263,29 +263,31 @@
 
   <xs:complexType name="InfoNode">
     <xs:complexContent>
-      <xs:extension base="ConfigurableWindowNodeBase">
+      <xs:extension base="ArguedWindowNodeBase">
+        <xs:attribute name="synopsis" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:group name="AbstractConfigNodeGroup">
-    <xs:element name="commandConfig" type="CommandConfigNode"/>
-    <xs:group ref="AbstractConfigWindowNodeGroup"/>
+  <xs:group name="ArgNodeGroup">
+    <xs:element name="commandArg" type="CommandArgNode"/>
+    <xs:group ref="ArgWindowNodeGroup"/>
   </xs:group>
 
-  <xs:group name="AbstractConfigWindowNodeGroup">
-    <xs:element name="config" type="ConfigNode"/>
-    <xs:element name="listConfig" type="ListConfigNode"/>
-    <xs:element name="complexConfig" type="ComplexConfigNode"/>
+  <xs:group name="ArgWindowNodeGroup">
+    <xs:element name="simpleArgs" type="SimpleArgsNode"/>
+    <xs:element name="menuArgs" type="MenuArgsNode"/>
+    <xs:element name="cycleArgs" type="CycleArgsNode"/>
+    <xs:element name="listArgs" type="ListArgsNode"/>
   </xs:group>
 
-  <xs:complexType name="AbstractConfigNodeBase">
+  <xs:complexType name="ArgsNodeBase">
     <xs:attribute name="id" type="IdPart" use="required"/>
     <xs:attribute name="required" type="xs:boolean" default="false"/>
   </xs:complexType>
-  <xs:complexType name="CommandConfigNode">
+  <xs:complexType name="CommandArgNode">
     <xs:complexContent>
-      <xs:extension base="AbstractConfigNodeBase">
+      <xs:extension base="ArgsNodeBase">
         <xs:attribute name="id" use="prohibited"/>
         <xs:attribute name="argName" type="MessageRef" use="required"/>
         <xs:sequence>
@@ -295,33 +297,33 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="AbstractConfigWindowNodeBase">
+  <xs:complexType name="ArgsWindowNodeBase">
     <xs:complexContent>
-      <xs:extension base="AbstractConfigNodeBase">
+      <xs:extension base="ArgsNodeBase">
         <xs:attribute name="title" type="MessageRef" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="ConfigNode">
+  <xs:complexType name="SimpleArgsNode">
     <xs:complexContent>
-      <xs:extension base="AbstractConfigWindowNodeBase">
+      <xs:extension base="ArgsWindowNodeBase">
         <xs:sequence>
           <xs:group ref="ElementNodeGroup" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="ListConfigNode">
+  <xs:complexType name="MenuArgsNode">
     <xs:complexContent>
-      <xs:extension base="AbstractConfigWindowNodeBase">
+      <xs:extension base="ArgsWindowNodeBase">
         <xs:attribute name="provider" type="Instantiable" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="ComplexConfigNode">
+  <xs:complexType name="CycleArgsNode">
     <xs:complexContent>
-      <xs:extension base="AbstractConfigWindowNodeBase">
+      <xs:extension base="ArgsWindowNodeBase">
         <xs:attribute name="provider" type="Instantiable" use="required"/>
         <xs:sequence>
           <xs:element name="each">
@@ -329,6 +331,25 @@
               <xs:sequence>
                 <xs:group ref="ElementNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
               </xs:sequence>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ListArgsNode">
+    <xs:complexContent>
+      <xs:extension base="ArgsWindowNodeBase">
+        <xs:sequence>
+          <xs:element name="each">
+            <xs:complexType>
+              <xs:attribute name="title" use="required"/>
+              <xs:attribute name="format" use="required">
+                <xs:annotation>
+                  <xs:documentation>The expression of each choice in the MenuForm</xs:documentation>
+                </xs:annotation>
+              </xs:attribute>
+              <xs:group ref="ElementNodeGroup" minOccurs="0" maxOccurs="unbounded"/>
             </xs:complexType>
           </xs:element>
         </xs:sequence>

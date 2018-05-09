@@ -26,4 +26,12 @@ class DropdownNode extends DropdownLikeNode{
 	protected function getStepName() : string{
 		return "OPTION";
 	}
+
+	protected function getFormType() : string{
+		return "dropdown";
+	}
+
+	protected function getFormStepKey() : string{
+		return "options";
+	}
 }

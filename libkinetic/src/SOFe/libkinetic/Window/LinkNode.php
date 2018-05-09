@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window;
 
 use pocketmine\Player;
-use SOFe\libkinetic\ConfigStack;
+use SOFe\libkinetic\WindowRequest;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\ClickableNode;
@@ -37,7 +37,7 @@ class LinkNode extends ClickableNode{
 
 	public function __construct(){
 		parent::__construct();
-		$this->title = "(fallback to target node)";
+		$this->indexName = "(fallback to target node)";
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -81,8 +81,8 @@ class LinkNode extends ClickableNode{
 		return $this->delegate;
 	}
 
-	public function onClick(Player $player, ConfigStack $config) : void{
-		parent::onClick($player, $config);
-		$this->delegate->onClick($player, $config);
+	public function onClick(WindowRequest $request) : void{
+		parent::onClick($request);
+		$this->delegate->onClick($request);
 	}
 }

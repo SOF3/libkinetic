@@ -25,5 +25,5 @@ namespace SOFe\libkinetic;
 use pocketmine\Player;
 
 interface ClickHandler{
-	public function onClick(Player $player, ConfigStack $config) : void;
+	public function onClick(Player $player, WindowRequest $request) : void;
 }

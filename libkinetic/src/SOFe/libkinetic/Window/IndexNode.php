@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\libkinetic\Window;
 
 use pocketmine\Player;
-use SOFe\libkinetic\ConfigStack;
+use SOFe\libkinetic\WindowRequest;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 
@@ -55,8 +55,10 @@ class IndexNode extends WindowNode{
 		$this->cpn_resolve($manager);
 	}
 
-	public function onClick(Player $player, ConfigStack $config) : void{
-		parent::onClick($player, $config);
+	public function onClick(WindowRequest $request) : void{
+		parent::onClick($request);
+
+		$player = $request->getPlayer();
 
 		$buttons = [];
 		/** @var WindowNode[] $buttonNodes */
@@ -68,7 +70,7 @@ class IndexNode extends WindowNode{
 			}
 
 			$button = [
-				"text" => $this->manager->translate($player, $node->title),
+				"text" => $this->manager->translate($player, $node->indexName),
 			];
 			if($node->icon !== null){
 				$buttons["icon"] = [
@@ -83,17 +85,17 @@ class IndexNode extends WindowNode{
 
 		$form = [
 			"type" => "form",
-			"title" => $this->manager->translate($player, $this->title, $config),
-			"content" => $this->getSynopsisString($player, $config),
+			"title" => $this->manager->translate($player, $this->title, $request),
+			"content" => $this->getSynopsisString($player, $request),
 			"buttons" => $buttons,
 		];
 
-		$this->manager->sendForm($player, $form, function(?int $button, Player $player) use ($buttonNodes, $config){
+		$this->manager->sendForm($player, $form, function(?int $button, Player $player) use ($buttonNodes, $request){
 			if($button === null){
 				return;
 			}
 			if(isset($buttonNodes[$button])){
-				$buttonNodes[$button]->onClick($player, $config);
+				$buttonNodes[$button]->onClick($request);
 			}
 		});
 	}

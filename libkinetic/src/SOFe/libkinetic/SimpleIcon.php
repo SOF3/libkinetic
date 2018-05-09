@@ -20,20 +20,24 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Element;
+namespace SOFe\libkinetic;
 
-use SOFe\libkinetic\WindowRequest;
+class SimpleIcon implements Icon{
+	/** @var string */
+	protected $type;
+	/** @var string */
+	protected $value;
 
-class LabelNode extends ElementNode{
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
+	public function __construct(string $type, string $value){
+		$this->type = $type;
+		$this->value = $value;
 	}
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		return [
-			"type" => "label",
-			"text" => $request->translate($this->title),
-		];
+	public function getType() : string{
+		return $this->type;
+	}
+
+	public function getValue() : string{
+		return $this->value;
 	}
 }

@@ -22,6 +22,10 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Element;
 
+use SOFe\libkinetic\InvalidFormResponseException;
+use SOFe\libkinetic\InvalidNodeException;
+use SOFe\libkinetic\WindowRequest;
+use function is_numeric;
 use function strtolower;
 
 class SliderNode extends EditableElementNode{
@@ -29,8 +33,8 @@ class SliderNode extends EditableElementNode{
 	protected $min, $max;
 	/** @var float */
 	protected $step = 1.0;
-	/** @var float|null */
-	protected $default = null;
+	/** @var float */
+	protected $default;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if(parent::setAttribute($name, $value)){
@@ -38,6 +42,9 @@ class SliderNode extends EditableElementNode{
 		}
 
 		if($name === "MIN" || $name === "MAX" || $name === "STEP" || $name === "DEFAULT"){
+			if(!is_numeric($value)){
+				throw new InvalidNodeException("$name should contain a numeric value", $this);
+			}
 			$this->{strtolower($name)} = (float) $value;
 			return true;
 		}
@@ -48,6 +55,9 @@ class SliderNode extends EditableElementNode{
 	public function endAttributes() : void{
 		parent::endAttributes();
 		$this->requireAttributes("min", "max");
+		if(!isset($this->default)){
+			$this->default = $this->min;
+		}
 	}
 
 	public function jsonSerialize() : array{
@@ -59,11 +69,30 @@ class SliderNode extends EditableElementNode{
 			];
 	}
 
-	public function getDefault(){
+	public function getDefault() : float{
 		return $this->default;
 	}
 
 	public function getDefaultAsString() : ?string{
 		return $this->default !== null ? (string) $this->default : null;
+	}
+
+	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
+		$adapter = function(float $value) : float{
+			if($value < $this->min || $value > $this->max){
+				throw new InvalidFormResponseException("Slider value should be between $this->min and $this->max, got $value");
+			}
+
+			return (float) $value;
+		};
+
+		return [
+				"type" => "slider",
+				"text" => $request->translate($this->title),
+				"min" => $this->min,
+				"max" => $this->max,
+				"step" => $this->step,
+				"default" => $this->default,
+			];
 	}
 }

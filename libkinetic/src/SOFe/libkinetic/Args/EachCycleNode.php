@@ -20,58 +20,47 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Config;
+namespace SOFe\libkinetic\Args;
 
+use SOFe\libkinetic\Element\ElementNode;
+use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
+use function assert;
 
-/**
- * `<complexConfig>` (ComplexConfigNode) is powered by a ComplexConfigProvider. Each element is displayed as one or multiple ElementNode.
- */
-class ComplexConfigNode extends AbstractConfigWindowNode{
-	/** @var string */
-	protected $provider;
-	/** @var EachComplexNode */
-	protected $each;
-
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "PROVIDER"){
-			$this->provider = $value;
-			return true;
-		}
-
-		return false;
-	}
-
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("provider");
-	}
+class EachCycleNode extends KineticNode{
+	/** @var ElementNode[] */
+	protected $elements = [];
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
 			return $delegate;
 		}
 
-		if($name === "EACH"){
-			return $this->each = new EachComplexNode();
+		if($delegate = ElementNode::byName($name)){
+			return $this->elements[] = $delegate;
 		}
 
 		return null;
 	}
 
-	public function endElement() : void{
-		parent::endElement();
-		$this->requireElements("each");
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		foreach($this->elements as $node){
+			$node->resolve($manager);
+		}
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
-				"provider" => $this->provider,
-				"each" => $this->each,
+				"elements" => $this->elements,
 			];
+	}
+
+
+	/**
+	 * @return ElementNode[]
+	 */
+	public function getElements() : array{
+		return $this->elements;
 	}
 }

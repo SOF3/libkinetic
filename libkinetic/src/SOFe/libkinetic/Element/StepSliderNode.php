@@ -26,4 +26,12 @@ class StepSliderNode extends DropdownLikeNode{
 	protected function getStepName() : string{
 		return "STEP";
 	}
+
+	protected function getFormType() : string{
+		return "step_slider";
+	}
+
+	protected function getFormStepKey() : string{
+		return "steps";
+	}
 }

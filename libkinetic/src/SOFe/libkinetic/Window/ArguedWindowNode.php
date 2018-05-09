@@ -22,18 +22,18 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic\Window;
 
-use SOFe\libkinetic\Config\AbstractConfigWindowNode;
-use SOFe\libkinetic\Config\CommandConfigNode;
-use SOFe\libkinetic\Config\ComplexConfigNode;
-use SOFe\libkinetic\Config\ConfigNode;
-use SOFe\libkinetic\Config\ListConfigNode;
+use SOFe\libkinetic\Args\ArgsWindowNode;
+use SOFe\libkinetic\Args\CommandArgNode;
+use SOFe\libkinetic\Args\CycleArgsNode;
+use SOFe\libkinetic\Args\SimpleArgsNode;
+use SOFe\libkinetic\Args\MenuArgsNode;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
 
-abstract class ConfigurableWindowNode extends WindowNode{
-	/** @var AbstractConfigWindowNode[] */
+abstract class ArguedWindowNode extends WindowNode{
+	/** @var ArgsWindowNode[] */
 	protected $windowConfigs = [];
-	/** @var CommandConfigNode[] */
+	/** @var CommandArgNode[] */
 	protected $commandConfigs = [];
 
 	public function startChild(string $name) : ?KineticNode{
@@ -41,20 +41,20 @@ abstract class ConfigurableWindowNode extends WindowNode{
 			return $delegate;
 		}
 
-		if($name === "CONFIG"){
-			return $this->windowConfigs[] = new ConfigNode();
+		if($name === "SIMPLE"."ARGS"){
+			return $this->windowConfigs[] = new SimpleArgsNode();
 		}
 
-		if($name === "LIST" . "CONFIG"){
-			return $this->windowConfigs[] = new ListConfigNode();
+		if($name === "MENU" . "ARGS"){
+			return $this->windowConfigs[] = new MenuArgsNode();
 		}
 
-		if($name === "COMPLEX" . "CONFIG"){
-			return $this->windowConfigs[] = new ComplexConfigNode();
+		if($name === "CYCLE" . "ARGS"){
+			return $this->windowConfigs[] = new CycleArgsNode();
 		}
 
-		if($name === "COMMAND" . "CONFIG"){
-			return $this->commandConfigs[] = new CommandConfigNode();
+		if($name === "COMMAND" . "ARG"){
+			return $this->commandConfigs[] = new CommandArgNode();
 		}
 
 
@@ -79,14 +79,14 @@ abstract class ConfigurableWindowNode extends WindowNode{
 	}
 
 	/**
-	 * @return ConfigNode[]
+	 * @return SimpleArgsNode[]
 	 */
 	public function getWindowConfigs() : array{
 		return $this->windowConfigs;
 	}
 
 	/**
-	 * @return CommandConfigNode[]
+	 * @return CommandArgNode[]
 	 */
 	public function getCommandConfigs() : array{
 		return $this->commandConfigs;

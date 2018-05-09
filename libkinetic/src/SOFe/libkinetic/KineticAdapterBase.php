@@ -25,7 +25,10 @@ namespace SOFe\libkinetic;
 use InvalidArgumentException;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
-use function sprintf;
+use function array_keys;
+use function array_map;
+use function array_values;
+use function str_replace;
 
 trait KineticAdapterBase{
 	/** @var Plugin */
@@ -44,7 +47,9 @@ trait KineticAdapterBase{
 	}
 
 	public function getMessage(?Player $player, string $identifier, array $parameters) : string{
-		return sprintf($identifier, $parameters);
+		return str_replace(array_map(function(string $key) : string{
+			return "\${{$key}}";
+		}, array_keys($parameters)), array_values($parameters), $identifier);
 	}
 
 	public function getInstantiable(string $name) : object{

@@ -25,7 +25,7 @@ namespace SOFe\libkinetic\Window\ListWindow;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use SOFe\libkinetic\Window\ConfigurableWindowNode;
+use SOFe\libkinetic\Window\ArguedWindowNode;
 use SOFe\libkinetic\Window\LinkNode;
 use SOFe\libkinetic\Window\SingleClickableHolderNode;
 
@@ -60,7 +60,7 @@ class EachListNode extends KineticNode{
 		}
 
 		if($delegate = $this->schn_startChild($name)){
-			if(!($delegate instanceof ConfigurableWindowNode) && !($delegate instanceof LinkNode)){
+			if(!($delegate instanceof ArguedWindowNode) && !($delegate instanceof LinkNode)){
 				throw new InvalidNodeException("The child must be a configurable node or a link to a configurable node, got a <{$this->child->nodeName}>", $this);
 			}
 
@@ -75,7 +75,7 @@ class EachListNode extends KineticNode{
 
 		$this->schn_resolve($manager);
 
-		if(!($this->child instanceof ConfigurableWindowNode)){
+		if(!($this->child instanceof ArguedWindowNode)){
 			throw new InvalidNodeException("The child must be a configurable node or a link to a configurable node, got a <{$this->child->nodeName}>", $this);
 		}
 	}

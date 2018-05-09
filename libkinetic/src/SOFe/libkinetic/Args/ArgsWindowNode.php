@@ -20,16 +20,14 @@
 
 declare(strict_types=1);
 
-namespace SOFe\libkinetic\Config;
+namespace SOFe\libkinetic\Args;
 
-use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
-use SOFe\libkinetic\Node\KineticNodeWithId;
-use SOFe\libkinetic\Window\ConfigurableWindowNode;
+use SOFe\libkinetic\WindowRequest;
 
-class AbstractConfigWindowNode extends AbstractConfigNode implements KineticNodeWithId{
+abstract class ArgsWindowNode extends ArgsNode{
 	/** @var string */
-	protected $id;
+	protected $id = null;
 	/** @var string */
 	protected $title;
 
@@ -37,11 +35,9 @@ class AbstractConfigWindowNode extends AbstractConfigNode implements KineticNode
 		if(parent::setAttribute($name, $value)){
 			return true;
 		}
+
 		if($name === "ID"){
-			if(!($this->nodeParent instanceof ConfigurableWindowNode)){
-				throw new InvalidNodeException("Only ConfigurableWindowNode can have AbstractConfigWindowNode children", $this);
-			}
-			$this->id = $this->nodeParent->getId() . "." . $value;
+			$this->id = $value;
 			return true;
 		}
 
@@ -70,7 +66,13 @@ class AbstractConfigWindowNode extends AbstractConfigNode implements KineticNode
 			];
 	}
 
-	public function getId() : string{
+	public function getId() : ?string{
 		return $this->id;
 	}
+
+	public function composeId(string $then) : string{
+		return $this->id !== null ? "{$this->id}.{$then}" : $then;
+	}
+
+	public abstract function sendForm(WindowRequest $request, callable $onComplete, bool $explicit) : void;
 }

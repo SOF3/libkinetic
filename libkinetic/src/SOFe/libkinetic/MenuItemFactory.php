@@ -22,6 +22,14 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-class ListItemFactory{
+class MenuItemFactory{
+	protected $values = [];
 
+	public function addItem($value, string $expression, ?Icon $icon = null) : void{
+		$this->values[] = [$value, $expression, $icon];
+	}
+
+	public function getValues() : array{
+		return $this->values;
+	}
 }

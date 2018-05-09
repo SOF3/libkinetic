@@ -25,6 +25,7 @@ namespace SOFe\libkinetic\Element;
 use InvalidArgumentException;
 use SOFe\libkinetic\InvalidNodeException;
 use SOFe\libkinetic\KineticManager;
+use SOFe\libkinetic\WindowRequest;
 use function is_numeric;
 use function strtoupper;
 use function trim;
@@ -60,7 +61,7 @@ class InputNode extends EditableElementNode{
 		}
 
 		if($name === "TYPECAST"){
-			$this->typeCast = $value;
+			$this->typeCast = strtoupper($value);
 			try{
 				$this->default = self::typeCast($this->default, $this->typeCast);
 			}catch(InvalidArgumentException $e){
@@ -129,5 +130,18 @@ class InputNode extends EditableElementNode{
 		}
 
 		throw new InvalidArgumentException("Invalid typeCast type \"$type\"");
+	}
+
+	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
+		$adapter = function(string $value){
+			return self::typeCast($value, $this->typeCast);
+		};
+
+		return [
+			"type" => "input",
+			"text" => $request->translate($this->title),
+			"placeholder" => $request->translate($this->placeholder),
+			"default" => $this->default,
+		];
 	}
 }

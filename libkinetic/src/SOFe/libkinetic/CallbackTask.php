@@ -22,6 +22,18 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
-interface ComplexConfigProvider{
+use pocketmine\plugin\Plugin;
+use pocketmine\scheduler\PluginTask;
 
+class CallbackTask extends PluginTask{
+	protected $callback;
+
+	public function __construct(Plugin $owner, callable $callback){
+		parent::__construct($owner);
+		$this->callback = $callback;
+	}
+
+	public function onRun(int $currentTick) : void{
+		($this->callback)();
+	}
 }

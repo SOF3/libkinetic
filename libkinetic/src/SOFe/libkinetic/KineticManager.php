@@ -66,6 +66,7 @@ class KineticManager{
 		}
 		$this->adapter = $adapter;
 		$plugin->getServer()->getPluginManager()->registerEvents(new FormListener($this), $plugin);
+		$plugin->getServer()->getScheduler()->scheduleRepeatingTask(new CallbackTask($plugin, [$this, "cleanExpiredForms"]), 200);
 
 		if(extension_loaded("xml")){
 			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");
@@ -86,6 +87,7 @@ class KineticManager{
 		foreach($this->parser->allNodes as $node){
 			$node->throwUnresolved();
 		}
+
 	}
 
 	public function getPlugin() : Plugin{
@@ -116,7 +118,7 @@ class KineticManager{
 
 
 	public function requireTranslation(KineticNode $node, string $key) : void{
-		if(!$this->adapter->hasMessage($key)){
+		if($key !== "" && !$this->adapter->hasMessage($key)){
 			throw new InvalidNodeException("The translation $key is undefined", $node);
 		}
 	}
@@ -168,7 +170,7 @@ class KineticManager{
 	}
 
 
-	public function clickWindow(Player $player, string $id, ConfigStack $config) : void{
+	public function clickWindow(Player $player, string $id, WindowRequest $request) : void{
 		if(!isset($this->parser->idMap[$id]) || !($this->parser->idMap[$id] instanceof WindowNode)){
 			throw new \InvalidArgumentException("$id does not exist or is not a window node");
 		}
@@ -176,7 +178,7 @@ class KineticManager{
 		/** @var WindowNode $window */
 		$window = $this->parser->idMap[$id];
 		try{
-			$window->onClick($player, $config);
+			$window->onClick($request);
 		}/** @noinspection BadExceptionsProcessingInspection */catch(ClickInterruptedException $ex){
 		}
 	}
@@ -194,22 +196,28 @@ class KineticManager{
 		return $form->formId;
 	}
 
-	public function handleFormResponse(Player $player, int $formId, array $response) : void{
+	public function handleFormResponse(Player $player, int $formId, $response) : void{
 		if(!isset($this->forms[$formId])){
 			return;
 		}
 
 		$form = $this->forms[$formId];
-		unset($this->forms[$formId]);
 		if($player !== $form->target){
-			// SECURITY ERROR!
+			$this->plugin->getLogger()->error("{$player->getName()} tried respond to a form that was sent to {$form->target->getName()}. There is 99999999/100000000 chance that the plugin is outdated, shoghi needs to be blamed or the player is hacking poorly.");
 			return;
 		}
+		unset($this->forms[$formId]);
 
 		try{
-			($form->onReceive)($response, $player);
-		}catch(TypeError $error){
-			throw new RuntimeException("{$player->getName()} responded to a form with invalid data types. Is the plugin using an outdated version of libkinetic?", 0, $error);
+			$result = ($form->onReceive)($response, $player);
+			if($result === true){
+				$this->sendForm($player, $form->formData, $form->onReceive);
+			}
+		}/** @noinspection BadExceptionsProcessingInspection */catch(ResendFormException $ex){
+			$this->forms[$formId] = $form;
+			$form->sendPacket();
+		}catch(TypeError|InvalidFormResponseException $error){
+			throw new RuntimeException("{$player->getName()} responded to a form with invalid data. Is {$this->plugin->getName()} using an outdated version of libkinetic?", 0, $error);
 		}
 	}
 

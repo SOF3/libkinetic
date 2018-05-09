@@ -96,8 +96,11 @@ class WindowRequest{
 	}
 
 	public function put(bool $local, string $key, $value) : void{
-		/** @noinspection UnnecessaryParenthesesInspection */
-		($local ? $this->local : $this->inherit)[$key] = $value;
+		if($local){
+			$this->local[$key] = $value;
+		}else{
+			$this->inherit[$key] = $value;
+		}
 	}
 
 	public function push() : WindowRequest{

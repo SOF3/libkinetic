@@ -61,11 +61,6 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
 
-  <xs:attributeGroup name="IdTitle">
-    <xs:attribute name="id" type="IdPart" use="required"/>
-    <xs:attribute name="title" type="MessageRef" use="required"/>
-  </xs:attributeGroup>
-
   <!-- actual types -->
   <xs:group name="NextStep">
     <xs:group ref="DirectEntryWindowNodeGroup"/>
@@ -74,7 +69,7 @@
   </xs:group>
 
   <xs:complexType name="NextStepBase">
-    <xs:attribute name="title" type="MessageRef" use="required"/>
+    <xs:attribute name="indexName" type="MessageRef" use="required"/>
     <xs:attribute name="onClick" type="Instantiable"/>
   </xs:complexType>
 
@@ -105,7 +100,8 @@
   <xs:complexType name="DirectEntryWindowNodeBase">
     <xs:complexContent>
       <xs:extension base="NextStepBase">
-        <xs:attributeGroup ref="IdTitle"/>
+        <xs:attribute name="id" type="IdPart" use="required"/>
+        <xs:attribute name="title" type="MessageRef"/>
         <xs:attribute name="synopsis" type="MessageRef"/>
 
         <xs:sequence>
@@ -371,7 +367,8 @@
   </xs:group>
 
   <xs:complexType name="ElementNode">
-    <xs:attributeGroup ref="IdTitle"/>
+    <xs:attribute name="id" type="IdPart" use="required"/>
+    <xs:attribute name="title" type="MessageRef" use="required"/>
   </xs:complexType>
   <xs:complexType name="LabelNode">
     <xs:complexContent>

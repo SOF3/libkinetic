@@ -20,9 +20,9 @@
 
 declare(strict_types=1);
 
-use SOFe\libkinetic\InvalidNodeException;
-use SOFe\libkinetic\ParseException;
-use SOFe\libkinetic\Parser\XmlFileParser;
+use SOFe\Libkinetic\InvalidNodeException;
+use SOFe\Libkinetic\ParseException;
+use SOFe\Libkinetic\Parser\XmlFileParser;
 
 require_once __DIR__ . "/../cli-autoload.php";
 

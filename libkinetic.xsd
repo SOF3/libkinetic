@@ -280,6 +280,7 @@
   <xs:complexType name="ArgsNodeBase">
     <xs:attribute name="id" type="IdPart" use="required"/>
     <xs:attribute name="required" type="xs:boolean" default="false"/>
+    <xs:attribute name="local" type="xs:boolean" default="true"/>
   </xs:complexType>
   <xs:complexType name="CommandArgNode">
     <xs:complexContent>

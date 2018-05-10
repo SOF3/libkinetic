@@ -117,6 +117,7 @@ class MenuArgsNode extends ArgsWindowNode{
 
 			$this->manager->sendForm($request->getPlayer(), $form, function(?int $data) use ($request, $values, $onComplete, $explicit){
 				if($data === null){
+					// TODO onCancel API
 					if(!$explicit){
 						throw new ResendFormException();
 					}

@@ -70,7 +70,7 @@ class IndexNode extends WindowNode{
 			}
 
 			$button = [
-				"text" => $this->manager->translate($player, $node->indexName),
+				"text" => $request->translate($node->indexName),
 			];
 			if($node->icon !== null){
 				$buttons["icon"] = [
@@ -85,12 +85,12 @@ class IndexNode extends WindowNode{
 
 		$form = [
 			"type" => "form",
-			"title" => $this->manager->translate($player, $this->title, $request),
+			"title" => $request->translate($this->title),
 			"content" => $this->getSynopsisString($player, $request),
 			"buttons" => $buttons,
 		];
 
-		$this->manager->sendForm($player, $form, function(?int $button, Player $player) use ($buttonNodes, $request){
+		$this->manager->sendForm($player, $form, function(?int $button) use ($buttonNodes, $request){
 			if($button === null){
 				return;
 			}

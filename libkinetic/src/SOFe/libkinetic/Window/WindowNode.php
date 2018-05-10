@@ -31,6 +31,7 @@ use SOFe\libkinetic\Node\KineticNodeWithId;
 use SOFe\libkinetic\Node\RootNode;
 use SOFe\libkinetic\Window\Entry\Command\CommandEntryPointNode;
 use SOFe\libkinetic\Window\Entry\Interact\InteractEntryPointNode;
+use SOFe\libkinetic\WindowRequest;
 
 /**
  * A window represents a form that can be displayed to the user.
@@ -142,8 +143,11 @@ abstract class WindowNode extends ClickableNode implements KineticNodeWithId{
 		return $this->synopsis;
 	}
 
-	public function getSynopsisString(?Player $context, array $args = []) : string{
+	public function getSynopsisString(?Player $context, WindowRequest $request = null) : string{
+		if($this->synopsis === null){
+			return "";
+		}
 
-		return $this->synopsis !== null ? $this->manager->translate($context, $this->synopsis, $args) : "";
+		return $request !== null ? $request->translate($this->synopsis) : $this->manager->translate($context, $this->synopsis);
 	}
 }

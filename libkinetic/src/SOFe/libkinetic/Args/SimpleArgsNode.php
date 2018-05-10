@@ -71,7 +71,7 @@ class SimpleArgsNode extends ArgsWindowNode{
 				return;
 			}
 			foreach($this->elements as $element){
-				if(!$request->hasKey($element->getId())){
+				if(!$request->hasKey($this->composeId($element->getId()))){
 					return;
 				}
 			}
@@ -93,6 +93,7 @@ class SimpleArgsNode extends ArgsWindowNode{
 			"content" => $contents,
 		], function(?array $data) use ($request, $explicit, $adapters, $onComplete){
 			if($data === null){
+				// TODO onCancel API
 				if($explicit){
 					$onComplete();
 					return;

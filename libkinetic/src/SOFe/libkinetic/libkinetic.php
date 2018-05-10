@@ -23,6 +23,12 @@ declare(strict_types=1);
 namespace SOFe\libkinetic;
 
 final class libkinetic{
+	public const MESSAGES = [
+		"libkinetic.enum-args.add-item" => [
+			"en_US" => "Add Item"
+		]
+	];
+
 	private static $raw;
 
 	public static function isRaw() : bool{

@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\libkinetic;
 
+use InvalidArgumentException;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
@@ -39,6 +40,7 @@ use function extension_loaded;
 use function in_array;
 use function microtime;
 use function random_int;
+use function str_replace;
 use function substr;
 
 class KineticManager{
@@ -61,7 +63,7 @@ class KineticManager{
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
 		if(in_array(KineticAdapterBase::class, class_uses($adapter), true)){
-			/** @var KineticAdapterBase $adapter */
+			/** @noinspection PhpUndefinedMethodInspection */
 			$adapter->kinetic_setPlugin($plugin);
 		}
 		$this->adapter = $adapter;
@@ -112,8 +114,24 @@ class KineticManager{
 	}
 
 
-	public function translate(?Player $context, string $identifier, array $args = []) : string{
-		return $this->adapter->getMessage($context, $identifier, $args);
+	public function translate(?Player $context, ?string $identifier, array $args = []) : string{
+		if($identifier === "" || $identifier === null){
+			return "";
+		}
+
+		try{
+			return $this->adapter->getMessage($context, $identifier, $args);
+		}catch(InvalidArgumentException $ex){
+			if(isset(libkinetic::MESSAGES[$identifier][$locale = $context !== null ? $context->getLocale() : "en_US"])){
+				$message = libkinetic::MESSAGES[$identifier][$locale];
+				foreach($args as $k => $v){
+					$message = str_replace("\${{$k}}", $v, $message);
+				}
+				return $message;
+			}
+
+			throw $ex;
+		}
 	}
 
 
@@ -203,7 +221,7 @@ class KineticManager{
 
 		$form = $this->forms[$formId];
 		if($player !== $form->target){
-			$this->plugin->getLogger()->error("{$player->getName()} tried respond to a form that was sent to {$form->target->getName()}. There is 99999999/100000000 chance that the plugin is outdated, shoghi needs to be blamed or the player is hacking poorly.");
+			$this->plugin->getLogger()->error("{$player->getName()} tried respond to a form that was sent to {$form->target->getName()}. There is 99.99999999999999% chance that the plugin is outdated, shoghi needs to be blamed or the player is hacking poorly.");
 			return;
 		}
 		unset($this->forms[$formId]);

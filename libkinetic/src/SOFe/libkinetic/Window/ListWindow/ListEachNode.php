@@ -29,7 +29,7 @@ use SOFe\libkinetic\Window\ArguedWindowNode;
 use SOFe\libkinetic\Window\LinkNode;
 use SOFe\libkinetic\Window\SingleClickableHolderNode;
 
-class EachListNode extends KineticNode{
+class ListEachNode extends KineticNode{
 	use SingleClickableHolderNode;
 
 	/** @var string */

@@ -274,7 +274,7 @@
     <xs:element name="simpleArgs" type="SimpleArgsNode"/>
     <xs:element name="menuArgs" type="MenuArgsNode"/>
     <xs:element name="cycleArgs" type="CycleArgsNode"/>
-    <xs:element name="listArgs" type="ListArgsNode"/>
+    <xs:element name="enumArgs" type="EnumArgsNode"/>
   </xs:group>
 
   <xs:complexType name="ArgsNodeBase">
@@ -333,9 +333,12 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:complexType name="ListArgsNode">
+  <xs:complexType name="EnumArgsNode">
     <xs:complexContent>
       <xs:extension base="ArgsWindowNodeBase">
+        <xs:attribute name="addItem" type="MessageRef" use="required"/>
+        <xs:attribute name="eachFormat" type="MessageRef" use="required"/>
+        <xs:attribute name="submit" type="MessageRef" use="required"/>
         <xs:sequence>
           <xs:element name="each">
             <xs:complexType>

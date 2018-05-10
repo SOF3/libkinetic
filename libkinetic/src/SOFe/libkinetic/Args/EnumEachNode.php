@@ -25,11 +25,25 @@ namespace SOFe\libkinetic\Args;
 use SOFe\libkinetic\Element\ElementNode;
 use SOFe\libkinetic\KineticManager;
 use SOFe\libkinetic\Node\KineticNode;
-use function assert;
 
-class EachCycleNode extends KineticNode{
+class EnumEachNode extends KineticNode{
+	/** @var string */
+	protected $title;
 	/** @var ElementNode[] */
 	protected $elements = [];
+
+	public function setAttribute(string $name, string $value) : bool{
+		if(parent::setAttribute($name, $value)){
+			return true;
+		}
+
+		if($name === "TITLE"){
+			$this->title = $value;
+			return true;
+		}
+
+		return false;
+	}
 
 	public function startChild(string $name) : ?KineticNode{
 		if($delegate = parent::startChild($name)){
@@ -45,17 +59,20 @@ class EachCycleNode extends KineticNode{
 
 	public function resolve(KineticManager $manager) : void{
 		parent::resolve($manager);
-		foreach($this->elements as $node){
-			$node->resolve($manager);
-		}
+		$manager->requireTranslation($this, $this->title);
 	}
 
 	public function jsonSerialize() : array{
 		return parent::jsonSerialize() + [
+				"title" => $this->title,
 				"elements" => $this->elements,
 			];
 	}
 
+
+	public function getTitle() : string{
+		return $this->title;
+	}
 
 	/**
 	 * @return ElementNode[]

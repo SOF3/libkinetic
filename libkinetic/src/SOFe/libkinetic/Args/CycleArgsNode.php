@@ -41,7 +41,7 @@ class CycleArgsNode extends ArgsWindowNode{
 	protected $provider;
 	/** @var ComplexProvider */
 	protected $providerObject;
-	/** @var EachCycleNode */
+	/** @var CycleEachNode */
 	protected $each;
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -68,7 +68,7 @@ class CycleArgsNode extends ArgsWindowNode{
 		}
 
 		if($name === "EACH"){
-			return $this->each = new EachCycleNode();
+			return $this->each = new CycleEachNode();
 		}
 
 		return null;
@@ -127,6 +127,7 @@ class CycleArgsNode extends ArgsWindowNode{
 
 			$this->manager->sendForm($request->getPlayer(), $form, function(?array $data) use ($elements, $eachSize, $onComplete, $explicit, $keys, $contents, $adapters, $request){
 				if($data === null){
+					// TODO onCancel API
 					if(!$explicit){
 						throw new ResendFormException();
 					}

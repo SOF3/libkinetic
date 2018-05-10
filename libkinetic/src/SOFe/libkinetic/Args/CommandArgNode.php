@@ -34,7 +34,7 @@ use function trim;
 /**
  * CommandArgNode is a variant of ArgsNode that only allows one child and requires an <code>argName</code> attribute.
  *
- * When a player tries to open a Argued from command, if there are required settings in ConfigNode, a CustomForm will be opened so that the player can edit them from the form. On the other hand, settings in CommandConfigNode will just go into the command's syntax, i.e. the player will fill the required and optional values from the command.
+ * When a player tries to open an ArguedWindow by command, if there are required settings through ArgsWindowNode, a form will be opened for each ArgsWindowNode so that the player can edit them from the form. On the other hand, settings in CommandConfigNode will go directly into the command's syntax, i.e. the player will fill the required and 1optional values from the command.
  */
 class CommandArgNode extends ArgsNode{
 	/** @var string */

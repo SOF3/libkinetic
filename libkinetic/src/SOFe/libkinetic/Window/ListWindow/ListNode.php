@@ -45,7 +45,7 @@ class ListNode extends ArguedWindowNode{
 	protected $before = null;
 	/** @var BeforeAfterListNode|null */
 	protected $after = null;
-	/** @var EachListNode */
+	/** @var ListEachNode */
 	protected $each;
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -81,7 +81,7 @@ class ListNode extends ArguedWindowNode{
 		}
 
 		if($name === "EACH"){
-			return $this->each = new EachListNode();
+			return $this->each = new ListEachNode();
 		}
 
 		return null;

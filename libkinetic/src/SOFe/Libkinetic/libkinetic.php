@@ -29,6 +29,8 @@ final class libkinetic{
 		]
 	];
 
+	public const GH_RAW = "https://raw.githubusercontent.com/SOF3/libkinetic/master/";
+
 	private static $raw;
 
 	public static function isRaw() : bool{

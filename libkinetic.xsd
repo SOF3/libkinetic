@@ -262,8 +262,16 @@
     <xs:complexContent>
       <xs:extension base="ArguedWindowNodeBase">
         <xs:attribute name="synopsis" use="required"/>
+        <xs:sequence>
+          <xs:element name="button1" type="ModalButtonNode" minOccurs="0"/>
+          <xs:element name="button2" type="ModalButtonNode" minOccurs="0"/>
+        </xs:sequence>
       </xs:extension>
     </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ModalButtonNode">
+    <xs:group ref="NextStep"/>
   </xs:complexType>
 
   <xs:group name="ArgNodeGroup">

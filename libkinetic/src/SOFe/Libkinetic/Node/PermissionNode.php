@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Node;
 
 use pocketmine\command\CommandSender;
-use pocketmine\Player;
 use SOFe\Libkinetic\API\PermissionPredicate;
 use SOFe\Libkinetic\KineticManager;
 

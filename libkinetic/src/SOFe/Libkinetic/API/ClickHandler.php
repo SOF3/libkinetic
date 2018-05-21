@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
-use pocketmine\Player;
 use SOFe\Libkinetic\WindowRequest;
 
 interface ClickHandler{

@@ -37,7 +37,6 @@ use SOFe\Libkinetic\Parser\XmlFileParser;
 use SOFe\Libkinetic\Util\CallbackTask;
 use SOFe\Libkinetic\Window\Entry\Interact\InteractEntryPointNode;
 use SOFe\Libkinetic\Window\Entry\Interact\InteractListener;
-use SOFe\Libkinetic\Window\WindowNode;
 use TypeError;
 use function class_uses;
 use function extension_loaded;

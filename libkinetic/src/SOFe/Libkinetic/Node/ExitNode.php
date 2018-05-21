@@ -22,5 +22,72 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Node;
 
+use SOFe\Libkinetic\Args\ArgsWindowNode;
+use SOFe\Libkinetic\Args\CommandArgNode;
+use SOFe\Libkinetic\Args\CycleArgsNode;
+use SOFe\Libkinetic\Args\MenuArgsNode;
+use SOFe\Libkinetic\Args\SimpleArgsNode;
+use SOFe\Libkinetic\KineticManager;
+
 class ExitNode extends ClickableNode{
+	/** @var ArgsWindowNode[] */
+	protected $windowConfigs = [];
+	/** @var CommandArgNode[] */
+	protected $commandConfigs = [];
+
+	public function startChild(string $name) : ?KineticNode{
+		if($delegate = parent::startChild($name)){
+			return $delegate;
+		}
+
+		if($name === "SIMPLE" . "ARGS"){
+			return $this->windowConfigs[] = new SimpleArgsNode();
+		}
+
+		if($name === "MENU" . "ARGS"){
+			return $this->windowConfigs[] = new MenuArgsNode();
+		}
+
+		if($name === "CYCLE" . "ARGS"){
+			return $this->windowConfigs[] = new CycleArgsNode();
+		}
+
+		if($name === "COMMAND" . "ARG"){
+			return $this->commandConfigs[] = new CommandArgNode();
+		}
+
+
+		return null;
+	}
+
+	public function resolve(KineticManager $manager) : void{
+		parent::resolve($manager);
+		foreach($this->windowConfigs as $config){
+			$config->resolve($manager);
+		}
+		foreach($this->commandConfigs as $config){
+			$config->resolve($manager);
+		}
+	}
+
+	public function jsonSerialize() : array{
+		return parent::jsonSerialize() + [
+				"windowConfigs" => $this->windowConfigs,
+				"commandConfigs" => $this->commandConfigs,
+			];
+	}
+
+	/**
+	 * @return SimpleArgsNode[]
+	 */
+	public function getWindowConfigs() : array{
+		return $this->windowConfigs;
+	}
+
+	/**
+	 * @return CommandArgNode[]
+	 */
+	public function getCommandConfigs() : array{
+		return $this->commandConfigs;
+	}
 }

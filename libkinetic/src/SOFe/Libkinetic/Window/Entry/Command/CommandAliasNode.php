@@ -26,6 +26,7 @@ use SOFe\Libkinetic\Node\KineticNode;
 use SOFe\Libkinetic\ParseException;
 
 class CommandAliasNode extends KineticNode{
+	/** @var string */
 	protected $text;
 
 	public function acceptText(string $text) : void{
@@ -33,6 +34,8 @@ class CommandAliasNode extends KineticNode{
 	}
 
 	public function endElement() : void{
+		parent::endElement();
+
 		if(empty($this->text)){
 			throw new ParseException("Text content is required", $this);
 		}
@@ -42,5 +45,10 @@ class CommandAliasNode extends KineticNode{
 		return parent::jsonSerialize() + [
 				"text" => $this->text,
 			];
+	}
+
+
+	public function getText() : string{
+		return $this->text;
 	}
 }

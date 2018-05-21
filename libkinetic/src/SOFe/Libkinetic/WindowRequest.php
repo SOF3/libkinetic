@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
+use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use function assert;
 use function get_class;
@@ -36,13 +37,13 @@ class WindowRequest{
 	/** @var KineticManager */
 	private $manager;
 	/** @var Player */
-	private $player;
+	private $sender;
 	private $local = [];
 	private $inherit = [];
 
-	public function __construct(KineticManager $manager, Player $player){
+	public function __construct(KineticManager $manager, CommandSender $sender){
 		$this->manager = $manager;
-		$this->player = $player;
+		$this->sender = $sender;
 	}
 
 	public function getBoolean(string $key) : bool{
@@ -104,7 +105,7 @@ class WindowRequest{
 	}
 
 	public function push() : WindowRequest{
-		$request = new WindowRequest($this->manager, $this->player);
+		$request = new WindowRequest($this->manager, $this->sender);
 		$request->inherit = $this->inherit;
 		return $request;
 	}
@@ -114,11 +115,11 @@ class WindowRequest{
 		return $this->manager;
 	}
 
-	public function getPlayer() : Player{
-		return $this->player;
+	public function getSender() : CommandSender{
+		return $this->sender;
 	}
 
 	public function translate(?string $message) : string{
-		return $message !== "" && $message !== null ? $this->manager->translate($this->player, $message, $this->local + $this->inherit) : "";
+		return $message !== "" && $message !== null ? $this->manager->translate($this->sender, $message, $this->local + $this->inherit) : "";
 	}
 }

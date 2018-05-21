@@ -37,7 +37,7 @@ abstract class KineticNode implements JsonSerializable{
 	protected $manager;
 
 	/** @var bool */
-	private $setAttributeCalled = false, $endAttributesCalled = false, $startChildCalled = false, $endElementCalled = false;
+	private $setAttributeCalled = false, $endAttributesCalled = false, $startChildCalled = true, $endElementCalled = false;
 
 	/** @var string */
 	public $nodeName;
@@ -93,6 +93,14 @@ abstract class KineticNode implements JsonSerializable{
 				throw new InvalidNodeException("Child element <$name> is required", $this);
 			}
 		}
+	}
+
+	public function setNoAttributes() : void{
+		$this->setAttributeCalled = true;
+	}
+
+	public function setHasChildren() : void{
+		$this->startChildCalled = false;
 	}
 
 	public final function validateParentsCalled() : void{

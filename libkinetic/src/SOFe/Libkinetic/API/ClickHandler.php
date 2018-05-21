@@ -26,5 +26,5 @@ use pocketmine\Player;
 use SOFe\Libkinetic\WindowRequest;
 
 interface ClickHandler{
-	public function onClick(Player $player, WindowRequest $request) : void;
+	public function onClick(WindowRequest $request) : void;
 }

@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Args;
 
+use pocketmine\Player;
 use SOFe\Libkinetic\API\MenuItemFactory;
 use SOFe\Libkinetic\API\MenuProvider;
 use SOFe\Libkinetic\Form\Icon;
@@ -81,14 +82,14 @@ class MenuArgsNode extends ArgsWindowNode{
 	}
 
 
-	public function sendForm(WindowRequest $request, callable $onComplete, bool $explicit) : void{
+	public function sendForm(Player $player, WindowRequest $request, callable $onComplete, bool $explicit) : void{
 		if(!$explicit && (!$this->required || $request->hasKey($this->id))){
 			$onComplete();
 			return;
 		}
 
 		$factory = new MenuItemFactory();
-		$this->providerObject->provide($factory, $request, function() use ($explicit, $onComplete, $request, $factory){
+		$this->providerObject->provide($factory, $request, function() use ($player, $explicit, $onComplete, $request, $factory){
 			$values = [];
 			$buttons = [];
 			/**
@@ -115,7 +116,7 @@ class MenuArgsNode extends ArgsWindowNode{
 				"buttons" => $buttons,
 			];
 
-			$this->manager->sendForm($request->getPlayer(), $form, function(?int $data) use ($request, $values, $onComplete, $explicit){
+			$this->manager->sendForm($player, $form, function(?int $data) use ($request, $values, $onComplete, $explicit){
 				if($data === null){
 					// TODO onCancel API
 					if(!$explicit){

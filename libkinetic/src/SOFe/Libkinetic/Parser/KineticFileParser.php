@@ -62,6 +62,7 @@ abstract class KineticFileParser{
 				$this->leaf->setAttribute($k, $v);
 			}
 		}else{
+			$this->leaf->setHasChildren();
 			$leaf = $this->leaf->startChild($name);
 			if($leaf === null){
 				throw new InvalidNodeException("<{$name}> is not a valid child node", $this->leaf);
@@ -83,6 +84,9 @@ abstract class KineticFileParser{
 				throw new InvalidNodeException("<$name> does not accept the attribute $attr", $this->leaf);
 			}
 		}
+		if(empty($attrs)){
+			$this->leaf->setNoAttributes();
+		}
 
 		$this->leaf->endAttributes();
 
@@ -99,6 +103,7 @@ abstract class KineticFileParser{
 		if($name !== $this->leaf->nodeName){
 			throw new ParseException("Closing tag </$name> does not match opening tag <{$this->leaf->nodeName}>");
 		}
+		$this->leaf->endElement();
 		$this->leaf = $this->leaf->nodeParent;
 	}
 

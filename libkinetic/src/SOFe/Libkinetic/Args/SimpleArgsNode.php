@@ -62,7 +62,7 @@ class SimpleArgsNode extends ArgsWindowNode{
 			];
 	}
 
-	public function sendForm(WindowRequest $request, callable $onComplete, bool $explicit) : void{
+	public function sendForm(\pocketmine\Player $player, WindowRequest $request, callable $onComplete, bool $explicit) : void{
 		if(!$explicit){
 			if(!$this->required){
 				$onComplete();
@@ -85,7 +85,7 @@ class SimpleArgsNode extends ArgsWindowNode{
 			$adapters[] = $adapter;
 		}
 
-		$this->manager->sendForm($request->getPlayer(), [
+		$this->manager->sendForm($player, [
 			"type" => "custom_form",
 			"title" => $request->translate($this->title),
 			"content" => $contents,

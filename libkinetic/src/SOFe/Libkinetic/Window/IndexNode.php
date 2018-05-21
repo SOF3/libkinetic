@@ -57,7 +57,7 @@ class IndexNode extends WindowNode{
 	public function onClick(WindowRequest $request) : void{
 		parent::onClick($request);
 
-		$player = $request->getPlayer();
+		$player = $request->getSender();
 
 		$buttons = [];
 		/** @var WindowNode[] $buttonNodes */

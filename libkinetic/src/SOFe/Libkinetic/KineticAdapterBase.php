@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 use InvalidArgumentException;
+use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use function array_keys;
@@ -46,7 +47,7 @@ trait KineticAdapterBase{
 		return true;
 	}
 
-	public function getMessage(?Player $player, string $identifier, array $parameters) : string{
+	public function getMessage(?CommandSender $sender, string $identifier, array $parameters) : string{
 		return str_replace(array_map(function(string $key) : string{
 			return "\${{$key}}";
 		}, array_keys($parameters)), array_values($parameters), $identifier);

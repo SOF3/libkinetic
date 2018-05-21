@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 use InvalidArgumentException;
-use pocketmine\Player;
+use pocketmine\command\CommandSender;
 
 interface KineticAdapter{
 	/**
@@ -34,15 +34,15 @@ interface KineticAdapter{
 	public function hasMessage(string $identifier) : bool;
 
 	/**
-	 * @param Player|null $player
-	 * @param string      $identifier
-	 * @param mixed[]     $parameters
+	 * @param CommandSender|null $sender
+	 * @param string             $identifier
+	 * @param mixed[]            $parameters
 	 *
 	 * @return string
 	 *
 	 * @throws InvalidArgumentException
 	 */
-	public function getMessage(?Player $player, string $identifier, array $parameters) : string;
+	public function getMessage(?CommandSender $sender, string $identifier, array $parameters) : string;
 
 	public function getInstantiable(string $name) : object;
 

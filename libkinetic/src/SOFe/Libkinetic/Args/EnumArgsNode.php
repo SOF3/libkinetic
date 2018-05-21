@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Args;
 
+use pocketmine\Player;
 use SOFe\Libkinetic\Element\ElementNode;
 use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\InvalidNodeException;
@@ -102,15 +103,15 @@ class EnumArgsNode extends ArgsWindowNode{
 		$manager->requireTranslation($this, $this->submit);
 	}
 
-	public function sendForm(WindowRequest $request, callable $onComplete, bool $explicit) : void{
+	public function sendForm(Player $player, WindowRequest $request, callable $onComplete, bool $explicit) : void{
 		if($explicit || ($this->required && !$request->hasKey($this->id))){
-			$this->sendMenu($request, [], $explicit, $onComplete);
+			$this->sendMenu($player, $request, [], $explicit, $onComplete);
 		}else{
 			$onComplete();
 		}
 	}
 
-	private function sendMenu(WindowRequest $request, array $items, bool $explicit, callable $onComplete) : void{
+	private function sendMenu(Player $player, WindowRequest $request, array $items, bool $explicit, callable $onComplete) : void{
 		$buttons = [];
 		$buttons[] = [
 			"text" => $request->translate($this->addItem),
@@ -139,7 +140,7 @@ class EnumArgsNode extends ArgsWindowNode{
 			"buttons" => $buttons,
 		];
 
-		$this->manager->sendForm($request->getPlayer(), $form, function(?int $choice) use ($request, $items, $explicit, $onComplete){
+		$this->manager->sendForm($player, $form, function(?int $choice) use ($player, $request, $items, $explicit, $onComplete){
 			if($choice === null){
 				// TODO onCancel API
 				return;
@@ -160,9 +161,9 @@ class EnumArgsNode extends ArgsWindowNode{
 					"content" => $contents,
 				];
 
-				$this->manager->sendForm($request->getPlayer(), $form, function(?array $data) use ($request, $items, $explicit, $onComplete, $elements, $adapters){
+				$this->manager->sendForm($player, $form, function(?array $data) use ($request, $items, $explicit, $onComplete, $elements, $adapters, $player){
 					if($data === null){
-						$this->sendMenu($request, $items, $explicit, $onComplete);
+						$this->sendMenu($player, $request, $items, $explicit, $onComplete);
 						return;
 					}
 
@@ -172,14 +173,14 @@ class EnumArgsNode extends ArgsWindowNode{
 					}
 					$items[] = $item;
 
-					$this->sendMenu($request, $items, $explicit, $onComplete);
+					$this->sendMenu($player, $request, $items, $explicit, $onComplete);
 				});
 				return;
 			}
 
 			if(isset($items[$choice - 1])){
 				array_splice($items, $choice - 1, 1);
-				$this->sendMenu($request, $items, $explicit, $onComplete);
+				$this->sendMenu($player, $request, $items, $explicit, $onComplete);
 				return;
 			}
 

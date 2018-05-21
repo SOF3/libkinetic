@@ -25,12 +25,13 @@ namespace SOFe\Libkinetic\Window\Entry\Command;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\Node\KineticNode;
 use SOFe\Libkinetic\Window\Entry\AbstractEntryPointNode;
-use SOFe\Libkinetic\Window\WindowNode;
-use function assert;
+use function array_map;
 
 class CommandEntryPointNode extends AbstractEntryPointNode{
 	/** @var string */
 	protected $name;
+	/** @var string|null */
+	protected $description = null;
 	/** @var CommandAliasNode[] */
 	protected $aliases = [];
 
@@ -41,6 +42,11 @@ class CommandEntryPointNode extends AbstractEntryPointNode{
 
 		if($name === "NAME"){
 			$this->name = $value;
+			return true;
+		}
+
+		if($name === "DESCRIPTION"){
+			$this->description = $value;
 			return true;
 		}
 
@@ -66,7 +72,11 @@ class CommandEntryPointNode extends AbstractEntryPointNode{
 	}
 
 	public function resolve(KineticManager $manager) : void{
-		assert($this->nodeParent instanceof WindowNode);
+		parent::resolve($manager);
+
+		if($this->description !== null){
+			$manager->requireTranslation($this, $this->description);
+		}
 		foreach($this->aliases as $node){
 			$node->resolve($manager);
 		}
@@ -86,5 +96,11 @@ class CommandEntryPointNode extends AbstractEntryPointNode{
 
 	public function getAliases() : array{
 		return $this->aliases;
+	}
+
+	public function getAliasStrings() : array{
+		return array_map(function(CommandAliasNode $node) : string{
+			return $node->getText();
+		}, $this->aliases);
 	}
 }

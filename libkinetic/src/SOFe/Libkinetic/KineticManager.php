@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 use InvalidArgumentException;
+use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
@@ -77,8 +78,8 @@ class KineticManager{
 			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");
 			$this->parser = new XmlFileParser($plugin->getResource($xmlResource), $xmlResource);
 		}else{
-			$plugin->getLogger()->info("Loading JSON kinetic file $xmlResource");
-			$this->parser = new JsonFileParser($plugin->getResource($xmlResource), $xmlResource);
+			$plugin->getLogger()->info("Loading JSON kinetic file $jsonResource");
+			$this->parser = new JsonFileParser($plugin->getResource($jsonResource), $jsonResource);
 		}
 
 		$this->parser->parse();
@@ -87,12 +88,11 @@ class KineticManager{
 			$node->validateParentsCalled();
 		}
 
-		$this->parser->getRoot()->cpn_resolve($this);
+		$this->parser->getRoot()->resolve($this);
 
 		foreach($this->parser->allNodes as $node){
 			$node->throwUnresolved();
 		}
-
 	}
 
 	public function getPlugin() : Plugin{
@@ -117,7 +117,7 @@ class KineticManager{
 	}
 
 
-	public function translate(?Player $context, ?string $identifier, array $args = []) : string{
+	public function translate(?CommandSender $context, ?string $identifier, array $args = []) : string{
 		if($identifier === "" || $identifier === null){
 			return "";
 		}
@@ -125,7 +125,8 @@ class KineticManager{
 		try{
 			return $this->adapter->getMessage($context, $identifier, $args);
 		}catch(InvalidArgumentException $ex){
-			if(isset(libkinetic::MESSAGES[$identifier][$locale = $context !== null ? $context->getLocale() : "en_US"])){
+			$locale = $context instanceof Player ? $context->getLocale() : "en_US";
+			if(isset(libkinetic::MESSAGES[$identifier][$locale])){
 				$message = libkinetic::MESSAGES[$identifier][$locale];
 				foreach($args as $k => $v){
 					$message = str_replace("\${{$k}}", $v, $message);
@@ -144,7 +145,11 @@ class KineticManager{
 		}
 	}
 
-	public function resolveClass(KineticNode $node, string $fqn, ?string $super) : object{
+	public function resolveClass(KineticNode $node, ?string $fqn, ?string $super) : ?object{
+		if($fqn === null){
+			return null;
+		}
+
 		if($fqn{0} === '$'){
 			$object = $this->adapter->getInstantiable(substr($fqn, 1));
 			if($super !== null && !($object instanceof $super)){
@@ -191,18 +196,18 @@ class KineticManager{
 	}
 
 
-	public function clickWindow(Player $player, string $id, WindowRequest $request) : void{
-		if(!isset($this->parser->idMap[$id]) || !($this->parser->idMap[$id] instanceof WindowNode)){
-			throw new \InvalidArgumentException("$id does not exist or is not a window node");
-		}
-
-		/** @var WindowNode $window */
-		$window = $this->parser->idMap[$id];
-		try{
-			$window->onClick($request);
-		}/** @noinspection BadExceptionsProcessingInspection */catch(ClickInterruptedException $ex){
-		}
-	}
+//	public function clickWindow(Player $player, string $id, WindowRequest $request) : void{
+//		if(!isset($this->parser->idMap[$id]) || !($this->parser->idMap[$id] instanceof WindowNode)){
+//			throw new \InvalidArgumentException("$id does not exist or is not a window node");
+//		}
+//
+//		/** @var WindowNode $window */
+//		$window = $this->parser->idMap[$id];
+//		try{
+//			$window->onClick($request);
+//		}/** @noinspection BadExceptionsProcessingInspection */catch(ClickInterruptedException $ex){
+//		}
+//	}
 
 
 	public function sendForm(Player $target, array $formData, callable $handler) : int{

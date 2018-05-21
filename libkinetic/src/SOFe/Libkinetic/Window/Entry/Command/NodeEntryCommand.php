@@ -25,13 +25,21 @@ namespace SOFe\Libkinetic\Window\Entry\Command;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
+use SOFe\Libkinetic\Args\CommandArgNode;
 use SOFe\Libkinetic\KineticManager;
+use SOFe\Libkinetic\Node\ClickableNode;
 use SOFe\Libkinetic\Window\ArguedWindowNode;
 use SOFe\Libkinetic\Window\WindowNode;
+use SOFe\Libkinetic\WindowRequest;
+use function array_values;
 use function assert;
+use function count;
+use function ksort;
+use const SORT_NUMERIC;
 
 class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 
@@ -69,7 +77,7 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 			}
 		}
 
-		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(null), $usage, $command->getAliases()); // TODO make translated description into the client
+		parent::__construct($command->getName(), $command->nodeParent->getSynopsisString(null), $usage, $command->getAliasStrings()); // TODO make translated description into the client
 		$this->manager = $manager;
 		$this->command = $command;
 	}
@@ -104,8 +112,49 @@ class NodeEntryCommand extends Command implements PluginIdentifiableCommand{
 		return null;
 	}
 
-	public function execute(CommandSender $sender, string $commandLabel, array $args){
-		// TODO implement
+	public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
+		$usedArgs = [];
+
+		$cnt = count($args);
+		foreach($this->args as $i => $arg){
+			if($arg->isRequired()){
+				$usedArgs[$i] = $arg;
+				--$cnt;
+			}
+		}
+		if($cnt < 0){
+			throw new InvalidCommandSyntaxException;
+		}
+
+		if($cnt > 0){
+			foreach($this->args as $i => $arg){
+				if(!$arg->isRequired()){
+					$usedArgs[$i] = $arg;
+					--$cnt;
+					if($cnt === 0){
+						break;
+					}
+				}
+			}
+		}
+
+		if($cnt > 0){
+			throw new InvalidCommandSyntaxException;
+		}
+
+		ksort($usedArgs, SORT_NUMERIC);
+		/** @var CommandArgNode[] $usedArgs */
+		$usedArgs = array_values($usedArgs);
+
+		$request = new WindowRequest($this->manager, $sender);
+
+		for($i = 0, $iMax = count($args); $i < $iMax; ++$i){
+			$request->put($usedArgs[$i]->isLocal(), $usedArgs[$i]->getArgName(), $args[$i]);
+		}
+
+		$nodeParent = $this->command->nodeParent;
+		assert($nodeParent instanceof ClickableNode);
+		$nodeParent->onClick($request);
 	}
 
 	public function getPlugin() : Plugin{

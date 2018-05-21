@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Args;
 
+use pocketmine\Player;
 use SOFe\Libkinetic\API\ComplexItemFactory;
 use SOFe\Libkinetic\API\ComplexProvider;
 use SOFe\Libkinetic\Element\ElementNode;
@@ -91,14 +92,14 @@ class CycleArgsNode extends ArgsWindowNode{
 			];
 	}
 
-	public function sendForm(WindowRequest $request, callable $onComplete, bool $explicit) : void{
+	public function sendForm(Player $player, WindowRequest $request, callable $onComplete, bool $explicit) : void{
 		if(!$explicit && (!$this->required || $request->hasKey($this->id))){
 			$onComplete();
 			return;
 		}
 
 		$factory = new ComplexItemFactory();
-		$this->providerObject->provide($factory, $request, function() use ($factory, $request, $onComplete, $explicit){
+		$this->providerObject->provide($factory, $request, function() use ($player, $factory, $request, $onComplete, $explicit){
 			$elements = $this->each->getElements();
 			$keys = [];
 			$contents = [];
@@ -125,7 +126,7 @@ class CycleArgsNode extends ArgsWindowNode{
 				"content" => $contents,
 			];
 
-			$this->manager->sendForm($request->getPlayer(), $form, function(?array $data) use ($elements, $eachSize, $onComplete, $explicit, $keys, $adapters, $request){
+			$this->manager->sendForm($player, $form, function(?array $data) use ($elements, $eachSize, $onComplete, $explicit, $keys, $adapters, $request){
 				if($data === null){
 					// TODO onCancel API
 					if(!$explicit){

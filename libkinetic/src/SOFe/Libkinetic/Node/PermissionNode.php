@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Node;
 
+use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use SOFe\Libkinetic\API\PermissionPredicate;
 use SOFe\Libkinetic\KineticManager;
@@ -89,12 +90,12 @@ class PermissionNode extends KineticNode{
 		return $this->permission;
 	}
 
-	public function getPermissionMessage(KineticManager $manager, Player $target) : ?string{
+	public function getPermissionMessage(KineticManager $manager, CommandSender $target) : ?string{
 		return $this->message !== null ? $manager->translate($target, $this->message, []) : null;
 	}
 
-	public function testPermission(Player $player) : bool{
-		return $player->hasPermission($this->permission) === $this->need;
+	public function testPermission(CommandSender $sender) : bool{
+		return $sender->hasPermission($this->permission) === $this->need;
 	}
 
 	public function jsonSerialize() : array{

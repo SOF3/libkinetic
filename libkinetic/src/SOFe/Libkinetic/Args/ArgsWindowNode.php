@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Args;
 
+use pocketmine\Player;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\WindowRequest;
 
@@ -74,5 +75,5 @@ abstract class ArgsWindowNode extends ArgsNode{
 		return $this->id !== null ? "{$this->id}.{$then}" : $then;
 	}
 
-	public abstract function sendForm(WindowRequest $request, callable $onComplete, bool $explicit) : void;
+	public abstract function sendForm(Player $player, WindowRequest $request, callable $onComplete, bool $explicit) : void;
 }

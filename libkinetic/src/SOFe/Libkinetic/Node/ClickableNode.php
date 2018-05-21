@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Node;
 
-use pocketmine\Player;
+use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\API\ClickHandler;
 use SOFe\Libkinetic\ClickInterruptedException;
 use SOFe\Libkinetic\InvalidNodeException;
@@ -115,20 +115,20 @@ abstract class ClickableNode extends KineticNode{
 		return $this->permission;
 	}
 
-	public function testPermission(Player $player, bool $ifUndefined = true) : bool{
-		return $this->permission !== null ? $this->permission->testPermission($player) : $ifUndefined;
+	public function testPermission(CommandSender $sender, bool $ifUndefined = true) : bool{
+		return $this->permission !== null ? $this->permission->testPermission($sender) : $ifUndefined;
 	}
 
 
 	public function onClick(WindowRequest $request) : void{
-		$player = $request->getPlayer();
-		if($this->permission !== null && !$this->permission->testPermission($player)){
-			$player->sendMessage($this->permission->getPermissionMessage($this->manager, $player));
+		$sender = $request->getSender();
+		if($this->permission !== null && !$this->permission->testPermission($sender)){
+			$sender->sendMessage($this->permission->getPermissionMessage($this->manager, $sender));
 			throw new ClickInterruptedException();
 		}
 
 		if($this->onClickHandler !== null){
-			$this->onClickHandler->onClick($player, $request);
+			$this->onClickHandler->onClick($request);
 		}
 	}
 }

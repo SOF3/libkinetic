@@ -20,12 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Form;
 
 use RuntimeException;
 
-class InvalidNodeException extends RuntimeException{
-	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
+class ResendFormException extends RuntimeException{
+	public function __construct(){
+		parent::__construct("ResendFormException should have been caught by KineticManager");
 	}
 }

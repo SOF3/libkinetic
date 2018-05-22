@@ -23,11 +23,12 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Parser;
 
 use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\Node\KineticNode;
+use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\Node\KineticNodeWithId;
 use SOFe\Libkinetic\Node\RootNode;
 use SOFe\Libkinetic\ParseException;
 use function explode;
+use SOFe\Libkinetic\Root\RootComponent;
 use function strpos;
 use function substr;
 use function trim;
@@ -35,12 +36,12 @@ use function trim;
 abstract class KineticFileParser{
 	public static $hasPm = false;
 
-	/** @var KineticNode[]|KineticNodeWithId[] */
+	/** @var KineticNode[] */
 	public $idMap = [];
 	/** @var KineticNode[] */
 	public $allNodes = [];
 
-	/** @var RootNode|null */
+	/** @var KineticNode|null */
 	protected $root = null;
 	/** @var KineticNode|null */
 	protected $leaf = null;
@@ -57,12 +58,11 @@ abstract class KineticFileParser{
 				throw new ParseException("<$name> is not an acceptable root element");
 			}
 
-			$this->allNodes[] = $this->leaf = $this->root = new RootNode();
+			$this->allNodes[] = $this->leaf = $this->root = KineticNode::create(RootComponent::class);
 			foreach($attrs as $k => $v){
 				$this->leaf->setAttribute($k, $v);
 			}
 		}else{
-			$this->leaf->setHasChildren();
 			$leaf = $this->leaf->startChild($name);
 			if($leaf === null){
 				throw new InvalidNodeException("<{$name}> is not a valid child node", $this->leaf);
@@ -84,11 +84,6 @@ abstract class KineticFileParser{
 				throw new InvalidNodeException("<$name> does not accept the attribute $attr", $this->leaf);
 			}
 		}
-		if(empty($attrs)){
-			$this->leaf->setNoAttributes();
-		}
-
-		$this->leaf->endAttributes();
 
 		if($this->leaf instanceof KineticNodeWithId){
 			if(isset($this->idMap[$this->leaf->getId()])){
@@ -125,7 +120,7 @@ abstract class KineticFileParser{
 		$this->dataBuffer .= $data;
 	}
 
-	public function getRoot() : RootNode{
+	public function getRoot() : KineticNode{
 		return $this->root;
 	}
 

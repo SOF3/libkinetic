@@ -20,12 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\API;
 
-use RuntimeException;
+use pocketmine\command\CommandSender;
 
-class InvalidNodeException extends RuntimeException{
-	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
+class NamedPermissionPredicate implements PermissionPredicate{
+	/** @var string */
+	protected $permissionName;
+	/** @var bool */
+	protected $need;
+
+	public function __construct(string $permissionName, bool $need){
+		$this->permissionName = $permissionName;
+		$this->need = $need;
+	}
+
+	public function hasPermission(CommandSender $sender) : bool{
+		return $sender->hasPermission($this->permissionName) === $this->need;
 	}
 }

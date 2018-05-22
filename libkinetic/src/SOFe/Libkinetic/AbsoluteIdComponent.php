@@ -22,10 +22,20 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-use RuntimeException;
+class AbsoluteIdComponent extends KineticComponent{
+	protected $my;
+	protected $full;
 
-class InvalidNodeException extends RuntimeException{
-	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
+	public function setAttribute(string $name, string $value) : bool{
+		if($name === "ID"){
+			$this->my = $value;
+			$this->full = $this->node->nodeParent->asAbsoluteId()->getId() . "." . $value;
+			return true;
+		}
+		return false;
+	}
+
+	public function getId() : string{
+		return $this->full;
 	}
 }

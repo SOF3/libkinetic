@@ -24,7 +24,7 @@ namespace SOFe\Libkinetic\Element;
 
 use SOFe\Libkinetic\InvalidNodeException;
 use SOFe\Libkinetic\KineticManager;
-use SOFe\Libkinetic\Node\KineticNode;
+use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 use function array_map;
 

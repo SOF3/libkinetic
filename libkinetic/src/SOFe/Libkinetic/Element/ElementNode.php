@@ -22,13 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticManager;
-use SOFe\Libkinetic\Node\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
-abstract class ElementNode extends KineticNode{
-	/** @var string */
-	protected $id;
+abstract class ElementNode {
 	/** @var string */
 	protected $title;
 

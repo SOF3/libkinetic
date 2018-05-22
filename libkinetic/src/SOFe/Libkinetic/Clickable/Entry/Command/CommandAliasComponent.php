@@ -20,12 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Clickable\Entry\Command;
 
-use RuntimeException;
+use SOFe\Libkinetic\KineticComponent;
 
-class InvalidNodeException extends RuntimeException{
-	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
+class CommandAliasComponent extends KineticComponent{
+	protected $value;
+
+	public function acceptText(string $text) : bool{
+		$this->value = $text;
+		return true;
+	}
+
+	public function endElement() : void{
+		$this->requireText($this->value);
+	}
+
+	public function init() : void{
+		$this->resolveConfigString($this->value);
 	}
 }

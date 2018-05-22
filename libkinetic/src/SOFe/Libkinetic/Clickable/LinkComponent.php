@@ -20,12 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Clickable;
 
-use RuntimeException;
+use SOFe\Libkinetic\KineticComponent;
 
-class InvalidNodeException extends RuntimeException{
-	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
-	}
+class LinkComponent extends KineticComponent{
+
 }

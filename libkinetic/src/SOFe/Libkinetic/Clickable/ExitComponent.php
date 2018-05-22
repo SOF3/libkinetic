@@ -20,12 +20,14 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Clickable;
 
-use RuntimeException;
+use Iterator;
+use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
+use SOFe\Libkinetic\KineticComponent;
 
-class InvalidNodeException extends RuntimeException{
-	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
+class ExitComponent extends KineticComponent{
+	public function dependsComponents() : Iterator{
+		yield DirectEntryClickableComponent::class;
 	}
 }

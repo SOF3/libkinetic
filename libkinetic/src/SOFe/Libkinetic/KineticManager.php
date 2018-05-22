@@ -30,7 +30,7 @@ use ReflectionClass;
 use RuntimeException;
 use SOFe\Libkinetic\Form\Form;
 use SOFe\Libkinetic\Form\FormListener;
-use SOFe\Libkinetic\Node\KineticNode;
+use SOFe\Libkinetic\Form\ResendFormException;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
@@ -162,7 +162,7 @@ class KineticManager{
 		}elseif($fqn{0} === "!"){
 			$class = libkinetic::getNamespace() . "\\" . substr($fqn, 1);
 		}else{
-			$class = $this->parser->getRoot()->getNamespace() . $fqn;
+			$class = $this->parser->getRoot()->asRoot()->getNamespace() . $fqn;
 		}
 
 		if(!class_exists($class)){

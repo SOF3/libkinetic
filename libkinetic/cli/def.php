@@ -21,7 +21,7 @@
 declare(strict_types=1);
 
 use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\Node\KineticNode;
+use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\Node\KineticNodeWithId;
 use SOFe\Libkinetic\ParseException;
 use SOFe\Libkinetic\Parser\XmlFileParser;
@@ -82,7 +82,7 @@ fwrite($php, "{$STRUCT} " . array_slice($fqn, -1)[0] . "{{$EOL}");
 
 $nodes = $parser->idMap;
 ksort($nodes);
-/** @var KineticNode|KineticNodeWithId $node */
+/** @var \SOFe\Libkinetic\KineticNode|KineticNodeWithId $node */
 foreach($nodes as $node){
 	$node->getId();
 	fwrite($php, "{$INDENT}/**{$EOL}");

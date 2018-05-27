@@ -20,8 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Element;
 
-class InfoComponent{
+interface EditableElementInterface extends ElementInterface{
+	public function getDefault();
 
+	public function getDefaultAsString() : ?string;
 }

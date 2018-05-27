@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
+use AssertionError;
+
 class AbsoluteIdComponent extends KineticComponent{
 	protected $my;
 	protected $full;
@@ -29,13 +31,21 @@ class AbsoluteIdComponent extends KineticComponent{
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
 			$this->my = $value;
-			$this->full = $this->node->nodeParent->asAbsoluteId()->getId() . "." . $value;
+			$this->full = ($this->node->nodeParent->isRoot() ? "" : ($this->node->nodeParent->asAbsoluteId()->getId() . ".")) . $value;
 			return true;
 		}
 		return false;
 	}
 
+	public function endElement() : void{
+		$this->requireAttribute("id", $this->full);
+	}
+
 	public function getId() : string{
+		if($this->full === null){
+			$this->requireAttribute("id", $this->full);
+			throw new AssertionError();
+		}
 		return $this->full;
 	}
 }

@@ -20,20 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\Clickable\Argument;
 
-use SOFe\Libkinetic\WindowRequest;
+interface ArgsInterface{
 
-class LabelNode extends ElementNode{
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
-	}
-
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		return [
-			"type" => "label",
-			"text" => $request->translate($this->title),
-		];
-	}
 }

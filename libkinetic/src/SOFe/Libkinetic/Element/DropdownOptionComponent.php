@@ -20,38 +20,44 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Element;
 
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticNode;
-use SOFe\Libkinetic\WindowRequest;
 
-class LinkComponent extends KineticComponent implements Clickable{
+class DropdownOptionComponent extends KineticComponent{
+	/** @var bool */
+	protected $default = false;
 	/** @var string */
-	protected $targetId;
-	/** @var KineticNode */
-	protected $target;
+	protected $value;
+	/** @var string */
+	protected $text;
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "TARGET"){
-			$this->targetId = $value;
+		if($name === "DEFAULT"){
+			$this->default = $this->parseBoolean($value);
+			return true;
+		}
+		if($name === "VALUE"){
+			$this->value = $value;
 			return true;
 		}
 		return false;
 	}
 
-	public function endElement() : void{
-		$this->requireAttribute("target", $this->targetId);
+	public function acceptText(string $text) : bool{
+		$this->text = $text;
+		return true;
 	}
 
-	public function init() : void{
-		$this->target = $this->manager->getNodeById($this->targetId);
-		if($this->target === null){
-			$this->throw("Undefined target {$this->targetId}");
-		}
+	public function isMarkedDefault() : bool{
+		return $this->default;
 	}
 
-	public function onClick(WindowRequest $request) : void{
-		$this->target->findComponentsByInterface(Clickable::class, 1)[0];
+	public function getValue() : string{
+		return $this->value;
+	}
+
+	public function getText() : string{
+		return $this->text;
 	}
 }

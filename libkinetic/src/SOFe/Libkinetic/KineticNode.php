@@ -22,11 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
+use AssertionError;
 use JsonSerializable;
 use function array_unshift;
 use function assert;
+use function count;
 
-final class KineticNode extends ComponentAdapter implements JsonSerializable{
+final class KineticNode implements JsonSerializable{
+	use ComponentAdapter;
+
 	/** @var KineticManager */
 	protected $manager;
 
@@ -44,6 +48,10 @@ final class KineticNode extends ComponentAdapter implements JsonSerializable{
 		return $node;
 	}
 
+	public function hasComponent(string $class) : bool{
+		return isset($this->components[$class]);
+	}
+
 	public function addComponent(string ...$classes) : void{
 		foreach($classes as $class){
 			if(!isset($this->components[$class])){
@@ -55,13 +63,43 @@ final class KineticNode extends ComponentAdapter implements JsonSerializable{
 	}
 
 	public function getComponent(string $class) : KineticComponent{
-		assert($this->components[$class] instanceof KineticComponent, "{$this->getHierarchyName()} does not have a $class");
+		assert((function(string $class) : bool{
+			if(!isset($this->components[$class]) && !($this->components[$class] instanceof $class)){
+				throw new AssertionError("{$this->getHierarchyName()} does not have a {$class}");
+			}
+			return true;
+		})($class));
 		return $this->components[$class];
+	}
+
+	/**
+	 * @param string $interface
+	 * @param int    $assertMinimum
+	 * @return KineticComponent[]
+	 */
+	public function findComponentsByInterface(string $interface, int $assertMinimum = 0) : array{
+		$ret = [];
+		foreach($this->components as $component){
+			if($component instanceof $interface){
+				$ret[] = $component;
+			}
+		}
+		assert(count($ret) >= $assertMinimum);
+		return $ret;
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
 		foreach($this->components as $component){
 			if($component->setAttribute($name, $value)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function setAttributeNS(string $name, string $value, string $ns) : bool{
+		foreach($this->components as $component){
+			if($component->setAttributeNS($name, $value, $ns)){
 				return true;
 			}
 		}
@@ -77,8 +115,16 @@ final class KineticNode extends ComponentAdapter implements JsonSerializable{
 		return null;
 	}
 
+	public function startChildNS(string $name, string $ns) : ?KineticNode{
+		foreach($this->components as $component){
+			if(($child = $component->startChildNS($name, $ns)) !== null){
+				return $child;
+			}
+		}
+		return null;
+	}
+
 	public function endElement() : void{
-		$this->endElementCalled = true;
 	}
 
 	public function acceptText(string $text) : void{
@@ -90,18 +136,24 @@ final class KineticNode extends ComponentAdapter implements JsonSerializable{
 		throw new InvalidNodeException("Text content is not allowed", $this);
 	}
 
+	public function init(KineticManager $manager) : void{
+		$this->manager = $manager;
+		foreach($this->components as $component){
+			$component->setManager($manager);
+			$component->init();
+		}
+	}
+
 	public function isRoot() : bool{
 		return $this->nodeParent === null;
 	}
 
 	public function getHierarchyName() : string{
-		$node = $this;
 		$elementNameStack = [];
-		while(!($node instanceof KineticNodeWithId)){
-			$node = $node->nodeParent;
+		for($node = $this; !$node->hasComponent(AbsoluteIdComponent::class); $node = $node->nodeParent){
 			array_unshift($elementNameStack, "<" . $node->nodeName . ">");
 		}
-		return $node->getId() . implode("", $elementNameStack);
+		return $node->asAbsoluteId()->getId() . implode(".", $elementNameStack);
 	}
 
 	public function jsonSerialize() : array{

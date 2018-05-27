@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-use EmptyIterator;
 use Iterator;
 use RuntimeException;
 use Throwable;
@@ -56,14 +55,24 @@ abstract class KineticComponent{
 	}
 
 	public function dependsComponents() : Iterator{
-		return new EmptyIterator();
+		if(false){
+			yield;
+		}
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
 		return false;
 	}
 
+	public function setAttributeNS(string $name, string $value, string $ns) : bool{
+		return false;
+	}
+
 	public function startChild(string $name) : ?KineticNode{
+		return null;
+	}
+
+	public function startChildNS(string $name, string $ns) : ?KineticNode{
 		return null;
 	}
 
@@ -160,6 +169,11 @@ abstract class KineticComponent{
 					throw new RuntimeException("Config error: missing required config value $configKey");
 				}
 			}
+		}elseif(is_string($number)){
+			if(!is_numeric($number)){
+				$this->throw("$number is not a number");
+			}
+			$number = (float) $number;
 		}
 	}
 
@@ -192,6 +206,12 @@ abstract class KineticComponent{
 			if(!is_bool($bool)){
 				$this->manager->getPlugin()->getLogger()->critical("Config error: $configKey should be true/false");
 				throw new RuntimeException("Incorrect config value $configKey");
+			}
+		}elseif(is_string($bool)){
+			try{
+				$bool = self::parseBoolean($bool);
+			}catch(InvalidNodeException $e){
+				$this->throw("$bool is not true/false");
 			}
 		}
 	}

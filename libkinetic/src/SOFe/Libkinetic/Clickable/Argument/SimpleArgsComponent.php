@@ -20,16 +20,26 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\WindowComponent;
 
-class ExitComponent extends KineticComponent{
+class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
+	/** @var string|null */
+	protected $groupId = null;
+
 	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield ArguableComponent::class;
+		yield ArgsComponent::class;
+		yield WindowComponent::class;
+	}
+
+	public function setAttribute(string $name, string $value) : bool{
+		if($name === "ID"){
+			$this->groupId = $value;
+			return true;
+		}
+		return false;
 	}
 }

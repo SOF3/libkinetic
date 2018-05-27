@@ -20,38 +20,46 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Element;
 
+use Iterator;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
-class LinkComponent extends KineticComponent implements Clickable{
-	/** @var string */
-	protected $targetId;
-	/** @var KineticNode */
-	protected $target;
+class ToggleComponent extends KineticComponent implements EditableElementInterface{
+	/** @var bool */
+	protected $default = false;
+
+	public function dependsComponents() : Iterator{
+		yield ElementComponent::class;
+	}
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "TARGET"){
-			$this->targetId = $value;
+		if($name === "DEFAULT"){
+			$this->default = $value;
 			return true;
 		}
+
 		return false;
 	}
 
-	public function endElement() : void{
-		$this->requireAttribute("target", $this->targetId);
+	public function getDefault() : bool{
+		return $this->default;
 	}
 
-	public function init() : void{
-		$this->target = $this->manager->getNodeById($this->targetId);
-		if($this->target === null){
-			$this->throw("Undefined target {$this->targetId}");
-		}
+	public function getDefaultAsString() : ?string{
+		return $this->default ? "true" : "false";
 	}
 
-	public function onClick(WindowRequest $request) : void{
-		$this->target->findComponentsByInterface(Clickable::class, 1)[0];
+	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
+		$adapter = function(bool $value) : bool{
+			return $value;
+		};
+
+		return [
+			"type" => "toggle",
+			"text" => $request->translate($this->node->asElement()->getTitle()),
+			"default" => $this->default,
+		];
 	}
 }

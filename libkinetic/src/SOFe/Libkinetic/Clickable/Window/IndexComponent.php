@@ -20,8 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Window;
 
-class ListComponent{
+use Iterator;
+use SOFe\Libkinetic\Clickable\ClickableParentComponent;
+use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
+use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\WindowComponent;
 
+class IndexComponent extends KineticComponent{
+	public function dependsComponents() : Iterator{
+		yield DirectEntryClickableComponent::class;
+		yield WindowComponent::class;
+		yield ClickableParentComponent::class;
+	}
 }

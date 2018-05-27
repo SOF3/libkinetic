@@ -25,4 +25,7 @@ namespace SOFe\Libkinetic;
 use RuntimeException;
 
 class ParseException extends RuntimeException{
+	public function setMessage(string $message) : void{
+		$this->message = $message;
+	}
 }

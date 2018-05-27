@@ -22,16 +22,16 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-class DropdownNode extends DropdownLikeNode{
+class StepSliderComponentLike extends DropdownComponentLike{
 	protected function getStepName() : string{
-		return "OPTION";
+		return "STEP";
 	}
 
 	protected function getFormType() : string{
-		return "dropdown";
+		return "step_slider";
 	}
 
 	protected function getFormStepKey() : string{
-		return "options";
+		return "steps";
 	}
 }

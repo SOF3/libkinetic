@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Root;
 
 use Iterator;
-use SOFe\Libkinetic\Clickable\ClickableListComponent;
+use SOFe\Libkinetic\Clickable\ClickableParentComponent;
 use SOFe\Libkinetic\KineticComponent;
 
 class RootComponent extends KineticComponent{
@@ -31,7 +31,7 @@ class RootComponent extends KineticComponent{
 	protected $namespace;
 
 	public function dependsComponents() : Iterator{
-		yield ClickableListComponent::class;
+		yield ClickableParentComponent::class;
 	}
 
 	public function setAttribute(string $name, string $value) : bool{

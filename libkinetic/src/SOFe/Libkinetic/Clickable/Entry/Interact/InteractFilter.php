@@ -20,16 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Entry\Interact;
 
-use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
-use SOFe\Libkinetic\KineticComponent;
+use pocketmine\event\player\PlayerInteractEvent;
 
-class ExitComponent extends KineticComponent{
-	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield ArguableComponent::class;
-	}
+interface InteractFilter{
+	public function test(PlayerInteractEvent $event) : bool;
 }

@@ -35,8 +35,6 @@ use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
 use SOFe\Libkinetic\Util\CallbackTask;
-use SOFe\Libkinetic\Window\Entry\Interact\InteractEntryPointNode;
-use SOFe\Libkinetic\Window\Entry\Interact\InteractListener;
 use TypeError;
 use function class_uses;
 use function extension_loaded;
@@ -84,14 +82,12 @@ class KineticManager{
 		$this->parser->parse();
 
 		foreach($this->parser->allNodes as $node){
-			$node->validateParentsCalled();
+			$node->init($this);
 		}
+	}
 
-		$this->parser->getRoot()->resolve($this);
-
-		foreach($this->parser->allNodes as $node){
-			$node->throwUnresolved();
-		}
+	public function getNodeById(string $id) : ?KineticNode{
+		return $this->parser->idMap[$id] ?? null;
 	}
 
 	public function getPlugin() : Plugin{

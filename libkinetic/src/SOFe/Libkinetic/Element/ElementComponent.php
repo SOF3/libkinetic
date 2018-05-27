@@ -23,10 +23,11 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\WindowRequest;
 
-abstract class ElementNode {
+abstract class ElementComponent extends KineticComponent{
+	/** @var string */
+	protected $id;
 	/** @var string */
 	protected $title;
 
@@ -35,10 +36,6 @@ abstract class ElementNode {
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
 		if($name === "ID"){
 			$this->id = $value;
 			return true;
@@ -52,16 +49,13 @@ abstract class ElementNode {
 		return false;
 	}
 
-	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("id", "title");
+	public function endElement() : void{
+		$this->requireAttribute("id", $this->id);
+		$this->requireAttribute("title", $this->title);
 	}
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"id" => $this->id,
-				"title" => $this->title,
-			];
+	public function init() : void{
+		$this->requireTranslation($this->title);
 	}
 
 	public function getId() : string{
@@ -70,39 +64,6 @@ abstract class ElementNode {
 
 	public function getTitle() : string{
 		return $this->title;
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->title);
-	}
-
-	public static function byName(string $name) : ?ElementNode{
-		if($name === "LABEL"){
-			return new LabelNode();
-		}
-
-		if($name === "INPUT"){
-			return new InputNode();
-		}
-
-		if($name === "TOGGLE"){
-			return new ToggleNode();
-		}
-
-		if($name === "SLIDER"){
-			return new SliderNode();
-		}
-
-		if($name === "DROPDOWN"){
-			return new DropdownNode();
-		}
-
-		if($name === "STEP" . "SLIDER"){
-			return new StepSliderNode();
-		}
-
-		return null;
 	}
 
 	public abstract function asFormComponent(WindowRequest $request, callable &$adapter) : array;

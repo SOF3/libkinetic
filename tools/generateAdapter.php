@@ -63,7 +63,7 @@ $output .= " * (This file would be unneeded if we had template functions in PHP)
 $output .= " *\n";
 $output .= " * @see KineticNode::getComponent()\n";
 $output .= " */\n";
-$output .= "abstract class ComponentAdapter{\n";
+$output .= "trait ComponentAdapter{\n";
 $output .= "\tpublic abstract function getComponent(string \$class) : KineticComponent;\n";
 
 foreach($fqnList as $item){

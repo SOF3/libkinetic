@@ -20,18 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\Clickable\Argument;
 
-class StepSliderNode extends DropdownLikeNode{
-	protected function getStepName() : string{
-		return "STEP";
+use Iterator;
+use SOFe\Libkinetic\Clickable\ClickableComponent;
+use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\KineticNode;
+
+class ArguableComponent extends KineticComponent{
+	/** @var ArgsInterface[] */
+	protected $args = [];
+
+	public function dependsComponents() : Iterator{
+		yield ClickableComponent::class;
 	}
 
-	protected function getFormType() : string{
-		return "step_slider";
-	}
-
-	protected function getFormStepKey() : string{
-		return "steps";
+	public function startChild(string $name) : ?KineticNode{
+		if($name === "SIMPLE" . "ARGS"){
+			return KineticNode::create(SimpleArgsComponent::class)->addSimpleArgs($this->args);
+		}
+		return null;
 	}
 }

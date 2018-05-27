@@ -26,6 +26,10 @@ use RuntimeException;
 
 class InvalidNodeException extends RuntimeException{
 	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . " <" . $node->nodeName . ">");
+		parent::__construct($message . " in " . $node->getHierarchyName() . ".<" . $node->nodeName . ">");
+	}
+
+	public function setMessage(string $message) : void{
+		$this->message = $message;
 	}
 }

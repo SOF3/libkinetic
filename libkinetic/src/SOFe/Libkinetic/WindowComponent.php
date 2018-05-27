@@ -20,38 +20,38 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic;
 
-use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticNode;
-use SOFe\Libkinetic\WindowRequest;
+use SOFe\Libkinetic\Clickable\ClickableComponent;
 
-class LinkComponent extends KineticComponent implements Clickable{
-	/** @var string */
-	protected $targetId;
-	/** @var KineticNode */
-	protected $target;
+class WindowComponent extends KineticComponent{
+	protected $title;
+	protected $synopsis = null;
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "TARGET"){
-			$this->targetId = $value;
+		if($name === "TITLE"){
+			$this->title = $value;
+			return true;
+		}
+		if($name === "SYNOPSIS"){
+			$this->synopsis = $value;
 			return true;
 		}
 		return false;
 	}
 
 	public function endElement() : void{
-		$this->requireAttribute("target", $this->targetId);
-	}
-
-	public function init() : void{
-		$this->target = $this->manager->getNodeById($this->targetId);
-		if($this->target === null){
-			$this->throw("Undefined target {$this->targetId}");
+		if($this->title === null){
+			if($this->node->hasComponent(ClickableComponent::class) && $this->node->asClickable()->getIndexName() !== null){
+				$this->title = $this->node->asClickable()->getIndexName();
+			}else{
+				$this->requireAttribute("title", $this->title);
+			}
 		}
 	}
 
-	public function onClick(WindowRequest $request) : void{
-		$this->target->findComponentsByInterface(Clickable::class, 1)[0];
+	public function init() : void{
+		$this->requireTranslation($this->title);
+		$this->requireTranslation($this->synopsis);
 	}
 }

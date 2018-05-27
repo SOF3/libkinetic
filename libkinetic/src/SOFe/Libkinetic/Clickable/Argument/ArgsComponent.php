@@ -20,15 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\Clickable\Argument;
 
-abstract class EditableElementNode extends ElementNode{
-	public abstract function getDefault();
+use SOFe\Libkinetic\KineticComponent;
 
-	public abstract function getDefaultAsString() : ?string;
+class ArgsComponent extends KineticComponent{
 
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-			];
-	}
 }

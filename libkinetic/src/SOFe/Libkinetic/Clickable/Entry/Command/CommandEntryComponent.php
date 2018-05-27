@@ -53,7 +53,7 @@ class CommandEntryComponent extends KineticComponent{
 	}
 
 	public function endElement() : void{
-		$this->requireAttribute("name",$this->name);
+		$this->requireAttribute("name", $this->name);
 	}
 
 	public function init() : void{

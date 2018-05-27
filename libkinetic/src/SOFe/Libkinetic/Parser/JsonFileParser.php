@@ -25,21 +25,30 @@ namespace SOFe\Libkinetic\Parser;
 use function array_change_key_case;
 use function fclose;
 use function json_decode;
+use SOFe\Libkinetic\InvalidNodeException;
+use SOFe\Libkinetic\ParseException;
 use function stream_get_contents;
 use function strtoupper;
 use const CASE_UPPER;
 
 class JsonFileParser extends KineticFileParser{
 	protected $json;
+	/** @var string */
+	private $fileName;
 
 	public function __construct($fh, string $fileName){
 		parent::__construct();
 		$this->json = json_decode(stream_get_contents($fh), true);
 		fclose($fh);
+		$this->fileName = $fileName;
 	}
 
 	public function parse() : void{
-		$this->traverseNode($this->json);
+		try{
+			$this->traverseNode($this->json);
+		}catch(ParseException | InvalidNodeException $exception){
+			$exception->setMessage("Error parsing $this->fileName: $exception");
+		}
 	}
 
 	public function traverseNode(array $node) : void{

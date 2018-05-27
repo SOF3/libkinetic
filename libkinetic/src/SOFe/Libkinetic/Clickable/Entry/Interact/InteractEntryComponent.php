@@ -23,7 +23,42 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Entry\Interact;
 
 use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\KineticNode;
 
 class InteractEntryComponent extends KineticComponent{
+	protected $fromConfig = false;
 
+	/** @var ItemFilterComponent[] */
+	protected $items = [];
+	/** @var BlockFilterComponent[] */
+	protected $blocks = [];
+	/** @var TouchModeFilterComponent[] */
+	protected $touchModes = [];
+	/** @var FaceFilterComponent[] */
+	protected $faces = [];
+
+	public function setAttribute(string $name, string $value) : bool{
+
+	}
+
+	public function startChild(string $name) : ?KineticNode{
+		if($this->fromConfig){
+			$this->throw("<interact> cannot have any children if fromConfig is set");
+		}
+
+		if($name === "ITEM"){
+			return KineticNode::create(ItemFilterComponent::class)->addItemFilter($this->items);
+		}
+		if($name === "BLOCK"){
+			return KineticNode::create(BlockFilterComponent::class)->addBlockFilter($this->blocks);
+		}
+		if($name === "TOUCH_MODE"){
+			return KineticNode::create(TouchModeFilterComponent::class)->addTouchModeFilter($this->touchModes);
+		}
+		if($name === "FACE"){
+			return KineticNode::create(FaceFilterComponent::class)->addFaceFilter($this->faces);
+		}
+
+		return null;
+	}
 }

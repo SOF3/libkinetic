@@ -23,14 +23,14 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use InvalidArgumentException;
-use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\KineticManager;
+use Iterator;
+use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 use function is_numeric;
 use function strtoupper;
 use function trim;
 
-class InputNode extends EditableElementNode{
+class InputComponent extends KineticComponent implements EditableElementInterface{
 	/** @var string */
 	protected $placeholder = "";
 	/** @var mixed */
@@ -38,11 +38,11 @@ class InputNode extends EditableElementNode{
 	/** @var string */
 	protected $typeCast = "";
 
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
+	public function dependsComponents() : Iterator{
+		yield ElementComponent::class;
+	}
 
+	public function setAttribute(string $name, string $value) : bool{
 		if($name === "PLACEHOLDER"){
 			$this->placeholder = $value;
 			return true;
@@ -54,7 +54,7 @@ class InputNode extends EditableElementNode{
 				try{
 					$this->default = self::typeCast($this->default, $this->typeCast);
 				}catch(InvalidArgumentException $e){
-					throw new InvalidNodeException($e->getMessage(), $this);
+					$this->throw($e->getMessage());
 				}
 			}
 			return true;
@@ -65,7 +65,7 @@ class InputNode extends EditableElementNode{
 			try{
 				$this->default = self::typeCast($this->default, $this->typeCast);
 			}catch(InvalidArgumentException $e){
-				throw new InvalidNodeException($e->getMessage(), $this);
+				$this->throw($e->getMessage());
 			}
 			return true;
 		}
@@ -73,17 +73,8 @@ class InputNode extends EditableElementNode{
 		return false;
 	}
 
-	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		$manager->requireTranslation($this, $this->placeholder);
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"placeholder" => $this->placeholder,
-				"default" => $this->default,
-				"typeCast" => $this->typeCast,
-			];
+	public function init() : void{
+		$this->requireTranslation($this->placeholder);
 	}
 
 	public function getPlaceholder() : string{
@@ -139,7 +130,7 @@ class InputNode extends EditableElementNode{
 
 		return [
 			"type" => "input",
-			"text" => $request->translate($this->title),
+			"text" => $request->translate($this->node->asElement()->getTitle()),
 			"placeholder" => $request->translate($this->placeholder),
 			"default" => $this->default,
 		];

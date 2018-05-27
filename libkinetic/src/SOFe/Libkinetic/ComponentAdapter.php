@@ -22,18 +22,33 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
+use SOFe\Libkinetic\Clickable\Argument\ArgsComponent;
+use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
+use SOFe\Libkinetic\Clickable\Argument\SimpleArgsComponent;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
-use SOFe\Libkinetic\Clickable\ClickableListComponent;
+use SOFe\Libkinetic\Clickable\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\BlockFilterComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\FaceFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\ItemFilterComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterComponent;
 use SOFe\Libkinetic\Clickable\ExitComponent;
-use SOFe\Libkinetic\Clickable\IndexComponent;
-use SOFe\Libkinetic\Clickable\InfoComponent;
 use SOFe\Libkinetic\Clickable\LinkComponent;
-use SOFe\Libkinetic\Clickable\ListComponent;
 use SOFe\Libkinetic\Clickable\PermissionComponent;
+use SOFe\Libkinetic\Clickable\Window\IndexComponent;
+use SOFe\Libkinetic\Clickable\Window\InfoComponent;
+use SOFe\Libkinetic\Clickable\Window\ListComponent;
+use SOFe\Libkinetic\Element\DropdownComponent;
+use SOFe\Libkinetic\Element\DropdownOptionComponent;
+use SOFe\Libkinetic\Element\ElementComponent;
+use SOFe\Libkinetic\Element\ElementParentComponent;
+use SOFe\Libkinetic\Element\InputComponent;
+use SOFe\Libkinetic\Element\LabelComponent;
+use SOFe\Libkinetic\Element\SliderComponent;
+use SOFe\Libkinetic\Element\ToggleComponent;
 use SOFe\Libkinetic\Root\RootComponent;
 
 /**
@@ -43,7 +58,7 @@ use SOFe\Libkinetic\Root\RootComponent;
  *
  * @see KineticNode::getComponent()
  */
-abstract class ComponentAdapter{
+trait ComponentAdapter{
 	public abstract function getComponent(string $class) : KineticComponent;
 
 
@@ -58,6 +73,51 @@ abstract class ComponentAdapter{
 
 	public function addAbsoluteId(array &$component) : KineticNode{
 		$component[] = $this->getComponent(AbsoluteIdComponent::class);
+		return $this;
+	}
+
+
+	public function asArgs() : ArgsComponent{
+		return $this->getComponent(ArgsComponent::class);
+	}
+
+	public function getArgs(&$component) : KineticNode{
+		$component = $this->getComponent(ArgsComponent::class);
+		return $this;
+	}
+
+	public function addArgs(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ArgsComponent::class);
+		return $this;
+	}
+
+
+	public function asArguable() : ArguableComponent{
+		return $this->getComponent(ArguableComponent::class);
+	}
+
+	public function getArguable(&$component) : KineticNode{
+		$component = $this->getComponent(ArguableComponent::class);
+		return $this;
+	}
+
+	public function addArguable(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ArguableComponent::class);
+		return $this;
+	}
+
+
+	public function asSimpleArgs() : SimpleArgsComponent{
+		return $this->getComponent(SimpleArgsComponent::class);
+	}
+
+	public function getSimpleArgs(&$component) : KineticNode{
+		$component = $this->getComponent(SimpleArgsComponent::class);
+		return $this;
+	}
+
+	public function addSimpleArgs(array &$component) : KineticNode{
+		$component[] = $this->getComponent(SimpleArgsComponent::class);
 		return $this;
 	}
 
@@ -77,17 +137,17 @@ abstract class ComponentAdapter{
 	}
 
 
-	public function asClickableList() : ClickableListComponent{
-		return $this->getComponent(ClickableListComponent::class);
+	public function asClickableParent() : ClickableParentComponent{
+		return $this->getComponent(ClickableParentComponent::class);
 	}
 
-	public function getClickableList(&$component) : KineticNode{
-		$component = $this->getComponent(ClickableListComponent::class);
+	public function getClickableParent(&$component) : KineticNode{
+		$component = $this->getComponent(ClickableParentComponent::class);
 		return $this;
 	}
 
-	public function addClickableList(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ClickableListComponent::class);
+	public function addClickableParent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ClickableParentComponent::class);
 		return $this;
 	}
 
@@ -137,6 +197,36 @@ abstract class ComponentAdapter{
 	}
 
 
+	public function asBlockFilter() : BlockFilterComponent{
+		return $this->getComponent(BlockFilterComponent::class);
+	}
+
+	public function getBlockFilter(&$component) : KineticNode{
+		$component = $this->getComponent(BlockFilterComponent::class);
+		return $this;
+	}
+
+	public function addBlockFilter(array &$component) : KineticNode{
+		$component[] = $this->getComponent(BlockFilterComponent::class);
+		return $this;
+	}
+
+
+	public function asFaceFilter() : FaceFilterComponent{
+		return $this->getComponent(FaceFilterComponent::class);
+	}
+
+	public function getFaceFilter(&$component) : KineticNode{
+		$component = $this->getComponent(FaceFilterComponent::class);
+		return $this;
+	}
+
+	public function addFaceFilter(array &$component) : KineticNode{
+		$component[] = $this->getComponent(FaceFilterComponent::class);
+		return $this;
+	}
+
+
 	public function asInteractEntry() : InteractEntryComponent{
 		return $this->getComponent(InteractEntryComponent::class);
 	}
@@ -152,6 +242,36 @@ abstract class ComponentAdapter{
 	}
 
 
+	public function asItemFilter() : ItemFilterComponent{
+		return $this->getComponent(ItemFilterComponent::class);
+	}
+
+	public function getItemFilter(&$component) : KineticNode{
+		$component = $this->getComponent(ItemFilterComponent::class);
+		return $this;
+	}
+
+	public function addItemFilter(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ItemFilterComponent::class);
+		return $this;
+	}
+
+
+	public function asTouchModeFilter() : TouchModeFilterComponent{
+		return $this->getComponent(TouchModeFilterComponent::class);
+	}
+
+	public function getTouchModeFilter(&$component) : KineticNode{
+		$component = $this->getComponent(TouchModeFilterComponent::class);
+		return $this;
+	}
+
+	public function addTouchModeFilter(array &$component) : KineticNode{
+		$component[] = $this->getComponent(TouchModeFilterComponent::class);
+		return $this;
+	}
+
+
 	public function asExit() : ExitComponent{
 		return $this->getComponent(ExitComponent::class);
 	}
@@ -163,6 +283,36 @@ abstract class ComponentAdapter{
 
 	public function addExit(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ExitComponent::class);
+		return $this;
+	}
+
+
+	public function asLink() : LinkComponent{
+		return $this->getComponent(LinkComponent::class);
+	}
+
+	public function getLink(&$component) : KineticNode{
+		$component = $this->getComponent(LinkComponent::class);
+		return $this;
+	}
+
+	public function addLink(array &$component) : KineticNode{
+		$component[] = $this->getComponent(LinkComponent::class);
+		return $this;
+	}
+
+
+	public function asPermission() : PermissionComponent{
+		return $this->getComponent(PermissionComponent::class);
+	}
+
+	public function getPermission(&$component) : KineticNode{
+		$component = $this->getComponent(PermissionComponent::class);
+		return $this;
+	}
+
+	public function addPermission(array &$component) : KineticNode{
+		$component[] = $this->getComponent(PermissionComponent::class);
 		return $this;
 	}
 
@@ -197,21 +347,6 @@ abstract class ComponentAdapter{
 	}
 
 
-	public function asLink() : LinkComponent{
-		return $this->getComponent(LinkComponent::class);
-	}
-
-	public function getLink(&$component) : KineticNode{
-		$component = $this->getComponent(LinkComponent::class);
-		return $this;
-	}
-
-	public function addLink(array &$component) : KineticNode{
-		$component[] = $this->getComponent(LinkComponent::class);
-		return $this;
-	}
-
-
 	public function asList() : ListComponent{
 		return $this->getComponent(ListComponent::class);
 	}
@@ -227,17 +362,122 @@ abstract class ComponentAdapter{
 	}
 
 
-	public function asPermission() : PermissionComponent{
-		return $this->getComponent(PermissionComponent::class);
+	public function asDropdown() : DropdownComponent{
+		return $this->getComponent(DropdownComponent::class);
 	}
 
-	public function getPermission(&$component) : KineticNode{
-		$component = $this->getComponent(PermissionComponent::class);
+	public function getDropdown(&$component) : KineticNode{
+		$component = $this->getComponent(DropdownComponent::class);
 		return $this;
 	}
 
-	public function addPermission(array &$component) : KineticNode{
-		$component[] = $this->getComponent(PermissionComponent::class);
+	public function addDropdown(array &$component) : KineticNode{
+		$component[] = $this->getComponent(DropdownComponent::class);
+		return $this;
+	}
+
+
+	public function asDropdownOption() : DropdownOptionComponent{
+		return $this->getComponent(DropdownOptionComponent::class);
+	}
+
+	public function getDropdownOption(&$component) : KineticNode{
+		$component = $this->getComponent(DropdownOptionComponent::class);
+		return $this;
+	}
+
+	public function addDropdownOption(array &$component) : KineticNode{
+		$component[] = $this->getComponent(DropdownOptionComponent::class);
+		return $this;
+	}
+
+
+	public function asElement() : ElementComponent{
+		return $this->getComponent(ElementComponent::class);
+	}
+
+	public function getElement(&$component) : KineticNode{
+		$component = $this->getComponent(ElementComponent::class);
+		return $this;
+	}
+
+	public function addElement(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ElementComponent::class);
+		return $this;
+	}
+
+
+	public function asElementParent() : ElementParentComponent{
+		return $this->getComponent(ElementParentComponent::class);
+	}
+
+	public function getElementParent(&$component) : KineticNode{
+		$component = $this->getComponent(ElementParentComponent::class);
+		return $this;
+	}
+
+	public function addElementParent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ElementParentComponent::class);
+		return $this;
+	}
+
+
+	public function asInput() : InputComponent{
+		return $this->getComponent(InputComponent::class);
+	}
+
+	public function getInput(&$component) : KineticNode{
+		$component = $this->getComponent(InputComponent::class);
+		return $this;
+	}
+
+	public function addInput(array &$component) : KineticNode{
+		$component[] = $this->getComponent(InputComponent::class);
+		return $this;
+	}
+
+
+	public function asLabel() : LabelComponent{
+		return $this->getComponent(LabelComponent::class);
+	}
+
+	public function getLabel(&$component) : KineticNode{
+		$component = $this->getComponent(LabelComponent::class);
+		return $this;
+	}
+
+	public function addLabel(array &$component) : KineticNode{
+		$component[] = $this->getComponent(LabelComponent::class);
+		return $this;
+	}
+
+
+	public function asSlider() : SliderComponent{
+		return $this->getComponent(SliderComponent::class);
+	}
+
+	public function getSlider(&$component) : KineticNode{
+		$component = $this->getComponent(SliderComponent::class);
+		return $this;
+	}
+
+	public function addSlider(array &$component) : KineticNode{
+		$component[] = $this->getComponent(SliderComponent::class);
+		return $this;
+	}
+
+
+	public function asToggle() : ToggleComponent{
+		return $this->getComponent(ToggleComponent::class);
+	}
+
+	public function getToggle(&$component) : KineticNode{
+		$component = $this->getComponent(ToggleComponent::class);
+		return $this;
+	}
+
+	public function addToggle(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ToggleComponent::class);
 		return $this;
 	}
 
@@ -253,6 +493,21 @@ abstract class ComponentAdapter{
 
 	public function addRoot(array &$component) : KineticNode{
 		$component[] = $this->getComponent(RootComponent::class);
+		return $this;
+	}
+
+
+	public function asWindow() : WindowComponent{
+		return $this->getComponent(WindowComponent::class);
+	}
+
+	public function getWindow(&$component) : KineticNode{
+		$component = $this->getComponent(WindowComponent::class);
+		return $this;
+	}
+
+	public function addWindow(array &$component) : KineticNode{
+		$component[] = $this->getComponent(WindowComponent::class);
 		return $this;
 	}
 }

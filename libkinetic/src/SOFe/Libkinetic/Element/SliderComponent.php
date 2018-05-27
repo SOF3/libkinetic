@@ -22,13 +22,14 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Iterator;
 use SOFe\Libkinetic\InvalidFormResponseException;
-use SOFe\Libkinetic\InvalidNodeException;
+use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 use function is_numeric;
 use function strtolower;
 
-class SliderNode extends EditableElementNode{
+class SliderComponent extends KineticComponent implements EditableElementInterface{
 	/** @var float */
 	protected $min, $max;
 	/** @var float */
@@ -36,14 +37,14 @@ class SliderNode extends EditableElementNode{
 	/** @var float */
 	protected $default;
 
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
+	public function dependsComponents() : Iterator{
+		yield ElementComponent::class;
+	}
 
+	public function setAttribute(string $name, string $value) : bool{
 		if($name === "MIN" || $name === "MAX" || $name === "STEP" || $name === "DEFAULT"){
 			if(!is_numeric($value)){
-				throw new InvalidNodeException("$name should contain a numeric value", $this);
+				$this->throw("$name should contain a numeric value");
 			}
 			$this->{strtolower($name)} = (float) $value;
 			return true;
@@ -53,20 +54,11 @@ class SliderNode extends EditableElementNode{
 	}
 
 	public function endAttributes() : void{
-		parent::endAttributes();
-		$this->requireAttributes("min", "max");
+		$this->requireAttribute("min", $this->min);
+		$this->requireAttribute("max", $this->max);
 		if(!isset($this->default)){
 			$this->default = $this->min;
 		}
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"min" => $this->min,
-				"max" => $this->max,
-				"step" => $this->step,
-				"default" => $this->default,
-			];
 	}
 
 	public function getDefault() : float{
@@ -88,7 +80,7 @@ class SliderNode extends EditableElementNode{
 
 		return [
 			"type" => "slider",
-			"text" => $request->translate($this->title),
+			"text" => $request->translate($this->node->asElement()->getTitle()),
 			"min" => $this->min,
 			"max" => $this->max,
 			"step" => $this->step,

@@ -20,8 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Element;
 
-class IndexComponent{
+use SOFe\Libkinetic\WindowRequest;
 
+interface ElementInterface{
+	public function asFormComponent(WindowRequest $request, callable &$adapter) : array;
 }

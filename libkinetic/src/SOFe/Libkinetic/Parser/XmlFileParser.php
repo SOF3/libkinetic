@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Parser;
 
 use RuntimeException;
+use SOFe\Libkinetic\InvalidNodeException;
 use SOFe\Libkinetic\ParseException;
 use function extension_loaded;
 use function fclose;
@@ -73,10 +74,11 @@ class XmlFileParser extends KineticFileParser{
 					throw new ParseException(xml_error_string($errorCode));
 				}
 			}
-		}catch(ParseException $ex){
+		}catch(ParseException | InvalidNodeException $exception){
 			$errorLine = xml_get_current_line_number($parser);
 			$errorColumn = xml_get_current_column_number($parser);
-			throw new ParseException("Failed parsing $this->fileName: {$ex->getMessage()} on line {$errorLine}:{$errorColumn}", 0);
+			$exception->setMessage("Error parsing $this->fileName#{$errorLine}:{$errorColumn}: {$exception->getMessage()}");
+			throw $exception;
 		}finally{
 			xml_parser_free($parser);
 			fclose($this->fh);

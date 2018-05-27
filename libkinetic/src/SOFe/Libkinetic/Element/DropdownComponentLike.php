@@ -23,13 +23,14 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use SOFe\Libkinetic\InvalidNodeException;
+use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 use function array_map;
 
-abstract class DropdownLikeNode extends EditableElementNode{
-	/** @var DropdownOptionNode[] */
+abstract class DropdownComponentLike extends KineticComponent implements EditableElementInterface{
+	/** @var DropdownOptionComponent[] */
 	protected $options = [];
 	/** @var int */
 	protected $default;
@@ -40,7 +41,7 @@ abstract class DropdownLikeNode extends EditableElementNode{
 		}
 
 		if($name === $this->getStepName()){
-			return $this->options[] = new DropdownOptionNode();
+			return KineticNode::create(DropdownOptionComponent::class)->addDropdownOption($this->options);
 		}
 
 		return null;
@@ -50,13 +51,13 @@ abstract class DropdownLikeNode extends EditableElementNode{
 		parent::endElement();
 
 		if(empty($this->options)){
-			throw new InvalidNodeException("At least one <{$this->getStepName()}> child node is required", $this);
+			$this->throw("At least one <{$this->getStepName()}> child node is required");
 		}
 
 		foreach($this->options as $i => $option){
-			if($option->isDefault()){
+			if($option->isMarkedDefault()){
 				if(isset($this->default)){
-					throw new InvalidNodeException("Only one child <{$this->getStepName()}> can be declared DEFAULT=\"true\"", $this->nodeParent);
+					$this->throw("Only one child <{$this->getStepName()}> can be declared DEFAULT=\"true\"");
 				}
 				$this->default = $i;
 			}
@@ -64,20 +65,6 @@ abstract class DropdownLikeNode extends EditableElementNode{
 		if(!isset($this->default)){
 			$this->default = 0;
 		}
-	}
-
-	public function resolve(KineticManager $manager) : void{
-		parent::resolve($manager);
-		foreach($this->options as $node){
-			$node->resolve($manager);
-		}
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"options" => $this->options,
-				"default" => $this->default,
-			];
 	}
 
 	public function getDefault(){

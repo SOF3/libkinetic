@@ -29,12 +29,14 @@ use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 
 class ClickableComponent extends KineticComponent{
-	/** @var string */
-	protected $indexName;
-	/** @var PermissionComponent */
-	protected $permission;
+	/** @var string|null */
+	protected $indexName = null;
+	/** @var PermissionComponent|null */
+	protected $permission = null;
 	/** @var string|null */
 	protected $onClickClass = null;
+	/** @var ClickHandler=null */
+	protected $onClick = null;
 
 	public function dependsComponents() : Iterator{
 		yield AbsoluteIdComponent::class;
@@ -60,12 +62,24 @@ class ClickableComponent extends KineticComponent{
 	}
 
 	public function endElement() : void{
-		if($this->node->nodeParent->isRoot()){ // $this->node is not in an index
+		if(!$this->node->nodeParent->isRoot()){ // $this->node is in an index
 			$this->requireAttribute("indexName", $this->indexName);
 		}
 	}
 
 	public function init() : void{
-		$this->onClickClass = $this->resolveClass($this->onClickClass, ClickHandler::class);
+		$this->onClick = $this->resolveClass($this->onClickClass, ClickHandler::class);
+	}
+
+	public function getIndexName() : ?string{
+		return $this->indexName;
+	}
+
+	public function getPermission() : ?PermissionComponent{
+		return $this->permission;
+	}
+
+	public function getOnClick() : ClickHandler{
+		return $this->onClick;
 	}
 }

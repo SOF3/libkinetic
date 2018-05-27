@@ -22,48 +22,19 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Iterator;
+use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 
-class ToggleNode extends EditableElementNode{
-	/** @var bool */
-	protected $default = false;
-
-	public function setAttribute(string $name, string $value) : bool{
-		if(parent::setAttribute($name, $value)){
-			return true;
-		}
-
-		if($name === "DEFAULT"){
-			$this->default = $value;
-			return true;
-		}
-
-		return false;
-	}
-
-	public function jsonSerialize() : array{
-		return parent::jsonSerialize() + [
-				"default" => $this->default,
-			];
-	}
-
-	public function getDefault() : bool{
-		return $this->default;
-	}
-
-	public function getDefaultAsString() : ?string{
-		return $this->default ? "true" : "false";
+class LabelComponent extends KineticComponent implements ElementInterface{
+	public function dependsComponents() : Iterator{
+		yield ElementComponent::class;
 	}
 
 	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		$adapter = function(bool $value) : bool{
-			return $value;
-		};
-
 		return [
-			"type" => "toggle",
-			"text" => $request->translate($this->title),
-			"default" => $this->default,
+			"type" => "label",
+			"text" => $request->translate($this->node->asElement()->getTitle()),
 		];
 	}
 }

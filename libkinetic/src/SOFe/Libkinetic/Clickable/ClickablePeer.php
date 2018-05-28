@@ -20,18 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\Clickable;
 
-class DropdownComponent extends DropdownComponentLike{
-	protected function getStepName() : string{
-		return "OPTION";
-	}
+use SOFe\Libkinetic\WindowRequest;
 
-	protected function getFormType() : string{
-		return "dropdown";
-	}
+interface ClickablePeer{
+	public const PRIORITY_EARLIER = 2;
+	public const PRIORITY_EARLY = 1;
+	public const PRIORITY_NORMAL = 0;
+	public const PRIORITY_LATE = -1;
+	public const PRIORITY_LATER = -2;
 
-	protected function getFormStepKey() : string{
-		return "options";
-	}
+	public function onClick(WindowRequest $request) : bool;
+
+	public function getPriority() : int;
 }

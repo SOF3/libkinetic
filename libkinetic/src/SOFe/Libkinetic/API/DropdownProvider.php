@@ -20,22 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\API;
 
-use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
-use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 
-class ExitComponent extends KineticComponent implements Clickable{
-	use ClickableTrait;
-
-	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield ArguableComponent::class;
-	}
-
-	protected function onClickImpl(WindowRequest $request) : void{
-	}
+interface DropdownProvider{
+	/**
+	 * @param DropdownOptionFactory $factory
+	 * @param WindowRequest         $request
+	 * @param callable              $onComplete
+	 */
+	public function provide(DropdownOptionFactory $factory, WindowRequest $request, callable $onComplete) : void;
 }

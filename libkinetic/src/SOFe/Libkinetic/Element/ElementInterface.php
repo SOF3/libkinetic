@@ -25,5 +25,9 @@ namespace SOFe\Libkinetic\Element;
 use SOFe\Libkinetic\WindowRequest;
 
 interface ElementInterface{
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array;
+	/**
+	 * @param WindowRequest $request
+	 * @param callable      $onComplete a on-complete callable accepting an array (form components) and an argument adapter
+	 */
+	public function asFormComponent(WindowRequest $request, callable $onComplete) : void;
 }

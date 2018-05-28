@@ -47,11 +47,11 @@ class ElementParentComponent extends KineticComponent{
 		}
 
 		if($name === "DROPDOWN"){
-			return KineticNode::create(DropdownComponent::class)->addDropdown($this->elements);
+			return KineticNode::create(StaticDropdownComponent::class)->addStaticDropdown($this->elements);
 		}
 
 		if($name === "STEP" . "SLIDER"){
-			return KineticNode::create(StepSliderComponentLike::class)->addStepSlider($this->elements);
+			return KineticNode::create(StaticStepSliderComponent::class)->addStaticStepSlider($this->elements);
 		}
 
 		return null;

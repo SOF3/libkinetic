@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 interface EditableElementInterface extends ElementInterface{
-	public function getDefault();
-
-	public function getDefaultAsString() : ?string;
+//	public function getDefault();
+//
+//	public function getDefaultAsString() : ?string;
 }

@@ -26,6 +26,7 @@ use Iterator;
 use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
+use function is_float;
 use function is_numeric;
 use function strtolower;
 
@@ -69,22 +70,21 @@ class SliderComponent extends KineticComponent implements EditableElementInterfa
 		return $this->default !== null ? (string) $this->default : null;
 	}
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		$adapter = function(float $value) : float{
-			if($value < $this->min || $value > $this->max){
-				throw new InvalidFormResponseException("Slider value should be between $this->min and $this->max, got $value");
-			}
-
-			return $value;
-		};
-
-		return [
+	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
+		$onComplete([
 			"type" => "slider",
 			"text" => $request->translate($this->node->asElement()->getTitle()),
 			"min" => $this->min,
 			"max" => $this->max,
 			"step" => $this->step,
 			"default" => $this->default,
-		];
+		], [$this, "adapter"]);
+	}
+
+	public function adapter(float$value) : float{
+		if($value<$this->min||$value>$this->max){
+			throw new InvalidFormResponseException("Slider value should be between $this->min and $this->max, got $value");
+		}
+		return $value;
 	}
 }

@@ -22,34 +22,25 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticManager;
+use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 use function array_map;
 
-abstract class DropdownComponentLike extends KineticComponent implements EditableElementInterface{
+trait DropdownComponentStaticLike{
 	/** @var DropdownOptionComponent[] */
 	protected $options = [];
 	/** @var int */
 	protected $default;
 
 	public function startChild(string $name) : ?KineticNode{
-		if($delegate = parent::startChild($name)){
-			return $delegate;
-		}
-
 		if($name === $this->getStepName()){
 			return KineticNode::create(DropdownOptionComponent::class)->addDropdownOption($this->options);
 		}
-
 		return null;
 	}
 
 	public function endElement() : void{
-		parent::endElement();
-
 		if(empty($this->options)){
 			$this->throw("At least one <{$this->getStepName()}> child node is required");
 		}
@@ -75,15 +66,22 @@ abstract class DropdownComponentLike extends KineticComponent implements Editabl
 		return $this->options[$this->default]->getText();
 	}
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		return [
+	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
+		$onComplete([
 			"type" => $this->getFormType(),
-			"text" => $request->translate($this->title),
-			$this->getFormStepKey() => array_map(function(DropdownOptionNode $node) use ($request){
+			"text" => $request->translate($this->getNode()->asElement()->getTitle()),
+			$this->getFormStepKey() => array_map(function(DropdownOptionComponent $node) use ($request){
 				return $request->translate($node->getText());
 			}, $this->options),
 			"default" => $this->default,
-		];
+		], [$this, "adapter"]);
+	}
+
+	public function adapter(int $id){
+		if(!isset($this->options[$id])){
+			throw new InvalidFormResponseException("Out-of-range {$this->getFormType()} choice $id");
+		}
+		return $this->options[$id]->getValue();
 	}
 
 	protected abstract function getStepName() : string;
@@ -91,4 +89,6 @@ abstract class DropdownComponentLike extends KineticComponent implements Editabl
 	protected abstract function getFormType() : string;
 
 	protected abstract function getFormStepKey() : string;
+
+	protected abstract function getNode() : KineticNode;
 }

@@ -27,10 +27,12 @@ use SOFe\Libkinetic\KineticComponent;
 class DropdownOptionComponent extends KineticComponent{
 	/** @var bool */
 	protected $default = false;
-	/** @var string */
+	/** @var float|int|string */
 	protected $value;
 	/** @var string */
 	protected $text;
+	/** @var string */
+	protected $typeCast = "";
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "DEFAULT"){
@@ -39,6 +41,14 @@ class DropdownOptionComponent extends KineticComponent{
 		}
 		if($name === "VALUE"){
 			$this->value = $value;
+			$this->value = ElementComponent::typeCast($this->value, $this->typeCast);
+			return true;
+		}
+		if($name === "TYPE" . "CAST"){
+			$this->typeCast = $value;
+			if(isset($this->value)){
+				$this->value = ElementComponent::typeCast($this->value, $this->typeCast);
+			}
 			return true;
 		}
 		return false;
@@ -53,7 +63,7 @@ class DropdownOptionComponent extends KineticComponent{
 		return $this->default;
 	}
 
-	public function getValue() : string{
+	public function getValue(){
 		return $this->value;
 	}
 

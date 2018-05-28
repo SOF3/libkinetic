@@ -23,19 +23,35 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable;
 
 use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
-class ExitComponent extends KineticComponent implements Clickable{
-	use ClickableTrait;
+class PermissionClickableComponent extends KineticComponent implements ClickablePeer{
+	/** @var PermissionComponent|null */
+	protected $permission = null;
 
 	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield ArguableComponent::class;
+		yield ClickableComponent::class;
 	}
 
-	protected function onClickImpl(WindowRequest $request) : void{
+	public function startChild(string $name) : ?KineticNode{
+		if($name === "PERMISSION"){
+			return KineticNode::create(PermissionComponent::class)->getPermission($this->permission);
+		}
+		return null;
+	}
+
+	public function getPermission() : ?PermissionComponent{
+		return $this->permission;
+	}
+
+	public function onClick(WindowRequest $request) : bool{
+		$perm = $this->getPermission();
+		return $perm !== null && !$perm->testPermissionNoisy($request->getSender());
+	}
+
+	public function getPriority() : int{
+		return self::PRIORITY_EARLIER;
 	}
 }

@@ -24,10 +24,12 @@ namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
+use SOFe\Libkinetic\Clickable\ClickablePeer;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\WindowRequest;
 
-class ArguableComponent extends KineticComponent{
+class ArguableComponent extends KineticComponent implements ClickablePeer{
 	/** @var ArgsInterface[] */
 	protected $args = [];
 
@@ -40,5 +42,13 @@ class ArguableComponent extends KineticComponent{
 			return KineticNode::create(SimpleArgsComponent::class)->addSimpleArgs($this->args);
 		}
 		return null;
+	}
+
+	public function onClick(WindowRequest $request) : bool{
+		
+	}
+
+	public function getPriority() : int{
+		return self::PRIORITY_EARLY;
 	}
 }

@@ -22,7 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-class StepSliderComponentLike extends DropdownComponentLike{
+use SOFe\Libkinetic\KineticComponent;
+
+class StaticStepSliderComponent extends KineticComponent implements EditableElementInterface{
+	use DropdownComponentStaticLike;
+
 	protected function getStepName() : string{
 		return "STEP";
 	}

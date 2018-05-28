@@ -26,9 +26,7 @@ use InvalidArgumentException;
 use Iterator;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
-use function is_numeric;
 use function strtoupper;
-use function trim;
 
 class InputComponent extends KineticComponent implements EditableElementInterface{
 	/** @var string */
@@ -52,7 +50,7 @@ class InputComponent extends KineticComponent implements EditableElementInterfac
 			$this->default = $value;
 			if($this->typeCast){
 				try{
-					$this->default = self::typeCast($this->default, $this->typeCast);
+					$this->default = ElementComponent::typeCast($this->default, $this->typeCast);
 				}catch(InvalidArgumentException $e){
 					$this->throw($e->getMessage());
 				}
@@ -63,7 +61,7 @@ class InputComponent extends KineticComponent implements EditableElementInterfac
 		if($name === "TYPECAST"){
 			$this->typeCast = strtoupper($value);
 			try{
-				$this->default = self::typeCast($this->default, $this->typeCast);
+				$this->default = ElementComponent::typeCast($this->default, $this->typeCast);
 			}catch(InvalidArgumentException $e){
 				$this->throw($e->getMessage());
 			}
@@ -93,46 +91,16 @@ class InputComponent extends KineticComponent implements EditableElementInterfac
 		return $this->typeCast;
 	}
 
-	public static function typeCast(string $value, string $type){
-		switch(strtoupper($type)){
-			case "INT":
-			case "INTEGER":
-				if($value === ""){
-					return 0;
-				}
-				if(!is_numeric(trim($value))){
-					throw new InvalidArgumentException("Not an integer");
-				}
-				return (int) trim($value);
-
-			case "FLOAT":
-			case "DOUBLE":
-				if($value === ""){
-					return 0.0;
-				}
-				if(!is_numeric(trim($value))){
-					throw new InvalidArgumentException("Not a number");
-				}
-				return (float) trim($value);
-
-			case "":
-			case "STRING":
-				return $value;
-		}
-
-		throw new InvalidArgumentException("Invalid typeCast type \"$type\"");
-	}
-
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		$adapter = function(string $value){
-			return self::typeCast($value, $this->typeCast);
-		};
-
-		return [
+	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
+		$onComplete([
 			"type" => "input",
 			"text" => $request->translate($this->node->asElement()->getTitle()),
 			"placeholder" => $request->translate($this->placeholder),
 			"default" => $this->default,
-		];
+		], [$this, "adapter"]);
+	}
+
+	public function adapter(string $value){
+		return ElementComponent::typeCast($value, $this->typeCast);
 	}
 }

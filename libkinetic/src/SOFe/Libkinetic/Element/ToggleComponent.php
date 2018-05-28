@@ -51,15 +51,15 @@ class ToggleComponent extends KineticComponent implements EditableElementInterfa
 		return $this->default ? "true" : "false";
 	}
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		$adapter = function(bool $value) : bool{
-			return $value;
-		};
-
-		return [
+	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
+		$onComplete([
 			"type" => "toggle",
 			"text" => $request->translate($this->node->asElement()->getTitle()),
 			"default" => $this->default,
-		];
+		], [$this, "adapter"]);
+	}
+
+	public function adapter(bool $value) : bool{
+		return $value;
 	}
 }

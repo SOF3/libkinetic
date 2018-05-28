@@ -25,14 +25,14 @@ namespace SOFe\Libkinetic\Clickable;
 use Iterator;
 use SOFe\Libkinetic\AbsoluteIdComponent;
 use SOFe\Libkinetic\API\ClickHandler;
+use SOFe\Libkinetic\ClickInterruptedException;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\WindowRequest;
 
-class ClickableComponent extends KineticComponent{
+class ClickableComponent extends KineticComponent implements ClickablePeer{
 	/** @var string|null */
 	protected $indexName = null;
-	/** @var PermissionComponent|null */
-	protected $permission = null;
+
 	/** @var string|null */
 	protected $onClickClass = null;
 	/** @var ClickHandler=null */
@@ -54,13 +54,6 @@ class ClickableComponent extends KineticComponent{
 		return false;
 	}
 
-	public function startChild(string $name) : ?KineticNode{
-		if($name === "PERMISSION"){
-			return KineticNode::create(PermissionComponent::class)->getPermission($this->permission);
-		}
-		return null;
-	}
-
 	public function endElement() : void{
 		if(!$this->node->nodeParent->isRoot()){ // $this->node is in an index
 			$this->requireAttribute("indexName", $this->indexName);
@@ -75,11 +68,22 @@ class ClickableComponent extends KineticComponent{
 		return $this->indexName;
 	}
 
-	public function getPermission() : ?PermissionComponent{
-		return $this->permission;
-	}
-
 	public function getOnClick() : ClickHandler{
 		return $this->onClick;
+	}
+
+	public function onClick(WindowRequest $request) : bool{
+		if($this->onClick !== null){
+			try{
+				$this->onClick->onClick($request);
+			}catch(ClickInterruptedException $e){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function getPriority() : int{
+		return self::PRIORITY_NORMAL;
 	}
 }

@@ -20,22 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Element;
 
-use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\WindowRequest;
 
-class ExitComponent extends KineticComponent implements Clickable{
-	use ClickableTrait;
+class StaticDropdownComponent extends KineticComponent implements EditableElementInterface{
+	use DropdownComponentStaticLike;
 
-	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield ArguableComponent::class;
+	protected function getStepName() : string{
+		return "OPTION";
 	}
 
-	protected function onClickImpl(WindowRequest $request) : void{
+	protected function getFormType() : string{
+		return "dropdown";
+	}
+
+	protected function getFormStepKey() : string{
+		return "options";
 	}
 }

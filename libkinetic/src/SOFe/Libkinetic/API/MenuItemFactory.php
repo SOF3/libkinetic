@@ -25,6 +25,7 @@ namespace SOFe\Libkinetic\API;
 use SOFe\Libkinetic\Form\Icon;
 
 class MenuItemFactory{
+	/** @var array[] */
 	protected $values = [];
 
 	public function addItem($value, string $expression, ?Icon $icon = null) : void{

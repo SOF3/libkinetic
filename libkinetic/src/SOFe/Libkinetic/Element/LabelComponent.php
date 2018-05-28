@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Iterator;
+use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 
@@ -31,10 +32,17 @@ class LabelComponent extends KineticComponent implements ElementInterface{
 		yield ElementComponent::class;
 	}
 
-	public function asFormComponent(WindowRequest $request, callable &$adapter) : array{
-		return [
+	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
+		$onComplete([
 			"type" => "label",
 			"text" => $request->translate($this->node->asElement()->getTitle()),
-		];
+		], [$this, "adapter"]);
+	}
+
+	public function adapter($null){
+		if($null !== null){
+			throw new InvalidFormResponseException("Response for label component should be null");
+		}
+		return null;
 	}
 }

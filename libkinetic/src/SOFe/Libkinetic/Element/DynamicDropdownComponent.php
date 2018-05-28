@@ -20,8 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Element;
 
-class KineticNodeFactory{
+use SOFe\Libkinetic\KineticComponent;
 
+class DynamicDropdownComponent extends KineticComponent implements EditableElementInterface{
+	use DropdownComponentDynamicLike;
+
+	protected function getFormType() : string{
+		return "step_slider";
+	}
+
+	protected function getFormStepKey() : string{
+		return "steps";
+	}
 }

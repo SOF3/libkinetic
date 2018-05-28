@@ -20,22 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Element;
 
-use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\WindowRequest;
 
-class ExitComponent extends KineticComponent implements Clickable{
-	use ClickableTrait;
+class DynamicStepSliderComponent extends KineticComponent implements EditableElementInterface{
+	use DropdownComponentDynamicLike;
 
-	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield ArguableComponent::class;
+	protected function getFormType() : string{
+		return "step_slider";
 	}
 
-	protected function onClickImpl(WindowRequest $request) : void{
+	protected function getFormStepKey() : string{
+		return "steps";
 	}
 }

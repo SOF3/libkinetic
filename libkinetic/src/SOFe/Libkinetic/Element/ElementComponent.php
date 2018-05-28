@@ -22,10 +22,13 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use InvalidArgumentException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 
 abstract class ElementComponent extends KineticComponent{
+	public const CAT = ElementComponent::class . "::cat";
+
 	/** @var string */
 	protected $id;
 	/** @var string */
@@ -33,6 +36,41 @@ abstract class ElementComponent extends KineticComponent{
 
 	public static function cat($value){
 		return $value;
+	}
+
+	/**
+	 * @param string $value
+	 * @param string $type
+	 * @return float|int|string
+	 */
+	public static function typeCast(string $value, string $type){
+		switch(strtoupper($type)){
+			case "INT":
+			case "INTEGER":
+				if($value === ""){
+					return 0;
+				}
+				if(!is_numeric(trim($value))){
+					throw new InvalidArgumentException("Not an integer");
+				}
+				return (int) trim($value);
+
+			case "FLOAT":
+			case "DOUBLE":
+				if($value === ""){
+					return 0.0;
+				}
+				if(!is_numeric(trim($value))){
+					throw new InvalidArgumentException("Not a number");
+				}
+				return (float) trim($value);
+
+			case "":
+			case "STRING":
+				return $value;
+		}
+
+		throw new InvalidArgumentException("Invalid typeCast type \"$type\"");
 	}
 
 	public function setAttribute(string $name, string $value) : bool{

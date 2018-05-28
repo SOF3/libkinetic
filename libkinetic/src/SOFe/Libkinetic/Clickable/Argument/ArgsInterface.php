@@ -23,5 +23,4 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Argument;
 
 interface ArgsInterface{
-
 }

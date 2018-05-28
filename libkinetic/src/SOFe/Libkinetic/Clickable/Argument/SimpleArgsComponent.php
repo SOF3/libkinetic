@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
+use SOFe\Libkinetic\Element\ElementParentComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowComponent;
 
@@ -33,6 +34,7 @@ class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
 	public function dependsComponents() : Iterator{
 		yield ArgsComponent::class;
 		yield WindowComponent::class;
+		yield ElementParentComponent::class;
 	}
 
 	public function setAttribute(string $name, string $value) : bool{

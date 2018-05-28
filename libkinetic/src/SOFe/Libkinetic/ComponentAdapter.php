@@ -37,17 +37,21 @@ use SOFe\Libkinetic\Clickable\Entry\Interact\ItemFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterComponent;
 use SOFe\Libkinetic\Clickable\ExitComponent;
 use SOFe\Libkinetic\Clickable\LinkComponent;
+use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
 use SOFe\Libkinetic\Clickable\PermissionComponent;
 use SOFe\Libkinetic\Clickable\Window\IndexComponent;
 use SOFe\Libkinetic\Clickable\Window\InfoComponent;
 use SOFe\Libkinetic\Clickable\Window\ListComponent;
-use SOFe\Libkinetic\Element\DropdownComponent;
 use SOFe\Libkinetic\Element\DropdownOptionComponent;
+use SOFe\Libkinetic\Element\DynamicDropdownComponent;
+use SOFe\Libkinetic\Element\DynamicStepSliderComponent;
 use SOFe\Libkinetic\Element\ElementComponent;
 use SOFe\Libkinetic\Element\ElementParentComponent;
 use SOFe\Libkinetic\Element\InputComponent;
 use SOFe\Libkinetic\Element\LabelComponent;
 use SOFe\Libkinetic\Element\SliderComponent;
+use SOFe\Libkinetic\Element\StaticDropdownComponent;
+use SOFe\Libkinetic\Element\StaticStepSliderComponent;
 use SOFe\Libkinetic\Element\ToggleComponent;
 use SOFe\Libkinetic\Root\RootComponent;
 
@@ -302,6 +306,21 @@ trait ComponentAdapter{
 	}
 
 
+	public function asPermissionClickable() : PermissionClickableComponent{
+		return $this->getComponent(PermissionClickableComponent::class);
+	}
+
+	public function getPermissionClickable(&$component) : KineticNode{
+		$component = $this->getComponent(PermissionClickableComponent::class);
+		return $this;
+	}
+
+	public function addPermissionClickable(array &$component) : KineticNode{
+		$component[] = $this->getComponent(PermissionClickableComponent::class);
+		return $this;
+	}
+
+
 	public function asPermission() : PermissionComponent{
 		return $this->getComponent(PermissionComponent::class);
 	}
@@ -362,21 +381,6 @@ trait ComponentAdapter{
 	}
 
 
-	public function asDropdown() : DropdownComponent{
-		return $this->getComponent(DropdownComponent::class);
-	}
-
-	public function getDropdown(&$component) : KineticNode{
-		$component = $this->getComponent(DropdownComponent::class);
-		return $this;
-	}
-
-	public function addDropdown(array &$component) : KineticNode{
-		$component[] = $this->getComponent(DropdownComponent::class);
-		return $this;
-	}
-
-
 	public function asDropdownOption() : DropdownOptionComponent{
 		return $this->getComponent(DropdownOptionComponent::class);
 	}
@@ -388,6 +392,36 @@ trait ComponentAdapter{
 
 	public function addDropdownOption(array &$component) : KineticNode{
 		$component[] = $this->getComponent(DropdownOptionComponent::class);
+		return $this;
+	}
+
+
+	public function asDynamicDropdown() : DynamicDropdownComponent{
+		return $this->getComponent(DynamicDropdownComponent::class);
+	}
+
+	public function getDynamicDropdown(&$component) : KineticNode{
+		$component = $this->getComponent(DynamicDropdownComponent::class);
+		return $this;
+	}
+
+	public function addDynamicDropdown(array &$component) : KineticNode{
+		$component[] = $this->getComponent(DynamicDropdownComponent::class);
+		return $this;
+	}
+
+
+	public function asDynamicStepSlider() : DynamicStepSliderComponent{
+		return $this->getComponent(DynamicStepSliderComponent::class);
+	}
+
+	public function getDynamicStepSlider(&$component) : KineticNode{
+		$component = $this->getComponent(DynamicStepSliderComponent::class);
+		return $this;
+	}
+
+	public function addDynamicStepSlider(array &$component) : KineticNode{
+		$component[] = $this->getComponent(DynamicStepSliderComponent::class);
 		return $this;
 	}
 
@@ -463,6 +497,36 @@ trait ComponentAdapter{
 
 	public function addSlider(array &$component) : KineticNode{
 		$component[] = $this->getComponent(SliderComponent::class);
+		return $this;
+	}
+
+
+	public function asStaticDropdown() : StaticDropdownComponent{
+		return $this->getComponent(StaticDropdownComponent::class);
+	}
+
+	public function getStaticDropdown(&$component) : KineticNode{
+		$component = $this->getComponent(StaticDropdownComponent::class);
+		return $this;
+	}
+
+	public function addStaticDropdown(array &$component) : KineticNode{
+		$component[] = $this->getComponent(StaticDropdownComponent::class);
+		return $this;
+	}
+
+
+	public function asStaticStepSlider() : StaticStepSliderComponent{
+		return $this->getComponent(StaticStepSliderComponent::class);
+	}
+
+	public function getStaticStepSlider(&$component) : KineticNode{
+		$component = $this->getComponent(StaticStepSliderComponent::class);
+		return $this;
+	}
+
+	public function addStaticStepSlider(array &$component) : KineticNode{
+		$component[] = $this->getComponent(StaticStepSliderComponent::class);
 		return $this;
 	}
 

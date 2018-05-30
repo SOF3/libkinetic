@@ -20,18 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\API;
 
 use SOFe\Libkinetic\WindowRequest;
 
-interface ClickablePeer{
-	public const PRIORITY_EARLIER = 2;
-	public const PRIORITY_EARLY = 1;
-	public const PRIORITY_NORMAL = 0;
-	public const PRIORITY_LATE = -1;
-	public const PRIORITY_LATER = -2;
-
-	public function onClick(WindowRequest $request, callable $next) : void;
-
-	public function getPriority() : int;
+interface RequestValidator{
+	public function validate(WindowRequest $request, callable $onValid, callable $onInvalid) : void;
 }

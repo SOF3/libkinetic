@@ -75,7 +75,7 @@
 
   <xs:complexType name="ExitNode">
     <xs:complexContent>
-      <xs:extension base="NextStepBase"/>
+      <xs:extension base="ArguedWindowNodeBase"/>
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="LinkNode">
@@ -100,7 +100,7 @@
   <xs:complexType name="DirectEntryWindowNodeBase">
     <xs:complexContent>
       <xs:extension base="NextStepBase">
-        <xs:attribute name="id" type="IdPart" use="required"/>
+        <xs:attribute name="id" type="IdPart"/>
         <xs:attribute name="title" type="MessageRef"/>
         <xs:attribute name="synopsis" type="MessageRef"/>
 
@@ -271,6 +271,7 @@
   </xs:complexType>
 
   <xs:complexType name="ModalButtonNode">
+    <xs:attribute name="title" default="Yes|No" type="MessageRef"/>
     <xs:group ref="NextStep"/>
   </xs:complexType>
 
@@ -427,20 +428,29 @@
   </xs:complexType>
   <xs:complexType name="DropdownOptionNode">
     <xs:attribute name="default" type="xs:boolean" default="false"/>
+    <xs:attribute name="value" type="xs:string"/>
     <xs:simpleContent>
       <xs:restriction base="MessageRef"/>
     </xs:simpleContent>
   </xs:complexType>
   <xs:complexType name="DropdownNode">
-    <xs:attribute name="provider" type="Instantiable"/>
-    <xs:sequence>
-      <xs:element name="option" type="DropdownOptionNode" maxOccurs="unbounded"/>
-    </xs:sequence>
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="provider" type="Instantiable"/>
+        <xs:sequence>
+          <xs:element name="option" type="DropdownOptionNode" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="StepSliderNode">
-    <xs:attribute name="provider" type="Instantiable"/>
-    <xs:sequence>
-      <xs:element name="step" type="DropdownOptionNode" maxOccurs="unbounded"/>
-    </xs:sequence>
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="provider" type="Instantiable"/>
+        <xs:sequence>
+          <xs:element name="step" type="DropdownOptionNode" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 </xs:schema>

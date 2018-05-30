@@ -37,13 +37,13 @@ class WindowRequest{
 	/** @var KineticManager */
 	private $manager;
 	/** @var Player */
-	private $sender;
+	private $user;
 	private $local = [];
 	private $inherit = [];
 
-	public function __construct(KineticManager $manager, CommandSender $sender){
+	public function __construct(KineticManager $manager, CommandSender $user){
 		$this->manager = $manager;
-		$this->sender = $sender;
+		$this->user = $user;
 	}
 
 	public function getBoolean(string $key) : bool{
@@ -105,7 +105,7 @@ class WindowRequest{
 	}
 
 	public function push() : WindowRequest{
-		$request = new WindowRequest($this->manager, $this->sender);
+		$request = new WindowRequest($this->manager, $this->user);
 		$request->inherit = $this->inherit;
 		return $request;
 	}
@@ -115,11 +115,11 @@ class WindowRequest{
 		return $this->manager;
 	}
 
-	public function getSender() : CommandSender{
-		return $this->sender;
+	public function getUser() : CommandSender{
+		return $this->user;
 	}
 
 	public function translate(?string $message) : string{
-		return $message !== "" && $message !== null ? $this->manager->translate($this->sender, $message, $this->local + $this->inherit) : "";
+		return $message !== "" && $message !== null ? $this->manager->translate($this->user, $message, $this->local + $this->inherit) : "";
 	}
 }

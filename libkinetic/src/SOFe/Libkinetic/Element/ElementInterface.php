@@ -22,9 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
 interface ElementInterface{
+	public function getNode() : KineticNode;
+
 	/**
 	 * @param WindowRequest $request
 	 * @param callable      $onComplete a on-complete callable accepting an array (form components) and an argument adapter

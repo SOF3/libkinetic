@@ -23,13 +23,17 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
+use pocketmine\Player;
 use SOFe\Libkinetic\Element\ElementParentComponent;
 use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowComponent;
+use SOFe\Libkinetic\WindowRequest;
 
 class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
-	/** @var string|null */
-	protected $groupId = null;
+	use ArgsTrait;
+
+	protected $title;
 
 	public function dependsComponents() : Iterator{
 		yield ArgsComponent::class;
@@ -38,10 +42,58 @@ class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "ID"){
-			$this->groupId = $value;
+		if($name === "TITLE"){
+			$this->title = $value;
 			return true;
 		}
 		return false;
+	}
+
+	public function init() : void{
+		$this->requireTranslation($this->title);
+	}
+
+	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured) : void{
+		CallSequence::forMethod($this->asElementParent()->getElements(), "asFormComponent", function($content) use ($onConfigured, $error, $player, $request, $explicit){
+			$formData = [
+				"type" => "custom_form",
+				"title" => $request->translate($this->title) . ($error !== null ? "\n$error" : ""),
+				"content" => $content,
+			];
+			$this->getManager()->sendForm($player, $formData, function(?array $response) use ($onConfigured, $request, $explicit) : void{
+				if($response === null){
+					if($explicit){
+						$onConfigured();
+					} // else cancel
+					return;
+				}
+				// TODO apply form response into $request
+
+				$this->afterResponse($request, $onConfigured);
+			});
+		}, [$request], [], CallSequence::YIELD_FIRST);
+	}
+
+	protected function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void{
+
+	}
+
+	protected function isRequestSufficient(WindowRequest $request, bool $baseRequired) : bool{
+		foreach($this->asElementParent()->getElements() as $element){
+			$required = $element->getNode()->asElement()->isRequired() ?? $baseRequired;
+			if(!$required){
+				continue;
+			}
+			$id = $this->composeId($element->getNode()->asElement()->getId());
+			if(!$request->hasKey($id)){
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private function composeId(string $childId) : string{
+		$baseId = $this->asArgs()->getId();
+		return $baseId !== null ? ($baseId . "." . $childId) : $childId;
 	}
 }

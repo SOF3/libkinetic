@@ -72,15 +72,15 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 		return $this->onClick;
 	}
 
-	public function onClick(WindowRequest $request) : bool{
+	public function onClick(WindowRequest $request, callable $onComplete) : void{
 		if($this->onClick !== null){
 			try{
 				$this->onClick->onClick($request);
 			}catch(ClickInterruptedException $e){
-				return true;
+				return;
 			}
 		}
-		return false;
+		$onComplete();
 	}
 
 	public function getPriority() : int{

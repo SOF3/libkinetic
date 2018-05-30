@@ -56,7 +56,7 @@ trait DropdownComponentDynamicLike{
 		$this->provider->provide($factory, $request, function() use ($request, $factory, $onComplete){
 			$onComplete([
 				"type" => $this->getFormType(),
-				"text" => $request->translate($this->getNode()->asElement()->getTitle()),
+				"text" => $request->translate($this->asElement()->getTitle()),
 				$this->getFormStepKey() => array_map(function(array $array) use ($request){
 					return $request->translate($array[1]);
 				}, $factory->getValues()),

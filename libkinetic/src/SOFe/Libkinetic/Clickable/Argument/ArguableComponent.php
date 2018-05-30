@@ -27,6 +27,7 @@ use SOFe\Libkinetic\Clickable\ClickableComponent;
 use SOFe\Libkinetic\Clickable\ClickablePeer;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowRequest;
 
 class ArguableComponent extends KineticComponent implements ClickablePeer{
@@ -44,8 +45,13 @@ class ArguableComponent extends KineticComponent implements ClickablePeer{
 		return null;
 	}
 
-	public function onClick(WindowRequest $request) : bool{
-		
+	public function onClick(WindowRequest $request, callable $onComplete) : void{
+		if(empty($this->args)){
+			$onComplete();
+			return;
+		}
+
+		CallSequence::forMethod($this->args, "configure", $onComplete, [$request], [false]);
 	}
 
 	public function getPriority() : int{

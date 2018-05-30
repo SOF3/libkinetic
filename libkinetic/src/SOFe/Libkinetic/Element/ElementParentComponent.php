@@ -56,4 +56,11 @@ class ElementParentComponent extends KineticComponent{
 
 		return null;
 	}
+
+	/**
+	 * @return ElementInterface[]
+	 */
+	public function getElements() : array{
+		return $this->elements;
+	}
 }

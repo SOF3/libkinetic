@@ -36,6 +36,8 @@ use function substr;
 use const PHP_INT_MAX;
 
 abstract class KineticComponent{
+	use ComponentAdapter;
+
 	/** @var KineticNode */
 	protected $node;
 
@@ -251,5 +253,9 @@ abstract class KineticComponent{
 		}
 
 		return (float) $float;
+	}
+
+	public function getComponent(string $class) : KineticComponent{
+		return $this->node->getComponent($class);
 	}
 }

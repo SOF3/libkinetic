@@ -88,6 +88,18 @@ final class KineticNode implements JsonSerializable{
 		return $ret;
 	}
 
+	/**
+	 * Finds the first (closest, i.e. most indented) ancestor, including $this, with the provided component
+	 * @param string $class
+	 * @return null|KineticNode
+	 */
+	public function findFirstAncestorComponent(string $class) : ?KineticNode{
+		if($this->hasComponent($class)){
+			return $this;
+		}
+		return $this->nodeParent !== null ? $this->nodeParent->findFirstAncestorComponent($class) : null;
+	}
+
 	public function setAttribute(string $name, string $value) : bool{
 		foreach($this->components as $component){
 			if($component->setAttribute($name, $value)){

@@ -60,7 +60,7 @@ use SOFe\Libkinetic\Root\RootComponent;
  *
  * (This file would be unneeded if we had template functions in PHP)
  *
- * @see KineticNode::getComponent()
+ * // * @see KineticNode::getComponent()
  */
 trait ComponentAdapter{
 	public abstract function getComponent(string $class) : KineticComponent;

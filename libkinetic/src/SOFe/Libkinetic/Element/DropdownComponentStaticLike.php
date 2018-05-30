@@ -69,7 +69,7 @@ trait DropdownComponentStaticLike{
 	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
 		$onComplete([
 			"type" => $this->getFormType(),
-			"text" => $request->translate($this->getNode()->asElement()->getTitle()),
+			"text" => $request->translate($this->asElement()->getTitle()),
 			$this->getFormStepKey() => array_map(function(DropdownOptionComponent $node) use ($request){
 				return $request->translate($node->getText());
 			}, $this->options),

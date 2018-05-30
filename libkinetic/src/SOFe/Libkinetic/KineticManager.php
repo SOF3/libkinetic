@@ -28,6 +28,7 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
 use RuntimeException;
+use SOFe\Libkinetic\Clickable\Clickable;
 use SOFe\Libkinetic\Form\Form;
 use SOFe\Libkinetic\Form\FormListener;
 use SOFe\Libkinetic\Form\ResendFormException;
@@ -88,6 +89,20 @@ class KineticManager{
 
 	public function getNodeById(string $id) : ?KineticNode{
 		return $this->parser->idMap[$id] ?? null;
+	}
+
+	public function clickNode(string $id, CommandSender $user) : void{
+		$node = $this->getNodeById($id);
+		if($node === null){
+			throw new InvalidArgumentException("$id: no such node");
+		}
+
+		/** @var Clickable $clickable */
+		$clickable = $node->findComponentsByInterface(Clickable::class, 1)[0];
+
+		$request = new WindowRequest($this, $user);
+
+		$clickable->onClick($request);
 	}
 
 	public function getPlugin() : Plugin{

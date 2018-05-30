@@ -42,8 +42,8 @@ class WindowComponent extends KineticComponent{
 
 	public function endElement() : void{
 		if($this->title === null){
-			if($this->node->hasComponent(ClickableComponent::class) && $this->node->asClickable()->getIndexName() !== null){
-				$this->title = $this->node->asClickable()->getIndexName();
+			if($this->node->hasComponent(ClickableComponent::class) && $this->asClickable()->getIndexName() !== null){
+				$this->title = $this->asClickable()->getIndexName();
 			}else{
 				$this->requireAttribute("title", $this->title);
 			}

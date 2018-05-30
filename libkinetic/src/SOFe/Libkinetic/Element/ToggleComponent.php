@@ -54,7 +54,7 @@ class ToggleComponent extends KineticComponent implements EditableElementInterfa
 	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
 		$onComplete([
 			"type" => "toggle",
-			"text" => $request->translate($this->node->asElement()->getTitle()),
+			"text" => $request->translate($this->asElement()->getTitle()),
 			"default" => $this->default,
 		], [$this, "adapter"]);
 	}

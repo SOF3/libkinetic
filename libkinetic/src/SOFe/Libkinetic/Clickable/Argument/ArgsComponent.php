@@ -22,8 +22,49 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Argument;
 
+use SOFe\Libkinetic\API\RequestValidator;
 use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\WindowRequest;
 
 class ArgsComponent extends KineticComponent{
+	/** @var string|null */
+	protected $id = null;
+	/** @var bool */
+	protected $required = false;
+	/** @var string|null */
+	protected $validatorClass = null;
+	/** @var RequestValidator|null */
+	protected $validator = null;
 
+	public function setAttribute(string $name, string $value) : bool{
+		if($name === "ID"){
+			$this->id = $value;
+			return true;
+		}
+		if($name === "REQUIRED"){
+			$this->required = $this->parseBoolean($value);
+			return true;
+		}
+		if($name === "VALIDATOR"){
+			$this->validatorClass = $value;
+			return true;
+		}
+		return false;
+	}
+
+	public function init() : void{
+		$this->validator = $this->resolveClass($this->validatorClass, RequestValidator::class);
+	}
+
+	public function getId() : ?string{
+		return $this->id;
+	}
+
+	public function isRequired() : bool{
+		return $this->required;
+	}
+
+	public function getValidator() : ?RequestValidator{
+		return $this->validator;
+	}
 }

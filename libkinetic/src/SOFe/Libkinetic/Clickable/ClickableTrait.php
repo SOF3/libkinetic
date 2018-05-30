@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable;
 
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowRequest;
 use function usort;
 
@@ -30,12 +31,9 @@ trait ClickableTrait{
 	private $peers;
 
 	public function onClick(WindowRequest $request) : void{
-		foreach($this->getPeers() as $peer){
-			if($peer->onClick($request)){
-				return;
-			}
-		}
-		$this->onClickImpl($request);
+		CallSequence::forMethod($this->getPeers(), "onClick", function() use ($request){
+			$this->onClickImpl($request);
+		}, [$request]);
 	}
 
 	/**

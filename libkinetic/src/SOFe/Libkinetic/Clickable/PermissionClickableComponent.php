@@ -46,9 +46,11 @@ class PermissionClickableComponent extends KineticComponent implements Clickable
 		return $this->permission;
 	}
 
-	public function onClick(WindowRequest $request) : bool{
+	public function onClick(WindowRequest $request, callable $onComplete) : void{
 		$perm = $this->getPermission();
-		return $perm !== null && !$perm->testPermissionNoisy($request->getSender());
+		if($perm === null || $perm->testPermissionNoisy($request->getUser())){
+			$onComplete();
+		}
 	}
 
 	public function getPriority() : int{

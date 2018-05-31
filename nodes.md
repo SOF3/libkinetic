@@ -1,105 +1,105 @@
-# Nodes Index
-This file provides a both hierarchical and relational index for libkinetic nodes.
+# Components Index
+This file provides a both hierarchical and relational index for libkinetic components.
 
 Keywords:
 - Verbs
-  - "Declares": attributes of the node
-  - "Contains": child nodes of the node
-  - "Accepts": text content of the node
-  - "Subclass": subclasses of the node
-  - "Abstract subclass": a subset of the subclasses of the node
-  - "Uses": traits used by the node
+  - "Declares": attributes of the component
+  - "Contains": child components of the component
+  - "Accepts": text content of the component
+  - "Subclass": subclasses of the component
+  - "Abstract subclass": a subset of the subclasses of the component
+  - "Uses": traits used by the component
 - Nouns
   - "Instantiable": a reference to an object that extends/implements a certain interface, with an empty constructor or a single-argument constructor accepting the Plugin object
     - References starting with `\` will be resolved as absolute FQNs
     - References starting with `!` will be resolved relative to the libkinetic namespace (might be shaded)
     - References starting with `$` will be resolved by `KineticAdapter::getInstantiable()`
-    - Other references are resolved relative to RootNode's namespace attribute (global namespace `\` if not provided)
+    - Other references are resolved relative to RootComponent's namespace attribute (global namespace `\` if not provided)
   - "MessageRef": a message identifier where `KineticAdapter::hasMessage($MessageRef)` returns true and can be passed to `KineticAdapter::getMessage($MessageRef)`
-  - "ID": an absolute reference to a node. Some nodes must have an ID, others must not have an ID. Generally, a node that requires an ID must be the child of another node that requires an ID, except RootNode, which has no ID. Contains groups of `A-Z` `a-z` `0-9` `_` connected by `.`s.
-    - "IDPart": part of an ID. A node may have an attribute `id` of type "IDPart", then the node's actual ID is the parent's ID + `.` + its `id`. IDPart may still contain `.`s in the middle.
+  - "ID": an absolute reference to a component. Some components must have an ID, others must not have an ID. Generally, a component that requires an ID must be the child of another component that requires an ID, except RootComponent, which has no ID. Contains groups of `A-Z` `a-z` `0-9` `_` connected by `.`s.
+    - "IDPart": part of an ID. A component may have an attribute `id` of type "IDPart", then the component's actual ID is the parent's ID + `.` + its `id`. IDPart may still contain `.`s in the middle.
     - "IDFull": a full reference to an absolute ID.
 
 Index:
 
-- **RootNode** (`<kinetic>`/`<root>`)
+- **RootComponent** (`<kinetic>`/`<root>`)
   - Declares `namespace`: default namespace, required
-  - Contains `[0, ∞)` **WindowNode**/**DirectEntryWindowNode** (may be merged in the future), each of which can be displayed as a form window independently
+  - Contains `[0, ∞)` **WindowComponent**/**DirectEntryWindowComponent** (may be merged in the future), each of which can be displayed as a form window independently
     - Declares `id`, IDPart, required
-    - Declares `title`, MessageRef: see documentation in *ClickableNode*
-    - Declares `synopsis`, MessageRef: header message in the form window, also used as the command description for *CommandEntryPointNode*
-    - Contains `[0, 1]` **PermissionNode** for declaring permissions, either by permission name or by a predicate class
+    - Declares `title`, MessageRef: see documentation in *ClickableComponent*
+    - Declares `synopsis`, MessageRef: header message in the form window, also used as the command description for *CommandEntryPointComponent*
+    - Contains `[0, 1]` **PermissionComponent** for declaring permissions, either by permission name or by a predicate class
       - Declares `message`, MessageRef: the message shown if the permission requirements are not satisfied
       - Declares `need`, boolean: whether the sender needs to have the permission or not, default `true`
       - Declares `name`, string: the permission name, requires exactly one of this attribute or `predicate`
       - Declares `predicate`, PermissionPredicate instantiable: requires exactly one of this attribute or `name`
-    - Contains `[0, ∞)` **AbstractEntryPointNode** for declaring entry points
-      - Subclass `[0, ∞)` **CommandEntryPointNode** (`<command>`) for declaring entry commands
+    - Contains `[0, ∞)` **AbstractEntryPointComponent** for declaring entry points
+      - Subclass `[0, ∞)` **CommandEntryPointComponent** (`<command>`) for declaring entry commands
         - Declares `name`, string: the command name (no leading slash; with the leading slash it becomes `//` for players)
-        - Contains `[0, ∞)` **CommandAliasNode** (`<alias>`), declaring individual aliases
+        - Contains `[0, ∞)` **CommandAliasComponent** (`<alias>`), declaring individual aliases
           - The alias name is in the cdata content of the tag
-      - Subclass `[0, ∞)` **InteractEntryPointNode** (`<interact>`) for declaring entry PlayerInteractEvent rules
-        - Contains `[0, ∞]` **InteractFilterNode** for specifying rules
-          - Subclass `[0, ∞]` **ItemFilterNode** (`<item>`) for specifying item types
+      - Subclass `[0, ∞)` **InteractEntryPointComponent** (`<interact>`) for declaring entry PlayerInteractEvent rules
+        - Contains `[0, ∞]` **InteractFilterComponent** for specifying rules
+          - Subclass `[0, ∞]` **ItemFilterComponent** (`<item>`) for specifying item types
             - Declares `itemId`, string/int: item name or ID
             - Declares `itemDamage`, string/int: item damage or `*`
-          - Subclass `[0, ∞]` **BlockFilterNode** (`<block>`) for specifying block types
+          - Subclass `[0, ∞]` **BlockFilterComponent** (`<block>`) for specifying block types
             - Declares `blockId`, string/int: block name or ID
             - Declares `blockDamage`, string/int: block damage or `*`
-          - Subclass `[0, ∞]` **TouchModeFilterNode** (`<touchMode>`) for specifying touch mode
+          - Subclass `[0, ∞]` **TouchModeFilterComponent** (`<touchMode>`) for specifying touch mode
             - Accepts a constant name in `PlayerInteractEvent`
-          - Subclass `[0, ∞]` **FaceFilterNode** (`<face>`) for specifying touch face
+          - Subclass `[0, ∞]` **FaceFilterComponent** (`<face>`) for specifying touch face
             - Accepts `up`/`down`/`east`/`west`/`north`/`south`
-    - Subclass `[0, ∞)` **IndexNode** (`<index>`): a hardcoded MenuForm
-      - Contains `[1, ∞)` **ClickableNode** children
-        - Declares `title`, MessageRef: the name of the form window, also used as button name in *IndexNode*, required
-        - Declares `onClick`, ClickHandler instantiable: triggered when the button is clicked (also triggered if directly entered from *AbstractEntryPointNode* methods for *DirectEntryWindowNode*)
-        - Abstract subclass `[0, ∞)` *WindowNode*/*DirectEntryWindowNode*
-        - Subclass `[0, ∞)` **ExitNode** (`<exit>`), which will not show any form windows
-        - Subclass `[0, ∞)` **LinkNode** (`<link>`), each pointing to another *WindowNode*/*DirectEntryWindowNode*
-          - Declares `target`, IDFull: the ID of the linked *WindowNode*/*DirectEntryWindowNode*, required
-          - `title` does not need to be declared, because it will be replaced by its referenced node during the resolve phase.
-      - Uses **WindowParentNode** for accepting ClickableNode children
-    - Abstract subclass `[0, ∞)` **ConfigurableWindowNode**: dynamic forms whose values can be configured
-      - Contains `[0, ∞)` **ArgsNode** for configuration
+    - Subclass `[0, ∞)` **IndexComponent** (`<index>`): a hardcoded MenuForm
+      - Contains `[1, ∞)` **ClickableComponent** children
+        - Declares `title`, MessageRef: the name of the form window, also used as button name in *IndexComponent*, required
+        - Declares `onClick`, ClickHandler instantiable: triggered when the button is clicked (also triggered if directly entered from *AbstractEntryPointComponent* methods for *DirectEntryWindowComponent*)
+        - Abstract subclass `[0, ∞)` *WindowComponent*/*DirectEntryWindowComponent*
+        - Subclass `[0, ∞)` **ExitComponent** (`<exit>`), which will not show any form windows
+        - Subclass `[0, ∞)` **LinkComponent** (`<link>`), each pointing to another *WindowComponent*/*DirectEntryWindowComponent*
+          - Declares `target`, IDFull: the ID of the linked *WindowComponent*/*DirectEntryWindowComponent*, required
+          - `title` does not need to be declared, because it will be replaced by its referenced component during the resolve phase.
+      - Uses **WindowParentComponent** for accepting ClickableComponent children
+    - Abstract subclass `[0, ∞)` **ArguableWindowComponent**: dynamic forms whose behaviour can be or need to be customized with an *ArgsComponent*
+      - Contains `[0, ∞)` **ArgsComponent** for configuration
         - Declares `id`, IDPart: required
         - Declares `required`, boolean: whether this configuration must be set, default `false`
         - Declares `local`, boolean: whether (`true`) this configuration is local or (`false`) should be further forwarded to child windows (if any), default `true`
-        - Abstract subclass `[0, ∞)` **ArgsWindowNode**: provides configurations that can be displayed as a form window
+        - Abstract subclass `[0, ∞)` **ArgsWindowComponent**: provides configurations that can be displayed as a form window
           - Declares `title`, MessageRef: the name of the form window displaying this configuration, required
-          - Subclass `[0, ∞)` **SimpleArgsNode** (`<simpleArgs>`): hardcoded config elements in a single CustomForm, outputs a fixed set of configuration values (`Map<NodeIDPart, ElementNode.Result>`)
-            - Contains `[1, ∞)` **ElementNode**, CustomForm elements
+          - Subclass `[0, ∞)` **SimpleArgsComponent** (`<simpleArgs>`): hardcoded config elements in a single CustomForm, outputs a fixed set of configuration values (`Map<ComponentIDPart, ElementComponent.Result>`)
+            - Contains `[1, ∞)` **ElementComponent**, CustomForm elements
               - Declares `id`, IDPart: required
               - Declares `title`, MessageRef: the text associated with the element, required
-              - Subclass `[0, ∞)` **LabelNode** (`<label>`): represents a `label` CustomForm element
-              - Abstract subclass `[1, ∞)` **EditableElementNode**: represents a CustomForm element that returns a useful value
-                - Subclass `[0, ∞)` **InputNode** (`<input>`): represents an `input` CustomForm element
-                - Subclass `[0, ∞)` **ToggleNode** (`<toggle>`): represents a `toggle` CustomForm element
-                - Subclass `[0, ∞)` **SliderNode** (`<slider>`): represents a `slider` CustomForm element
-                - Abstract subclass `[0, ∞)` **DropdownLikeNode**
+              - Subclass `[0, ∞)` **LabelComponent** (`<label>`): represents a `label` CustomForm element
+              - Abstract subclass `[1, ∞)` **EditableElementComponent**: represents a CustomForm element that returns a useful value
+                - Subclass `[0, ∞)` **InputComponent** (`<input>`): represents an `input` CustomForm element
+                - Subclass `[0, ∞)` **ToggleComponent** (`<toggle>`): represents a `toggle` CustomForm element
+                - Subclass `[0, ∞)` **SliderComponent** (`<slider>`): represents a `slider` CustomForm element
+                - Abstract subclass `[0, ∞)` **DropdownLikeComponent**
                   - Either
-                    - Contains `[1, ∞)` **DropdownOptionNode** (`<option>`/`<step>`), representing options of the DropdownLikeNode
+                    - Contains `[1, ∞)` **DropdownOptionComponent** (`<option>`/`<step>`), representing options of the DropdownLikeComponent
                   - Or
                     - Declares `provider`, an instantiable DropdownOptionProvider responsible for providing options to this provider
-                  - Subclass `[0, ∞)` **DropdownNode** (`<dropdown>`): represents a `dropdown` CustomForm element
-                  - Subclass `[0, ∞)` **StepSliderNode** (`<stepSlider>`): represents a `step_slider` CustomForm element
-          - Subclass `[0, ∞)` **MenuArgsNode** (`<menuArgs>`): options listed in a MenuForm, outputs a single configuration value (`MenuProvider.ItemID`)
+                  - Subclass `[0, ∞)` **DropdownComponent** (`<dropdown>`): represents a `dropdown` CustomForm element
+                  - Subclass `[0, ∞)` **StepSliderComponent** (`<stepSlider>`): represents a `step_slider` CustomForm element
+          - Subclass `[0, ∞)` **MenuArgsComponent** (`<menuArgs>`): options listed in a MenuForm, outputs a single configuration value (`MenuProvider.ItemID`)
             - Declares `provider`, MenuProvider instantiable: provides options to the list, required
-          - Subclass `[0, ∞)` **CycleArgsNode** (`<cycleArgs>`): a big CustomForm with recurring config elements, each recurrence contains a hardcoded set of config elements, the number of recurrences and parameters to each recurrence provided by a ComplexConfigProvider, outputs a list of a a fixed set of configuration values (`Map<CycleArgsProvider.ItemID, Map<NodeIDPart, ElementNode.Result>>`)
+          - Subclass `[0, ∞)` **CycleArgsComponent** (`<cycleArgs>`): a big CustomForm with recurring config elements, each recurrence contains a hardcoded set of config elements, the number of recurrences and parameters to each recurrence provided by a ComplexConfigProvider, outputs a list of a a fixed set of configuration values (`Map<CycleArgsProvider.ItemID, Map<ComponentIDPart, ElementComponent.Result>>`)
             - Declares `provider`, ComplexProvider instantiable: provides number of recurrences and parameters to each occurrence
-            - Contains `1` **EachComplexNode** (`<each>`), defining the config elements of each recurrence
-              - Contains `[1, ∞)` *ElementNode*
-        - Subclass `[0, ∞)` **CommandConfigNode** (`<commandArg>`): a single-CustomForm-element configuration, may be specified as required arguments in CustomForm
+            - Contains `1` **EachComplexComponent** (`<each>`), defining the config elements of each recurrence
+              - Contains `[1, ∞)` *ElementComponent*
+        - Subclass `[0, ∞)` **CommandConfigComponent** (`<commandArg>`): a single-CustomForm-element configuration, may be specified as required arguments in CustomForm
           - Declares `argName`, MessageRef: the argument name in the usage message of the command
-      - Subclass `[0, ∞)` **ListNode** (`<list>`): a dynamic MenuForm whose values are provided by a MenuProvider
+      - Subclass `[0, ∞)` **ListComponent** (`<list>`): a dynamic MenuForm whose values are provided by a MenuProvider
         - Declares `provider`, an instantiable MenuProvider
-        - Contains `[0, 2]` **BeforeAfterListNode**: header/footer buttons for this list
-          - Contains `1` *ClickableNode*
-          - Uses **WindowParentNode** for accepting the ClickableNode child
-          - Subclass `[0, 1]` **BeforeListNode** (`<before>`): header buttons
-          - Subclass `[0, 1]` **AfterListNode** (`<after>`): footer buttons
-        - Contains `1` **EachListNode** (`<each>`): the window to display after clicking each button
+        - Contains `[0, 2]` **BeforeAfterListComponent**: header/footer buttons for this list
+          - Contains `1` *ClickableComponent*
+          - Uses **WindowParentComponent** for accepting the ClickableComponent child
+          - Subclass `[0, 1]` **BeforeListComponent** (`<before>`): header buttons
+          - Subclass `[0, 1]` **AfterListComponent** (`<after>`): footer buttons
+        - Contains `1` **EachListComponent** (`<each>`): the window to display after clicking each button
           - Declares `configName`: the button's list item ID will be forwarded to the next form as a `configName` using this button
-      - Subclass `[0, ∞)` **InfoNode** (`<info>`): a ModalForm with a single message in the `synopsis` attribute (like other nodes, config values will be sent into the message through KineticAdapter's message processing implementation)
-        - Contains **ModalButtonNode** (`<button1>`, `<button2>`): the two buttons in the ModalForm
-          - Contains `[0, 1]` *ClickableNode*: the next window to display upon clicking the button
+      - Subclass `[0, ∞)` **InfoComponent** (`<info>`): a ModalForm with a single message in the `synopsis` attribute (like other components, config values will be sent into the message through KineticAdapter's message processing implementation)
+        - Contains **ModalButtonComponent** (`<button1>`, `<button2>`): the two buttons in the ModalForm
+          - Contains `[0, 1]` *ClickableComponent*: the next window to display upon clicking the button

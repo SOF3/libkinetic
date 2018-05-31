@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['parseexception',['ParseException',['../class_s_o_fe_1_1libkinetic_1_1_parse_exception.html',1,'SOFe::libkinetic']]],
-  ['permissionnode',['PermissionNode',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_permission_node.html',1,'SOFe::libkinetic::Node']]],
-  ['permissionpredicate',['PermissionPredicate',['../interface_s_o_fe_1_1libkinetic_1_1_permission_predicate.html',1,'SOFe::libkinetic']]]
+  ['parseexception',['ParseException',['../class_s_o_fe_1_1_libkinetic_1_1_parse_exception.html',1,'SOFe::Libkinetic']]],
+  ['permissionclickablecomponent',['PermissionClickableComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_clickable_component.html',1,'SOFe::Libkinetic::Clickable']]],
+  ['permissioncomponent',['PermissionComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_component.html',1,'SOFe::Libkinetic::Clickable']]],
+  ['permissionpredicate',['PermissionPredicate',['../interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_permission_predicate.html',1,'SOFe::Libkinetic::API']]]
 ];

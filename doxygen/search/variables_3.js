@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['sides',['SIDES',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_face_filter_node.html#a2a7273678edc33bb9f54cada28952b0e',1,'SOFe::libkinetic::Window::Entry::Interact::FaceFilterNode']]],
-  ['singleclickableholdernode',['SingleClickableHolderNode',['../namespace_s_o_fe_1_1libkinetic_1_1_window.html#a46f2a0a4fcdb28428b1c77652fb6fdce',1,'SOFe::libkinetic::Window']]]
+  ['dropdowncomponentdynamiclike',['DropdownComponentDynamicLike',['../namespace_s_o_fe_1_1_libkinetic_1_1_element.html#a48aa87bbb2a3b970fb6ab410c3a7782b',1,'SOFe::Libkinetic::Element']]],
+  ['dropdowncomponentstaticlike',['DropdownComponentStaticLike',['../namespace_s_o_fe_1_1_libkinetic_1_1_element.html#a29b1f7bc0dc21a429ad72add97a6d16f',1,'SOFe::Libkinetic::Element']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['clickableparentnode',['ClickableParentNode',['../namespace_s_o_fe_1_1libkinetic_1_1_window.html#a8b7c7cf61d40740febc93c8da6967e5b',1,'SOFe::libkinetic::Window']]]
+  ['argstrait',['ArgsTrait',['../namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument.html#a10beb8823990b36ee76a6b112c89081f',1,'SOFe::Libkinetic::Clickable::Argument']]]
 ];

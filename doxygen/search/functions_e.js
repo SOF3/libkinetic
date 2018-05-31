@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['parse',['parse',['../class_s_o_fe_1_1libkinetic_1_1_parser_1_1_json_file_parser.html#a38d99acc70a1d8fd8f94455743b2d237',1,'SOFe\libkinetic\Parser\JsonFileParser\parse()'],['../class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a38d99acc70a1d8fd8f94455743b2d237',1,'SOFe\libkinetic\Parser\KineticFileParser\parse()'],['../class_s_o_fe_1_1libkinetic_1_1_parser_1_1_xml_file_parser.html#a38d99acc70a1d8fd8f94455743b2d237',1,'SOFe\libkinetic\Parser\XmlFileParser\parse()']]],
-  ['parseboolean',['parseBoolean',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a82bd2b9e6e0e857e62b7f18a48a2ce86',1,'SOFe::libkinetic::Node::KineticNode']]],
-  ['parsefloat',['parseFloat',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#ac6cd5a27e202655bcac0012f617f7a71',1,'SOFe::libkinetic::Node::KineticNode']]],
-  ['parseint',['parseInt',['../class_s_o_fe_1_1libkinetic_1_1_node_1_1_kinetic_node.html#a76ec38da9037ede0cb10528fda6ea81e',1,'SOFe::libkinetic::Node::KineticNode']]],
-  ['parsetext',['parseText',['../class_s_o_fe_1_1libkinetic_1_1_parser_1_1_kinetic_file_parser.html#aaeeed829feb8a2160d27eaf49d7b5415',1,'SOFe::libkinetic::Parser::KineticFileParser']]],
-  ['provide',['provide',['../interface_s_o_fe_1_1libkinetic_1_1_complex_provider.html#a4e6d22adadf43aa629199b12d79957a2',1,'SOFe\libkinetic\ComplexProvider\provide()'],['../interface_s_o_fe_1_1libkinetic_1_1_menu_provider.html#aa8c30b33b0d372e2318e68e1883b63a7',1,'SOFe\libkinetic\MenuProvider\provide()']]],
-  ['push',['push',['../class_s_o_fe_1_1libkinetic_1_1_window_request.html#aa9e892cf9ba1a191af9fe1157a783490',1,'SOFe::libkinetic::WindowRequest']]],
-  ['put',['put',['../class_s_o_fe_1_1libkinetic_1_1_window_request.html#ad5603bce1e774afd9476f634c38b8d50',1,'SOFe::libkinetic::WindowRequest']]]
+  ['registeritemhandler',['registerItemHandler',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#a12ac18b5cd3cad8a7028cc3c6e126bd7',1,'SOFe::Libkinetic::KineticManager']]],
+  ['requireattribute',['requireAttribute',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#ae0a98f7802db9aaadf5bfbdd93ea31c2',1,'SOFe::Libkinetic::KineticComponent']]],
+  ['requirechild',['requireChild',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#ad1b4fff210e92da83e9b7bc7ee233390',1,'SOFe::Libkinetic::KineticComponent']]],
+  ['requirechildren',['requireChildren',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a8235e66eaa3b13a7541c48feec38d17c',1,'SOFe::Libkinetic::KineticComponent']]],
+  ['requiretext',['requireText',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a08e1f7cd8fcd737db3eb56aeabbc25df',1,'SOFe::Libkinetic::KineticComponent']]],
+  ['requiretranslation',['requireTranslation',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a6a81e716b718f12a9a7c9c1a1dd08554',1,'SOFe\Libkinetic\KineticComponent\requireTranslation()'],['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#a4cfaf01b880d42abeb219b15c480b7d4',1,'SOFe\Libkinetic\KineticManager\requireTranslation()']]],
+  ['resolveclass',['resolveClass',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#afaebf5729056c4d1c248754b3b6a5953',1,'SOFe\Libkinetic\KineticComponent\resolveClass()'],['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#ab708813f308f43d09028c5ff1c015c06',1,'SOFe\Libkinetic\KineticManager\resolveClass()']]],
+  ['resolveconfigbool',['resolveConfigBool',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a5748018ef8f232673480c82ae92b4680',1,'SOFe::Libkinetic::KineticComponent']]],
+  ['resolveconfignumber',['resolveConfigNumber',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a02b2c603ed9366ed9b5b2bd26e2a4e03',1,'SOFe::Libkinetic::KineticComponent']]],
+  ['rewind',['rewind',['../class_s_o_fe_1_1_libkinetic_1_1_util_1_1_binary_array_wrapper.html#ae619dcf2218c21549cb65d875bbc6c9c',1,'SOFe::Libkinetic::Util::BinaryArrayWrapper']]]
 ];

@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['beforeafterlistnode',['BeforeAfterListNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_before_after_list_node.html',1,'SOFe::libkinetic::Window::ListWindow']]],
-  ['beforelistnode',['BeforeListNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_list_window_1_1_before_list_node.html',1,'SOFe::libkinetic::Window::ListWindow']]],
-  ['binaryarraywrapper',['BinaryArrayWrapper',['../class_s_o_fe_1_1libkinetic_1_1_binary_array_wrapper.html',1,'SOFe::libkinetic']]],
-  ['blockfilternode',['BlockFilterNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_block_filter_node.html',1,'SOFe::libkinetic::Window::Entry::Interact']]]
+  ['binaryarraywrapper',['BinaryArrayWrapper',['../class_s_o_fe_1_1_libkinetic_1_1_util_1_1_binary_array_wrapper.html',1,'SOFe::Libkinetic::Util']]],
+  ['blockfiltercomponent',['BlockFilterComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_interact_1_1_block_filter_component.html',1,'SOFe::Libkinetic::Clickable::Entry::Interact']]]
 ];

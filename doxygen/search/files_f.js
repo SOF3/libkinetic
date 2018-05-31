@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['togglenode_2ephp',['ToggleNode.php',['../_toggle_node_8php.html',1,'']]],
-  ['touchmodefilternode_2ephp',['TouchModeFilterNode.php',['../_touch_mode_filter_node_8php.html',1,'']]]
+  ['togglecomponent_2ephp',['ToggleComponent.php',['../_toggle_component_8php.html',1,'']]],
+  ['touchmodefiltercomponent_2ephp',['TouchModeFilterComponent.php',['../_touch_mode_filter_component_8php.html',1,'']]]
 ];

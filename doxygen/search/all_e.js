@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['menuargsnode',['MenuArgsNode',['../class_s_o_fe_1_1libkinetic_1_1_args_1_1_menu_args_node.html',1,'SOFe::libkinetic::Args']]],
-  ['menuargsnode_2ephp',['MenuArgsNode.php',['../_menu_args_node_8php.html',1,'']]],
-  ['menuitemfactory',['MenuItemFactory',['../class_s_o_fe_1_1libkinetic_1_1_menu_item_factory.html',1,'SOFe::libkinetic']]],
+  ['menuitemfactory',['MenuItemFactory',['../class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_menu_item_factory.html',1,'SOFe::Libkinetic::API']]],
   ['menuitemfactory_2ephp',['MenuItemFactory.php',['../_menu_item_factory_8php.html',1,'']]],
-  ['menuprovider',['MenuProvider',['../interface_s_o_fe_1_1libkinetic_1_1_menu_provider.html',1,'SOFe::libkinetic']]],
+  ['menuprovider',['MenuProvider',['../interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_menu_provider.html',1,'SOFe::Libkinetic::API']]],
   ['menuprovider_2ephp',['MenuProvider.php',['../_menu_provider_8php.html',1,'']]],
-  ['mimicconfig',['mimicConfig',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_block_filter_node.html#adafc9462f12d789063a615e57ec0d256',1,'SOFe\libkinetic\Window\Entry\Interact\BlockFilterNode\mimicConfig()'],['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_face_filter_node.html#a761c9012b3535904859cb1273fa6ac18',1,'SOFe\libkinetic\Window\Entry\Interact\FaceFilterNode\mimicConfig()'],['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_entry_1_1_interact_1_1_item_filter_node.html#adafc9462f12d789063a615e57ec0d256',1,'SOFe\libkinetic\Window\Entry\Interact\ItemFilterNode\mimicConfig()']]],
-  ['modalbuttonnode',['ModalButtonNode',['../class_s_o_fe_1_1libkinetic_1_1_window_1_1_modal_button_node.html',1,'SOFe::libkinetic::Window']]],
-  ['modalbuttonnode_2ephp',['ModalButtonNode.php',['../_modal_button_node_8php.html',1,'']]]
+  ['messages',['MESSAGES',['../class_s_o_fe_1_1_libkinetic_1_1libkinetic.html#a86aa5038c10b94e2be53af262922dedb',1,'SOFe::Libkinetic::libkinetic']]]
 ];

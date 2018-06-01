@@ -67,7 +67,7 @@ Index:
         - Declares `local`, boolean: whether (`true`) this configuration is local or (`false`) should be further forwarded to child windows (if any), default `true`
         - Abstract subclass `[0, ∞)` **ArgsWindowComponent**: provides configurations that can be displayed as a form window
           - Declares `title`, MessageRef: the name of the form window displaying this configuration, required
-          - Subclass `[0, ∞)` **SimpleArgsComponent** (`<simpleArgs>`): hardcoded config elements in a single CustomForm, outputs a fixed set of configuration values (`Map<ComponentIDPart, ElementComponent.Result>`)
+          - Subclass `[0, ∞)` **SimpleArgComponent** (`<simpleArgs>`): hardcoded config elements in a single CustomForm, outputs a fixed set of configuration values (`Map<ComponentIDPart, ElementComponent.Result>`)
             - Contains `[1, ∞)` **ElementComponent**, CustomForm elements
               - Declares `id`, IDPart: required
               - Declares `title`, MessageRef: the text associated with the element, required

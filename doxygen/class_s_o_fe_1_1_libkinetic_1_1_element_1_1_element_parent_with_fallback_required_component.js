@@ -1,0 +1,4 @@
+var class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_with_fallback_required_component =
+[
+    [ "addRequiredComponent", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_with_fallback_required_component.html#a578cd1c11ff1703381a0c695a7adb6c4", null ]
+];

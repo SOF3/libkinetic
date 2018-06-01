@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>SOFe\Libkinetic\Clickable\Argument\ArgsInterface | libkinetic v0.0.1</title>
+
+            <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../../../../css/sami.css">
+        <script src="../../../../js/jquery-1.11.1.min.js"></script>
+        <script src="../../../../js/bootstrap.min.js"></script>
+        <script src="../../../../js/typeahead.min.js"></script>
+        <script src="../../../../sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="class" data-name="class:SOFe_Libkinetic_Clickable_Argument_ArgsInterface" data-root-path="../../../../">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="../../../../search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="../../../../index.html">libkinetic v0.0.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="../../../../classes.html">Classes</a></li>
+                                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+                    <li><a href="../../../../traits.html">Traits</a></li>
+                    <li><a href="../../../../doc-index.html">Index</a></li>
+                    <li><a href="../../../../search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div class="namespace-breadcrumbs">
+            <ol class="breadcrumb">
+                <li><span class="label label-default">interface</span></li>
+                        <li><a href="../../../../SOFe.html">SOFe</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic.html">Libkinetic</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic/Clickable.html">Clickable</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic/Clickable/Argument.html">Argument</a></li><li class="backslash">\</li><li>ArgsInterface</li>
+            </ol>
+        </div>
+                <div id="page-content">
+                
+    <div class="page-header">
+        <h1>
+            ArgsInterface
+                
+        </h1>
+    </div>
+
+    <p>    interface
+    <strong>ArgsInterface</strong>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgsInterface.php">View source</a>)
+</p>
+
+        
+    
+
+            <div class="description">
+            <p><h2>Entry</h2>
+
+<ul>
+<li><strong>Implicit entry</strong>: If some args are required but not set in the WindowRequest, they would be displayed to the user before the parent Clickable is actually clicked (even before onClick).</li>
+</ul>
+</p>            <p><ul>
+<li><strong>Explicit entry</strong>: An arguable window clickable can have an <code>&lt;editArg&gt;</code> button that allows the user to edit an arg.</li>
+</ul>
+
+<h2>Interface</h2>
+
+<p>Both players and non-players can define args via command interface. Form interface is an alternative interface for players.</p>
+
+<p>Before the args are passed to the underlying Clickable, they can be validated through a RequestValidator interface.</p>
+
+<h2>Cancellation/Abandonment</h2>
+
+<p>While the server presents the args interface to the user, the user may ignore it, either through not running the commands required or pressing the "X" button in a form.</p>
+
+<p>If the entry to the arg was implicit, this means the user wanted to access the parent Clickable rather than this particular arg. In other words, the user considers this arg as the beginning of the expected Clickable, and ignoring/cancelling this arg means the user no longer wants to access the parent Clickable.</p>
+
+<p>If the entry to the arg was explicit, this means the user considers the arg interface as a step in itself. For form interface, the parent Clickable form should be displayed again, as if the user submitted the same value as before. For command interface, explicit entry is not sensible because the user simply needs to run the command again with the optional arguments filled.</p>
+
+<h2>Validation</h2>
+
+<p>Before and after editing an arg, the optional RequestValidator for the arg is invoked. If the request contains invalid args, the user will receive the error message plus the arg request message again.</p>
+
+<p>Libkinetic provides 4 types of arg:</p>
+
+<ul>
+<li><code>&lt;simpleArg&gt;</code>: a static set of arguments. Each child is set as an argument in the WindowRequest.
+
+<ul>
+<li>Form interface: the elements were designed specifically for the CustomForm interface. The elements are sent to the user in the same order as in the declaration.</li>
+<li>Command interface: the elements are listed as optional or required command arguments in the same order as in the declaration. Multi-word arguments may need to be "quoted".</li>
+</ul></li>
+<li><code>&lt;listArg&gt;</code>: similar to <code>&lt;list&gt;</code>, but <code>&lt;list&gt;</code> should provide information in itself while <code>&lt;listArg&gt;</code> is just a configuration.</li>
+<li><code>&lt;cycleArg&gt;</code>: this is like a hybrid of <code>&lt;simpleArg&gt;</code> and <code>&lt;listArg&gt;</code>, having a dynamic list, each with static set of arguments.
+
+<ul>
+<li>Form interface: The form can be <code>merged="true"</code> (default) or <code>merged="false"</code>.</li>
+<li>If merged, the user sees a CustomForm with the child elements recurring, and each occurrence corresponds to an item in the dynamic list.</li>
+<li>If not merged, the user sees a MenuForm corresponding to the dynamic list, where each item corresponds to an item in the dynamic list. Clicking into each item displays a CustomForm for the child elements. There is a "Submit" option appended to the MenuForm.</li>
+<li>Command interface: needs an adapter from the plugin to implement command syntax parsing.</li>
+</ul></li>
+<li><code>&lt;complexArg&gt;</code>: this is similar to <code>&lt;cycleArg&gt;</code>, except there is no dynamic list. Consider the block list in WorldEdit's //set.
+
+<ul>
+<li>Form interface: The user starts with a blank list (unless previously set), with an "Add" button to add objects to the list. Each object can be edited by the underlying child elements like <code>&lt;cycleArg&gt;</code>. Clicking on each element deletes it. Clicking on the trailing "Submit" button submits this list.</li>
+<li>Command interface: needs an adapter from the plugin to implement command syntax parsing.</li>
+</ul></li>
+</ul>
+</p>                    </div>
+    
+    
+    
+    
+            <h2>Methods</h2>
+
+            <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_configure">configure</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, callable $onConfigured)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_getNode">getNode</a>()
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+            </div>
+
+
+        <h2>Details</h2>
+
+            <div id="method-details">
+                    <div class="method-item">
+                    <h3 id="method_configure">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgsInterface.php#L64">line 64</a></div>
+        <code>                    
+    <strong>configure</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, callable $onConfigured)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td>$request</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>bool</td>
+                <td>$explicit</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$onConfigured</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_getNode">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgsInterface.php#L66">line 66</a></div>
+        <code>                    
+    <strong>getNode</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+            </div>
+
+    
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="index, follow, all" />
+    <title>Interfaces | libkinetic v0.0.1</title>
+
+            <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/sami.css">
+        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/typeahead.min.js"></script>
+        <script src="sami.js"></script>
+        <meta name="MobileOptimized" content="width">
+        <meta name="HandheldFriendly" content="true">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    
+    
+    </head>
+
+    <body id="interfaces" data-name="" data-root-path="">
+            <div id="content">
+        <div id="left-column">
+                <div id="control-panel">
+                <script>
+            $('option[data-version="'+window.projectVersion+'"]').prop('selected', true);
+        </script>
+        <form id="search-form" action="search.html" method="GET">
+            <span class="glyphicon glyphicon-search"></span>
+            <input name="search"
+                   class="typeahead form-control"
+                   type="search"
+                   placeholder="Search">
+        </form>
+    </div>
+
+                <div id="api-tree"></div>
+
+        </div>
+        <div id="right-column">
+                <nav id="site-nav" class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-elements">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">libkinetic v0.0.1</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-elements">
+                <ul class="nav navbar-nav">
+                    <li><a href="classes.html">Classes</a></li>
+                                            <li><a href="namespaces.html">Namespaces</a></li>
+                                        <li><a href="interfaces.html">Interfaces</a></li>
+                    <li><a href="traits.html">Traits</a></li>
+                    <li><a href="doc-index.html">Index</a></li>
+                    <li><a href="search.html">Search</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+                        <div id="page-content">
+                    <div class="page-header">
+        <h1>Interfaces</h1>
+    </div>
+
+    
+    <div class="container-fluid underlined">
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/API/ClickHandler.html"><abbr title="SOFe\Libkinetic\API\ClickHandler">ClickHandler</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/API/ComplexProvider.html"><abbr title="SOFe\Libkinetic\API\ComplexProvider">ComplexProvider</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/API/DropdownProvider.html"><abbr title="SOFe\Libkinetic\API\DropdownProvider">DropdownProvider</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/API/MenuProvider.html"><abbr title="SOFe\Libkinetic\API\MenuProvider">MenuProvider</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/API/RequestValidator.html"><abbr title="SOFe\Libkinetic\API\RequestValidator">RequestValidator</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/API/UserPredicate.html"><abbr title="SOFe\Libkinetic\API\UserPredicate">UserPredicate</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Clickable/Argument/ArgsInterface.html"><abbr title="SOFe\Libkinetic\Clickable\Argument\ArgsInterface">ArgsInterface</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    <h2>Entry</h2>
+
+<ul>
+<li><strong>Implicit entry</strong>: If some args are required but not set in the WindowRequest, they would be displayed to the user before the parent Clickable is actually clicked (even before onClick).</li>
+</ul>
+
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Clickable/Clickable.html"><abbr title="SOFe\Libkinetic\Clickable\Clickable">Clickable</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    A Clickable represents an action that can be executed. They are all valid as children in a master menu (<code>&lt;index&gt;</code>), except <code>&lt;editArg&gt;</code>, which is only applicable in an arguable window clickable (both ArguableClickableComponent and WindowComponent are depended).
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Clickable/ClickablePeer.html"><abbr title="SOFe\Libkinetic\Clickable\ClickablePeer">ClickablePeer</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Clickable/Entry/Interact/InteractFilter.html"><abbr title="SOFe\Libkinetic\Clickable\Entry\Interact\InteractFilter">InteractFilter</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Element/EditableElementInterface.html"><abbr title="SOFe\Libkinetic\Element\EditableElementInterface">EditableElementInterface</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Element/ElementInterface.html"><abbr title="SOFe\Libkinetic\Element\ElementInterface">ElementInterface</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/Form/Icon.html"><abbr title="SOFe\Libkinetic\Form\Icon">Icon</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/IntermediateNode.html"><abbr title="SOFe\Libkinetic\IntermediateNode">IntermediateNode</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+                    <div class="row">
+                <div class="col-md-6">
+                                            <em><a href="SOFe/Libkinetic/KineticAdapter.html"><abbr title="SOFe\Libkinetic\KineticAdapter">KineticAdapter</abbr></a></em>
+                                            
+                </div>
+                <div class="col-md-6">
+                    
+                </div>
+            </div>
+            </div>
+            </div>
+                <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/">Sami, the API Documentation Generator</a>.
+    </div>
+
+        </div>
+    </div>
+    </body>
+
+</html>

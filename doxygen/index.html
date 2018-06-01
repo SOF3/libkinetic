@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libkinetic: libkinetic</title>
+<title>libkinetic: libkinetic [![Poggit-CI](https://poggit.pmmp.io/ci.badge/SOF3/libkinetic/~)](https://poggit.pmmp.io/ci/SOF3/libkinetic/~)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,10 +88,34 @@ $(document).ready(function(){initNavTree('index.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">libkinetic </div>  </div>
+<div class="title">libkinetic [![Poggit-CI](<a href="https://poggit.pmmp.io/ci.badge/SOF3/libkinetic/~">https://poggit.pmmp.io/ci.badge/SOF3/libkinetic/~</a>)](<a href="https://poggit.pmmp.io/ci/SOF3/libkinetic/~">https://poggit.pmmp.io/ci/SOF3/libkinetic/~</a>) </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Organize your form UI better </p>
+<div class="textblock"><p>Organize your user interface better!</p>
+<h2>What does libkinetic do? How does it work?</h2>
+<p>Libkinetic reads an XML file that lists the user interface plan in your plugin. For example, see the <a href="examples/simplewarp.xml">example kinetic.xml for SimpleWarp</a>. Here I will briefly explain how it works, but for details, please refer to their respective documentation on <a href="https://sof3.github.io/libkinetic/doxygen/">Doxygen</a>.</p>
+<p>Why is so special about libkinetic is that you only have to write the user interface once and libkinetic will implement it for both forms and commands interface. Some advanced components like <code>&lt;complexArg&gt;</code> also saves you from the trouble of creating a complicated UI.</p>
+<h3>Clickable</h3>
+<p>Under the root <code>&lt;kinetic&gt;</code> node, you can add different user interface components called <code>Clickable</code>s. Each <code>Clickable</code> can be accessed either through forms UI or commands + chat. There are a few types of <code>Clickable</code>s:</p>
+<h3><code>&lt;info&gt;</code></h3>
+<p><code>&lt;info&gt;</code> is designed to show some text to the user with two subsequent actions, namely <code>&lt;button1&gt;</code> and <code>&lt;button2&gt;</code>. It can be used for different things:</p>
+<ul>
+<li>Confirmation box (with buttons "OK" and "Cancel")</li>
+<li>Informative dialog plus two custom actions</li>
+</ul>
+<p>In form interface, this is presented as a ModalForm. In command interface, the info text is displayed, and the user may append "yes" or "no" (or custom values) to the command to use the buttons.</p>
+<h3><code>&lt;list&gt;</code></h3>
+<p><code>&lt;list&gt;</code> provides a dynamic list. The data are provided from a MenuProvider implementation. A few example uses include:</p>
+<ul>
+<li>A pure informative list (e.g. player list, world list, warp list)</li>
+<li>A list where you can do something special with each action, e.g.:<ul>
+<li>warp list: click into each warp item to edit/delete it</li>
+<li>shop list: click into each item to buy it</li>
+</ul>
+</li>
+</ul>
+<p>In form interface, this is presented as a MenuForm. In command interface, the list items are displayed, and the user may type the item ID to click into it.</p>
+<h3><code>&lt;index&gt;</code></h3>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

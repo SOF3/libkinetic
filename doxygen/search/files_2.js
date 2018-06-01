@@ -13,5 +13,6 @@ var searchData=
   ['commandentrycomponent_2ephp',['CommandEntryComponent.php',['../_command_entry_component_8php.html',1,'']]],
   ['complexitemfactory_2ephp',['ComplexItemFactory.php',['../_complex_item_factory_8php.html',1,'']]],
   ['complexprovider_2ephp',['ComplexProvider.php',['../_complex_provider_8php.html',1,'']]],
-  ['componentadapter_2ephp',['ComponentAdapter.php',['../_component_adapter_8php.html',1,'']]]
+  ['componentadapter_2ephp',['ComponentAdapter.php',['../_component_adapter_8php.html',1,'']]],
+  ['contcommandcomponent_2ephp',['ContCommandComponent.php',['../_cont_command_component_8php.html',1,'']]]
 ];

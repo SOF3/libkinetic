@@ -99,7 +99,7 @@ Inheritance diagram for ArgsInterface:</div>
  <div class="center">
   <img src="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_interface.png" usemap="#ArgsInterface_map" alt=""/>
   <map id="ArgsInterface_map" name="ArgsInterface_map">
-<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_args_component.html" alt="SimpleArgsComponent" shape="rect" coords="0,56,139,80"/>
+<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html" alt="SimpleArgComponent" shape="rect" coords="0,56,133,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -107,6 +107,8 @@ Inheritance diagram for ArgsInterface:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aae9309a42ec0911c2f671bc150a8ee7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_interface.html#aae9309a42ec0911c2f671bc150a8ee7a">configure</a> (<a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> $request, bool $explicit, callable $onConfigured)</td></tr>
 <tr class="separator:aae9309a42ec0911c2f671bc150a8ee7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a0d17930cbcc57bef84064afcc1a837"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_interface.html#a3a0d17930cbcc57bef84064afcc1a837">getNode</a> ()</td></tr>
+<tr class="separator:a3a0d17930cbcc57bef84064afcc1a837"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><h2><a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry.html">Entry</a></h2>
@@ -116,61 +118,38 @@ Public Member Functions</h2></td></tr>
 </ul>
 <h2>Interface</h2>
 <p>Both players and non-players can define args via command interface. <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_form.html">Form</a> interface is an alternative interface for players.</p>
+<p>Before the args are passed to the underlying <a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a>, they can be validated through a RequestValidator interface.</p>
 <h2>Cancellation/Abandonment</h2>
 <p>While the server presents the args interface to the user, the user may ignore it, either through not running the commands required or pressing the "X" button in a form.</p>
 <p>If the entry to the arg was implicit, this means the user wanted to access the parent <a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a> rather than this particular arg. In other words, the user considers this arg as the beginning of the expected <a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a>, and ignoring/cancelling this arg means the user no longer wants to access the parent <a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a>.</p>
-<p>If the entry to the arg was explicit, this means the user considers the arg interface as a step in itself. For form interface, the parent <a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a> form should be displayed again, as if the user submitted the same value as before.</p>
-<h2>How args work: Definition and discussion</h2>
+<p>If the entry to the arg was explicit, this means the user considers the arg interface as a step in itself. For form interface, the parent <a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a> form should be displayed again, as if the user submitted the same value as before. For command interface, explicit entry is not sensible because the user simply needs to run the command again with the optional arguments filled.</p>
+<h2>Validation</h2>
+<p>Before and after editing an arg, the optional RequestValidator for the arg is invoked. If the request contains invalid args, the user will receive the error message plus the arg request message again.</p>
+<p><a class="el" href="namespace_s_o_fe_1_1_libkinetic.html">Libkinetic</a> provides 4 types of arg:</p>
 <ul>
-<li>The <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> involves an arg either explicitly or implicitly:<ul>
-<li>Implicit path:<ul>
-<li>Through certain means (e.g. commands, events, directed from plugin code, or clicking other buttons), the user requests an arguable clickable.</li>
-<li>Certain required variables in the <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> for this arguable clickable is missing, so the user is required to configure this arg.</li>
+<li><code>&lt;simpleArg&gt;</code>: a static set of arguments. Each child is set as an argument in the <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a>.<ul>
+<li><a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_form.html">Form</a> interface: the elements were designed specifically for the CustomForm interface. The elements are sent to the user in the same order as in the declaration.</li>
+<li>Command interface: the elements are listed as optional or required command arguments in the same order as in the declaration. Multi-word arguments may need to be "quoted".</li>
 </ul>
 </li>
-<li>Explicit path:<ul>
-<li>The arguable clickable's window contains a button that allows changing the argument, e.g. "online players" list contains a button to configure the arg for player filters (e.g. checkbox "players in my clan")</li>
+<li><code>&lt;listArg&gt;</code>: similar to <code>&lt;list&gt;</code>, but <code>&lt;list&gt;</code> should provide information in itself while <code>&lt;listArg&gt;</code> is just a configuration.</li>
+<li><code>&lt;cycleArg&gt;</code>: this is like a hybrid of <code>&lt;simpleArg&gt;</code> and <code>&lt;listArg&gt;</code>, having a dynamic list, each with static set of arguments.<ul>
+<li><a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_form.html">Form</a> interface: The form can be <code>merged="true"</code> (default) or <code>merged="false"</code>.<ul>
+<li>If merged, the user sees a CustomForm with the child elements recurring, and each occurrence corresponds to an item in the dynamic list.</li>
+<li>If not merged, the user sees a MenuForm corresponding to the dynamic list, where each item corresponds to an item in the dynamic list. Clicking into each item displays a CustomForm for the child elements. There is a "Submit" option appended to the MenuForm.</li>
 </ul>
 </li>
+<li>Command interface: needs an adapter from the plugin to implement command syntax parsing.</li>
 </ul>
 </li>
-<li>If the user is a player, a form interface will be displayed. Otherwise, a command interface will be displayed.<ul>
-<li><a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_form.html">Form</a> interface:<ul>
-<li>Depending on the arg type, a form is displayed. Configuration completes when the player fills the form.</li>
-<li>If the player cancels the form (through the "X" button):<ul>
-<li>If the arg was entered explicitly, we should assume the player doesn't want to change anything.</li>
-<li>Otherwise, we can assume the player wants to cancel the arguable clickable action<ul>
-<li>Therefore, we need to do nothing.</li>
-<li>In other words, the <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> session is terminated. Might this have any side impacts? Let's consider one by one:<ul>
-<li>If the arguable clickable was opened from an Index button, from a command or from voluntary (explicit) actions, it is totally OK.</li>
-<li>Otherwise, TODO: perhaps we should accept a flag from the calling context</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>Command interface:<ul>
-<li>If there is an ancestor node with a command entry, and there is a path between only consisting of index nodes, the config can be set via command arguments + subcommands.<ul>
-<li>WARNING: The onClick actions for the ancestors (including the one with the <code>&lt;command&gt;</code> node) will not be triggered. It behaves as if the node has its own <code>&lt;command&gt;</code>.</li>
-</ul>
-</li>
-<li>Otherwise, the arguable clickable cannot be used by non-players. (TODO: add a command node that allows the console to run to resume the last)</li>
-<li>It is possible to add support for non-index nodes like <code>&lt;info&gt;</code> and <code>&lt;list&gt;</code>, but:<ol type="1">
-<li>The onClick for the middle nodes will not be called, so some config values might be missing. A possible solution is to require the middle nodes to declare that they can be skipped.</li>
-<li>It is a</li>
-</ol>
-</li>
-<li>Therefore I think it is inappropriate to add support for this. </li>
-</ul>
-</li>
+<li><code>&lt;complexArg&gt;</code>: this is similar to <code>&lt;cycleArg&gt;</code>, except there is no dynamic list. Consider the block list in WorldEdit's //set.<ul>
+<li><a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_form.html">Form</a> interface: The user starts with a blank list (unless previously set), with an "Add" button to add objects to the list. Each object can be edited by the underlying child elements like <code>&lt;cycleArg&gt;</code>. Clicking on each element deletes it. Clicking on the trailing "Submit" button submits this list.</li>
+<li>Command interface: needs an adapter from the plugin to implement command syntax parsing. </li>
 </ul>
 </li>
 </ul>
 
-<p class="definition">Definition at line <a class="el" href="_args_interface_8php_source.html#l00068">68</a> of file <a class="el" href="_args_interface_8php_source.html">ArgsInterface.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_args_interface_8php_source.html#l00063">63</a> of file <a class="el" href="_args_interface_8php_source.html">ArgsInterface.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="aae9309a42ec0911c2f671bc150a8ee7a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aae9309a42ec0911c2f671bc150a8ee7a">&#9670;&nbsp;</a></span>configure()</h2>
@@ -200,6 +179,23 @@ Public Member Functions</h2></td></tr>
           <td></td>
           <td>)</td>
           <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3a0d17930cbcc57bef84064afcc1a837"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a0d17930cbcc57bef84064afcc1a837">&#9670;&nbsp;</a></span>getNode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getNode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['namedpermissionpredicate_2ephp',['NamedPermissionPredicate.php',['../_named_permission_predicate_8php.html',1,'']]]
+  ['nameduserpredicate_2ephp',['NamedUserPredicate.php',['../_named_user_predicate_8php.html',1,'']]]
 ];

@@ -24,6 +24,7 @@ for the JavaScript code in this file
 var NAVTREE =
 [
   [ "libkinetic", "index.html", [
+    [ "libkinetic [![Poggit-CI](https://poggit.pmmp.io/ci.badge/SOF3/libkinetic/~)](https://poggit.pmmp.io/ci/SOF3/libkinetic/~)", "index.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -51,9 +52,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_absolute_id_component_8php.html",
-"_link_component_8php_source.html",
-"class_s_o_fe_1_1_libkinetic_1_1_element_1_1_input_component.html#aec1ee80905f69cdf447b76c6b83acdd3",
-"functions_func_t.html"
+"_item_filter_component_8php_source.html",
+"class_s_o_fe_1_1_libkinetic_1_1_element_1_1_dropdown_option_component.html#a9df479534ecf05fd7575c6275d381687",
+"class_s_o_fe_1_1_libkinetic_1_1_window_component.html#ada57e7bb7c152edad18fe2f166188691"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

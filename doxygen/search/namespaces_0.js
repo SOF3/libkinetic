@@ -4,6 +4,7 @@ var searchData=
   ['argument',['Argument',['../namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument.html',1,'SOFe::Libkinetic::Clickable']]],
   ['clickable',['Clickable',['../namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html',1,'SOFe::Libkinetic']]],
   ['command',['Command',['../namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command.html',1,'SOFe::Libkinetic::Clickable::Entry']]],
+  ['defaults',['Defaults',['../namespace_s_o_fe_1_1_libkinetic_1_1_defaults.html',1,'SOFe::Libkinetic']]],
   ['element',['Element',['../namespace_s_o_fe_1_1_libkinetic_1_1_element.html',1,'SOFe::Libkinetic']]],
   ['entry',['Entry',['../namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry.html',1,'SOFe::Libkinetic::Clickable']]],
   ['form',['Form',['../namespace_s_o_fe_1_1_libkinetic_1_1_form.html',1,'SOFe::Libkinetic']]],

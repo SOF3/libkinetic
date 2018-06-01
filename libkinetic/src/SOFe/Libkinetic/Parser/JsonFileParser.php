@@ -22,11 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser;
 
+use SOFe\Libkinetic\InvalidNodeException;
+use SOFe\Libkinetic\ParseException;
 use function array_change_key_case;
 use function fclose;
 use function json_decode;
-use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\ParseException;
 use function stream_get_contents;
 use function strtoupper;
 use const CASE_UPPER;

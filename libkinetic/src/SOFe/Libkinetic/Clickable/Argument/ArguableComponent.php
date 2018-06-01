@@ -39,8 +39,8 @@ class ArguableComponent extends KineticComponent implements ClickablePeer{
 	}
 
 	public function startChild(string $name) : ?KineticNode{
-		if($name === "SIMPLE" . "ARGS"){
-			return KineticNode::create(SimpleArgsComponent::class)->addSimpleArgs($this->args);
+		if($name === "SIMPLE" . "ARG"){
+			return KineticNode::create(SimpleArgComponent::class)->addSimpleArg($this->args);
 		}
 		return null;
 	}
@@ -52,6 +52,13 @@ class ArguableComponent extends KineticComponent implements ClickablePeer{
 		}
 
 		CallSequence::forMethod($this->args, "configure", $onComplete, [$request], [false]);
+	}
+
+	/**
+	 * @return ArgsInterface[]
+	 */
+	public function getArguments() : array{
+		return $this->args;
 	}
 
 	public function getPriority() : int{

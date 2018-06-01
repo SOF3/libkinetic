@@ -25,7 +25,7 @@ namespace SOFe\Libkinetic\Clickable;
 use SOFe\Libkinetic\WindowRequest;
 
 /**
- * A Clickable represents an action that can be executed. You can assume them to be a button in an index.
+ * A Clickable represents an action that can be executed. They are all valid as children in a master menu (`<index>`), except `<editArg>`, which is only applicable in an arguable window clickable (both ArguableClickableComponent and WindowComponent are depended).
  *
  * Execution path:  DirectEntry -> ClickablePeer -> Clickable
  *
@@ -55,7 +55,8 @@ use SOFe\Libkinetic\WindowRequest;
  *     - On the other hand, if the `<info>` is just a warning/confirmation dialog, and it is only expected for players (i.e. console doesn't need confirmation), the attribute `skip="button1"`/`skip="button2"` can be set *on the `<info>` node*. It does not make sense to have both `skip` and `subcmd` on the same `<info>`.
  * - `<list>` provides a dynamic list for the user to choose from. The list data are provided from a `MenuProvider`.
  *   - For non-players, it is presented as a list of data in command response with an associative key for each datum. The user can append the key. Nevertheless, the `<before>` and `<after>` parts can still be used as if it is a simple `<index>`.
- *   - For players, it is presented as a MenuForm. `<before>` is displayed before the data list and `<after>` is displayed after the data list, as if they are an `<index>`. For the data list buttons, clicking on any would trigger the Clickable child in `<each>`, with the value represented by the datum passed as an argument. This is more or less same as a `<listConfig>`, and similar to a `<simpleConfig>` dynamic dropdown. The main difference is that the options provided in the `<list>` itself should already be an informative list, while `<listConfig>` should be used for list options that aren't designed to provide information.
+ *   - For players, it is presented as a MenuForm. `<before>` is displayed before the data list and `<after>` is displayed after the data list, as if they are an `<index>`. For the data list buttons, clicking on any would trigger the Clickable child in `<each>`, with the value represented by the datum passed as an argument. This is more or less same as a `<listArg>`, and similar to a `<simpleArg>` dynamic dropdown. The main difference is that the options provided in the `<list>` itself should already be an informative list, while `<listArg>` should be used for list options that aren't designed to provide information.
+ * - `<editArg>` is only allowed in arguable window clickables, which will explicitly open an argument form.
  */
 interface Clickable{
 	public function onClick(WindowRequest $request) : void;

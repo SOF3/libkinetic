@@ -24,18 +24,6 @@ namespace SOFe\Libkinetic\API;
 
 use pocketmine\command\CommandSender;
 
-class NamedPermissionPredicate implements PermissionPredicate{
-	/** @var string */
-	protected $permissionName;
-	/** @var bool */
-	protected $need;
-
-	public function __construct(string $permissionName, bool $need){
-		$this->permissionName = $permissionName;
-		$this->need = $need;
-	}
-
-	public function hasPermission(CommandSender $sender) : bool{
-		return $sender->hasPermission($this->permissionName) === $this->need;
-	}
+interface UserPredicate{
+	public function test(CommandSender $sender) : bool;
 }

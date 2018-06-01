@@ -23,8 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable;
 
 use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\API\NamedPermissionPredicate;
-use SOFe\Libkinetic\API\PermissionPredicate;
+use SOFe\Libkinetic\API\NamedUserPredicate;
+use SOFe\Libkinetic\API\UserPredicate;
 use SOFe\Libkinetic\KineticComponent;
 
 class PermissionComponent extends KineticComponent{
@@ -34,7 +34,7 @@ class PermissionComponent extends KineticComponent{
 	protected $usesPredicate;
 	/** @var string */
 	protected $name;
-	/** @var PermissionPredicate */
+	/** @var UserPredicate */
 	protected $predicate;
 	/** @var string|null */
 	protected $message = null;
@@ -67,12 +67,12 @@ class PermissionComponent extends KineticComponent{
 	}
 
 	public function init() : void{
-		$this->predicate = $this->usesPredicate ? $this->resolveClass($this->name, PermissionPredicate::class) : new NamedPermissionPredicate($this->name, $this->need);
+		$this->predicate = $this->usesPredicate ? $this->resolveClass($this->name, UserPredicate::class) : new NamedUserPredicate($this->name, $this->need);
 		$this->requireTranslation($this->message);
 	}
 
 	public function testPermission(CommandSender $sender) : bool{
-		return $this->predicate->hasPermission($sender) === $this->need;
+		return $this->predicate->test($sender) === $this->need;
 	}
 
 	public function testPermissionNoisy(CommandSender $sender) : bool{

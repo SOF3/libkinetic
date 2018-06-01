@@ -24,13 +24,13 @@ namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
 use pocketmine\Player;
-use SOFe\Libkinetic\Element\ElementParentComponent;
+use SOFe\Libkinetic\Element\ElementParentWithFallbackRequiredComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
 
-class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
+class SimpleArgComponent extends KineticComponent implements ArgsInterface{
 	use ArgsTrait;
 
 	protected $title;
@@ -38,7 +38,7 @@ class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
 	public function dependsComponents() : Iterator{
 		yield ArgsComponent::class;
 		yield WindowComponent::class;
-		yield ElementParentComponent::class;
+		yield ElementParentWithFallbackRequiredComponent::class;
 	}
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -54,24 +54,37 @@ class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
 	}
 
 	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured) : void{
-		CallSequence::forMethod($this->asElementParent()->getElements(), "asFormComponent", function($content) use ($onConfigured, $error, $player, $request, $explicit){
+		CallSequence::forMethod($this->asElementParentWithFallbackRequired()->getElements(), "asFormComponent", function($elements) use ($onConfigured, $error, $player, $request, $explicit){
+			$content = [];
+			$callback = [];
+			foreach($elements as $element){
+				$content[] = $element[0];
+				$callback[] = $element[1];
+			}
 			$formData = [
 				"type" => "custom_form",
 				"title" => $request->translate($this->title) . ($error !== null ? "\n$error" : ""),
 				"content" => $content,
 			];
-			$this->getManager()->sendForm($player, $formData, function(?array $response) use ($onConfigured, $request, $explicit) : void{
+
+			$this->getManager()->sendForm($player, $formData, function(?array $response) use ($callback, $onConfigured, $request, $explicit) : void{
 				if($response === null){
 					if($explicit){
 						$onConfigured();
-					} // else cancel
+					} // else abandon
 					return;
 				}
-				// TODO apply form response into $request
+
+				foreach($this->asElementParentWithFallbackRequired()->getElements() as $i => $element){
+					$id = $this->composeId($element->getNode()->asElement()->getId());
+					$value = $callback[$i]();
+					$local = $element->getNode()->asRequired()->test($request->getUser());
+					$request->put($local, $id, $value);
+				}
 
 				$this->afterResponse($request, $onConfigured);
 			});
-		}, [$request], [], CallSequence::YIELD_FIRST);
+		}, [$request], [], CallSequence::YIELD_ALL);
 	}
 
 	protected function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void{
@@ -79,12 +92,13 @@ class SimpleArgsComponent extends KineticComponent implements ArgsInterface{
 	}
 
 	protected function isRequestSufficient(WindowRequest $request, bool $baseRequired) : bool{
-		foreach($this->asElementParent()->getElements() as $element){
-			$required = $element->getNode()->asElement()->isRequired() ?? $baseRequired;
+		foreach($this->asElementParentWithFallbackRequired()->getElements() as $iElement){
+			$element = $iElement->getNode()->asElement();
+			$required = $iElement->getNode()->asRequired()->test($request->getUser()) ?? $baseRequired;
 			if(!$required){
 				continue;
 			}
-			$id = $this->composeId($element->getNode()->asElement()->getId());
+			$id = $this->composeId($element->getId());
 			if(!$request->hasKey($id)){
 				return false;
 			}

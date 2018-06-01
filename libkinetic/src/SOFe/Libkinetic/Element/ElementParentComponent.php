@@ -31,30 +31,36 @@ class ElementParentComponent extends KineticComponent{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "LABEL"){
-			return KineticNode::create(LabelComponent::class)->addLabel($this->elements);
+			return $this->addRequiredComponent(KineticNode::create(LabelComponent::class))->addLabel($this->elements);
 		}
-
 		if($name === "INPUT"){
-			return KineticNode::create(InputComponent::class)->addInput($this->elements);
+			return $this->addRequiredComponent(KineticNode::create(InputComponent::class))->addInput($this->elements);
 		}
-
 		if($name === "TOGGLE"){
-			return KineticNode::create(ToggleComponent::class)->addToggle($this->elements);
+			return $this->addRequiredComponent(KineticNode::create(ToggleComponent::class))->addToggle($this->elements);
 		}
-
 		if($name === "SLIDER"){
-			return KineticNode::create(SliderComponent::class)->addSlider($this->elements);
+			return $this->addRequiredComponent(KineticNode::create(SliderComponent::class))->addSlider($this->elements);
 		}
-
 		if($name === "DROPDOWN"){
-			return KineticNode::create(StaticDropdownComponent::class)->addStaticDropdown($this->elements);
+			return $this->addRequiredComponent(KineticNode::create(StaticDropdownComponent::class))->addStaticDropdown($this->elements);
 		}
-
 		if($name === "STEP" . "SLIDER"){
-			return KineticNode::create(StaticStepSliderComponent::class)->addStaticStepSlider($this->elements);
+			return $this->addRequiredComponent(KineticNode::create(StaticStepSliderComponent::class))->addStaticStepSlider($this->elements);
+		}
+		if($name === "DYN" . "DROPDOWN"){
+			return $this->addRequiredComponent(KineticNode::create(DynamicDropdownComponent::class))->addDynamicDropdown($this->elements);
+		}
+		if($name === "DYN" . "STEP" . "SLIDER"){
+			return $this->addRequiredComponent(KineticNode::create(DynamicStepSliderComponent::class))->addDynamicStepSlider($this->elements);
 		}
 
 		return null;
+	}
+
+	protected function addRequiredComponent(KineticNode $node) : KineticNode{
+		$node->addComponent(RequiredComponent::class);
+		return $node;
 	}
 
 	/**

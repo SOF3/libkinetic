@@ -20,10 +20,13 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Element;
 
-use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\KineticNode;
 
-interface PermissionPredicate{
-	public function hasPermission(CommandSender $sender) : bool;
+class ElementParentWithFallbackRequiredComponent extends ElementParentComponent{
+	protected function addRequiredComponent(KineticNode $node) : KineticNode{
+		$node->addComponent(RequiredWithFallbackComponent::class);
+		return $node;
+	}
 }

@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable;
 
+use SOFe\Libkinetic\AbsoluteIdComponent;
+use SOFe\Libkinetic\IntermediateNode;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
@@ -34,6 +36,16 @@ class LinkComponent extends KineticComponent implements Clickable{
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "TARGET"){
+			if($value === '$parent'){
+				/** @noinspection LoopWhichDoesNotLoopInspection */
+				/** @noinspection PhpStatementHasEmptyBodyInspection */
+				for($parent = $this->node->nodeParent; $parent instanceof IntermediateNode; $parent = $parent->nodeParent){
+				}
+				if($parent !== null && !$parent->hasComponent(AbsoluteIdComponent::class)){
+					$this->throw('target="$parent" is only allowed for children of nodes with an ID');
+				}
+				$value = $parent->asAbsoluteId()->getId();
+			}
 			$this->targetId = $value;
 			return true;
 		}

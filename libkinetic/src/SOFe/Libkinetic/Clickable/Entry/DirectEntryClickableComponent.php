@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Entry;
 
 use Iterator;
-use SOFe\Libkinetic\Clickable\ClickableComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
 use SOFe\Libkinetic\Clickable\PermissionClickableComponent;

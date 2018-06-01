@@ -38,12 +38,17 @@ trait ArgsTrait{
 			$validator = $this->asArgs()->getValidator();
 			if($validator !== null){
 				// if validator exists, validate the current args. if invalid, still request
-				$validator->validate($request, $onConfigured, function(string $error = null) use ($explicit, $onConfigured, $request){
+				$validator->validate($request, $onConfigured, function(string $error = null) use ($explicit, $onConfigured, $request): void{
 					$this->sendInterface($request, $explicit, $error, $onConfigured);
 				});
 			}else{
 				// everything's ok, let's skip this arg
-				$onConfigured();
+				$next = $this->asArgs()->getNext();
+				if($next !== null){
+					$next->configure($request, false, $onConfigured);
+				}else{
+					$onConfigured();
+				}
 			}
 			return;
 		}
@@ -64,18 +69,11 @@ trait ArgsTrait{
 
 	protected abstract function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void;
 
-	public function afterResponse(WindowRequest $request, bool $wasExplicit, callable $onConfigured) : void{
-		$validator = $this->asArgs()->getValidator();
-		if($validator !== null){
-			$validator->validate($request, $onConfigured, function(string $error = null) use ($onConfigured, $request){ // resend the form
-				$this->sendInterface($request, true, $error, $onConfigured);
-			});
-		}else{
-			$onConfigured();
-		}
+	public function afterResponse(WindowRequest $request, callable $onConfigured) : void{
+		$this->configure($request, false, $onConfigured);
 	}
 
-	protected abstract function isRequestSufficient(WindowRequest $request, bool $baseRequired);
+	protected abstract function isRequestSufficient(WindowRequest $request, bool $baseRequired) : bool;
 
 	protected abstract function getManager() : KineticManager;
 

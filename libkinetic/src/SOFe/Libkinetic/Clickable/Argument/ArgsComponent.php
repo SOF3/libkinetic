@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Argument;
 
+use AssertionError;
 use SOFe\Libkinetic\API\RequestValidator;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\WindowRequest;
 
 class ArgsComponent extends KineticComponent{
 	/** @var string|null */
@@ -35,6 +35,9 @@ class ArgsComponent extends KineticComponent{
 	protected $validatorClass = null;
 	/** @var RequestValidator|null */
 	protected $validator = null;
+
+	/** @var ArgsInterface|null */
+	protected $next;
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
@@ -54,6 +57,15 @@ class ArgsComponent extends KineticComponent{
 
 	public function init() : void{
 		$this->validator = $this->resolveClass($this->validatorClass, RequestValidator::class);
+
+		$args = $this->node->nodeParent->asArguable()->getArguments();
+		foreach($args as $i => $arg){
+			if($arg->getNode() === $this->node){
+				$this->next = $args[$i + 1] ?? null;
+				return;
+			}
+		}
+		throw new AssertionError("\$this is not among parent node's arguments");
 	}
 
 	public function getId() : ?string{
@@ -66,5 +78,9 @@ class ArgsComponent extends KineticComponent{
 
 	public function getValidator() : ?RequestValidator{
 		return $this->validator;
+	}
+
+	public function getNext() : ?ArgsInterface{
+		return $this->next;
 	}
 }

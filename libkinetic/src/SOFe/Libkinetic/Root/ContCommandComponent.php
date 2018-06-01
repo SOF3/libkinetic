@@ -22,41 +22,38 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Root;
 
-use Iterator;
-use SOFe\Libkinetic\Clickable\ClickableParentComponent;
+use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 
-class RootComponent extends KineticComponent{
-	/** @var string */
-	protected $namespace;
-	/** @var ContCommandComponent|null */
-	protected $contCmd = null;
-
-	public function dependsComponents() : Iterator{
-		yield ClickableParentComponent::class;
-	}
+class ContCommandComponent extends KineticComponent{
+	protected $name;
+	protected $description;
+	protected $aliases = [];
 
 	public function setAttribute(string $name, string $value) : bool{
-		if($name === "NAMESPACE"){
-			$this->namespace = $value;
+		if($name === "NAME"){
+			$this->name = $value;
+			return true;
+		}
+		if($name === "DESCRIPTION"){
+			$this->description = $value;
 			return true;
 		}
 		return false;
 	}
 
 	public function startChild(string $name) : ?KineticNode{
-		if($name === "CONT"){
-			return KineticNode::create(ContCommandComponent::class)->getContCommand($this->contCmd);
-		}
-		return null;
+		return KineticNode::create(CommandAliasComponent::class)->addCommandAlias($this->aliases);
 	}
 
 	public function endElement() : void{
-		$this->requireAttribute("namespace", $this->namespace);
+		$this->requireAttribute("name", $this->name);
+		$this->requireAttribute("description", $this->description);
 	}
 
-	public function getNamespace() : string{
-		return $this->namespace;
+	public function init() : void{
+		$this->resolveConfigString($this->name);
+		$this->requireTranslation($this->description);
 	}
 }

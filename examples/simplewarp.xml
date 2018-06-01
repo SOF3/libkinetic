@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kinetic>
+  <index id="simplewarp">
+    <command name="simplewarp" description="SimpleWarp master menu">
+      <alias>sw</alias>
+    </command>
+
+    <exit id="goto" subcmd="to" indexName="Warp to..." onClick="GotoWarpController"
+          icon="https://example.com/SimpleWarp/goto.png">
+      <command name="warp" description="Warp to a specific warp"/>
+
+      <listArg id="player" provider="!PlayerMenuProvider" requiredPredicate="!IsPlayerPredicate:not"/>
+      <listArg id="warp" argName="target warp" required="true" provider="WarpListProvider"/>
+    </exit>
+
+    <index id="add" indexName="Add Warp" icon="https://example.com/SimpleWarp/add.png">
+      <exit id="here" indexName="at your current position" onClick="AddWarpHereController">
+        <permission predicate="!IsPlayerPredicate"/>
+      </exit>
+      <exit id="player" indexName="at the current position of" subcmd="at" onClick="AddWarpAtPlayerController">
+        <listArg id="player" provider="!PlayerMenuProvider"/>
+      </exit>
+    </index>
+
+    <list id="list" indexName="Warp list" icon="https://example.com/SimpleWarp/list.png">
+      <before>
+        <link indexName="Add Warp" target="simplewarp.add"/>
+        <link indexName="Delete Warp" target="simplewarp.del"/>
+      </before>
+      <each argName="warp">
+        <info title="Warp: ${warp}"
+              synopsis="Created by ${creator} on ${created_on}\nVisibility: ${visibility}\nLocation: ${location}"
+              onClick="WarpInfoProvider">
+          <button1 name="Edit">
+            <editArg target="edit"/>
+          </button1>
+          <button2 name="Back to warp list">
+            <link target="$parent"/>
+          </button2>
+
+          <simpleArg id="edit">
+            <input id="name"/>
+            <input id="loc.x" typeCast="float"/>
+            <input id="loc.y" typeCast="float"/>
+            <input id="loc.z" typeCast="float"/>
+            <dynDropdown id="level" provider="LevelListProvider"/>
+          </simpleArg>
+        </info>
+      </each>
+    </list>
+  </index>
+</kinetic>

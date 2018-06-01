@@ -40,6 +40,8 @@ use TypeError;
 use function class_uses;
 use function extension_loaded;
 use function in_array;
+use function mb_strpos;
+use function mb_substr;
 use function microtime;
 use function random_int;
 use function str_replace;
@@ -168,10 +170,16 @@ class KineticManager{
 			return $object;
 		}
 
+		$args = "";
+		if(($pos = mb_strpos($fqn, ":")) !== false){
+			$args = mb_substr($fqn, $pos + 1);
+			$fqn = mb_substr($fqn, 0, $pos);
+		}
+
 		if($fqn{0} === "\\"){
 			$class = substr($fqn, 1);
 		}elseif($fqn{0} === "!"){
-			$class = libkinetic::getNamespace() . "\\" . substr($fqn, 1);
+			$class = libkinetic::getNamespace() . "\\Defaults\\" . substr($fqn, 1);
 		}else{
 			$class = $this->parser->getRoot()->asRoot()->getNamespace() . $fqn;
 		}
@@ -198,11 +206,19 @@ class KineticManager{
 		}
 
 		$param = $constructor->getParameters()[0];
-		if($param->getClass() === null || !$param->getClass()->isInstance($this->plugin)){
-			return $class->newInstance();
+		if($param->getClass() === null){
+			return $class->newInstance($args);
 		}
 
-		return $class->newInstance($this->plugin);
+		if($param->getClass()->isInstance($this)){
+			return $class->newInstance($this, $args);
+		}
+
+		if($param->getClass()->isInstance($this->plugin)){
+			return $class->newInstance($this->plugin, $args);
+		}
+
+		return $class->newInstance($args);
 	}
 
 

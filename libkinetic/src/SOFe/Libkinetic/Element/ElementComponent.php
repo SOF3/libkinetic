@@ -33,8 +33,6 @@ abstract class ElementComponent extends KineticComponent{
 	protected $id;
 	/** @var string */
 	protected $title;
-	/** @var bool|null */
-	protected $required = null;
 
 	public static function cat($value){
 		return $value;
@@ -86,10 +84,6 @@ abstract class ElementComponent extends KineticComponent{
 			return true;
 		}
 
-		if($name==="REQUIRED"){
-			$this->required = $this->parseBoolean($value);
-		}
-
 		return false;
 	}
 
@@ -108,10 +102,6 @@ abstract class ElementComponent extends KineticComponent{
 
 	public function getTitle() : string{
 		return $this->title;
-	}
-
-	public function isRequired() : ?bool{
-		return $this->required;
 	}
 
 	public abstract function asFormComponent(WindowRequest $request, callable &$adapter) : array;

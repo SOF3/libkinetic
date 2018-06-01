@@ -24,7 +24,7 @@ namespace SOFe\Libkinetic;
 
 use SOFe\Libkinetic\Clickable\Argument\ArgsComponent;
 use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Argument\SimpleArgsComponent;
+use SOFe\Libkinetic\Clickable\Argument\SimpleArgComponent;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
 use SOFe\Libkinetic\Clickable\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
@@ -47,12 +47,16 @@ use SOFe\Libkinetic\Element\DynamicDropdownComponent;
 use SOFe\Libkinetic\Element\DynamicStepSliderComponent;
 use SOFe\Libkinetic\Element\ElementComponent;
 use SOFe\Libkinetic\Element\ElementParentComponent;
+use SOFe\Libkinetic\Element\ElementParentWithFallbackRequiredComponent;
 use SOFe\Libkinetic\Element\InputComponent;
 use SOFe\Libkinetic\Element\LabelComponent;
+use SOFe\Libkinetic\Element\RequiredComponent;
+use SOFe\Libkinetic\Element\RequiredWithFallbackComponent;
 use SOFe\Libkinetic\Element\SliderComponent;
 use SOFe\Libkinetic\Element\StaticDropdownComponent;
 use SOFe\Libkinetic\Element\StaticStepSliderComponent;
 use SOFe\Libkinetic\Element\ToggleComponent;
+use SOFe\Libkinetic\Root\ContCommandComponent;
 use SOFe\Libkinetic\Root\RootComponent;
 
 /**
@@ -60,7 +64,7 @@ use SOFe\Libkinetic\Root\RootComponent;
  *
  * (This file would be unneeded if we had template functions in PHP)
  *
- * // * @see KineticNode::getComponent()
+ * @see KineticNode::getComponent()
  */
 trait ComponentAdapter{
 	public abstract function getComponent(string $class) : KineticComponent;
@@ -111,17 +115,17 @@ trait ComponentAdapter{
 	}
 
 
-	public function asSimpleArgs() : SimpleArgsComponent{
-		return $this->getComponent(SimpleArgsComponent::class);
+	public function asSimpleArg() : SimpleArgComponent{
+		return $this->getComponent(SimpleArgComponent::class);
 	}
 
-	public function getSimpleArgs(&$component) : KineticNode{
-		$component = $this->getComponent(SimpleArgsComponent::class);
+	public function getSimpleArg(&$component) : KineticNode{
+		$component = $this->getComponent(SimpleArgComponent::class);
 		return $this;
 	}
 
-	public function addSimpleArgs(array &$component) : KineticNode{
-		$component[] = $this->getComponent(SimpleArgsComponent::class);
+	public function addSimpleArg(array &$component) : KineticNode{
+		$component[] = $this->getComponent(SimpleArgComponent::class);
 		return $this;
 	}
 
@@ -456,6 +460,21 @@ trait ComponentAdapter{
 	}
 
 
+	public function asElementParentWithFallbackRequired() : ElementParentWithFallbackRequiredComponent{
+		return $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
+	}
+
+	public function getElementParentWithFallbackRequired(&$component) : KineticNode{
+		$component = $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
+		return $this;
+	}
+
+	public function addElementParentWithFallbackRequired(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
+		return $this;
+	}
+
+
 	public function asInput() : InputComponent{
 		return $this->getComponent(InputComponent::class);
 	}
@@ -482,6 +501,36 @@ trait ComponentAdapter{
 
 	public function addLabel(array &$component) : KineticNode{
 		$component[] = $this->getComponent(LabelComponent::class);
+		return $this;
+	}
+
+
+	public function asRequired() : RequiredComponent{
+		return $this->getComponent(RequiredComponent::class);
+	}
+
+	public function getRequired(&$component) : KineticNode{
+		$component = $this->getComponent(RequiredComponent::class);
+		return $this;
+	}
+
+	public function addRequired(array &$component) : KineticNode{
+		$component[] = $this->getComponent(RequiredComponent::class);
+		return $this;
+	}
+
+
+	public function asRequiredWithFallback() : RequiredWithFallbackComponent{
+		return $this->getComponent(RequiredWithFallbackComponent::class);
+	}
+
+	public function getRequiredWithFallback(&$component) : KineticNode{
+		$component = $this->getComponent(RequiredWithFallbackComponent::class);
+		return $this;
+	}
+
+	public function addRequiredWithFallback(array &$component) : KineticNode{
+		$component[] = $this->getComponent(RequiredWithFallbackComponent::class);
 		return $this;
 	}
 
@@ -542,6 +591,21 @@ trait ComponentAdapter{
 
 	public function addToggle(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ToggleComponent::class);
+		return $this;
+	}
+
+
+	public function asContCommand() : ContCommandComponent{
+		return $this->getComponent(ContCommandComponent::class);
+	}
+
+	public function getContCommand(&$component) : KineticNode{
+		$component = $this->getComponent(ContCommandComponent::class);
+		return $this;
+	}
+
+	public function addContCommand(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ContCommandComponent::class);
 		return $this;
 	}
 

@@ -60,6 +60,4 @@ use SOFe\Libkinetic\WindowRequest;
  */
 interface Clickable{
 	public function onClick(WindowRequest $request) : void;
-
-	public function getCommandPathHelp() : ?string;
 }

@@ -107,7 +107,7 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 	}
 
 	private function composeId(string $childId) : string{
-		$baseId = $this->asArg()->getId();
+		$baseId = $this->asArgComponent()->getId();
 		return $baseId !== null ? ($baseId . "." . $childId) : $childId;
 	}
 }

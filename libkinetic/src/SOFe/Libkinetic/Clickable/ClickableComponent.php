@@ -32,6 +32,8 @@ use SOFe\Libkinetic\WindowRequest;
 class ClickableComponent extends KineticComponent implements ClickablePeer{
 	/** @var string|null */
 	protected $indexName = null;
+	/** @var string|null  */
+	protected $argName = null;
 
 	/** @var string|null */
 	protected $onClickClass = null;
@@ -47,6 +49,10 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 			$this->indexName = $value;
 			return true;
 		}
+		if($name === "ARG"."NAME"){
+			$this->argName = $value;
+			return true;
+		}
 		if($name === "ON" . "CLICK"){
 			$this->onClickClass = $value;
 			return true;
@@ -57,6 +63,11 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 	public function endElement() : void{
 		if(!$this->node->nodeParent->isRoot()){ // $this->node is in an index
 			$this->requireAttribute("indexName", $this->indexName);
+			if($this->argName !== null){
+				$this->resolveConfigString($this->argName);
+			}else{
+				$this->argName = $this->asAbsoluteIdComponent()->getId();
+			}
 		}
 	}
 
@@ -66,6 +77,10 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 
 	public function getIndexName() : ?string{
 		return $this->indexName;
+	}
+
+	public function getArgName() : ?string{
+		return $this->argName;
 	}
 
 	public function getOnClick() : ClickHandler{

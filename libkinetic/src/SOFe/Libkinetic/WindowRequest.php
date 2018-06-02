@@ -119,7 +119,11 @@ class WindowRequest{
 		return $this->user;
 	}
 
-	public function translate(?string $message) : string{
-		return $message !== "" && $message !== null ? $this->manager->translate($this->user, $message, $this->local + $this->inherit) : "";
+	public function translate(?string $message, array $args = []) : string{
+		return $message !== "" && $message !== null ? $this->manager->translate($this->user, $message, $args + $this->local + $this->inherit) : "";
+	}
+
+	public function send(?string $message, array $args = []) : void{
+		$this->user->sendMessage($this->translate($message, $args));
 	}
 }

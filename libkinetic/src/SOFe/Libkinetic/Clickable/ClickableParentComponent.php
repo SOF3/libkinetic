@@ -67,7 +67,7 @@ class ClickableParentComponent extends KineticComponent{
 	}
 
 	/**
-	 * @return Clickable[]|ClickableComponent[]
+	 * @return Clickable[]|KineticComponent[]
 	 */
 	public function getClickableList() : array{
 		return $this->clickables;

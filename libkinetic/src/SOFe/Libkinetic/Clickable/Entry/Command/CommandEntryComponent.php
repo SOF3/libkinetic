@@ -69,6 +69,9 @@ class CommandEntryComponent extends KineticComponent{
 		return $this->description;
 	}
 
+	/**
+	 * @return CommandAliasComponent[]
+	 */
 	public function getAliases() : array{
 		return $this->aliases;
 	}

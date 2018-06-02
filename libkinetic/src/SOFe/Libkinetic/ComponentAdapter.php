@@ -35,7 +35,6 @@ use SOFe\Libkinetic\Clickable\Entry\Interact\FaceFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\ItemFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterComponent;
-use SOFe\Libkinetic\Clickable\Entry\PartialContainerComponent;
 use SOFe\Libkinetic\Clickable\ExitComponent;
 use SOFe\Libkinetic\Clickable\LinkComponent;
 use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
@@ -275,21 +274,6 @@ trait ComponentAdapter{
 
 	public function addTouchModeFilterComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(TouchModeFilterComponent::class);
-		return $this;
-	}
-
-
-	public function asPartialContainerComponent() : PartialContainerComponent{
-		return $this->getComponent(PartialContainerComponent::class);
-	}
-
-	public function getPartialContainerComponent(&$component) : KineticNode{
-		$component = $this->getComponent(PartialContainerComponent::class);
-		return $this;
-	}
-
-	public function addPartialContainerComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(PartialContainerComponent::class);
 		return $this;
 	}
 

@@ -23,9 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Argument;
 
 use pocketmine\Player;
-use SOFe\Libkinetic\Clickable\Clickable;
-use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
-use SOFe\Libkinetic\Clickable\Entry\PartialContainerComponent;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
@@ -37,9 +34,9 @@ trait ArgTrait{
 	 * @param callable      $onConfigured action to execute after successful configuration of this arg; might never get called if user abandons this arg
 	 */
 	public function configure(WindowRequest $request, bool $explicit, callable $onConfigured) : void{
-		if(!$explicit && $this->isRequestSufficient($request, $this->asArg()->isRequired())){
+		if(!$explicit && $this->isRequestSufficient($request, $this->asArgComponent()->isRequired())){
 			// if args are sufficient, skip this arg
-			$validator = $this->asArg()->getValidator();
+			$validator = $this->asArgComponent()->getValidator();
 			if($validator !== null){
 				// if validator exists, validate the current args. if invalid, still request
 				$validator->validate($request, $onConfigured, function(string $error = null) use ($explicit, $onConfigured, $request): void{
@@ -47,7 +44,7 @@ trait ArgTrait{
 				});
 			}else{
 				// everything's ok, let's skip this arg
-				$next = $this->asArg()->getNext();
+				$next = $this->asArgComponent()->getNext();
 				if($next !== null){
 					$next->configure($request, false, $onConfigured);
 				}else{
@@ -73,29 +70,6 @@ trait ArgTrait{
 
 	protected abstract function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void;
 
-	protected function findCommandPath() : ?string{
-		$path = "";
-		for($node = $this->getNode()->nodeParent; $node !== null && !$node->hasComponent(CommandEntryComponent::class); $node = $node->nodeParent){
-			if($node->hasComponent(PartialContainerComponent::class)){
-				continue;
-			}
-
-			/** @var Clickable $clickable */
-			$clickable = $node->findComponentsByInterface(Clickable::class, 1)[0];
-			$help = $clickable->getCommandPathHelp();
-			if($help === null){
-				return null;
-			}
-			$path = $help . " " . $path;
-		}
-
-		if($node === null){
-			return null;
-		}
-
-		$node->asCommandEntryComponent()->getName();
-	}
-
 	public function afterResponse(WindowRequest $request, callable $onConfigured) : void{
 		$this->configure($request, false, $onConfigured);
 	}
@@ -106,5 +80,5 @@ trait ArgTrait{
 
 	protected abstract function getManager() : KineticManager;
 
-	protected abstract function asArg() : ArgComponent;
+	protected abstract function asArgComponent() : ArgComponent;
 }

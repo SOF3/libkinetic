@@ -163,13 +163,11 @@ abstract class KineticComponent{
 			$number = $this->manager->getAdapter()->getKineticConfig($configKey);
 			if(is_numeric($number)){
 				$number = (float) $number;
+			}elseif($number === null && isset($default)){
+				$number = $default;
 			}else{
-				if($number === null && isset($default)){
-					$number = $default;
-				}else{
-					$this->manager->getPlugin()->getLogger()->critical("Missing required config value $configKey, or it is not a number");
-					throw new RuntimeException("Config error: missing required config value $configKey");
-				}
+				$this->manager->getPlugin()->getLogger()->critical("Missing required config value $configKey, or it is not a number");
+				throw new RuntimeException("Config error: missing required config value $configKey");
 			}
 		}elseif(is_string($number)){
 			if(!is_numeric($number)){
@@ -211,7 +209,7 @@ abstract class KineticComponent{
 			}
 		}elseif(is_string($bool)){
 			try{
-				$bool = self::parseBoolean($bool);
+				$bool = $this->parseBoolean($bool);
 			}catch(InvalidNodeException $e){
 				$this->throw("$bool is not true/false");
 			}

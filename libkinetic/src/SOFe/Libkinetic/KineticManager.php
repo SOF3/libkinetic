@@ -60,9 +60,6 @@ class KineticManager{
 	/** @var Form[] formId => Form */
 	protected $forms = [];
 
-	/** @var InteractListener|null */
-	protected $interactListener = null;
-
 	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
@@ -117,15 +114,6 @@ class KineticManager{
 
 	public function getParser() : KineticFileParser{
 		return $this->parser;
-	}
-
-	public function registerItemHandler(InteractEntryPointNode $filter) : void{
-		if($this->interactListener === null){
-			$this->interactListener = new InteractListener($this);
-			$this->plugin->getServer()->getPluginManager()->registerEvents($this->interactListener, $this->plugin);
-		}
-
-		$this->interactListener->filters[] = $filter;
 	}
 
 

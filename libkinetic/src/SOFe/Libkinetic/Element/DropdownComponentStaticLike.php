@@ -91,4 +91,6 @@ trait DropdownComponentStaticLike{
 	protected abstract function getFormStepKey() : string;
 
 	protected abstract function getNode() : KineticNode;
+
+	protected abstract function asElementComponent() : ElementComponent;
 }

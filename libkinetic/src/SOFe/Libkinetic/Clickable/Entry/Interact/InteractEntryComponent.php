@@ -37,9 +37,10 @@ class InteractEntryComponent extends KineticComponent{
 	/** @var FaceFilterComponent[] */
 	protected $faces = [];
 
-	public function setAttribute(string $name, string $value) : bool{
-
-	}
+//	public function setAttribute(string $name, string $value) : bool{
+	// TODO implement fromConfig
+//		return false;
+//	}
 
 	public function startChild(string $name) : ?KineticNode{
 		if($this->fromConfig){

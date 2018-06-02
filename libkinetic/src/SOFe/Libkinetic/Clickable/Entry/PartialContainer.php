@@ -22,8 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Entry;
 
-use SOFe\Libkinetic\KineticComponent;
-
-class PartialContainerComponent extends KineticComponent{
+interface PartialContainer{
 
 }

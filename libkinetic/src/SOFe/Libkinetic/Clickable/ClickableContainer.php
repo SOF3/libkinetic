@@ -20,28 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable\Entry\Command;
+namespace SOFe\Libkinetic\Clickable;
 
-use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\KineticNode;
 
-class CommandAliasComponent extends KineticComponent{
-	/** @var string */
-	protected $value;
-
-	public function acceptText(string $text) : bool{
-		$this->value = $text;
-		return true;
-	}
-
-	public function endElement() : void{
-		$this->requireText($this->value);
-	}
-
-	public function init() : void{
-		$this->resolveConfigString($this->value);
-	}
-
-	public function getValue():string{
-		return $this->value;
-	}
+interface ClickableContainer{
+	public function getCommandPathFor(KineticNode $node) : string;
 }

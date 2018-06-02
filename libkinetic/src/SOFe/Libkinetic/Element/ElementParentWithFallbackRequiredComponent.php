@@ -22,11 +22,10 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-use SOFe\Libkinetic\KineticNode;
+use Generator;
 
 class ElementParentWithFallbackRequiredComponent extends ElementParentComponent{
-	protected function addRequiredComponent(KineticNode $node) : KineticNode{
-		$node->addComponent(RequiredWithFallbackComponent::class);
-		return $node;
+	protected function extraComponents() : Generator{
+		yield RequiredWithFallbackComponent::class;
 	}
 }

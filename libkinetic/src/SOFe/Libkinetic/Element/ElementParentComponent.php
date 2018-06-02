@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Generator;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 
@@ -31,36 +32,35 @@ class ElementParentComponent extends KineticComponent{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "LABEL"){
-			return $this->addRequiredComponent(KineticNode::create(LabelComponent::class))->addLabelComponent($this->elements);
+			return KineticNode::create(LabelComponent::class, ...$this->extraComponents())->addLabelComponent($this->elements);
 		}
 		if($name === "INPUT"){
-			return $this->addRequiredComponent(KineticNode::create(InputComponent::class))->addInputComponent($this->elements);
+			return KineticNode::create(InputComponent::class, ...$this->extraComponents())->addInputComponent($this->elements);
 		}
 		if($name === "TOGGLE"){
-			return $this->addRequiredComponent(KineticNode::create(ToggleComponent::class))->addToggleComponent($this->elements);
+			return KineticNode::create(ToggleComponent::class, ...$this->extraComponents())->addToggleComponent($this->elements);
 		}
 		if($name === "SLIDER"){
-			return $this->addRequiredComponent(KineticNode::create(SliderComponent::class))->addSliderComponent($this->elements);
+			return KineticNode::create(SliderComponent::class, ...$this->extraComponents())->addSliderComponent($this->elements);
 		}
 		if($name === "DROPDOWN"){
-			return $this->addRequiredComponent(KineticNode::create(StaticDropdownComponent::class))->addStaticDropdownComponent($this->elements);
+			return KineticNode::create(StaticDropdownComponent::class, ...$this->extraComponents())->addStaticDropdownComponent($this->elements);
 		}
 		if($name === "STEP" . "SLIDER"){
-			return $this->addRequiredComponent(KineticNode::create(StaticStepSliderComponent::class))->addStaticStepSliderComponent($this->elements);
+			return KineticNode::create(StaticStepSliderComponent::class, ...$this->extraComponents())->addStaticStepSliderComponent($this->elements);
 		}
 		if($name === "DYN" . "DROPDOWN"){
-			return $this->addRequiredComponent(KineticNode::create(DynamicDropdownComponent::class))->addDynamicDropdownComponent($this->elements);
+			return KineticNode::create(DynamicDropdownComponent::class, ...$this->extraComponents())->addDynamicDropdownComponent($this->elements);
 		}
 		if($name === "DYN" . "STEP" . "SLIDER"){
-			return $this->addRequiredComponent(KineticNode::create(DynamicStepSliderComponent::class))->addDynamicStepSliderComponent($this->elements);
+			return KineticNode::create(DynamicStepSliderComponent::class, ...$this->extraComponents())->addDynamicStepSliderComponent($this->elements);
 		}
 
 		return null;
 	}
 
-	protected function addRequiredComponent(KineticNode $node) : KineticNode{
-		$node->addComponent(RequiredComponent::class);
-		return $node;
+	protected function extraComponents() : Generator{
+		yield RequiredComponent::class;
 	}
 
 	/**

@@ -69,15 +69,15 @@ foreach($fqnList as $item){
 //	$baseName = substr($baseNameComponent, 0, -strlen("Component"));
 
 	$output .= "\n\n";
-	$output .= "\tpublic function as{$baseNameComponent}() : $baseNameComponent{\n";
+	$output .= "\tpublic final function as{$baseNameComponent}() : $baseNameComponent{\n";
 	$output .= "\t\treturn \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t}\n\n";
 
-	$output .= "\tpublic function get{$baseNameComponent}(&\$component) : KineticNode{\n";
+	$output .= "\tpublic final function get{$baseNameComponent}(&\$component) : KineticNode{\n";
 	$output .= "\t\t\$component = \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t\treturn \$this;\n";
 	$output .= "\t}\n\n";
-	$output .= "\tpublic function add{$baseNameComponent}(array &\$component) : KineticNode{\n";
+	$output .= "\tpublic final function add{$baseNameComponent}(array &\$component) : KineticNode{\n";
 	$output .= "\t\t\$component[] = \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t\treturn \$this;\n";
 	$output .= "\t}\n";

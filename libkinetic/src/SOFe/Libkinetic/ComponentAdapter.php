@@ -68,571 +68,571 @@ trait ComponentAdapter{
 	public abstract function getComponent(string $class) : KineticComponent;
 
 
-	public function asAbsoluteIdComponent() : AbsoluteIdComponent{
+	public final function asAbsoluteIdComponent() : AbsoluteIdComponent{
 		return $this->getComponent(AbsoluteIdComponent::class);
 	}
 
-	public function getAbsoluteIdComponent(&$component) : KineticNode{
+	public final function getAbsoluteIdComponent(&$component) : KineticNode{
 		$component = $this->getComponent(AbsoluteIdComponent::class);
 		return $this;
 	}
 
-	public function addAbsoluteIdComponent(array &$component) : KineticNode{
+	public final function addAbsoluteIdComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(AbsoluteIdComponent::class);
 		return $this;
 	}
 
 
-	public function asArgComponent() : ArgComponent{
+	public final function asArgComponent() : ArgComponent{
 		return $this->getComponent(ArgComponent::class);
 	}
 
-	public function getArgComponent(&$component) : KineticNode{
+	public final function getArgComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ArgComponent::class);
 		return $this;
 	}
 
-	public function addArgComponent(array &$component) : KineticNode{
+	public final function addArgComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ArgComponent::class);
 		return $this;
 	}
 
 
-	public function asArguableComponent() : ArguableComponent{
+	public final function asArguableComponent() : ArguableComponent{
 		return $this->getComponent(ArguableComponent::class);
 	}
 
-	public function getArguableComponent(&$component) : KineticNode{
+	public final function getArguableComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ArguableComponent::class);
 		return $this;
 	}
 
-	public function addArguableComponent(array &$component) : KineticNode{
+	public final function addArguableComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ArguableComponent::class);
 		return $this;
 	}
 
 
-	public function asSimpleArgComponent() : SimpleArgComponent{
+	public final function asSimpleArgComponent() : SimpleArgComponent{
 		return $this->getComponent(SimpleArgComponent::class);
 	}
 
-	public function getSimpleArgComponent(&$component) : KineticNode{
+	public final function getSimpleArgComponent(&$component) : KineticNode{
 		$component = $this->getComponent(SimpleArgComponent::class);
 		return $this;
 	}
 
-	public function addSimpleArgComponent(array &$component) : KineticNode{
+	public final function addSimpleArgComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(SimpleArgComponent::class);
 		return $this;
 	}
 
 
-	public function asClickableComponent() : ClickableComponent{
+	public final function asClickableComponent() : ClickableComponent{
 		return $this->getComponent(ClickableComponent::class);
 	}
 
-	public function getClickableComponent(&$component) : KineticNode{
+	public final function getClickableComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ClickableComponent::class);
 		return $this;
 	}
 
-	public function addClickableComponent(array &$component) : KineticNode{
+	public final function addClickableComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ClickableComponent::class);
 		return $this;
 	}
 
 
-	public function asClickableParentComponent() : ClickableParentComponent{
+	public final function asClickableParentComponent() : ClickableParentComponent{
 		return $this->getComponent(ClickableParentComponent::class);
 	}
 
-	public function getClickableParentComponent(&$component) : KineticNode{
+	public final function getClickableParentComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ClickableParentComponent::class);
 		return $this;
 	}
 
-	public function addClickableParentComponent(array &$component) : KineticNode{
+	public final function addClickableParentComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ClickableParentComponent::class);
 		return $this;
 	}
 
 
-	public function asCommandAliasComponent() : CommandAliasComponent{
+	public final function asCommandAliasComponent() : CommandAliasComponent{
 		return $this->getComponent(CommandAliasComponent::class);
 	}
 
-	public function getCommandAliasComponent(&$component) : KineticNode{
+	public final function getCommandAliasComponent(&$component) : KineticNode{
 		$component = $this->getComponent(CommandAliasComponent::class);
 		return $this;
 	}
 
-	public function addCommandAliasComponent(array &$component) : KineticNode{
+	public final function addCommandAliasComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(CommandAliasComponent::class);
 		return $this;
 	}
 
 
-	public function asCommandEntryComponent() : CommandEntryComponent{
+	public final function asCommandEntryComponent() : CommandEntryComponent{
 		return $this->getComponent(CommandEntryComponent::class);
 	}
 
-	public function getCommandEntryComponent(&$component) : KineticNode{
+	public final function getCommandEntryComponent(&$component) : KineticNode{
 		$component = $this->getComponent(CommandEntryComponent::class);
 		return $this;
 	}
 
-	public function addCommandEntryComponent(array &$component) : KineticNode{
+	public final function addCommandEntryComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(CommandEntryComponent::class);
 		return $this;
 	}
 
 
-	public function asDirectEntryClickableComponent() : DirectEntryClickableComponent{
+	public final function asDirectEntryClickableComponent() : DirectEntryClickableComponent{
 		return $this->getComponent(DirectEntryClickableComponent::class);
 	}
 
-	public function getDirectEntryClickableComponent(&$component) : KineticNode{
+	public final function getDirectEntryClickableComponent(&$component) : KineticNode{
 		$component = $this->getComponent(DirectEntryClickableComponent::class);
 		return $this;
 	}
 
-	public function addDirectEntryClickableComponent(array &$component) : KineticNode{
+	public final function addDirectEntryClickableComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(DirectEntryClickableComponent::class);
 		return $this;
 	}
 
 
-	public function asBlockFilterComponent() : BlockFilterComponent{
+	public final function asBlockFilterComponent() : BlockFilterComponent{
 		return $this->getComponent(BlockFilterComponent::class);
 	}
 
-	public function getBlockFilterComponent(&$component) : KineticNode{
+	public final function getBlockFilterComponent(&$component) : KineticNode{
 		$component = $this->getComponent(BlockFilterComponent::class);
 		return $this;
 	}
 
-	public function addBlockFilterComponent(array &$component) : KineticNode{
+	public final function addBlockFilterComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(BlockFilterComponent::class);
 		return $this;
 	}
 
 
-	public function asFaceFilterComponent() : FaceFilterComponent{
+	public final function asFaceFilterComponent() : FaceFilterComponent{
 		return $this->getComponent(FaceFilterComponent::class);
 	}
 
-	public function getFaceFilterComponent(&$component) : KineticNode{
+	public final function getFaceFilterComponent(&$component) : KineticNode{
 		$component = $this->getComponent(FaceFilterComponent::class);
 		return $this;
 	}
 
-	public function addFaceFilterComponent(array &$component) : KineticNode{
+	public final function addFaceFilterComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(FaceFilterComponent::class);
 		return $this;
 	}
 
 
-	public function asInteractEntryComponent() : InteractEntryComponent{
+	public final function asInteractEntryComponent() : InteractEntryComponent{
 		return $this->getComponent(InteractEntryComponent::class);
 	}
 
-	public function getInteractEntryComponent(&$component) : KineticNode{
+	public final function getInteractEntryComponent(&$component) : KineticNode{
 		$component = $this->getComponent(InteractEntryComponent::class);
 		return $this;
 	}
 
-	public function addInteractEntryComponent(array &$component) : KineticNode{
+	public final function addInteractEntryComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(InteractEntryComponent::class);
 		return $this;
 	}
 
 
-	public function asItemFilterComponent() : ItemFilterComponent{
+	public final function asItemFilterComponent() : ItemFilterComponent{
 		return $this->getComponent(ItemFilterComponent::class);
 	}
 
-	public function getItemFilterComponent(&$component) : KineticNode{
+	public final function getItemFilterComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ItemFilterComponent::class);
 		return $this;
 	}
 
-	public function addItemFilterComponent(array &$component) : KineticNode{
+	public final function addItemFilterComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ItemFilterComponent::class);
 		return $this;
 	}
 
 
-	public function asTouchModeFilterComponent() : TouchModeFilterComponent{
+	public final function asTouchModeFilterComponent() : TouchModeFilterComponent{
 		return $this->getComponent(TouchModeFilterComponent::class);
 	}
 
-	public function getTouchModeFilterComponent(&$component) : KineticNode{
+	public final function getTouchModeFilterComponent(&$component) : KineticNode{
 		$component = $this->getComponent(TouchModeFilterComponent::class);
 		return $this;
 	}
 
-	public function addTouchModeFilterComponent(array &$component) : KineticNode{
+	public final function addTouchModeFilterComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(TouchModeFilterComponent::class);
 		return $this;
 	}
 
 
-	public function asExitComponent() : ExitComponent{
+	public final function asExitComponent() : ExitComponent{
 		return $this->getComponent(ExitComponent::class);
 	}
 
-	public function getExitComponent(&$component) : KineticNode{
+	public final function getExitComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ExitComponent::class);
 		return $this;
 	}
 
-	public function addExitComponent(array &$component) : KineticNode{
+	public final function addExitComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ExitComponent::class);
 		return $this;
 	}
 
 
-	public function asLinkComponent() : LinkComponent{
+	public final function asLinkComponent() : LinkComponent{
 		return $this->getComponent(LinkComponent::class);
 	}
 
-	public function getLinkComponent(&$component) : KineticNode{
+	public final function getLinkComponent(&$component) : KineticNode{
 		$component = $this->getComponent(LinkComponent::class);
 		return $this;
 	}
 
-	public function addLinkComponent(array &$component) : KineticNode{
+	public final function addLinkComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(LinkComponent::class);
 		return $this;
 	}
 
 
-	public function asPermissionClickableComponent() : PermissionClickableComponent{
+	public final function asPermissionClickableComponent() : PermissionClickableComponent{
 		return $this->getComponent(PermissionClickableComponent::class);
 	}
 
-	public function getPermissionClickableComponent(&$component) : KineticNode{
+	public final function getPermissionClickableComponent(&$component) : KineticNode{
 		$component = $this->getComponent(PermissionClickableComponent::class);
 		return $this;
 	}
 
-	public function addPermissionClickableComponent(array &$component) : KineticNode{
+	public final function addPermissionClickableComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(PermissionClickableComponent::class);
 		return $this;
 	}
 
 
-	public function asPermissionComponent() : PermissionComponent{
+	public final function asPermissionComponent() : PermissionComponent{
 		return $this->getComponent(PermissionComponent::class);
 	}
 
-	public function getPermissionComponent(&$component) : KineticNode{
+	public final function getPermissionComponent(&$component) : KineticNode{
 		$component = $this->getComponent(PermissionComponent::class);
 		return $this;
 	}
 
-	public function addPermissionComponent(array &$component) : KineticNode{
+	public final function addPermissionComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(PermissionComponent::class);
 		return $this;
 	}
 
 
-	public function asIndexComponent() : IndexComponent{
+	public final function asIndexComponent() : IndexComponent{
 		return $this->getComponent(IndexComponent::class);
 	}
 
-	public function getIndexComponent(&$component) : KineticNode{
+	public final function getIndexComponent(&$component) : KineticNode{
 		$component = $this->getComponent(IndexComponent::class);
 		return $this;
 	}
 
-	public function addIndexComponent(array &$component) : KineticNode{
+	public final function addIndexComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(IndexComponent::class);
 		return $this;
 	}
 
 
-	public function asInfoComponent() : InfoComponent{
+	public final function asInfoComponent() : InfoComponent{
 		return $this->getComponent(InfoComponent::class);
 	}
 
-	public function getInfoComponent(&$component) : KineticNode{
+	public final function getInfoComponent(&$component) : KineticNode{
 		$component = $this->getComponent(InfoComponent::class);
 		return $this;
 	}
 
-	public function addInfoComponent(array &$component) : KineticNode{
+	public final function addInfoComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(InfoComponent::class);
 		return $this;
 	}
 
 
-	public function asListComponent() : ListComponent{
+	public final function asListComponent() : ListComponent{
 		return $this->getComponent(ListComponent::class);
 	}
 
-	public function getListComponent(&$component) : KineticNode{
+	public final function getListComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ListComponent::class);
 		return $this;
 	}
 
-	public function addListComponent(array &$component) : KineticNode{
+	public final function addListComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ListComponent::class);
 		return $this;
 	}
 
 
-	public function asDropdownOptionComponent() : DropdownOptionComponent{
+	public final function asDropdownOptionComponent() : DropdownOptionComponent{
 		return $this->getComponent(DropdownOptionComponent::class);
 	}
 
-	public function getDropdownOptionComponent(&$component) : KineticNode{
+	public final function getDropdownOptionComponent(&$component) : KineticNode{
 		$component = $this->getComponent(DropdownOptionComponent::class);
 		return $this;
 	}
 
-	public function addDropdownOptionComponent(array &$component) : KineticNode{
+	public final function addDropdownOptionComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(DropdownOptionComponent::class);
 		return $this;
 	}
 
 
-	public function asDynamicDropdownComponent() : DynamicDropdownComponent{
+	public final function asDynamicDropdownComponent() : DynamicDropdownComponent{
 		return $this->getComponent(DynamicDropdownComponent::class);
 	}
 
-	public function getDynamicDropdownComponent(&$component) : KineticNode{
+	public final function getDynamicDropdownComponent(&$component) : KineticNode{
 		$component = $this->getComponent(DynamicDropdownComponent::class);
 		return $this;
 	}
 
-	public function addDynamicDropdownComponent(array &$component) : KineticNode{
+	public final function addDynamicDropdownComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(DynamicDropdownComponent::class);
 		return $this;
 	}
 
 
-	public function asDynamicStepSliderComponent() : DynamicStepSliderComponent{
+	public final function asDynamicStepSliderComponent() : DynamicStepSliderComponent{
 		return $this->getComponent(DynamicStepSliderComponent::class);
 	}
 
-	public function getDynamicStepSliderComponent(&$component) : KineticNode{
+	public final function getDynamicStepSliderComponent(&$component) : KineticNode{
 		$component = $this->getComponent(DynamicStepSliderComponent::class);
 		return $this;
 	}
 
-	public function addDynamicStepSliderComponent(array &$component) : KineticNode{
+	public final function addDynamicStepSliderComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(DynamicStepSliderComponent::class);
 		return $this;
 	}
 
 
-	public function asElementComponent() : ElementComponent{
+	public final function asElementComponent() : ElementComponent{
 		return $this->getComponent(ElementComponent::class);
 	}
 
-	public function getElementComponent(&$component) : KineticNode{
+	public final function getElementComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ElementComponent::class);
 		return $this;
 	}
 
-	public function addElementComponent(array &$component) : KineticNode{
+	public final function addElementComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ElementComponent::class);
 		return $this;
 	}
 
 
-	public function asElementParentComponent() : ElementParentComponent{
+	public final function asElementParentComponent() : ElementParentComponent{
 		return $this->getComponent(ElementParentComponent::class);
 	}
 
-	public function getElementParentComponent(&$component) : KineticNode{
+	public final function getElementParentComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ElementParentComponent::class);
 		return $this;
 	}
 
-	public function addElementParentComponent(array &$component) : KineticNode{
+	public final function addElementParentComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ElementParentComponent::class);
 		return $this;
 	}
 
 
-	public function asElementParentWithFallbackRequiredComponent() : ElementParentWithFallbackRequiredComponent{
+	public final function asElementParentWithFallbackRequiredComponent() : ElementParentWithFallbackRequiredComponent{
 		return $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
 	}
 
-	public function getElementParentWithFallbackRequiredComponent(&$component) : KineticNode{
+	public final function getElementParentWithFallbackRequiredComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
 		return $this;
 	}
 
-	public function addElementParentWithFallbackRequiredComponent(array &$component) : KineticNode{
+	public final function addElementParentWithFallbackRequiredComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
 		return $this;
 	}
 
 
-	public function asInputComponent() : InputComponent{
+	public final function asInputComponent() : InputComponent{
 		return $this->getComponent(InputComponent::class);
 	}
 
-	public function getInputComponent(&$component) : KineticNode{
+	public final function getInputComponent(&$component) : KineticNode{
 		$component = $this->getComponent(InputComponent::class);
 		return $this;
 	}
 
-	public function addInputComponent(array &$component) : KineticNode{
+	public final function addInputComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(InputComponent::class);
 		return $this;
 	}
 
 
-	public function asLabelComponent() : LabelComponent{
+	public final function asLabelComponent() : LabelComponent{
 		return $this->getComponent(LabelComponent::class);
 	}
 
-	public function getLabelComponent(&$component) : KineticNode{
+	public final function getLabelComponent(&$component) : KineticNode{
 		$component = $this->getComponent(LabelComponent::class);
 		return $this;
 	}
 
-	public function addLabelComponent(array &$component) : KineticNode{
+	public final function addLabelComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(LabelComponent::class);
 		return $this;
 	}
 
 
-	public function asRequiredComponent() : RequiredComponent{
+	public final function asRequiredComponent() : RequiredComponent{
 		return $this->getComponent(RequiredComponent::class);
 	}
 
-	public function getRequiredComponent(&$component) : KineticNode{
+	public final function getRequiredComponent(&$component) : KineticNode{
 		$component = $this->getComponent(RequiredComponent::class);
 		return $this;
 	}
 
-	public function addRequiredComponent(array &$component) : KineticNode{
+	public final function addRequiredComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(RequiredComponent::class);
 		return $this;
 	}
 
 
-	public function asRequiredWithFallbackComponent() : RequiredWithFallbackComponent{
+	public final function asRequiredWithFallbackComponent() : RequiredWithFallbackComponent{
 		return $this->getComponent(RequiredWithFallbackComponent::class);
 	}
 
-	public function getRequiredWithFallbackComponent(&$component) : KineticNode{
+	public final function getRequiredWithFallbackComponent(&$component) : KineticNode{
 		$component = $this->getComponent(RequiredWithFallbackComponent::class);
 		return $this;
 	}
 
-	public function addRequiredWithFallbackComponent(array &$component) : KineticNode{
+	public final function addRequiredWithFallbackComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(RequiredWithFallbackComponent::class);
 		return $this;
 	}
 
 
-	public function asSliderComponent() : SliderComponent{
+	public final function asSliderComponent() : SliderComponent{
 		return $this->getComponent(SliderComponent::class);
 	}
 
-	public function getSliderComponent(&$component) : KineticNode{
+	public final function getSliderComponent(&$component) : KineticNode{
 		$component = $this->getComponent(SliderComponent::class);
 		return $this;
 	}
 
-	public function addSliderComponent(array &$component) : KineticNode{
+	public final function addSliderComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(SliderComponent::class);
 		return $this;
 	}
 
 
-	public function asStaticDropdownComponent() : StaticDropdownComponent{
+	public final function asStaticDropdownComponent() : StaticDropdownComponent{
 		return $this->getComponent(StaticDropdownComponent::class);
 	}
 
-	public function getStaticDropdownComponent(&$component) : KineticNode{
+	public final function getStaticDropdownComponent(&$component) : KineticNode{
 		$component = $this->getComponent(StaticDropdownComponent::class);
 		return $this;
 	}
 
-	public function addStaticDropdownComponent(array &$component) : KineticNode{
+	public final function addStaticDropdownComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(StaticDropdownComponent::class);
 		return $this;
 	}
 
 
-	public function asStaticStepSliderComponent() : StaticStepSliderComponent{
+	public final function asStaticStepSliderComponent() : StaticStepSliderComponent{
 		return $this->getComponent(StaticStepSliderComponent::class);
 	}
 
-	public function getStaticStepSliderComponent(&$component) : KineticNode{
+	public final function getStaticStepSliderComponent(&$component) : KineticNode{
 		$component = $this->getComponent(StaticStepSliderComponent::class);
 		return $this;
 	}
 
-	public function addStaticStepSliderComponent(array &$component) : KineticNode{
+	public final function addStaticStepSliderComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(StaticStepSliderComponent::class);
 		return $this;
 	}
 
 
-	public function asToggleComponent() : ToggleComponent{
+	public final function asToggleComponent() : ToggleComponent{
 		return $this->getComponent(ToggleComponent::class);
 	}
 
-	public function getToggleComponent(&$component) : KineticNode{
+	public final function getToggleComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ToggleComponent::class);
 		return $this;
 	}
 
-	public function addToggleComponent(array &$component) : KineticNode{
+	public final function addToggleComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ToggleComponent::class);
 		return $this;
 	}
 
 
-	public function asContCommandComponent() : ContCommandComponent{
+	public final function asContCommandComponent() : ContCommandComponent{
 		return $this->getComponent(ContCommandComponent::class);
 	}
 
-	public function getContCommandComponent(&$component) : KineticNode{
+	public final function getContCommandComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ContCommandComponent::class);
 		return $this;
 	}
 
-	public function addContCommandComponent(array &$component) : KineticNode{
+	public final function addContCommandComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ContCommandComponent::class);
 		return $this;
 	}
 
 
-	public function asRootComponent() : RootComponent{
+	public final function asRootComponent() : RootComponent{
 		return $this->getComponent(RootComponent::class);
 	}
 
-	public function getRootComponent(&$component) : KineticNode{
+	public final function getRootComponent(&$component) : KineticNode{
 		$component = $this->getComponent(RootComponent::class);
 		return $this;
 	}
 
-	public function addRootComponent(array &$component) : KineticNode{
+	public final function addRootComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(RootComponent::class);
 		return $this;
 	}
 
 
-	public function asWindowComponent() : WindowComponent{
+	public final function asWindowComponent() : WindowComponent{
 		return $this->getComponent(WindowComponent::class);
 	}
 
-	public function getWindowComponent(&$component) : KineticNode{
+	public final function getWindowComponent(&$component) : KineticNode{
 		$component = $this->getComponent(WindowComponent::class);
 		return $this;
 	}
 
-	public function addWindowComponent(array &$component) : KineticNode{
+	public final function addWindowComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(WindowComponent::class);
 		return $this;
 	}

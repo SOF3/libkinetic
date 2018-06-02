@@ -9,6 +9,9 @@ var dir_c31005e3765156e6cace160336ed1759 =
     [ "ClickableComponent.php", "_clickable_component_8php.html", [
       [ "ClickableComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component" ]
     ] ],
+    [ "ClickableContainer.php", "_clickable_container_8php.html", [
+      [ "ClickableContainer", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_container.html", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_container" ]
+    ] ],
     [ "ClickableParentComponent.php", "_clickable_parent_component_8php.html", [
       [ "ClickableParentComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component" ]
     ] ],

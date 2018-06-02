@@ -5,6 +5,7 @@ var namespace_s_o_fe_1_1_libkinetic_1_1_clickable =
     [ "Window", "namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_window.html", "namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_window" ],
     [ "Clickable", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable" ],
     [ "ClickableComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component" ],
+    [ "ClickableContainer", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_container.html", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_container" ],
     [ "ClickableParentComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component" ],
     [ "ClickablePeer", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer.html", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer" ],
     [ "ExitComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_exit_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_exit_component" ],

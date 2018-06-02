@@ -1,12 +1,16 @@
 var hierarchy =
 [
-    [ "ArgsInterface", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_interface.html", [
+    [ "ArgInterface", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_interface.html", [
       [ "SimpleArgComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html", null ]
     ] ],
     [ "CallSequence", "class_s_o_fe_1_1_libkinetic_1_1_util_1_1_call_sequence.html", null ],
     [ "Clickable", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html", [
       [ "ExitComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_exit_component.html", null ],
-      [ "LinkComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html", null ]
+      [ "LinkComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html", null ],
+      [ "IndexComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_window_1_1_index_component.html", null ]
+    ] ],
+    [ "ClickableContainer", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_container.html", [
+      [ "IndexComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_window_1_1_index_component.html", null ]
     ] ],
     [ "ClickablePeer", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer.html", [
       [ "ArguableComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arguable_component.html", null ],
@@ -44,7 +48,7 @@ var hierarchy =
     [ "KineticAdapter", "interface_s_o_fe_1_1_libkinetic_1_1_kinetic_adapter.html", null ],
     [ "KineticComponent", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html", [
       [ "AbsoluteIdComponent", "class_s_o_fe_1_1_libkinetic_1_1_absolute_id_component.html", null ],
-      [ "ArgsComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_component.html", null ],
+      [ "ArgComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_component.html", null ],
       [ "ArguableComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arguable_component.html", null ],
       [ "SimpleArgComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html", null ],
       [ "ClickableComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component.html", null ],
@@ -94,6 +98,7 @@ var hierarchy =
     [ "MenuProvider", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_menu_provider.html", [
       [ "AllPlayersMenuProvider", "class_s_o_fe_1_1_libkinetic_1_1_defaults_1_1_all_players_menu_provider.html", null ]
     ] ],
+    [ "PartialContainer", "interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_partial_container.html", null ],
     [ "RequestValidator", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_request_validator.html", null ],
     [ "UserPredicate", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_user_predicate.html", [
       [ "NamedUserPredicate", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_named_user_predicate.html", null ],

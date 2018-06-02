@@ -100,6 +100,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 <li>$allNodes
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a4bcf9fb7e1dee94b3de83a5e7273f2ce">KineticFileParser</a>
 </li>
+<li>$argName
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component.html#a8f3a83ea55ea5426fff6959a52a47fb5">ClickableComponent</a>
+</li>
 <li>$args
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arguable_component.html#a67e94494731d99ed23b123e95175bc10">ArguableComponent</a>
 </li>
@@ -126,6 +129,9 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </li>
 <li>$callback
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_util_1_1_callback_task.html#abc7c2ac0d93d22f71221e8b60512c860">CallbackTask</a>
+</li>
+<li>$clickables
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a2caf24189c5e935362916aa5094a2d72">ClickableParentComponent</a>
 </li>
 <li>$commands
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_direct_entry_clickable_component.html#ab63cd62b3b65fd223b6f3d57b6ca754d">DirectEntryClickableComponent</a>
@@ -189,7 +195,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_kinetic_file_parser.html#adc21a1f4fc096a6c960255e4ef1a2396">KineticFileParser</a>
 </li>
 <li>$id
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_component.html#ae97941710d863131c700f069b109991e">ArgsComponent</a>
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_component.html#ae97941710d863131c700f069b109991e">ArgComponent</a>
 , <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_component.html#ae97941710d863131c700f069b109991e">ElementComponent</a>
 </li>
 <li>$idMap
@@ -197,9 +203,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </li>
 <li>$indexName
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_component.html#ac6e7e4761230cee1e07e4490bbf4a510">ClickableComponent</a>
-</li>
-<li>$interactListener
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#aa973f04e7f68be6d533436f25f3ecb62">KineticManager</a>
 </li>
 <li>$interacts
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_direct_entry_clickable_component.html#afea8c7d927663fd3a7dc7585d3cb705d">DirectEntryClickableComponent</a>
@@ -226,9 +229,6 @@ $(document).ready(function(){initNavTree('functions.html','');});
 </li>
 <li>$leaf
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_kinetic_file_parser.html#aae5640ca8695325fb20c62d22b890612">KineticFileParser</a>
-</li>
-<li>$list
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a358b00350db3d8f227d500337cc437af">ClickableParentComponent</a>
 </li>
 <li>$manager
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form_listener.html#a4621b1cd69b1417c9fb966c825299de1">FormListener</a>
@@ -263,7 +263,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 , <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_component.html#ad292af3ec0d58b396d226b91ba73749c">PermissionComponent</a>
 </li>
 <li>$next
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_component.html#ac24f6189c7888ec50c77f7e65a837a62">ArgsComponent</a>
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_component.html#ac24f6189c7888ec50c77f7e65a837a62">ArgComponent</a>
 </li>
 <li>$nextCallable
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_util_1_1_call_sequence.html#a037dde6d54374142ad347e90289adb19">CallSequence</a>
@@ -315,7 +315,7 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_element_1_1_required_component.html#a622391102335543bb7652dca3df38220">RequiredComponent</a>
 </li>
 <li>$required
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_component.html#a38addc8a958af4b42bda4fca677b4208">ArgsComponent</a>
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_component.html#a38addc8a958af4b42bda4fca677b4208">ArgComponent</a>
 , <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_element_1_1_required_component.html#a38addc8a958af4b42bda4fca677b4208">RequiredComponent</a>
 </li>
 <li>$results
@@ -365,10 +365,10 @@ $(document).ready(function(){initNavTree('functions.html','');});
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_component.html#ac4814e06f8e0d7f7e7465effb00f0e00">PermissionComponent</a>
 </li>
 <li>$validator
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_component.html#aa4e00b38f53ef571bf77fc9c3e882972">ArgsComponent</a>
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_component.html#aa4e00b38f53ef571bf77fc9c3e882972">ArgComponent</a>
 </li>
 <li>$validatorClass
-: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_args_component.html#a5053631461a4380d2a19a804e4205eeb">ArgsComponent</a>
+: <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_arg_component.html#a5053631461a4380d2a19a804e4205eeb">ArgComponent</a>
 </li>
 <li>$value
 : <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_alias_component.html#a0f298096f322952a72a50f98a74c7b60">CommandAliasComponent</a>

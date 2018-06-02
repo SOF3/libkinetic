@@ -8,7 +8,7 @@ var searchData=
   ['togglecomponent_2ephp',['ToggleComponent.php',['../_toggle_component_8php.html',1,'']]],
   ['touchmodefiltercomponent',['TouchModeFilterComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_interact_1_1_touch_mode_filter_component.html',1,'SOFe::Libkinetic::Clickable::Entry::Interact']]],
   ['touchmodefiltercomponent_2ephp',['TouchModeFilterComponent.php',['../_touch_mode_filter_component_8php.html',1,'']]],
-  ['translate',['translate',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#a49f98708007a805c824633b9b1162443',1,'SOFe\Libkinetic\KineticManager\translate()'],['../class_s_o_fe_1_1_libkinetic_1_1_window_request.html#a80e38ea3c3b2c4e3a344201f3f8a1cd3',1,'SOFe\Libkinetic\WindowRequest\translate()']]],
+  ['translate',['translate',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#a49f98708007a805c824633b9b1162443',1,'SOFe\Libkinetic\KineticManager\translate()'],['../class_s_o_fe_1_1_libkinetic_1_1_window_request.html#ad9ba98a61e6a0c95d74fcdca82aa92d1',1,'SOFe\Libkinetic\WindowRequest\translate()']]],
   ['traversenode',['traverseNode',['../class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_json_file_parser.html#a120cd9231de70418f6cf4aa64b95a27c',1,'SOFe::Libkinetic::Parser::JsonFileParser']]],
   ['typecast',['typeCast',['../class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_component.html#ade745f99f5a442e98fda90542c7028ed',1,'SOFe::Libkinetic::Element::ElementComponent']]]
 ];

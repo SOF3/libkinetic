@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="robots" content="index, follow, all" />
-    <title>SOFe\Libkinetic\Clickable\Argument\ArgsInterface | libkinetic v0.0.1</title>
+    <title>SOFe\Libkinetic\Clickable\Argument\ArgInterface | libkinetic v0.0.1</title>
 
             <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="../../../../css/bootstrap-theme.min.css">
@@ -19,7 +19,7 @@
     
     </head>
 
-    <body id="class" data-name="class:SOFe_Libkinetic_Clickable_Argument_ArgsInterface" data-root-path="../../../../">
+    <body id="class" data-name="class:SOFe_Libkinetic_Clickable_Argument_ArgInterface" data-root-path="../../../../">
             <div id="content">
         <div id="left-column">
                 <div id="control-panel">
@@ -66,32 +66,30 @@
                         <div class="namespace-breadcrumbs">
             <ol class="breadcrumb">
                 <li><span class="label label-default">interface</span></li>
-                        <li><a href="../../../../SOFe.html">SOFe</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic.html">Libkinetic</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic/Clickable.html">Clickable</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic/Clickable/Argument.html">Argument</a></li><li class="backslash">\</li><li>ArgsInterface</li>
+                        <li><a href="../../../../SOFe.html">SOFe</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic.html">Libkinetic</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic/Clickable.html">Clickable</a></li><li class="backslash">\</li><li><a href="../../../../SOFe/Libkinetic/Clickable/Argument.html">Argument</a></li><li class="backslash">\</li><li>ArgInterface</li>
             </ol>
         </div>
                 <div id="page-content">
                 
     <div class="page-header">
         <h1>
-            ArgsInterface
+            ArgInterface
                 
         </h1>
     </div>
 
     <p>    interface
-    <strong>ArgsInterface</strong>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgsInterface.php">View source</a>)
+    <strong>ArgInterface</strong>        (<a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgInterface.php">View source</a>)
 </p>
 
         
     
 
             <div class="description">
-            <p><h2>Entry</h2>
+            <p>ArgInterface is implemented by various types of args.</p>            <p><h2>Entry</h2>
 
 <ul>
 <li><strong>Implicit entry</strong>: If some args are required but not set in the WindowRequest, they would be displayed to the user before the parent Clickable is actually clicked (even before onClick).</li>
-</ul>
-</p>            <p><ul>
 <li><strong>Explicit entry</strong>: An arguable window clickable can have an <code>&lt;editArg&gt;</code> button that allows the user to edit an arg.</li>
 </ul>
 
@@ -112,6 +110,8 @@
 <h2>Validation</h2>
 
 <p>Before and after editing an arg, the optional RequestValidator for the arg is invoked. If the request contains invalid args, the user will receive the error message plus the arg request message again.</p>
+
+<h2>Arg types:</h2>
 
 <p>Libkinetic provides 4 types of arg:</p>
 
@@ -176,7 +176,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_configure">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgsInterface.php#L64">line 64</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgInterface.php#L67">line 67</a></div>
         <code>                    
     <strong>configure</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, callable $onConfigured)
         </code>
@@ -215,7 +215,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getNode">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgsInterface.php#L66">line 66</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgInterface.php#L69">line 69</a></div>
         <code>                    
     <strong>getNode</strong>()
         </code>

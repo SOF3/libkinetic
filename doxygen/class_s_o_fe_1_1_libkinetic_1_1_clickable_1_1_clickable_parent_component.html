@@ -108,6 +108,10 @@ Inheritance diagram for ClickableParentComponent:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a69fb3f4df6426a9852d9642c9586af8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a69fb3f4df6426a9852d9642c9586af8e">startChild</a> (string $name)</td></tr>
 <tr class="separator:a69fb3f4df6426a9852d9642c9586af8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3362a540cf1709d68dbb00e9b0c48f0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a3362a540cf1709d68dbb00e9b0c48f0c">endElement</a> ()</td></tr>
+<tr class="separator:a3362a540cf1709d68dbb00e9b0c48f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3beccf37e500a3b61e0523712a952d9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a3beccf37e500a3b61e0523712a952d9b">getClickableList</a> ()</td></tr>
+<tr class="separator:a3beccf37e500a3b61e0523712a952d9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html">KineticComponent</a></td></tr>
 <tr class="memitem:a6827567cfa8fa5b4a10ab7aff3726024 inherit pub_methods_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a6827567cfa8fa5b4a10ab7aff3726024">__construct</a> (<a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html">KineticNode</a> $node)</td></tr>
 <tr class="separator:a6827567cfa8fa5b4a10ab7aff3726024 inherit pub_methods_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,8 +148,8 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a358b00350db3d8f227d500337cc437af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a358b00350db3d8f227d500337cc437af">$list</a> = []</td></tr>
-<tr class="separator:a358b00350db3d8f227d500337cc437af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2caf24189c5e935362916aa5094a2d72"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_parent_component.html#a2caf24189c5e935362916aa5094a2d72">$clickables</a> = []</td></tr>
+<tr class="separator:a2caf24189c5e935362916aa5094a2d72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html">KineticComponent</a></td></tr>
 <tr class="memitem:a15955933e72700564e1a76d7f97c1ac7 inherit pro_attribs_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a15955933e72700564e1a76d7f97c1ac7">$node</a></td></tr>
 <tr class="separator:a15955933e72700564e1a76d7f97c1ac7 inherit pro_attribs_class_s_o_fe_1_1_libkinetic_1_1_kinetic_component"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,8 +181,47 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Accepts <code>&lt;index&gt;</code>, <code>&lt;list&gt;</code>, <code>&lt;info&gt;</code>, <code>&lt;exit&gt;</code>, <code>&lt;link&gt;</code> </p>
 
-<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00034">34</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00035">35</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3362a540cf1709d68dbb00e9b0c48f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3362a540cf1709d68dbb00e9b0c48f0c">&#9670;&nbsp;</a></span>endElement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">endElement </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00058">58</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
+
+</div>
+</div>
+<a id="a3beccf37e500a3b61e0523712a952d9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3beccf37e500a3b61e0523712a952d9b">&#9670;&nbsp;</a></span>getClickableList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">getClickableList </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable.html">Clickable</a>[]|KineticComponent[] </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00072">72</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
+
+</div>
+</div>
 <a id="a69fb3f4df6426a9852d9642c9586af8e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a69fb3f4df6426a9852d9642c9586af8e">&#9670;&nbsp;</a></span>startChild()</h2>
 
@@ -195,13 +238,13 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00038">38</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00039">39</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Field Documentation</h2>
-<a id="a358b00350db3d8f227d500337cc437af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a358b00350db3d8f227d500337cc437af">&#9670;&nbsp;</a></span>$list</h2>
+<a id="a2caf24189c5e935362916aa5094a2d72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2caf24189c5e935362916aa5094a2d72">&#9670;&nbsp;</a></span>$clickables</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,7 +253,7 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">$list = []</td>
+          <td class="memname">$clickables = []</td>
         </tr>
       </table>
   </td>
@@ -220,7 +263,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00036">36</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_clickable_parent_component_8php_source.html#l00037">37</a> of file <a class="el" href="_clickable_parent_component_8php_source.html">ClickableParentComponent.php</a>.</p>
 
 </div>
 </div>

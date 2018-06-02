@@ -1,5 +1,6 @@
 var _dropdown_component_dynamic_like_8php =
 [
+    [ "asElementComponent", "_dropdown_component_dynamic_like_8php.html#a692b244b7f816a330afee5cea33a63aa", null ],
     [ "asFormComponent", "_dropdown_component_dynamic_like_8php.html#ab6f48d27d95c14c96f7995063650c177", null ],
     [ "endElement", "_dropdown_component_dynamic_like_8php.html#a3362a540cf1709d68dbb00e9b0c48f0c", null ],
     [ "getFormStepKey", "_dropdown_component_dynamic_like_8php.html#a8647ed706395c0e814ffb8eca49893a2", null ],

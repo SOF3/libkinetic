@@ -1,6 +1,7 @@
 var _dropdown_component_static_like_8php =
 [
     [ "adapter", "_dropdown_component_static_like_8php.html#abcc210e6daf152e8fd4f9daa29c99024", null ],
+    [ "asElementComponent", "_dropdown_component_static_like_8php.html#a692b244b7f816a330afee5cea33a63aa", null ],
     [ "asFormComponent", "_dropdown_component_static_like_8php.html#ab6f48d27d95c14c96f7995063650c177", null ],
     [ "endElement", "_dropdown_component_static_like_8php.html#a3362a540cf1709d68dbb00e9b0c48f0c", null ],
     [ "getDefault", "_dropdown_component_static_like_8php.html#a30692df6964977bd29f909b77e8f4625", null ],

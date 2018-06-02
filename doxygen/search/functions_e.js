@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['registeritemhandler',['registerItemHandler',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#a12ac18b5cd3cad8a7028cc3c6e126bd7',1,'SOFe::Libkinetic::KineticManager']]],
   ['requireattribute',['requireAttribute',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#ae0a98f7802db9aaadf5bfbdd93ea31c2',1,'SOFe::Libkinetic::KineticComponent']]],
   ['requirechild',['requireChild',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#ad1b4fff210e92da83e9b7bc7ee233390',1,'SOFe::Libkinetic::KineticComponent']]],
   ['requirechildren',['requireChildren',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a8235e66eaa3b13a7541c48feec38d17c',1,'SOFe::Libkinetic::KineticComponent']]],

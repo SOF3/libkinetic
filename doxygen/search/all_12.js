@@ -1,7 +1,6 @@
 var searchData=
 [
   ['readme_2emd',['README.md',['../_r_e_a_d_m_e_8md.html',1,'']]],
-  ['registeritemhandler',['registerItemHandler',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_manager.html#a12ac18b5cd3cad8a7028cc3c6e126bd7',1,'SOFe::Libkinetic::KineticManager']]],
   ['requestvalidator',['RequestValidator',['../interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_request_validator.html',1,'SOFe::Libkinetic::API']]],
   ['requestvalidator_2ephp',['RequestValidator.php',['../_request_validator_8php.html',1,'']]],
   ['requireattribute',['requireAttribute',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#ae0a98f7802db9aaadf5bfbdd93ea31c2',1,'SOFe::Libkinetic::KineticComponent']]],

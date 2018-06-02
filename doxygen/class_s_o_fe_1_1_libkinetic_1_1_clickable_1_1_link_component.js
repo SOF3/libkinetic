@@ -1,5 +1,6 @@
 var class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component =
 [
+    [ "dependsComponents", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html#aec1ee80905f69cdf447b76c6b83acdd3", null ],
     [ "endElement", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html#a3362a540cf1709d68dbb00e9b0c48f0c", null ],
     [ "init", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html#a4be4055f3361d4800e16bc2e2e38cda6", null ],
     [ "onClick", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html#a6cc5ea54f6da8a72c4ebf342f035ecc3", null ],

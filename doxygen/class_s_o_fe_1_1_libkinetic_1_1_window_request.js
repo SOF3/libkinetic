@@ -11,5 +11,6 @@ var class_s_o_fe_1_1_libkinetic_1_1_window_request =
     [ "hasKey", "class_s_o_fe_1_1_libkinetic_1_1_window_request.html#aa86f6f1204bffd52ceae859514e7719f", null ],
     [ "push", "class_s_o_fe_1_1_libkinetic_1_1_window_request.html#aa9e892cf9ba1a191af9fe1157a783490", null ],
     [ "put", "class_s_o_fe_1_1_libkinetic_1_1_window_request.html#ad5603bce1e774afd9476f634c38b8d50", null ],
-    [ "translate", "class_s_o_fe_1_1_libkinetic_1_1_window_request.html#a80e38ea3c3b2c4e3a344201f3f8a1cd3", null ]
+    [ "send", "class_s_o_fe_1_1_libkinetic_1_1_window_request.html#acba61e9f696e3e3f02d3b58b6bfc7414", null ],
+    [ "translate", "class_s_o_fe_1_1_libkinetic_1_1_window_request.html#ad9ba98a61e6a0c95d74fcdca82aa92d1", null ]
 ];

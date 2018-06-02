@@ -60,4 +60,16 @@ class CommandEntryComponent extends KineticComponent{
 		$this->resolveConfigString($this->name);
 		$this->requireTranslation($this->description);
 	}
+
+	public function getName() : string{
+		return $this->name;
+	}
+
+	public function getDescription() : string{
+		return $this->description;
+	}
+
+	public function getAliases() : array{
+		return $this->aliases;
+	}
 }

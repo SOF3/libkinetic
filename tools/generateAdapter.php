@@ -66,18 +66,18 @@ $output .= "\tpublic abstract function getComponent(string \$class) : KineticCom
 
 foreach($fqnList as $item){
 	$baseNameComponent = array_slice(explode("\\", $item), -1)[0];
-	$baseName = substr($baseNameComponent, 0, -strlen("Component"));
+//	$baseName = substr($baseNameComponent, 0, -strlen("Component"));
 
 	$output .= "\n\n";
-	$output .= "\tpublic function as{$baseName}() : $baseNameComponent{\n";
+	$output .= "\tpublic function as{$baseNameComponent}() : $baseNameComponent{\n";
 	$output .= "\t\treturn \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t}\n\n";
 
-	$output .= "\tpublic function get{$baseName}(&\$component) : KineticNode{\n";
+	$output .= "\tpublic function get{$baseNameComponent}(&\$component) : KineticNode{\n";
 	$output .= "\t\t\$component = \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t\treturn \$this;\n";
 	$output .= "\t}\n\n";
-	$output .= "\tpublic function add{$baseName}(array &\$component) : KineticNode{\n";
+	$output .= "\tpublic function add{$baseNameComponent}(array &\$component) : KineticNode{\n";
 	$output .= "\t\t\$component[] = \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t\treturn \$this;\n";
 	$output .= "\t}\n";

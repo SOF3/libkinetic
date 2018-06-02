@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-use SOFe\Libkinetic\Clickable\Argument\ArgsComponent;
+use SOFe\Libkinetic\Clickable\Argument\ArgComponent;
 use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
 use SOFe\Libkinetic\Clickable\Argument\SimpleArgComponent;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
@@ -35,6 +35,7 @@ use SOFe\Libkinetic\Clickable\Entry\Interact\FaceFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\ItemFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterComponent;
+use SOFe\Libkinetic\Clickable\Entry\PartialContainerComponent;
 use SOFe\Libkinetic\Clickable\ExitComponent;
 use SOFe\Libkinetic\Clickable\LinkComponent;
 use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
@@ -83,17 +84,17 @@ trait ComponentAdapter{
 	}
 
 
-	public function asArgs() : ArgsComponent{
-		return $this->getComponent(ArgsComponent::class);
+	public function asArg() : ArgComponent{
+		return $this->getComponent(ArgComponent::class);
 	}
 
-	public function getArgs(&$component) : KineticNode{
-		$component = $this->getComponent(ArgsComponent::class);
+	public function getArg(&$component) : KineticNode{
+		$component = $this->getComponent(ArgComponent::class);
 		return $this;
 	}
 
-	public function addArgs(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ArgsComponent::class);
+	public function addArg(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ArgComponent::class);
 		return $this;
 	}
 
@@ -274,6 +275,21 @@ trait ComponentAdapter{
 
 	public function addTouchModeFilter(array &$component) : KineticNode{
 		$component[] = $this->getComponent(TouchModeFilterComponent::class);
+		return $this;
+	}
+
+
+	public function asPartialContainer() : PartialContainerComponent{
+		return $this->getComponent(PartialContainerComponent::class);
+	}
+
+	public function getPartialContainer(&$component) : KineticNode{
+		$component = $this->getComponent(PartialContainerComponent::class);
+		return $this;
+	}
+
+	public function addPartialContainer(array &$component) : KineticNode{
+		$component[] = $this->getComponent(PartialContainerComponent::class);
 		return $this;
 	}
 

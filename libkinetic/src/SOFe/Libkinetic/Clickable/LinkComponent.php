@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable;
 
+use Iterator;
 use SOFe\Libkinetic\AbsoluteIdComponent;
 use SOFe\Libkinetic\IntermediateNode;
 use SOFe\Libkinetic\KineticComponent;
@@ -32,7 +33,9 @@ class LinkComponent extends KineticComponent implements Clickable{
 	/** @var string */
 	protected $targetId;
 	/** @var KineticNode */
-	protected $target;
+	protected $target;public function dependsComponents() : Iterator{
+	yield ClickableComponent::class;
+}
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "TARGET"){

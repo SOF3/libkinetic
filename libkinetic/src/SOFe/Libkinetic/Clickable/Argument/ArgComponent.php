@@ -26,7 +26,7 @@ use AssertionError;
 use SOFe\Libkinetic\API\RequestValidator;
 use SOFe\Libkinetic\KineticComponent;
 
-class ArgsComponent extends KineticComponent{
+class ArgComponent extends KineticComponent{
 	/** @var string|null */
 	protected $id = null;
 	/** @var bool */
@@ -36,7 +36,7 @@ class ArgsComponent extends KineticComponent{
 	/** @var RequestValidator|null */
 	protected $validator = null;
 
-	/** @var ArgsInterface|null */
+	/** @var ArgInterface|null */
 	protected $next;
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -80,7 +80,7 @@ class ArgsComponent extends KineticComponent{
 		return $this->validator;
 	}
 
-	public function getNext() : ?ArgsInterface{
+	public function getNext() : ?ArgInterface{
 		return $this->next;
 	}
 }

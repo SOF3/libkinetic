@@ -25,7 +25,9 @@ namespace SOFe\Libkinetic;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
 
 class WindowComponent extends KineticComponent{
+	/** @var string */
 	protected $title;
+	/** @var string|null */
 	protected $synopsis = null;
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -53,5 +55,13 @@ class WindowComponent extends KineticComponent{
 	public function init() : void{
 		$this->requireTranslation($this->title);
 		$this->requireTranslation($this->synopsis);
+	}
+
+	public function getTitle() : string{
+		return $this->title;
+	}
+
+	public function getSynopsis() : ?string{
+		return $this->synopsis;
 	}
 }

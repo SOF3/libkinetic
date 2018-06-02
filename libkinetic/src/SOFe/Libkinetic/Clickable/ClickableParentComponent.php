@@ -27,30 +27,49 @@ use SOFe\Libkinetic\Clickable\Window\InfoComponent;
 use SOFe\Libkinetic\Clickable\Window\ListComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
+use function assert;
 
 /**
  * Accepts `<index>`, `<list>`, `<info>`, `<exit>`, `<link>`
  */
 class ClickableParentComponent extends KineticComponent{
 	/** @var Clickable[] */
-	protected $list = [];
+	protected $clickables = [];
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "INDEX"){
-			return $this->list[] = KineticNode::create(IndexComponent::class)->addIndex($this->list);
+			return $this->clickables[] = KineticNode::create(IndexComponent::class)->addIndex($this->clickables);
 		}
 		if($name === "LIST"){
-			return $this->list[] = KineticNode::create(ListComponent::class)->addList($this->list);
+			return $this->clickables[] = KineticNode::create(ListComponent::class)->addList($this->clickables);
 		}
 		if($name === "INFO"){
-			return $this->list[] = KineticNode::create(InfoComponent::class)->addInfo($this->list);
+			return $this->clickables[] = KineticNode::create(InfoComponent::class)->addInfo($this->clickables);
 		}
 		if($name === "EXIT"){
-			return $this->list[] = KineticNode::create(ExitComponent::class)->addExit($this->list);
+			return $this->clickables[] = KineticNode::create(ExitComponent::class)->addExit($this->clickables);
 		}
 		if($this->node->nodeParent !== null && $name === "LINK"){ // disallow <link> under root node
-			return $this->list[] = KineticNode::create(LinkComponent::class)->addLink($this->list);
+			return $this->clickables[] = KineticNode::create(LinkComponent::class)->addLink($this->clickables);
 		}
 		return null;
+	}
+
+	public function endElement() : void{
+		assert((function(array $array) : bool{
+			foreach($array as $item){
+				if(!($item instanceof Clickable)){
+					return false;
+				}
+			}
+			return true;
+		})($this->clickables));
+	}
+
+	/**
+	 * @return Clickable[]|ClickableComponent[]
+	 */
+	public function getClickableList() : array{
+		return $this->clickables;
 	}
 }

@@ -23,15 +23,40 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Window;
 
 use Iterator;
+use pocketmine\Player;
+use SOFe\Libkinetic\Clickable\Clickable;
 use SOFe\Libkinetic\Clickable\ClickableParentComponent;
+use SOFe\Libkinetic\Clickable\ClickableTrait;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowComponent;
+use SOFe\Libkinetic\WindowRequest;
 
-class IndexComponent extends KineticComponent{
+class IndexComponent extends KineticComponent implements Clickable{
+	use ClickableTrait;
+
 	public function dependsComponents() : Iterator{
 		yield DirectEntryClickableComponent::class;
 		yield WindowComponent::class;
 		yield ClickableParentComponent::class;
+	}
+
+	protected function onClickImpl(WindowRequest $request) : void{
+		if($request->getUser() instanceof Player){
+			/** @var Player $player */
+			$player = $request->getUser();
+			$buttons = [];
+			foreach($this->asClickableParent()->getClickableList() as $clickable){
+				$buttons[] = [
+					"text" => $request->translate($clickable->asClickable()->getIndexName()),
+				]; // TODO add icon
+			}
+			$form = [
+				"type" => "form",
+				"title" => $request->translate($this->asWindow()->getTitle()),
+				"content" => $request->translate($this->asWindow()->getSynopsis()),
+				"buttons" => $buttons,
+			];
+		}
 	}
 }

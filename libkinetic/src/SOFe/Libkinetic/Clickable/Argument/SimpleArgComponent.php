@@ -30,13 +30,13 @@ use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
 
-class SimpleArgComponent extends KineticComponent implements ArgsInterface{
-	use ArgsTrait;
+class SimpleArgComponent extends KineticComponent implements ArgInterface{
+	use ArgTrait;
 
 	protected $title;
 
 	public function dependsComponents() : Iterator{
-		yield ArgsComponent::class;
+		yield ArgComponent::class;
 		yield WindowComponent::class;
 		yield ElementParentWithFallbackRequiredComponent::class;
 	}
@@ -107,7 +107,7 @@ class SimpleArgComponent extends KineticComponent implements ArgsInterface{
 	}
 
 	private function composeId(string $childId) : string{
-		$baseId = $this->asArgs()->getId();
+		$baseId = $this->asArg()->getId();
 		return $baseId !== null ? ($baseId . "." . $childId) : $childId;
 	}
 }

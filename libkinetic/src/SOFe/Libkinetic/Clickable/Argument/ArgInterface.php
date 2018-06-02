@@ -26,6 +26,8 @@ use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
 /**
+ * ArgInterface is implemented by various types of args.
+ *
  * ## Entry
  * - **Implicit entry**: If some args are required but not set in the WindowRequest, they would be displayed to the user before the parent Clickable is actually clicked (even before onClick).
  * - **Explicit entry**: An arguable window clickable can have an `<editArg>` button that allows the user to edit an arg.
@@ -45,6 +47,7 @@ use SOFe\Libkinetic\WindowRequest;
  * ## Validation
  * Before and after editing an arg, the optional RequestValidator for the arg is invoked. If the request contains invalid args, the user will receive the error message plus the arg request message again.
  *
+ * ## Arg types:
  * Libkinetic provides 4 types of arg:
  *
  * - `<simpleArg>`: a static set of arguments. Each child is set as an argument in the WindowRequest.
@@ -60,7 +63,7 @@ use SOFe\Libkinetic\WindowRequest;
  *   - Form interface: The user starts with a blank list (unless previously set), with an "Add" button to add objects to the list. Each object can be edited by the underlying child elements like `<cycleArg>`. Clicking on each element deletes it. Clicking on the trailing "Submit" button submits this list.
  *   - Command interface: needs an adapter from the plugin to implement command syntax parsing.
  */
-interface ArgsInterface{
+interface ArgInterface{
 	public function configure(WindowRequest $request, bool $explicit, callable $onConfigured) : void;
 
 	public function getNode() : KineticNode;

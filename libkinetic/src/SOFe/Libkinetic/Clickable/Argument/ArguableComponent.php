@@ -31,7 +31,7 @@ use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowRequest;
 
 class ArguableComponent extends KineticComponent implements ClickablePeer{
-	/** @var ArgsInterface[] */
+	/** @var ArgInterface[] */
 	protected $args = [];
 
 	public function dependsComponents() : Iterator{
@@ -51,11 +51,12 @@ class ArguableComponent extends KineticComponent implements ClickablePeer{
 			return;
 		}
 
+		$this->args[0]->configure($request,false, $onComplete);
 		CallSequence::forMethod($this->args, "configure", $onComplete, [$request], [false]);
 	}
 
 	/**
-	 * @return ArgsInterface[]
+	 * @return ArgInterface[]
 	 */
 	public function getArguments() : array{
 		return $this->args;

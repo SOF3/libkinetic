@@ -181,7 +181,7 @@ class KineticManager{
 		}elseif($fqn{0} === "!"){
 			$class = libkinetic::getNamespace() . "\\Defaults\\" . substr($fqn, 1);
 		}else{
-			$class = $this->parser->getRoot()->asRoot()->getNamespace() . $fqn;
+			$class = $this->parser->getRoot()->asRootComponent()->getNamespace() . $fqn;
 		}
 
 		if(!class_exists($class)){

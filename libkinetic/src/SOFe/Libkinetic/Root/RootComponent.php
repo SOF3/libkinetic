@@ -47,7 +47,7 @@ class RootComponent extends KineticComponent{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "CONT"){
-			return KineticNode::create(ContCommandComponent::class)->getContCommand($this->contCmd);
+			return KineticNode::create(ContCommandComponent::class)->getContCommandComponent($this->contCmd);
 		}
 		return null;
 	}

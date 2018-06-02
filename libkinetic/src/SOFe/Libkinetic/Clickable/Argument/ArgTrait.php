@@ -93,7 +93,7 @@ trait ArgTrait{
 			return null;
 		}
 
-		$node->asCommandEntry()->getName();
+		$node->asCommandEntryComponent()->getName();
 	}
 
 	public function afterResponse(WindowRequest $request, callable $onConfigured) : void{

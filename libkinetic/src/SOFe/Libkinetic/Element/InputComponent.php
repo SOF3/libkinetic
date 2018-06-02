@@ -94,7 +94,7 @@ class InputComponent extends KineticComponent implements EditableElementInterfac
 	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
 		$onComplete([
 			"type" => "input",
-			"text" => $request->translate($this->asElement()->getTitle()),
+			"text" => $request->translate($this->asElementComponent()->getTitle()),
 			"placeholder" => $request->translate($this->placeholder),
 			"default" => $this->default,
 		], [$this, "adapter"]);

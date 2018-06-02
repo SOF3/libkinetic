@@ -35,7 +35,7 @@ trait DropdownComponentStaticLike{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === $this->getStepName()){
-			return KineticNode::create(DropdownOptionComponent::class)->addDropdownOption($this->options);
+			return KineticNode::create(DropdownOptionComponent::class)->addDropdownOptionComponent($this->options);
 		}
 		return null;
 	}
@@ -69,7 +69,7 @@ trait DropdownComponentStaticLike{
 	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
 		$onComplete([
 			"type" => $this->getFormType(),
-			"text" => $request->translate($this->asElement()->getTitle()),
+			"text" => $request->translate($this->asElementComponent()->getTitle()),
 			$this->getFormStepKey() => array_map(function(DropdownOptionComponent $node) use ($request){
 				return $request->translate($node->getText());
 			}, $this->options),

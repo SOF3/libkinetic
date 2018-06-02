@@ -39,10 +39,10 @@ class DirectEntryClickableComponent extends KineticComponent{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "COMMAND"){
-			return KineticNode::create(CommandEntryComponent::class)->addCommandEntry($this->commands);
+			return KineticNode::create(CommandEntryComponent::class)->addCommandEntryComponent($this->commands);
 		}
 		if($name === "INTERACT"){
-			return KineticNode::create(InteractEntryComponent::class)->addInteractEntry($this->interacts);
+			return KineticNode::create(InteractEntryComponent::class)->addInteractEntryComponent($this->interacts);
 		}
 		return null;
 	}

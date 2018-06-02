@@ -37,7 +37,7 @@ class PermissionClickableComponent extends KineticComponent implements Clickable
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "PERMISSION"){
-			return KineticNode::create(PermissionComponent::class)->getPermission($this->permission);
+			return KineticNode::create(PermissionComponent::class)->getPermissionComponent($this->permission);
 		}
 		return null;
 	}

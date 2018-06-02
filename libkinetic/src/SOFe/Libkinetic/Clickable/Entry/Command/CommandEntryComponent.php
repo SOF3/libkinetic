@@ -47,7 +47,7 @@ class CommandEntryComponent extends KineticComponent{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "ALIAS"){
-			return KineticNode::create(CommandAliasComponent::class)->addCommandAlias($this->aliases);
+			return KineticNode::create(CommandAliasComponent::class)->addCommandAliasComponent($this->aliases);
 		}
 		return null;
 	}

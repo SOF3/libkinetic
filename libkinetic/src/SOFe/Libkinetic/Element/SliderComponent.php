@@ -72,7 +72,7 @@ class SliderComponent extends KineticComponent implements EditableElementInterfa
 	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
 		$onComplete([
 			"type" => "slider",
-			"text" => $request->translate($this->asElement()->getTitle()),
+			"text" => $request->translate($this->asElementComponent()->getTitle()),
 			"min" => $this->min,
 			"max" => $this->max,
 			"step" => $this->step,

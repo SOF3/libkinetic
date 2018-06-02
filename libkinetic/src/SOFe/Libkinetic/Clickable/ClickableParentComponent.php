@@ -38,19 +38,19 @@ class ClickableParentComponent extends KineticComponent{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "INDEX"){
-			return $this->clickables[] = KineticNode::create(IndexComponent::class)->addIndex($this->clickables);
+			return $this->clickables[] = KineticNode::create(IndexComponent::class)->addIndexComponent($this->clickables);
 		}
 		if($name === "LIST"){
-			return $this->clickables[] = KineticNode::create(ListComponent::class)->addList($this->clickables);
+			return $this->clickables[] = KineticNode::create(ListComponent::class)->addListComponent($this->clickables);
 		}
 		if($name === "INFO"){
-			return $this->clickables[] = KineticNode::create(InfoComponent::class)->addInfo($this->clickables);
+			return $this->clickables[] = KineticNode::create(InfoComponent::class)->addInfoComponent($this->clickables);
 		}
 		if($name === "EXIT"){
-			return $this->clickables[] = KineticNode::create(ExitComponent::class)->addExit($this->clickables);
+			return $this->clickables[] = KineticNode::create(ExitComponent::class)->addExitComponent($this->clickables);
 		}
 		if($this->node->nodeParent !== null && $name === "LINK"){ // disallow <link> under root node
-			return $this->clickables[] = KineticNode::create(LinkComponent::class)->addLink($this->clickables);
+			return $this->clickables[] = KineticNode::create(LinkComponent::class)->addLinkComponent($this->clickables);
 		}
 		return null;
 	}

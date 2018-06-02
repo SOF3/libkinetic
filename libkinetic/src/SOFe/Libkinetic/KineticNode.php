@@ -165,7 +165,7 @@ final class KineticNode implements JsonSerializable{
 		for($node = $this; !$node->hasComponent(AbsoluteIdComponent::class); $node = $node->nodeParent){
 			array_unshift($elementNameStack, "<" . $node->nodeName . ">");
 		}
-		return $node->asAbsoluteId()->getId() . implode(".", $elementNameStack);
+		return $node->asAbsoluteIdComponent()->getId() . implode(".", $elementNameStack);
 	}
 
 	public function jsonSerialize() : array{

@@ -44,7 +44,7 @@ class ContCommandComponent extends KineticComponent{
 	}
 
 	public function startChild(string $name) : ?KineticNode{
-		return KineticNode::create(CommandAliasComponent::class)->addCommandAlias($this->aliases);
+		return KineticNode::create(CommandAliasComponent::class)->addCommandAliasComponent($this->aliases);
 	}
 
 	public function endElement() : void{

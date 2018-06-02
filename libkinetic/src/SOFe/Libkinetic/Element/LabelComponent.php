@@ -35,7 +35,7 @@ class LabelComponent extends KineticComponent implements ElementInterface{
 	public function asFormComponent(WindowRequest $request, callable $onComplete) : void{
 		$onComplete([
 			"type" => "label",
-			"text" => $request->translate($this->asElement()->getTitle()),
+			"text" => $request->translate($this->asElementComponent()->getTitle()),
 		], [$this, "adapter"]);
 	}
 

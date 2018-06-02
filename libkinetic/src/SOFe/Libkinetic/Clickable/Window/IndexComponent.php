@@ -46,15 +46,15 @@ class IndexComponent extends KineticComponent implements Clickable{
 			/** @var Player $player */
 			$player = $request->getUser();
 			$buttons = [];
-			foreach($this->asClickableParent()->getClickableList() as $clickable){
+			foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
 				$buttons[] = [
-					"text" => $request->translate($clickable->asClickable()->getIndexName()),
+					"text" => $request->translate($clickable->asClickableComponent()->getIndexName()),
 				]; // TODO add icon
 			}
 			$form = [
 				"type" => "form",
-				"title" => $request->translate($this->asWindow()->getTitle()),
-				"content" => $request->translate($this->asWindow()->getSynopsis()),
+				"title" => $request->translate($this->asWindowComponent()->getTitle()),
+				"content" => $request->translate($this->asWindowComponent()->getSynopsis()),
 				"buttons" => $buttons,
 			];
 		}

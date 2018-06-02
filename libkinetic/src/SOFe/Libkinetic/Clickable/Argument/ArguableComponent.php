@@ -40,7 +40,7 @@ class ArguableComponent extends KineticComponent implements ClickablePeer{
 
 	public function startChild(string $name) : ?KineticNode{
 		if($name === "SIMPLE" . "ARG"){
-			return KineticNode::create(SimpleArgComponent::class)->addSimpleArg($this->args);
+			return KineticNode::create(SimpleArgComponent::class)->addSimpleArgComponent($this->args);
 		}
 		return null;
 	}

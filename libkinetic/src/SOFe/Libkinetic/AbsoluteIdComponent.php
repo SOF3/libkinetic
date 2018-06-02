@@ -31,7 +31,7 @@ class AbsoluteIdComponent extends KineticComponent{
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "ID"){
 			$this->my = $value;
-			$this->full = ($this->node->nodeParent->isRoot() ? "" : ($this->node->nodeParent->asAbsoluteId()->getId() . ".")) . $value;
+			$this->full = ($this->node->nodeParent->isRoot() ? "" : ($this->node->nodeParent->asAbsoluteIdComponent()->getId() . ".")) . $value;
 			return true;
 		}
 		return false;

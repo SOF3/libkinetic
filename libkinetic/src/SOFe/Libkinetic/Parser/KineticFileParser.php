@@ -110,10 +110,10 @@ abstract class KineticFileParser{
 		}
 
 		if($this->leaf->hasComponent(AbsoluteIdComponent::class)){
-			if(isset($this->idMap[$this->leaf->asAbsoluteId()->getId()])){
-				throw new InvalidNodeException("Duplicate ID {$this->leaf->asAbsoluteId()->getId()}", $this->leaf);
+			if(isset($this->idMap[$this->leaf->asAbsoluteIdComponent()->getId()])){
+				throw new InvalidNodeException("Duplicate ID {$this->leaf->asAbsoluteIdComponent()->getId()}", $this->leaf);
 			}
-			$this->idMap[$this->leaf->asAbsoluteId()->getId()] = $this->leaf;
+			$this->idMap[$this->leaf->asAbsoluteIdComponent()->getId()] = $this->leaf;
 		}
 	}
 
@@ -149,7 +149,7 @@ abstract class KineticFileParser{
 	}
 
 	public function getNamespace() : string{
-		return $this->root->asRoot()->getNamespace();
+		return $this->root->asRootComponent()->getNamespace();
 	}
 
 	public abstract function parse();

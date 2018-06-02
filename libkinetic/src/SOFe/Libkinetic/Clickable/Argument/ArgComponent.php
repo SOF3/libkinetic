@@ -58,7 +58,7 @@ class ArgComponent extends KineticComponent{
 	public function init() : void{
 		$this->validator = $this->resolveClass($this->validatorClass, RequestValidator::class);
 
-		$args = $this->node->nodeParent->asArguable()->getArguments();
+		$args = $this->node->nodeParent->asArguableComponent()->getArguments();
 		foreach($args as $i => $arg){
 			if($arg->getNode() === $this->node){
 				$this->next = $args[$i + 1] ?? null;

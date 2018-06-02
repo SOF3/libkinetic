@@ -47,7 +47,7 @@ class LinkComponent extends KineticComponent implements Clickable{
 				if($parent !== null && !$parent->hasComponent(AbsoluteIdComponent::class)){
 					$this->throw('target="$parent" is only allowed for children of nodes with an ID');
 				}
-				$value = $parent->asAbsoluteId()->getId();
+				$value = $parent->asAbsoluteIdComponent()->getId();
 			}
 			$this->targetId = $value;
 			return true;

@@ -47,16 +47,16 @@ class InteractEntryComponent extends KineticComponent{
 		}
 
 		if($name === "ITEM"){
-			return KineticNode::create(ItemFilterComponent::class)->addItemFilter($this->items);
+			return KineticNode::create(ItemFilterComponent::class)->addItemFilterComponent($this->items);
 		}
 		if($name === "BLOCK"){
-			return KineticNode::create(BlockFilterComponent::class)->addBlockFilter($this->blocks);
+			return KineticNode::create(BlockFilterComponent::class)->addBlockFilterComponent($this->blocks);
 		}
 		if($name === "TOUCH_MODE"){
-			return KineticNode::create(TouchModeFilterComponent::class)->addTouchModeFilter($this->touchModes);
+			return KineticNode::create(TouchModeFilterComponent::class)->addTouchModeFilterComponent($this->touchModes);
 		}
 		if($name === "FACE"){
-			return KineticNode::create(FaceFilterComponent::class)->addFaceFilter($this->faces);
+			return KineticNode::create(FaceFilterComponent::class)->addFaceFilterComponent($this->faces);
 		}
 
 		return null;

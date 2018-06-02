@@ -54,7 +54,7 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 	}
 
 	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured) : void{
-		CallSequence::forMethod($this->asElementParentWithFallbackRequired()->getElements(), "asFormComponent", function($elements) use ($onConfigured, $error, $player, $request, $explicit){
+		CallSequence::forMethod($this->asElementParentWithFallbackRequiredComponent()->getElements(), "asFormComponent", function($elements) use ($onConfigured, $error, $player, $request, $explicit){
 			$content = [];
 			$callback = [];
 			foreach($elements as $element){
@@ -75,10 +75,10 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 					return;
 				}
 
-				foreach($this->asElementParentWithFallbackRequired()->getElements() as $i => $element){
-					$id = $this->composeId($element->getNode()->asElement()->getId());
+				foreach($this->asElementParentWithFallbackRequiredComponent()->getElements() as $i => $element){
+					$id = $this->composeId($element->getNode()->asElementComponent()->getId());
 					$value = $callback[$i]();
-					$local = $element->getNode()->asRequired()->test($request->getUser());
+					$local = $element->getNode()->asRequiredComponent()->test($request->getUser());
 					$request->put($local, $id, $value);
 				}
 
@@ -92,9 +92,9 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 	}
 
 	protected function isRequestSufficient(WindowRequest $request, bool $baseRequired) : bool{
-		foreach($this->asElementParentWithFallbackRequired()->getElements() as $iElement){
-			$element = $iElement->getNode()->asElement();
-			$required = $iElement->getNode()->asRequired()->test($request->getUser()) ?? $baseRequired;
+		foreach($this->asElementParentWithFallbackRequiredComponent()->getElements() as $iElement){
+			$element = $iElement->getNode()->asElementComponent();
+			$required = $iElement->getNode()->asRequiredComponent()->test($request->getUser()) ?? $baseRequired;
 			if(!$required){
 				continue;
 			}

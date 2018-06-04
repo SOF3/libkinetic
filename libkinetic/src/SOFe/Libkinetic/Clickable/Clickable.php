@@ -36,7 +36,7 @@ use SOFe\Libkinetic\WindowRequest;
  * ClickablePeer executes something before the Clickable itself is run. Their executions are listed as follows, from the earliest to the latest:
  * - *Permission*: Checks if the user has the permissions described in `<permission>` to use this Clickable. Abandons this request if the user has no permission.
  * - *Arguable*: Ensures that the WindowRequest consists of sufficient arguments to use this Clickable. Abandons this request if the user cancelled the forms asking for the arguments.
- * - *All*: Triggers the `onClick` handler of the Clickable node if any. Abandons this request if the handler throws a `ClickInterruptedException`.
+ * - *All*: Triggers the `onClick` and `onClickAsync` handler of the Clickable node if any. Abandons this request if the handler throws a `ClickInterruptedException`.
  *
  * ## Clickable
  * There are different types of Clickable for different purposes:

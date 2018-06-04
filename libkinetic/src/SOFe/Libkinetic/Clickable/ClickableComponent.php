@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\Clickable;
 
 use Iterator;
 use SOFe\Libkinetic\AbsoluteIdComponent;
+use SOFe\Libkinetic\API\AsyncClickHandler;
 use SOFe\Libkinetic\API\ClickHandler;
 use SOFe\Libkinetic\ClickInterruptedException;
 use SOFe\Libkinetic\KineticComponent;
@@ -32,13 +33,17 @@ use SOFe\Libkinetic\WindowRequest;
 class ClickableComponent extends KineticComponent implements ClickablePeer{
 	/** @var string|null */
 	protected $indexName = null;
-	/** @var string|null  */
+	/** @var string|null */
 	protected $argName = null;
 
 	/** @var string|null */
 	protected $onClickClass = null;
-	/** @var ClickHandler=null */
+	/** @var string|null */
+	protected $onClickAsyncClass = null;
+	/** @var ClickHandler|null */
 	protected $onClick = null;
+	/** @var AsyncClickHandler|null */
+	protected $onClickAsync = null;
 
 	public function dependsComponents() : Iterator{
 		yield AbsoluteIdComponent::class;
@@ -49,12 +54,16 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 			$this->indexName = $value;
 			return true;
 		}
-		if($name === "ARG"."NAME"){
+		if($name === "ARG" . "NAME"){
 			$this->argName = $value;
 			return true;
 		}
 		if($name === "ON" . "CLICK"){
 			$this->onClickClass = $value;
+			return true;
+		}
+		if($name === "ON" . "CLICK" . "ASYNC"){
+			$this->onClickAsyncClass = $value;
 			return true;
 		}
 		return false;
@@ -73,6 +82,7 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 
 	public function init() : void{
 		$this->onClick = $this->resolveClass($this->onClickClass, ClickHandler::class);
+		$this->onClickAsync = $this->resolveClass($this->onClickAsyncClass, AsyncClickHandler::class);
 	}
 
 	public function getIndexName() : ?string{
@@ -87,6 +97,10 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 		return $this->onClick;
 	}
 
+	public function getOnClickAsync() : ?AsyncClickHandler{
+		return $this->onClickAsync;
+	}
+
 	public function onClick(WindowRequest $request, callable $onComplete) : void{
 		if($this->onClick !== null){
 			try{
@@ -94,6 +108,10 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 			}catch(ClickInterruptedException $e){
 				return;
 			}
+		}
+		if($this->onClickAsync !== null){
+			$this->onClickAsync->onClick($request, $onComplete);
+			return;
 		}
 		$onComplete();
 	}

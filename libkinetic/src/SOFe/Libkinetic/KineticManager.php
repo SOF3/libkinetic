@@ -69,7 +69,7 @@ class KineticManager{
 		}
 		$this->adapter = $adapter;
 		$plugin->getServer()->getPluginManager()->registerEvents(new FormListener($this), $plugin);
-		$plugin->getServer()->getScheduler()->scheduleRepeatingTask(new CallbackTask($plugin, [$this, "cleanExpiredForms"]), 200);
+		$plugin->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "cleanExpiredForms"]), 200);
 
 		if(extension_loaded("xml")){
 			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");

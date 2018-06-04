@@ -22,14 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Util;
 
-use pocketmine\plugin\Plugin;
-use pocketmine\scheduler\PluginTask;
+use pocketmine\scheduler\Task;
 
-class CallbackTask extends PluginTask{
+class CallbackTask extends Task{
 	protected $callback;
 
-	public function __construct(Plugin $owner, callable $callback){
-		parent::__construct($owner);
+	public function __construct(callable $callback){
 		$this->callback = $callback;
 	}
 

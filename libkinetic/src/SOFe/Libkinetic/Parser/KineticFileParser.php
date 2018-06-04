@@ -56,7 +56,8 @@ abstract class KineticFileParser{
 	public function __construct(){
 	}
 
-	public function startElement($parser, string $elementName, array $attrs) : void{
+	public function startElement(/** @noinspection PhpUnusedParameterInspection */
+		$parser, string $elementName, array $attrs) : void{
 		$this->flushBuffer();
 
 		$isRoot = $this->leaf === null;
@@ -117,7 +118,8 @@ abstract class KineticFileParser{
 		}
 	}
 
-	public function endElement($parser, string $name) : void{
+	public function endElement(/** @noinspection PhpUnusedParameterInspection */
+		$parser, string $name) : void{
 		$this->flushBuffer();
 		if($name !== $this->leaf->nodeName){
 			throw new ParseException("Closing tag </$name> does not match opening tag <{$this->leaf->nodeName}>");
@@ -140,7 +142,8 @@ abstract class KineticFileParser{
 		}
 	}
 
-	public function parseText($parser, string $data) : void{
+	public function parseText(/** @noinspection PhpUnusedParameterInspection */
+		$parser, string $data) : void{
 		$this->dataBuffer .= $data;
 	}
 

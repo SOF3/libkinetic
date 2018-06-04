@@ -25,15 +25,14 @@ namespace SOFe\Libkinetic\Form;
 use pocketmine\event\Listener;
 use pocketmine\event\server\DataPacketReceiveEvent;
 use pocketmine\network\mcpe\protocol\ModalFormResponsePacket;
-use SOFe\Libkinetic\KineticManager;
 use function json_decode;
 
 class FormListener implements Listener{
-	/** @var KineticManager */
-	protected $manager;
+	/** @var FormHandler */
+	protected $handler;
 
-	public function __construct(KineticManager $actionManager){
-		$this->manager = $actionManager;
+	public function __construct(FormHandler $handler){
+		$this->handler = $handler;
 	}
 
 	/**
@@ -44,7 +43,7 @@ class FormListener implements Listener{
 		if($event->getPacket()::NETWORK_ID === ModalFormResponsePacket::NETWORK_ID){
 			/** @var ModalFormResponsePacket $packet */
 			$packet = $event->getPacket();
-			$this->manager->handleFormResponse($event->getPlayer(), $packet->formId, json_decode($packet->formData));
+			$this->handler->handleFormResponse($event->getPlayer(), $packet->formId, json_decode($packet->formData));
 		}
 	}
 }

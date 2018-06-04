@@ -67,7 +67,7 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 				"content" => $content,
 			];
 
-			$this->getManager()->sendForm($player, $formData, function(?array $response) use ($callback, $onConfigured, $request, $explicit) : void{
+			$this->getManager()->getFormHandler()->sendForm($player, $formData, function(?array $response) use ($callback, $onConfigured, $request, $explicit) : void{
 				if($response === null){
 					if($explicit){
 						$onConfigured();

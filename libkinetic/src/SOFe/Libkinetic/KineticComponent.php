@@ -62,23 +62,28 @@ abstract class KineticComponent{
 		}
 	}
 
-	public function setAttribute(string $name, string $value) : bool{
+	public function setAttribute(/** @noinspection PhpUnusedParameterInspection */
+		string $name, string $value) : bool{
 		return false;
 	}
 
-	public function setAttributeNS(string $name, string $value, string $ns) : bool{
+	public function setAttributeNS(/** @noinspection PhpUnusedParameterInspection */
+		string $name, string $value, string $ns) : bool{
 		return false;
 	}
 
-	public function startChild(string $name) : ?KineticNode{
+	public function startChild(/** @noinspection PhpUnusedParameterInspection */
+		string $name) : ?KineticNode{
 		return null;
 	}
 
-	public function startChildNS(string $name, string $ns) : ?KineticNode{
+	public function startChildNS(/** @noinspection PhpUnusedParameterInspection */
+		string $name, string $ns) : ?KineticNode{
 		return null;
 	}
 
-	public function acceptText(string $text) : bool{
+	public function acceptText(/** @noinspection PhpUnusedParameterInspection */
+		string $text) : bool{
 		return false;
 	}
 

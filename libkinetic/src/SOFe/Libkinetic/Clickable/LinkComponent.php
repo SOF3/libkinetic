@@ -33,9 +33,11 @@ class LinkComponent extends KineticComponent implements Clickable{
 	/** @var string */
 	protected $targetId;
 	/** @var KineticNode */
-	protected $target;public function dependsComponents() : Iterator{
-	yield ClickableComponent::class;
-}
+	protected $target;
+
+	public function dependsComponents() : Iterator{
+		yield ClickableComponent::class;
+	}
 
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "TARGET"){

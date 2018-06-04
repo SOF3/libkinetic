@@ -27,38 +27,28 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
-use RuntimeException;
 use SOFe\Libkinetic\Clickable\Clickable;
-use SOFe\Libkinetic\Form\Form;
-use SOFe\Libkinetic\Form\FormListener;
-use SOFe\Libkinetic\Form\ResendFormException;
+use SOFe\Libkinetic\Form\FormHandler;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
-use SOFe\Libkinetic\Util\CallbackTask;
-use TypeError;
 use function class_uses;
 use function extension_loaded;
 use function in_array;
 use function mb_strpos;
 use function mb_substr;
-use function microtime;
-use function random_int;
 use function str_replace;
 use function substr;
 
 class KineticManager{
-	public static $FORM_RESEND_TIME = 10.0;
-
 	/** @var Plugin */
 	protected $plugin;
 	/** @var KineticAdapter */
 	protected $adapter;
 	/** @var KineticFileParser */
 	protected $parser;
-
-	/** @var Form[] formId => Form */
-	protected $forms = [];
+	/** @var FormHandler */
+	protected $formHandler;
 
 	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
 		KineticFileParser::$hasPm = true;
@@ -68,8 +58,8 @@ class KineticManager{
 			$adapter->kinetic_setPlugin($plugin);
 		}
 		$this->adapter = $adapter;
-		$plugin->getServer()->getPluginManager()->registerEvents(new FormListener($this), $plugin);
-		$plugin->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "cleanExpiredForms"]), 200);
+
+		$this->formHandler = new FormHandler($this);
 
 		if(extension_loaded("xml")){
 			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");
@@ -114,6 +104,10 @@ class KineticManager{
 
 	public function getParser() : KineticFileParser{
 		return $this->parser;
+	}
+
+	public function getFormHandler() : FormHandler{
+		return $this->formHandler;
 	}
 
 
@@ -209,7 +203,6 @@ class KineticManager{
 		return $class->newInstance($args);
 	}
 
-
 //	public function clickWindow(Player $player, string $id, WindowRequest $request) : void{
 //		if(!isset($this->parser->idMap[$id]) || !($this->parser->idMap[$id] instanceof WindowNode)){
 //			throw new \InvalidArgumentException("$id does not exist or is not a window node");
@@ -222,55 +215,4 @@ class KineticManager{
 //		}/** @noinspection BadExceptionsProcessingInspection */catch(ClickInterruptedException $ex){
 //		}
 //	}
-
-
-	public function sendForm(Player $target, array $formData, callable $handler) : int{
-		$form = new Form();
-		$form->formId = random_int(0, 0x7FFFFFFF);
-		$form->formData = $formData;
-		$form->onReceive = $handler;
-		$form->target = $target;
-
-		$this->forms[$form->formId] = $form;
-		$form->sendPacket();
-		return $form->formId;
-	}
-
-	public function handleFormResponse(Player $player, int $formId, $response) : void{
-		if(!isset($this->forms[$formId])){
-			return;
-		}
-
-		$form = $this->forms[$formId];
-		if($player !== $form->target){
-			$this->plugin->getLogger()->error("{$player->getName()} tried respond to a form that was sent to {$form->target->getName()}. There is 99.99999999999999% chance that the plugin is outdated, shoghi needs to be blamed or the player is hacking poorly.");
-			return;
-		}
-		unset($this->forms[$formId]);
-
-		try{
-			$result = ($form->onReceive)($response, $player);
-			if($result === true){
-				$this->sendForm($player, $form->formData, $form->onReceive);
-			}
-		}/** @noinspection BadExceptionsProcessingInspection */catch(ResendFormException $ex){
-			$this->forms[$formId] = $form;
-			$form->sendPacket();
-		}catch(TypeError|InvalidFormResponseException $error){
-			throw new RuntimeException("{$player->getName()} responded to a form with invalid data. Is {$this->plugin->getName()} using an outdated version of libkinetic?", 0, $error);
-		}
-	}
-
-	public function cleanExpiredForms() : void{
-		foreach($this->forms as $formId => $form){
-			if(!$form->target->isOnline()){
-				unset($this->forms[$formId]);
-				continue;
-			}
-
-			if($form->sendTime + self::$FORM_RESEND_TIME < microtime(true)){
-				$form->sendPacket();
-			}
-		}
-	}
 }

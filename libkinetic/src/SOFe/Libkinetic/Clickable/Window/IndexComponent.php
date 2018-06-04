@@ -75,7 +75,7 @@ class IndexComponent extends KineticComponent implements Clickable, ClickableCon
 				"content" => $request->translate($this->asWindowComponent()->getSynopsis()),
 				"buttons" => $buttons,
 			];
-			$this->manager->sendForm($player, $form, function(int $id) use ($request, $list){
+			$this->manager->getFormHandler()->sendForm($player, $form, function(int $id) use ($request, $list){
 				if(!isset($list[$id])){
 					throw new InvalidFormResponseException("Undefined \$list[$id]");
 				}

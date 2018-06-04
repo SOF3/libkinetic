@@ -51,7 +51,7 @@ class ArguableComponent extends KineticComponent implements ClickablePeer{
 			return;
 		}
 
-		$this->args[0]->configure($request,false, $onComplete);
+		$this->args[0]->configure($request, false, $onComplete);
 		CallSequence::forMethod($this->args, "configure", $onComplete, [$request], [false]);
 	}
 

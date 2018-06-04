@@ -42,11 +42,13 @@ trait KineticAdapterBase{
 		$this->plugin = $plugin;
 	}
 
-	public function hasMessage(string $identifier) : bool{
+	public function hasMessage(/** @noinspection PhpUnusedParameterInspection */
+		string $identifier) : bool{
 		return true;
 	}
 
-	public function getMessage(?CommandSender $sender, string $identifier, array $parameters) : string{
+	public function getMessage(/** @noinspection PhpUnusedParameterInspection */
+		?CommandSender $sender, string $identifier, array $parameters) : string{
 		return str_replace(array_map(function(string $key) : string{
 			return "\${{$key}}";
 		}, array_keys($parameters)), array_values($parameters), $identifier);

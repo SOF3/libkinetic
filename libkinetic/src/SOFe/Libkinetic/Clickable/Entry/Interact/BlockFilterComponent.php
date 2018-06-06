@@ -63,7 +63,7 @@ class BlockFilterComponent extends KineticComponent{
 		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->resolveConfigNumber($this->blockId);
 		$this->resolveConfigNumber($this->blockDamage);
 	}

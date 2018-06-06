@@ -25,8 +25,9 @@ namespace SOFe\Libkinetic\Clickable\Window;
 use InvalidArgumentException;
 use Iterator;
 use pocketmine\Player;
-use SOFe\Libkinetic\Clickable\Clickable;
-use SOFe\Libkinetic\Clickable\ClickableContainer;
+use SOFe\Libkinetic\Clickable\ClickableContainerInterface;
+use SOFe\Libkinetic\Clickable\ClickableContainerTrait;
+use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\Clickable\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\ClickableTrait;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
@@ -36,9 +37,10 @@ use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
+use function array_map;
 
-class IndexComponent extends KineticComponent implements Clickable, ClickableContainer{
-	use ClickableTrait;
+class IndexComponent extends KineticComponent implements ClickableContainerInterface{
+	use ClickableContainerTrait;
 
 	public function dependsComponents() : Iterator{
 		yield DirectEntryClickableComponent::class;
@@ -47,7 +49,7 @@ class IndexComponent extends KineticComponent implements Clickable, ClickableCon
 	}
 
 	protected function onClickImpl(WindowRequest $request) : void{
-		/** @var Clickable[]|KineticComponent[] $list */
+		/** @var ClickableInterface[]|KineticComponent[] $list */
 		$list = [];
 		foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
 			if($clickable->getNode()->hasComponent(PermissionClickableComponent::class)){
@@ -91,12 +93,20 @@ class IndexComponent extends KineticComponent implements Clickable, ClickableCon
 		}
 	}
 
-	public function getCommandPathFor(KineticNode $node) : string{
+	public function getCommandPathFor(KineticNode $node) : ?array{
 		foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
 			if($clickable->getNode() === $node){
-				return $clickable->asClickableComponent()->getArgName();
+				return [$clickable->asClickableComponent()->getArgName()];
 			}
 		}
 		throw new InvalidArgumentException("Attempt to get command path for non-child node");
+	}
+
+	public function getCommandPaths() : array{
+		$output = [];
+
+		return array_map(function(KineticComponent $component) : string{
+			return $component->asClickableComponent()->getArgName();
+		}, $this->asClickableParentComponent()->getClickableList());
 	}
 }

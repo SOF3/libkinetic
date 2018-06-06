@@ -27,7 +27,7 @@ use pocketmine\math\Vector3;
 use SOFe\Libkinetic\KineticComponent;
 use function strtoupper;
 
-class FaceFilterComponent extends KineticComponent implements InteractFilter{
+class FaceFilterInterfaceComponent extends KineticComponent implements InteractFilterInterface{
 	public const SIDES = [
 		"TOP" => Vector3::SIDE_UP,
 		"UP" => Vector3::SIDE_UP,
@@ -46,7 +46,7 @@ class FaceFilterComponent extends KineticComponent implements InteractFilter{
 		return true;
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$text = $this->face;
 		$this->resolveConfigString($text);
 		if(!isset(self::SIDES[strtoupper($text)])){

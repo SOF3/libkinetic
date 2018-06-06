@@ -60,7 +60,7 @@ class RequiredComponent extends KineticComponent{
 		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		if($this->predicate !== null){
 			$this->predicate = $this->resolveClass($this->predicateClass, UserPredicate::class);
 		}

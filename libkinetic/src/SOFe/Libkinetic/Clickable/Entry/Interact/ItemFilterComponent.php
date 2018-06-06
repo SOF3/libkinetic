@@ -63,7 +63,7 @@ class ItemFilterComponent extends KineticComponent{
 		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->resolveConfigNumber($this->itemId);
 		$this->resolveConfigNumber($this->itemDamage);
 	}

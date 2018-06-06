@@ -66,7 +66,7 @@ class PermissionComponent extends KineticComponent{
 		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->predicate = $this->usesPredicate ? $this->resolveClass($this->name, UserPredicate::class) : new NamedUserPredicate($this->name, $this->need);
 		$this->requireTranslation($this->message);
 	}

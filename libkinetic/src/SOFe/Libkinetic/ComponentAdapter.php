@@ -23,18 +23,23 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 use SOFe\Libkinetic\Clickable\Argument\ArgComponent;
+use SOFe\Libkinetic\Clickable\Argument\ArgInterface;
 use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
 use SOFe\Libkinetic\Clickable\Argument\SimpleArgComponent;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
+use SOFe\Libkinetic\Clickable\ClickableContainerInterface;
+use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\Clickable\ClickableParentComponent;
+use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\BlockFilterComponent;
-use SOFe\Libkinetic\Clickable\Entry\Interact\FaceFilterComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\FaceFilterInterfaceComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\InteractFilterInterface;
 use SOFe\Libkinetic\Clickable\Entry\Interact\ItemFilterComponent;
-use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterComponent;
+use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterInterfaceComponent;
 use SOFe\Libkinetic\Clickable\ExitComponent;
 use SOFe\Libkinetic\Clickable\LinkComponent;
 use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
@@ -45,7 +50,9 @@ use SOFe\Libkinetic\Clickable\Window\ListComponent;
 use SOFe\Libkinetic\Element\DropdownOptionComponent;
 use SOFe\Libkinetic\Element\DynamicDropdownComponent;
 use SOFe\Libkinetic\Element\DynamicStepSliderComponent;
+use SOFe\Libkinetic\Element\EditableElementInterface;
 use SOFe\Libkinetic\Element\ElementComponent;
+use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Element\ElementParentComponent;
 use SOFe\Libkinetic\Element\ElementParentWithFallbackRequiredComponent;
 use SOFe\Libkinetic\Element\InputComponent;
@@ -66,6 +73,8 @@ use SOFe\Libkinetic\Root\RootComponent;
  */
 trait ComponentAdapter{
 	public abstract function getComponent(string $class) : KineticComponent;
+
+	public abstract function findComponentsByInterface(string $interface, int $assertMinimum = 0) : array;
 
 
 	public final function asAbsoluteIdComponent() : AbsoluteIdComponent{
@@ -218,17 +227,17 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asFaceFilterComponent() : FaceFilterComponent{
-		return $this->getComponent(FaceFilterComponent::class);
+	public final function asFaceFilterInterfaceComponent() : FaceFilterInterfaceComponent{
+		return $this->getComponent(FaceFilterInterfaceComponent::class);
 	}
 
-	public final function getFaceFilterComponent(&$component) : KineticNode{
-		$component = $this->getComponent(FaceFilterComponent::class);
+	public final function getFaceFilterInterfaceComponent(&$component) : KineticNode{
+		$component = $this->getComponent(FaceFilterInterfaceComponent::class);
 		return $this;
 	}
 
-	public final function addFaceFilterComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(FaceFilterComponent::class);
+	public final function addFaceFilterInterfaceComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(FaceFilterInterfaceComponent::class);
 		return $this;
 	}
 
@@ -263,17 +272,17 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asTouchModeFilterComponent() : TouchModeFilterComponent{
-		return $this->getComponent(TouchModeFilterComponent::class);
+	public final function asTouchModeFilterInterfaceComponent() : TouchModeFilterInterfaceComponent{
+		return $this->getComponent(TouchModeFilterInterfaceComponent::class);
 	}
 
-	public final function getTouchModeFilterComponent(&$component) : KineticNode{
-		$component = $this->getComponent(TouchModeFilterComponent::class);
+	public final function getTouchModeFilterInterfaceComponent(&$component) : KineticNode{
+		$component = $this->getComponent(TouchModeFilterInterfaceComponent::class);
 		return $this;
 	}
 
-	public final function addTouchModeFilterComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(TouchModeFilterComponent::class);
+	public final function addTouchModeFilterInterfaceComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(TouchModeFilterInterfaceComponent::class);
 		return $this;
 	}
 
@@ -635,5 +644,85 @@ trait ComponentAdapter{
 	public final function addWindowComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(WindowComponent::class);
 		return $this;
+	}
+
+
+	public final function asArgInterface() : ArgInterface{
+		return $this->findComponentsByInterface(ArgInterface::class, 1)[0];
+	}
+
+	/** @return ArgInterface[] */
+	public final function getArgInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(ArgInterface::class, $assertMinimum);
+	}
+
+
+	public final function asClickableContainerInterface() : ClickableContainerInterface{
+		return $this->findComponentsByInterface(ClickableContainerInterface::class, 1)[0];
+	}
+
+	/** @return ClickableContainerInterface[] */
+	public final function getClickableContainerInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(ClickableContainerInterface::class, $assertMinimum);
+	}
+
+
+	public final function asClickableInterface() : ClickableInterface{
+		return $this->findComponentsByInterface(ClickableInterface::class, 1)[0];
+	}
+
+	/** @return ClickableInterface[] */
+	public final function getClickableInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(ClickableInterface::class, $assertMinimum);
+	}
+
+
+	public final function asClickablePeerInterface() : ClickablePeerInterface{
+		return $this->findComponentsByInterface(ClickablePeerInterface::class, 1)[0];
+	}
+
+	/** @return ClickablePeerInterface[] */
+	public final function getClickablePeerInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(ClickablePeerInterface::class, $assertMinimum);
+	}
+
+
+	public final function asInteractFilterInterface() : InteractFilterInterface{
+		return $this->findComponentsByInterface(InteractFilterInterface::class, 1)[0];
+	}
+
+	/** @return InteractFilterInterface[] */
+	public final function getInteractFilterInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(InteractFilterInterface::class, $assertMinimum);
+	}
+
+
+	public final function asEditableElementInterface() : EditableElementInterface{
+		return $this->findComponentsByInterface(EditableElementInterface::class, 1)[0];
+	}
+
+	/** @return EditableElementInterface[] */
+	public final function getEditableElementInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(EditableElementInterface::class, $assertMinimum);
+	}
+
+
+	public final function asElementInterface() : ElementInterface{
+		return $this->findComponentsByInterface(ElementInterface::class, 1)[0];
+	}
+
+	/** @return ElementInterface[] */
+	public final function getElementInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(ElementInterface::class, $assertMinimum);
+	}
+
+
+	public final function asIntermediateNodeInterface() : IntermediateNodeInterface{
+		return $this->findComponentsByInterface(IntermediateNodeInterface::class, 1)[0];
+	}
+
+	/** @return IntermediateNodeInterface[] */
+	public final function getIntermediateNodeInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(IntermediateNodeInterface::class, $assertMinimum);
 	}
 }

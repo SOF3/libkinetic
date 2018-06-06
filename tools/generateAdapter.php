@@ -10,16 +10,21 @@ if(is_file($target)){
 	unlink($target);
 }
 
-$fqnList = [];
+$componentList = [];
+$interfaceList = [];
 
 /** @var SplFileInfo $file */
 foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(".")) as $file){
 	$path = (string) $file;
-	if($path{0} === "." && ($path{1} === "/" || $path{1} === "\\") && str_endsWith($path, "Component.php")){
-
-		$fqn = str_replace("/", "\\", substr($path, 2, -4));
-		if($fqn !== "SOFe\\Libkinetic\\KineticComponent"){
-			$fqnList[] = $fqn;
+	if($path{0} === "." && ($path{1} === "/" || $path{1} === "\\")){
+		if(str_endsWith($path, "Component.php")){
+			$fqn = str_replace("/", "\\", substr($path, 2, -4));
+			if($fqn !== "SOFe\\Libkinetic\\KineticComponent"){
+				$componentList[] = $fqn;
+			}
+		}elseif(str_endsWith($path, "Interface.php")){
+			$fqn = str_replace("/", "\\", substr($path, 2, -4));
+			$interfaceList[] = $fqn;
 		}
 	}
 }
@@ -49,10 +54,20 @@ $output = "<?php /** @noinspection PhpIncompatibleReturnTypeInspection */\n" .
 	"namespace SOFe\\Libkinetic;\n" .
 	"\n";
 
-foreach($fqnList as $item){
+$uses = [];
+foreach($componentList as $item){
 	if(strpos($item, "\\", strlen("SOFe\\Libkinetic\\")) !== false){
-		$output .= "use $item;\n";
+		$uses[] = $item;
 	}
+}
+foreach($interfaceList as $item){
+	if(strpos($item, "\\", strlen("SOFe\\Libkinetic\\")) !== false){
+		$uses[] = $item;
+	}
+}
+sort($uses);
+foreach($uses as $item){
+	$output .= "use $item;\n";
 }
 
 $output .= "\n";
@@ -63,23 +78,39 @@ $output .= " * (This file would be unneeded if we had template functions in PHP)
 $output .= " */\n";
 $output .= "trait ComponentAdapter{\n";
 $output .= "\tpublic abstract function getComponent(string \$class) : KineticComponent;\n";
+$output .= "\n";
+$output .= "\tpublic abstract function findComponentsByInterface(string \$interface, int \$assertMinimum = 0) : array;\n";
 
-foreach($fqnList as $item){
+foreach($componentList as $item){
 	$baseNameComponent = array_slice(explode("\\", $item), -1)[0];
-//	$baseName = substr($baseNameComponent, 0, -strlen("Component"));
 
 	$output .= "\n\n";
-	$output .= "\tpublic final function as{$baseNameComponent}() : $baseNameComponent{\n";
+	$output .= "\tpublic final function as{$baseNameComponent}() : {$baseNameComponent}{\n";
 	$output .= "\t\treturn \$this->getComponent($baseNameComponent::class);\n";
-	$output .= "\t}\n\n";
-
+	$output .= "\t}\n";
+	$output .= "\n";
 	$output .= "\tpublic final function get{$baseNameComponent}(&\$component) : KineticNode{\n";
-	$output .= "\t\t\$component = \$this->getComponent($baseNameComponent::class);\n";
+	$output .= "\t\t\$component = \$this->getComponent({$baseNameComponent}::class);\n";
 	$output .= "\t\treturn \$this;\n";
-	$output .= "\t}\n\n";
+	$output .= "\t}\n";
+	$output .= "\n";
 	$output .= "\tpublic final function add{$baseNameComponent}(array &\$component) : KineticNode{\n";
-	$output .= "\t\t\$component[] = \$this->getComponent($baseNameComponent::class);\n";
+	$output .= "\t\t\$component[] = \$this->getComponent({$baseNameComponent}::class);\n";
 	$output .= "\t\treturn \$this;\n";
+	$output .= "\t}\n";
+}
+
+foreach($interfaceList as $item){
+	$baseNameInterface = array_slice(explode("\\", $item), -1)[0];
+
+	$output .= "\n\n";
+	$output .= "\tpublic final function as{$baseNameInterface}() : {$baseNameInterface}{\n";
+	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, 1)[0];\n";
+	$output .= "\t}\n";
+	$output .= "\n";
+	$output .= "\t/** @return {$baseNameInterface}[] */\n";
+	$output .= "\tpublic final function get{$baseNameInterface}s(int \$assertMinimum = 0) : array{\n";
+	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, \$assertMinimum);\n";
 	$output .= "\t}\n";
 }
 

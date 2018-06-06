@@ -49,7 +49,7 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 		return false;
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->requireTranslation($this->title);
 	}
 

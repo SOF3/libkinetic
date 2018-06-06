@@ -22,6 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-interface IntermediateNode{
+interface IntermediateNodeInterface{
 
 }

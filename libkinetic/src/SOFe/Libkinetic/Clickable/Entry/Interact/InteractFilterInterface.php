@@ -23,33 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Entry\Interact;
 
 use pocketmine\event\player\PlayerInteractEvent;
-use SOFe\Libkinetic\KineticComponent;
-use function constant;
-use function defined;
-use function strtoupper;
 
-class TouchModeFilterComponent extends KineticComponent implements InteractFilter{
-	protected $mode;
-
-	public function acceptText(string $text) : bool{
-		$this->mode = $text;
-		return true;
-	}
-
-	public function init() : void{
-		$text = $this->mode;
-		$this->resolveConfigString($text);
-		if(!defined($constant = PlayerInteractEvent::class . "::" . strtoupper($text))){
-			$this->throw("$text is not a valid touch mode");
-		}
-		$this->mode = constant($constant);
-	}
-
-	public function getMode() : int{
-		return $this->mode;
-	}
-
-	public function test(PlayerInteractEvent $event) : bool{
-		return $event->getAction() === $this->mode;
-	}
+interface InteractFilterInterface{
+	public function test(PlayerInteractEvent $event) : bool;
 }

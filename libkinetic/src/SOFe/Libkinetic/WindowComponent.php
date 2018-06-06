@@ -52,7 +52,7 @@ class WindowComponent extends KineticComponent{
 		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->requireTranslation($this->title);
 		$this->requireTranslation($this->synopsis);
 	}

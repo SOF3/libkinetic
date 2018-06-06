@@ -28,7 +28,7 @@ use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 
-class ExitComponent extends KineticComponent implements Clickable{
+class ExitComponent extends KineticComponent implements ClickableInterface{
 	use ClickableTrait;
 
 	public function dependsComponents() : Iterator{

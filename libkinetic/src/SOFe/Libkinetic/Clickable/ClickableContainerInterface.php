@@ -24,6 +24,25 @@ namespace SOFe\Libkinetic\Clickable;
 
 use SOFe\Libkinetic\KineticNode;
 
-interface ClickableContainer{
-	public function getCommandPathFor(KineticNode $node) : string;
+interface ClickableContainerInterface extends ClickableInterface{
+	/**
+	 * Given a child node, return the command path from this node's that resolves into the child node.
+	 *
+	 * This method should be the inverse operation of getNodeFor().
+	 *
+	 * @param KineticNode $node
+	 * @return string[]
+	 */
+	public function getCommandPathFor(KineticNode $node) : ?array;
+
+	/**
+	 * @return string[][]|KineticNode[] a binary array where, for each element, the first sub-element is a string[] and the second sub-element is a KineticNode.
+	 */
+	public function getCommandPaths() : array;
+
+	/**
+	 * @param string $commandPath
+	 * @return KineticNode|null
+	 */
+	public function getNodeFor(string $commandPath) : ?KineticNode;
 }

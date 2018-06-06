@@ -33,7 +33,7 @@ use function assert;
  * Accepts `<index>`, `<list>`, `<info>`, `<exit>`, `<link>`
  */
 class ClickableParentComponent extends KineticComponent{
-	/** @var Clickable[] */
+	/** @var ClickableInterface[] */
 	protected $clickables = [];
 
 	public function startChild(string $name) : ?KineticNode{
@@ -58,7 +58,7 @@ class ClickableParentComponent extends KineticComponent{
 	public function endElement() : void{
 		assert((function(array $array) : bool{
 			foreach($array as $item){
-				if(!($item instanceof Clickable)){
+				if(!($item instanceof ClickableInterface)){
 					return false;
 				}
 			}
@@ -67,7 +67,7 @@ class ClickableParentComponent extends KineticComponent{
 	}
 
 	/**
-	 * @return Clickable[]|KineticComponent[]
+	 * @return ClickableInterface[]|KineticComponent[]
 	 */
 	public function getClickableList() : array{
 		return $this->clickables;

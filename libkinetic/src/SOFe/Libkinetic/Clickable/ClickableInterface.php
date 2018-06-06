@@ -58,6 +58,6 @@ use SOFe\Libkinetic\WindowRequest;
  *   - For players, it is presented as a MenuForm. `<before>` is displayed before the data list and `<after>` is displayed after the data list, as if they are an `<index>`. For the data list buttons, clicking on any would trigger the Clickable child in `<each>`, with the value represented by the datum passed as an argument. This is more or less same as a `<listArg>`, and similar to a `<simpleArg>` dynamic dropdown. The main difference is that the options provided in the `<list>` itself should already be an informative list, while `<listArg>` should be used for list options that aren't designed to provide information.
  * - `<editArg>` is only allowed in arguable window clickables, which will explicitly open an argument form.
  */
-interface Clickable{
+interface ClickableInterface{
 	public function onClick(WindowRequest $request) : void;
 }

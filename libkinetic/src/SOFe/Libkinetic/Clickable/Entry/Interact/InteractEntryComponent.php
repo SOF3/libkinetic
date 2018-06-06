@@ -32,9 +32,9 @@ class InteractEntryComponent extends KineticComponent{
 	protected $items = [];
 	/** @var BlockFilterComponent[] */
 	protected $blocks = [];
-	/** @var TouchModeFilterComponent[] */
+	/** @var TouchModeFilterInterfaceComponent[] */
 	protected $touchModes = [];
-	/** @var FaceFilterComponent[] */
+	/** @var FaceFilterInterfaceComponent[] */
 	protected $faces = [];
 
 //	public function setAttribute(string $name, string $value) : bool{
@@ -54,10 +54,10 @@ class InteractEntryComponent extends KineticComponent{
 			return KineticNode::create(BlockFilterComponent::class)->addBlockFilterComponent($this->blocks);
 		}
 		if($name === "TOUCH_MODE"){
-			return KineticNode::create(TouchModeFilterComponent::class)->addTouchModeFilterComponent($this->touchModes);
+			return KineticNode::create(TouchModeFilterInterfaceComponent::class)->addTouchModeFilterComponent($this->touchModes);
 		}
 		if($name === "FACE"){
-			return KineticNode::create(FaceFilterComponent::class)->addFaceFilterComponent($this->faces);
+			return KineticNode::create(FaceFilterInterfaceComponent::class)->addFaceFilterComponent($this->faces);
 		}
 
 		return null;

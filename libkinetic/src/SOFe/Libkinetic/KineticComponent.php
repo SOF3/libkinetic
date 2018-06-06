@@ -56,37 +56,79 @@ abstract class KineticComponent{
 		return $this->manager;
 	}
 
+	/**
+	 * Returns an iterator (usually a Generator) that iterates over the class names of the components that this component must also be used with.
+	 *
+	 * @return Iterator
+	 */
 	public function dependsComponents() : Iterator{
 		if(false){
 			yield;
 		}
 	}
 
+	/**
+	 * Apply an attribute to this component. Returns true if the attribute is consumed by this component, false otherwise.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @return bool
+	 */
 	public function setAttribute(/** @noinspection PhpUnusedParameterInspection */
 		string $name, string $value) : bool{
 		return false;
 	}
 
+	/**
+	 * A variant of setAttribute() with non-default namespace.
+	 *
+	 * @param string $name
+	 * @param string $value
+	 * @param string $ns
+	 * @return bool
+	 */
 	public function setAttributeNS(/** @noinspection PhpUnusedParameterInspection */
 		string $name, string $value, string $ns) : bool{
 		return false;
 	}
 
+	/**
+	 * Resolve a child element into a node with components. Returns null if this node name is not recognized by this component.
+	 *
+	 * @param string $name
+	 * @return null|KineticNode
+	 */
 	public function startChild(/** @noinspection PhpUnusedParameterInspection */
 		string $name) : ?KineticNode{
 		return null;
 	}
 
+	/**
+	 * A variant of startChild() with non-default namespace.
+	 *
+	 * @param string $name
+	 * @param string $ns
+	 * @return null|KineticNode
+	 */
 	public function startChildNS(/** @noinspection PhpUnusedParameterInspection */
 		string $name, string $ns) : ?KineticNode{
 		return null;
 	}
 
+	/**
+	 * Handles the cdata in the element. Returns true if this component consumes the cdata.
+	 *
+	 * @param string $text
+	 * @return bool
+	 */
 	public function acceptText(/** @noinspection PhpUnusedParameterInspection */
 		string $text) : bool{
 		return false;
 	}
 
+	/**
+	 * Validates the element after all attributes and child elements have been resolved
+	 */
 	public function endElement() : void{
 	}
 
@@ -94,22 +136,31 @@ abstract class KineticComponent{
 		$this->manager = $manager;
 	}
 
+	/**
+	 * Validates and resolves values that are only available in runtime context
+	 */
+	public function resolve() : void{
+	}
+
+	/**
+	 * Register handlers with the PocketMine interface in runtime context
+	 */
 	public function init() : void{
 	}
 
-	protected function requireAttribute(string $name, &$field) : void{
+	protected final function requireAttribute(string $name, &$field) : void{
 		if($field === null){
 			throw new InvalidNodeException("Missing attribute $name", $this->node);
 		}
 	}
 
-	protected function requireChild(string $name, &$field) : void{
+	protected final function requireChild(string $name, &$field) : void{
 		if($field === null){
 			throw new InvalidNodeException("Missing child <$name>", $this->node);
 		}
 	}
 
-	protected function requireChildren(string $name, array $field, int $min, int $max = PHP_INT_MAX) : void{
+	protected final function requireChildren(string $name, array $field, int $min, int $max = PHP_INT_MAX) : void{
 		$cnt = count($field);
 		if($cnt < $min){
 			throw new InvalidNodeException("There must be at least $min <$name>", $this->node);
@@ -119,26 +170,26 @@ abstract class KineticComponent{
 		}
 	}
 
-	protected function requireText(&$field) : void{
+	protected final function requireText(&$field) : void{
 		if($field === null){
 			throw new InvalidNodeException("Missing text content", $this->node);
 		}
 	}
 
-	protected function requireTranslation(?string $identifier) : void{
+	protected final function requireTranslation(?string $identifier) : void{
 		if($identifier !== null){
 			$this->manager->requireTranslation($this->node, $identifier);
 		}
 	}
 
-	protected function resolveClass(?string $fqn, ?string $super) : ?object{
+	protected final function resolveClass(?string $fqn, ?string $super) : ?object{
 		if($fqn === null){
 			return null;
 		}
 		return $this->manager->resolveClass($this->node, $fqn, $super);
 	}
 
-	protected function resolveConfigString(?string &$string) : void{
+	protected final function resolveConfigString(?string &$string) : void{
 		if($string !== null && stripos($string, "config:") === 0){
 			$configKey = substr($string, 7);
 			if(($pos = strpos($configKey, "=")) !== false){
@@ -158,7 +209,7 @@ abstract class KineticComponent{
 		}
 	}
 
-	protected function resolveConfigNumber(&$number) : void{
+	protected final function resolveConfigNumber(&$number) : void{
 		if(is_string($number) && stripos($number, "config:") === 0){
 			$configKey = substr($number, 7);
 			if(($pos = strpos($configKey, "=")) !== false){
@@ -182,7 +233,7 @@ abstract class KineticComponent{
 		}
 	}
 
-	protected function resolveConfigBool(&$bool) : void{
+	protected final function resolveConfigBool(&$bool) : void{
 		if(is_string($bool) && stripos($bool, "config:") === 0){
 			$configKey = substr($bool, 7);
 			if(($pos = strpos($configKey, "=")) !== false){
@@ -221,7 +272,7 @@ abstract class KineticComponent{
 		}
 	}
 
-	protected function throw(string $message) : Throwable{
+	protected final function throw(string $message) : Throwable{
 		throw new InvalidNodeException($message, $this->node);
 	}
 
@@ -260,5 +311,9 @@ abstract class KineticComponent{
 
 	public function getComponent(string $class) : KineticComponent{
 		return $this->node->getComponent($class);
+	}
+
+	public function findComponentsByInterface(string $interface, int $assertMinimum = 0) : array{
+		return $this->node->findComponentsByInterface($interface, $assertMinimum);
 	}
 }

@@ -100,6 +100,10 @@ final class KineticNode implements JsonSerializable{
 		return $this->nodeParent !== null ? $this->nodeParent->findFirstAncestorComponent($class) : null;
 	}
 
+	public function getManager() : KineticManager{
+		return $this->manager;
+	}
+
 	public function setAttribute(string $name, string $value) : bool{
 		foreach($this->components as $component){
 			if($component->setAttribute($name, $value)){
@@ -150,8 +154,15 @@ final class KineticNode implements JsonSerializable{
 
 	public function init(KineticManager $manager) : void{
 		$this->manager = $manager;
+
+		// validate and resolve runtime-only values
 		foreach($this->components as $component){
 			$component->setManager($manager);
+			$component->resolve();
+		}
+
+		// register handlers against the PocketMine interface as necessary
+		foreach($this->components as $component){
 			$component->init();
 		}
 	}

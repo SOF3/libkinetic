@@ -92,7 +92,7 @@ abstract class ElementComponent extends KineticComponent{
 		$this->requireAttribute("title", $this->title);
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->requireTranslation($this->title);
 	}
 

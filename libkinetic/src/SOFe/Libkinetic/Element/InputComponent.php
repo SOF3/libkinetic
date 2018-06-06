@@ -71,7 +71,7 @@ class InputComponent extends KineticComponent implements EditableElementInterfac
 		return false;
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->requireTranslation($this->placeholder);
 	}
 

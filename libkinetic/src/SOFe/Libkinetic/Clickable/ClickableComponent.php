@@ -30,7 +30,7 @@ use SOFe\Libkinetic\ClickInterruptedException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowRequest;
 
-class ClickableComponent extends KineticComponent implements ClickablePeer{
+class ClickableComponent extends KineticComponent implements ClickablePeerInterface{
 	/** @var string|null */
 	protected $indexName = null;
 	/** @var string|null */
@@ -80,7 +80,7 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->onClick = $this->resolveClass($this->onClickClass, ClickHandler::class);
 		$this->onClickAsync = $this->resolveClass($this->onClickAsyncClass, AsyncClickHandler::class);
 	}
@@ -89,7 +89,7 @@ class ClickableComponent extends KineticComponent implements ClickablePeer{
 		return $this->indexName;
 	}
 
-	public function getArgName() : ?string{
+	public function getArgName() : string{
 		return $this->argName;
 	}
 

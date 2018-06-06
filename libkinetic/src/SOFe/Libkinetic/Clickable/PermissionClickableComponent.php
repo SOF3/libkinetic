@@ -27,7 +27,7 @@ use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
-class PermissionClickableComponent extends KineticComponent implements ClickablePeer{
+class PermissionClickableComponent extends KineticComponent implements ClickablePeerInterface{
 	/** @var PermissionComponent|null */
 	protected $permission = null;
 

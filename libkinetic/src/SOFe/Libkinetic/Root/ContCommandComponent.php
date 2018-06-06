@@ -52,7 +52,7 @@ class ContCommandComponent extends KineticComponent{
 		$this->requireAttribute("description", $this->description);
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->resolveConfigString($this->name);
 		$this->requireTranslation($this->description);
 	}

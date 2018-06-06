@@ -27,7 +27,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
-use SOFe\Libkinetic\Clickable\Clickable;
+use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\Form\FormHandler;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
@@ -86,8 +86,8 @@ class KineticManager{
 			throw new InvalidArgumentException("$id: no such node");
 		}
 
-		/** @var Clickable $clickable */
-		$clickable = $node->findComponentsByInterface(Clickable::class, 1)[0];
+		/** @var ClickableInterface $clickable */
+		$clickable = $node->findComponentsByInterface(ClickableInterface::class, 1)[0];
 
 		$request = new WindowRequest($this, $user);
 

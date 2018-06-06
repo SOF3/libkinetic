@@ -30,7 +30,9 @@ use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 
 class DirectEntryClickableComponent extends KineticComponent{
+	/** @var CommandEntryComponent[] */
 	protected $commands = [];
+	/** @var InteractEntryComponent[] */
 	protected $interacts = [];
 
 	public function dependsComponents() : Iterator{
@@ -47,10 +49,16 @@ class DirectEntryClickableComponent extends KineticComponent{
 		return null;
 	}
 
+	/**
+	 * @return CommandEntryComponent[]
+	 */
 	public function getCommands() : array{
 		return $this->commands;
 	}
 
+	/**
+	 * @return InteractEntryComponent[]
+	 */
 	public function getInteracts() : array{
 		return $this->interacts;
 	}

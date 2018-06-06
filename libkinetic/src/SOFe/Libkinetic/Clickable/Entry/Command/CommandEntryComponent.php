@@ -24,12 +24,13 @@ namespace SOFe\Libkinetic\Clickable\Entry\Command;
 
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\WindowComponent;
 
 class CommandEntryComponent extends KineticComponent{
 	/** @var string */
 	protected $name;
-	/** @var string */
-	protected $description;
+	/** @var string|null */
+	protected $description = null;
 	/** @var CommandAliasComponent[] */
 	protected $aliases = [];
 
@@ -54,9 +55,12 @@ class CommandEntryComponent extends KineticComponent{
 
 	public function endElement() : void{
 		$this->requireAttribute("name", $this->name);
+		if($this->description === null && $this->node->nodeParent->hasComponent(WindowComponent::class)){
+			$this->description = $this->node->nodeParent->asWindowComponent()->getSynopsis();
+		}
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->resolveConfigString($this->name);
 		$this->requireTranslation($this->description);
 	}
@@ -65,7 +69,7 @@ class CommandEntryComponent extends KineticComponent{
 		return $this->name;
 	}
 
-	public function getDescription() : string{
+	public function getDescription() : ?string{
 		return $this->description;
 	}
 

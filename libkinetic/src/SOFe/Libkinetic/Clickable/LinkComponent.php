@@ -24,12 +24,12 @@ namespace SOFe\Libkinetic\Clickable;
 
 use Iterator;
 use SOFe\Libkinetic\AbsoluteIdComponent;
-use SOFe\Libkinetic\IntermediateNode;
+use SOFe\Libkinetic\IntermediateNodeInterface;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
-class LinkComponent extends KineticComponent implements Clickable{
+class LinkComponent extends KineticComponent implements ClickableInterface{
 	/** @var string */
 	protected $targetId;
 	/** @var KineticNode */
@@ -42,9 +42,8 @@ class LinkComponent extends KineticComponent implements Clickable{
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "TARGET"){
 			if($value === '$parent'){
-				/** @noinspection LoopWhichDoesNotLoopInspection */
-				/** @noinspection PhpStatementHasEmptyBodyInspection */
-				for($parent = $this->node->nodeParent; $parent instanceof IntermediateNode; $parent = $parent->nodeParent){
+				for($parent = $this->node->nodeParent; !empty($parent->findComponentsByInterface(IntermediateNodeInterface::class)); $parent = $parent->nodeParent){
+					// find grandparent if node has a IntermediateNodeInterface component
 				}
 				if($parent !== null && !$parent->hasComponent(AbsoluteIdComponent::class)){
 					$this->throw('target="$parent" is only allowed for children of nodes with an ID');
@@ -61,7 +60,7 @@ class LinkComponent extends KineticComponent implements Clickable{
 		$this->requireAttribute("target", $this->targetId);
 	}
 
-	public function init() : void{
+	public function resolve() : void{
 		$this->target = $this->manager->getNodeById($this->targetId);
 		if($this->target === null){
 			$this->throw("Undefined target {$this->targetId}");
@@ -69,6 +68,6 @@ class LinkComponent extends KineticComponent implements Clickable{
 	}
 
 	public function onClick(WindowRequest $request) : void{
-		$this->target->findComponentsByInterface(Clickable::class, 1)[0];
+		$this->target->findComponentsByInterface(ClickableInterface::class, 1)[0];
 	}
 }

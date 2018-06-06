@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable;
 
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
-use SOFe\Libkinetic\Clickable\Entry\PartialContainer;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowRequest;
@@ -40,14 +39,14 @@ trait ClickableTrait{
 	}
 
 	/**
-	 * @return ClickablePeer[]
+	 * @return ClickablePeerInterface[]
 	 */
 	private function getPeers() : array{
 		if(isset($this->peers)){
 			return $this->peers;
 		}
-		$this->peers = $this->getNode()->findComponentsByInterface(ClickablePeer::class);
-		usort($this->peers, function(ClickablePeer $a, ClickablePeer $b) : int{
+		$this->peers = $this->getNode()->findComponentsByInterface(ClickablePeerInterface::class);
+		usort($this->peers, function(ClickablePeerInterface $a, ClickablePeerInterface $b) : int{
 			return $b->getPriority() <=> $a->getPriority();
 		});
 		return $this->peers;
@@ -65,12 +64,8 @@ trait ClickableTrait{
 	 */
 	public static function findCommandPath(KineticNode $node) : ?string{
 		for($path = ""; $node->nodeParent !== null; $node = $node->nodeParent){ // loop until root
-			if(isset($node->nodeParent->findComponentsByInterface(PartialContainer::class)[0])){
-				continue;
-			}
-
-			/** @var ClickableContainer[] $containers */
-			$containers = $node->nodeParent->findComponentsByInterface(ClickableContainer::class);
+			/** @var ClickableContainerInterface[] $containers */
+			$containers = $node->nodeParent->findComponentsByInterface(ClickableContainerInterface::class);
 			if(!isset($containers[0])){
 				return null;
 			}

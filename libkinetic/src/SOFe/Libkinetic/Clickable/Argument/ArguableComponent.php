@@ -24,13 +24,13 @@ namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
-use SOFe\Libkinetic\Clickable\ClickablePeer;
+use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowRequest;
 
-class ArguableComponent extends KineticComponent implements ClickablePeer{
+class ArguableComponent extends KineticComponent implements ClickablePeerInterface{
 	/** @var ArgInterface[] */
 	protected $args = [];
 

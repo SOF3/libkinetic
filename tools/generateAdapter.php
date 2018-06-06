@@ -29,6 +29,13 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(".")) as $f
 	}
 }
 
+usort($componentList, function(string $a, string $b){
+	return array_slice(explode("\\", $a), -1)[0] <=> array_slice(explode("\\", $b), -1)[0];
+});
+usort($interfaceList, function(string $a, string $b){
+	return array_slice(explode("\\", $a), -1)[0] <=> array_slice(explode("\\", $b), -1)[0];
+});
+
 $output = "<?php /** @noinspection PhpIncompatibleReturnTypeInspection */\n" .
 	"\n" .
 	"/*\n" .

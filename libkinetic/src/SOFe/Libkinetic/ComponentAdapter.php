@@ -122,17 +122,17 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asSimpleArgComponent() : SimpleArgComponent{
-		return $this->getComponent(SimpleArgComponent::class);
+	public final function asBlockFilterComponent() : BlockFilterComponent{
+		return $this->getComponent(BlockFilterComponent::class);
 	}
 
-	public final function getSimpleArgComponent(&$component) : KineticNode{
-		$component = $this->getComponent(SimpleArgComponent::class);
+	public final function getBlockFilterComponent(&$component) : KineticNode{
+		$component = $this->getComponent(BlockFilterComponent::class);
 		return $this;
 	}
 
-	public final function addSimpleArgComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(SimpleArgComponent::class);
+	public final function addBlockFilterComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(BlockFilterComponent::class);
 		return $this;
 	}
 
@@ -197,6 +197,21 @@ trait ComponentAdapter{
 	}
 
 
+	public final function asContCommandComponent() : ContCommandComponent{
+		return $this->getComponent(ContCommandComponent::class);
+	}
+
+	public final function getContCommandComponent(&$component) : KineticNode{
+		$component = $this->getComponent(ContCommandComponent::class);
+		return $this;
+	}
+
+	public final function addContCommandComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ContCommandComponent::class);
+		return $this;
+	}
+
+
 	public final function asDirectEntryClickableComponent() : DirectEntryClickableComponent{
 		return $this->getComponent(DirectEntryClickableComponent::class);
 	}
@@ -208,186 +223,6 @@ trait ComponentAdapter{
 
 	public final function addDirectEntryClickableComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(DirectEntryClickableComponent::class);
-		return $this;
-	}
-
-
-	public final function asBlockFilterComponent() : BlockFilterComponent{
-		return $this->getComponent(BlockFilterComponent::class);
-	}
-
-	public final function getBlockFilterComponent(&$component) : KineticNode{
-		$component = $this->getComponent(BlockFilterComponent::class);
-		return $this;
-	}
-
-	public final function addBlockFilterComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(BlockFilterComponent::class);
-		return $this;
-	}
-
-
-	public final function asFaceFilterInterfaceComponent() : FaceFilterInterfaceComponent{
-		return $this->getComponent(FaceFilterInterfaceComponent::class);
-	}
-
-	public final function getFaceFilterInterfaceComponent(&$component) : KineticNode{
-		$component = $this->getComponent(FaceFilterInterfaceComponent::class);
-		return $this;
-	}
-
-	public final function addFaceFilterInterfaceComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(FaceFilterInterfaceComponent::class);
-		return $this;
-	}
-
-
-	public final function asInteractEntryComponent() : InteractEntryComponent{
-		return $this->getComponent(InteractEntryComponent::class);
-	}
-
-	public final function getInteractEntryComponent(&$component) : KineticNode{
-		$component = $this->getComponent(InteractEntryComponent::class);
-		return $this;
-	}
-
-	public final function addInteractEntryComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(InteractEntryComponent::class);
-		return $this;
-	}
-
-
-	public final function asItemFilterComponent() : ItemFilterComponent{
-		return $this->getComponent(ItemFilterComponent::class);
-	}
-
-	public final function getItemFilterComponent(&$component) : KineticNode{
-		$component = $this->getComponent(ItemFilterComponent::class);
-		return $this;
-	}
-
-	public final function addItemFilterComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ItemFilterComponent::class);
-		return $this;
-	}
-
-
-	public final function asTouchModeFilterInterfaceComponent() : TouchModeFilterInterfaceComponent{
-		return $this->getComponent(TouchModeFilterInterfaceComponent::class);
-	}
-
-	public final function getTouchModeFilterInterfaceComponent(&$component) : KineticNode{
-		$component = $this->getComponent(TouchModeFilterInterfaceComponent::class);
-		return $this;
-	}
-
-	public final function addTouchModeFilterInterfaceComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(TouchModeFilterInterfaceComponent::class);
-		return $this;
-	}
-
-
-	public final function asExitComponent() : ExitComponent{
-		return $this->getComponent(ExitComponent::class);
-	}
-
-	public final function getExitComponent(&$component) : KineticNode{
-		$component = $this->getComponent(ExitComponent::class);
-		return $this;
-	}
-
-	public final function addExitComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ExitComponent::class);
-		return $this;
-	}
-
-
-	public final function asLinkComponent() : LinkComponent{
-		return $this->getComponent(LinkComponent::class);
-	}
-
-	public final function getLinkComponent(&$component) : KineticNode{
-		$component = $this->getComponent(LinkComponent::class);
-		return $this;
-	}
-
-	public final function addLinkComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(LinkComponent::class);
-		return $this;
-	}
-
-
-	public final function asPermissionClickableComponent() : PermissionClickableComponent{
-		return $this->getComponent(PermissionClickableComponent::class);
-	}
-
-	public final function getPermissionClickableComponent(&$component) : KineticNode{
-		$component = $this->getComponent(PermissionClickableComponent::class);
-		return $this;
-	}
-
-	public final function addPermissionClickableComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(PermissionClickableComponent::class);
-		return $this;
-	}
-
-
-	public final function asPermissionComponent() : PermissionComponent{
-		return $this->getComponent(PermissionComponent::class);
-	}
-
-	public final function getPermissionComponent(&$component) : KineticNode{
-		$component = $this->getComponent(PermissionComponent::class);
-		return $this;
-	}
-
-	public final function addPermissionComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(PermissionComponent::class);
-		return $this;
-	}
-
-
-	public final function asIndexComponent() : IndexComponent{
-		return $this->getComponent(IndexComponent::class);
-	}
-
-	public final function getIndexComponent(&$component) : KineticNode{
-		$component = $this->getComponent(IndexComponent::class);
-		return $this;
-	}
-
-	public final function addIndexComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(IndexComponent::class);
-		return $this;
-	}
-
-
-	public final function asInfoComponent() : InfoComponent{
-		return $this->getComponent(InfoComponent::class);
-	}
-
-	public final function getInfoComponent(&$component) : KineticNode{
-		$component = $this->getComponent(InfoComponent::class);
-		return $this;
-	}
-
-	public final function addInfoComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(InfoComponent::class);
-		return $this;
-	}
-
-
-	public final function asListComponent() : ListComponent{
-		return $this->getComponent(ListComponent::class);
-	}
-
-	public final function getListComponent(&$component) : KineticNode{
-		$component = $this->getComponent(ListComponent::class);
-		return $this;
-	}
-
-	public final function addListComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ListComponent::class);
 		return $this;
 	}
 
@@ -482,6 +317,66 @@ trait ComponentAdapter{
 	}
 
 
+	public final function asExitComponent() : ExitComponent{
+		return $this->getComponent(ExitComponent::class);
+	}
+
+	public final function getExitComponent(&$component) : KineticNode{
+		$component = $this->getComponent(ExitComponent::class);
+		return $this;
+	}
+
+	public final function addExitComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ExitComponent::class);
+		return $this;
+	}
+
+
+	public final function asFaceFilterInterfaceComponent() : FaceFilterInterfaceComponent{
+		return $this->getComponent(FaceFilterInterfaceComponent::class);
+	}
+
+	public final function getFaceFilterInterfaceComponent(&$component) : KineticNode{
+		$component = $this->getComponent(FaceFilterInterfaceComponent::class);
+		return $this;
+	}
+
+	public final function addFaceFilterInterfaceComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(FaceFilterInterfaceComponent::class);
+		return $this;
+	}
+
+
+	public final function asIndexComponent() : IndexComponent{
+		return $this->getComponent(IndexComponent::class);
+	}
+
+	public final function getIndexComponent(&$component) : KineticNode{
+		$component = $this->getComponent(IndexComponent::class);
+		return $this;
+	}
+
+	public final function addIndexComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(IndexComponent::class);
+		return $this;
+	}
+
+
+	public final function asInfoComponent() : InfoComponent{
+		return $this->getComponent(InfoComponent::class);
+	}
+
+	public final function getInfoComponent(&$component) : KineticNode{
+		$component = $this->getComponent(InfoComponent::class);
+		return $this;
+	}
+
+	public final function addInfoComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(InfoComponent::class);
+		return $this;
+	}
+
+
 	public final function asInputComponent() : InputComponent{
 		return $this->getComponent(InputComponent::class);
 	}
@@ -497,6 +392,36 @@ trait ComponentAdapter{
 	}
 
 
+	public final function asInteractEntryComponent() : InteractEntryComponent{
+		return $this->getComponent(InteractEntryComponent::class);
+	}
+
+	public final function getInteractEntryComponent(&$component) : KineticNode{
+		$component = $this->getComponent(InteractEntryComponent::class);
+		return $this;
+	}
+
+	public final function addInteractEntryComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(InteractEntryComponent::class);
+		return $this;
+	}
+
+
+	public final function asItemFilterComponent() : ItemFilterComponent{
+		return $this->getComponent(ItemFilterComponent::class);
+	}
+
+	public final function getItemFilterComponent(&$component) : KineticNode{
+		$component = $this->getComponent(ItemFilterComponent::class);
+		return $this;
+	}
+
+	public final function addItemFilterComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ItemFilterComponent::class);
+		return $this;
+	}
+
+
 	public final function asLabelComponent() : LabelComponent{
 		return $this->getComponent(LabelComponent::class);
 	}
@@ -508,6 +433,66 @@ trait ComponentAdapter{
 
 	public final function addLabelComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(LabelComponent::class);
+		return $this;
+	}
+
+
+	public final function asLinkComponent() : LinkComponent{
+		return $this->getComponent(LinkComponent::class);
+	}
+
+	public final function getLinkComponent(&$component) : KineticNode{
+		$component = $this->getComponent(LinkComponent::class);
+		return $this;
+	}
+
+	public final function addLinkComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(LinkComponent::class);
+		return $this;
+	}
+
+
+	public final function asListComponent() : ListComponent{
+		return $this->getComponent(ListComponent::class);
+	}
+
+	public final function getListComponent(&$component) : KineticNode{
+		$component = $this->getComponent(ListComponent::class);
+		return $this;
+	}
+
+	public final function addListComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(ListComponent::class);
+		return $this;
+	}
+
+
+	public final function asPermissionClickableComponent() : PermissionClickableComponent{
+		return $this->getComponent(PermissionClickableComponent::class);
+	}
+
+	public final function getPermissionClickableComponent(&$component) : KineticNode{
+		$component = $this->getComponent(PermissionClickableComponent::class);
+		return $this;
+	}
+
+	public final function addPermissionClickableComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(PermissionClickableComponent::class);
+		return $this;
+	}
+
+
+	public final function asPermissionComponent() : PermissionComponent{
+		return $this->getComponent(PermissionComponent::class);
+	}
+
+	public final function getPermissionComponent(&$component) : KineticNode{
+		$component = $this->getComponent(PermissionComponent::class);
+		return $this;
+	}
+
+	public final function addPermissionComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(PermissionComponent::class);
 		return $this;
 	}
 
@@ -538,6 +523,36 @@ trait ComponentAdapter{
 
 	public final function addRequiredWithFallbackComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(RequiredWithFallbackComponent::class);
+		return $this;
+	}
+
+
+	public final function asRootComponent() : RootComponent{
+		return $this->getComponent(RootComponent::class);
+	}
+
+	public final function getRootComponent(&$component) : KineticNode{
+		$component = $this->getComponent(RootComponent::class);
+		return $this;
+	}
+
+	public final function addRootComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(RootComponent::class);
+		return $this;
+	}
+
+
+	public final function asSimpleArgComponent() : SimpleArgComponent{
+		return $this->getComponent(SimpleArgComponent::class);
+	}
+
+	public final function getSimpleArgComponent(&$component) : KineticNode{
+		$component = $this->getComponent(SimpleArgComponent::class);
+		return $this;
+	}
+
+	public final function addSimpleArgComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(SimpleArgComponent::class);
 		return $this;
 	}
 
@@ -602,32 +617,17 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asContCommandComponent() : ContCommandComponent{
-		return $this->getComponent(ContCommandComponent::class);
+	public final function asTouchModeFilterInterfaceComponent() : TouchModeFilterInterfaceComponent{
+		return $this->getComponent(TouchModeFilterInterfaceComponent::class);
 	}
 
-	public final function getContCommandComponent(&$component) : KineticNode{
-		$component = $this->getComponent(ContCommandComponent::class);
+	public final function getTouchModeFilterInterfaceComponent(&$component) : KineticNode{
+		$component = $this->getComponent(TouchModeFilterInterfaceComponent::class);
 		return $this;
 	}
 
-	public final function addContCommandComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ContCommandComponent::class);
-		return $this;
-	}
-
-
-	public final function asRootComponent() : RootComponent{
-		return $this->getComponent(RootComponent::class);
-	}
-
-	public final function getRootComponent(&$component) : KineticNode{
-		$component = $this->getComponent(RootComponent::class);
-		return $this;
-	}
-
-	public final function addRootComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(RootComponent::class);
+	public final function addTouchModeFilterInterfaceComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(TouchModeFilterInterfaceComponent::class);
 		return $this;
 	}
 
@@ -687,16 +687,6 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asInteractFilterInterface() : InteractFilterInterface{
-		return $this->findComponentsByInterface(InteractFilterInterface::class, 1)[0];
-	}
-
-	/** @return InteractFilterInterface[] */
-	public final function getInteractFilterInterfaces(int $assertMinimum = 0) : array{
-		return $this->findComponentsByInterface(InteractFilterInterface::class, $assertMinimum);
-	}
-
-
 	public final function asEditableElementInterface() : EditableElementInterface{
 		return $this->findComponentsByInterface(EditableElementInterface::class, 1)[0];
 	}
@@ -714,6 +704,16 @@ trait ComponentAdapter{
 	/** @return ElementInterface[] */
 	public final function getElementInterfaces(int $assertMinimum = 0) : array{
 		return $this->findComponentsByInterface(ElementInterface::class, $assertMinimum);
+	}
+
+
+	public final function asInteractFilterInterface() : InteractFilterInterface{
+		return $this->findComponentsByInterface(InteractFilterInterface::class, 1)[0];
+	}
+
+	/** @return InteractFilterInterface[] */
+	public final function getInteractFilterInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(InteractFilterInterface::class, $assertMinimum);
 	}
 
 

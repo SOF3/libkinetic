@@ -25,6 +25,7 @@ var NAVTREE =
 [
   [ "libkinetic", "index.html", [
     [ "libkinetic [![Poggit-CI](https://poggit.pmmp.io/ci.badge/SOF3/libkinetic/~)](https://poggit.pmmp.io/ci/SOF3/libkinetic/~)", "index.html", null ],
+    [ "Libkinetic developer note", "md__d_e_v.html", null ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -52,9 +53,9 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_absolute_id_component_8php.html",
-"_invalid_node_exception_8php.html",
-"class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_window_1_1_info_component.html",
-"class_s_o_fe_1_1_libkinetic_1_1_util_1_1_call_sequence.html#a319a9ae58df8b2baa242953439087a6f"
+"_face_filter_interface_component_8php.html",
+"class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_interact_1_1_touch_mode_filter_interface_component.html#a6575c27b4e37901c864476375ec9369e",
+"class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_kinetic_file_parser.html#ab37f7c32f41c3c61ed940887453767f4"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

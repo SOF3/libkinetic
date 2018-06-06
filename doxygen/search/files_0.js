@@ -6,5 +6,6 @@ var searchData=
   ['argcomponent_2ephp',['ArgComponent.php',['../_arg_component_8php.html',1,'']]],
   ['arginterface_2ephp',['ArgInterface.php',['../_arg_interface_8php.html',1,'']]],
   ['argtrait_2ephp',['ArgTrait.php',['../_arg_trait_8php.html',1,'']]],
-  ['arguablecomponent_2ephp',['ArguableComponent.php',['../_arguable_component_8php.html',1,'']]]
+  ['arguablecomponent_2ephp',['ArguableComponent.php',['../_arguable_component_8php.html',1,'']]],
+  ['asyncclickhandler_2ephp',['AsyncClickHandler.php',['../_async_click_handler_8php.html',1,'']]]
 ];

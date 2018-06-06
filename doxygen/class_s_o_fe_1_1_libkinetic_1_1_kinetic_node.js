@@ -6,6 +6,7 @@ var class_s_o_fe_1_1_libkinetic_1_1_kinetic_node =
     [ "findFirstAncestorComponent", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#adc6358df14d49b09f6834af0ae63aa13", null ],
     [ "getComponent", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#a966e26f0da23ac9146adec0842a5f502", null ],
     [ "getHierarchyName", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#a409118c2823d1c1d02259f9ddac33ebd", null ],
+    [ "getManager", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#a362a87534635a8d4c3c18d54a3dd01b4", null ],
     [ "hasComponent", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#ad29a51a7a3fe13a3bb064c24b2658f73", null ],
     [ "init", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#af4707b9deff43a7a008af3d6f68372ad", null ],
     [ "isRoot", "class_s_o_fe_1_1_libkinetic_1_1_kinetic_node.html#a846a3636e0fd9960ac164258af6d3552", null ],

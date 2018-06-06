@@ -1,5 +1,6 @@
 var namespace_s_o_fe_1_1_libkinetic_1_1_a_p_i =
 [
+    [ "AsyncClickHandler", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_async_click_handler.html", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_async_click_handler" ],
     [ "ClickHandler", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_click_handler.html", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_click_handler" ],
     [ "ComplexItemFactory", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_complex_item_factory.html", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_complex_item_factory" ],
     [ "ComplexProvider", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_complex_provider.html", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_complex_provider" ],

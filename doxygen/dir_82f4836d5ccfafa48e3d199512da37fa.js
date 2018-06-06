@@ -3,6 +3,9 @@ var dir_82f4836d5ccfafa48e3d199512da37fa =
     [ "Form.php", "_form_8php.html", [
       [ "Form", "class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form.html", "class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form" ]
     ] ],
+    [ "FormHandler.php", "_form_handler_8php.html", [
+      [ "FormHandler", "class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form_handler.html", "class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form_handler" ]
+    ] ],
     [ "FormListener.php", "_form_listener_8php.html", [
       [ "FormListener", "class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form_listener.html", "class_s_o_fe_1_1_libkinetic_1_1_form_1_1_form_listener" ]
     ] ],

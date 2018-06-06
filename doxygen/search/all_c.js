@@ -6,6 +6,8 @@ var searchData=
   ['kineticadapter_2ephp',['KineticAdapter.php',['../_kinetic_adapter_8php.html',1,'']]],
   ['kineticadapterbase',['KineticAdapterBase',['../namespace_s_o_fe_1_1_libkinetic.html#a0fbd070a2392b46c942a3d6aa550bf85',1,'SOFe::Libkinetic']]],
   ['kineticadapterbase_2ephp',['KineticAdapterBase.php',['../_kinetic_adapter_base_8php.html',1,'']]],
+  ['kineticcommand',['KineticCommand',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_kinetic_command.html',1,'SOFe::Libkinetic::Clickable::Entry::Command']]],
+  ['kineticcommand_2ephp',['KineticCommand.php',['../_kinetic_command_8php.html',1,'']]],
   ['kineticcomponent',['KineticComponent',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html',1,'SOFe::Libkinetic']]],
   ['kineticcomponent_2ephp',['KineticComponent.php',['../_kinetic_component_8php.html',1,'']]],
   ['kineticfileparser',['KineticFileParser',['../class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_kinetic_file_parser.html',1,'SOFe::Libkinetic::Parser']]],

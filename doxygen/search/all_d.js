@@ -9,5 +9,6 @@ var searchData=
   ['linkcomponent',['LinkComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_link_component.html',1,'SOFe::Libkinetic::Clickable']]],
   ['linkcomponent_2ephp',['LinkComponent.php',['../_link_component_8php.html',1,'']]],
   ['listcomponent',['ListComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_window_1_1_list_component.html',1,'SOFe::Libkinetic::Clickable::Window']]],
-  ['listcomponent_2ephp',['ListComponent.php',['../_list_component_8php.html',1,'']]]
+  ['listcomponent_2ephp',['ListComponent.php',['../_list_component_8php.html',1,'']]],
+  ['libkinetic_20developer_20note',['Libkinetic developer note',['../md__d_e_v.html',1,'']]]
 ];

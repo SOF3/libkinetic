@@ -1,5 +1,6 @@
 var namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command =
 [
     [ "CommandAliasComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_alias_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_alias_component" ],
-    [ "CommandEntryComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_entry_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_entry_component" ]
+    [ "CommandEntryComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_entry_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_command_entry_component" ],
+    [ "KineticCommand", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_kinetic_command.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_entry_1_1_command_1_1_kinetic_command" ]
 ];

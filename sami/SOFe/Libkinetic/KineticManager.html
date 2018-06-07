@@ -92,6 +92,14 @@
 
             <table class="table table-condensed">
                     <tr>
+                <td class="type" id="property_CONT_ACTION_EXPIRY_TIME">
+                    static                                                            
+                </td>
+                <td>$CONT_ACTION_EXPIRY_TIME</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
                 <td class="type" id="property_plugin">
                                         protected                                        <abbr title="pocketmine\plugin\Plugin">Plugin</abbr>
                 </td>
@@ -120,6 +128,14 @@
                                         protected                                        <a href="../../SOFe/Libkinetic/Form/FormHandler.html"><abbr title="SOFe\Libkinetic\Form\FormHandler">FormHandler</abbr></a>
                 </td>
                 <td>$formHandler</td>
+                <td class="last"></td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type" id="property_contAction">
+                                        protected                                        <a target="_blank" href="http://php.net/SplObjectStorage">SplObjectStorage</a>|<abbr title="pocketmine\command\CommandSender">CommandSender</abbr>[]
+                </td>
+                <td>$contAction</td>
                 <td class="last"></td>
                 <td></td>
             </tr>
@@ -189,17 +205,6 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_getParser">getParser</a>()
-        
-                                            <p class="no-description">No description</p>
-                                    </div>
-                <div class="col-md-2"></div>
-            </div>
-                    <div class="row">
-                <div class="col-md-2 type">
-                    
-                </div>
-                <div class="col-md-8 type">
                     <a href="#method_getFormHandler">getFormHandler</a>()
         
                                             <p class="no-description">No description</p>
@@ -212,6 +217,39 @@
                 </div>
                 <div class="col-md-8 type">
                     <a href="#method_translate">translate</a>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr>|null $context, string|null $identifier, array $args = [])
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_setContAction">setContAction</a>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $sender, callable $action)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_consumeContAction">consumeContAction</a>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $sender)
+        
+                                            <p class="no-description">No description</p>
+                                    </div>
+                <div class="col-md-2"></div>
+            </div>
+                    <div class="row">
+                <div class="col-md-2 type">
+                    
+                </div>
+                <div class="col-md-8 type">
+                    <a href="#method_cleanContAction">cleanContAction</a>()
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -247,7 +285,7 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method___construct">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L53">line 53</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L61">line 61</a></div>
         <code>                    
     <strong>__construct</strong>(<abbr title="pocketmine\plugin\Plugin">Plugin</abbr> $plugin, <a href="../../SOFe/Libkinetic/KineticAdapter.html"><abbr title="SOFe\Libkinetic\KineticAdapter">KineticAdapter</abbr></a> $adapter, string $xmlResource = &quot;kinetic.xml&quot;, string $jsonResource = &quot;kinetic.json&quot;)
         </code>
@@ -291,7 +329,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getNodeById">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L79">line 79</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L89">line 89</a></div>
         <code>                    
     <strong>getNodeById</strong>(string $id)
         </code>
@@ -320,7 +358,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_clickNode">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L83">line 83</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L93">line 93</a></div>
         <code>                    
     <strong>clickNode</strong>(string $id, <abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $user)
         </code>
@@ -354,7 +392,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getPlugin">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L97">line 97</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L107">line 107</a></div>
         <code>                    
     <strong>getPlugin</strong>()
         </code>
@@ -373,7 +411,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getAdapter">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L101">line 101</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L111">line 111</a></div>
         <code>                    
     <strong>getAdapter</strong>()
         </code>
@@ -391,27 +429,8 @@
 
             </div>
                     <div class="method-item">
-                    <h3 id="method_getParser">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L105">line 105</a></div>
-        <code>                    
-    <strong>getParser</strong>()
-        </code>
-    </h3>
-    <div class="details">
-            
-    
-
-                <div class="tags">
-            
-            
-            
-                    </div>
-    </div>
-
-            </div>
-                    <div class="method-item">
                     <h3 id="method_getFormHandler">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L109">line 109</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L115">line 115</a></div>
         <code>                    
     <strong>getFormHandler</strong>()
         </code>
@@ -430,7 +449,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_translate">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L114">line 114</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L120">line 120</a></div>
         <code>                    
     <strong>translate</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr>|null $context, string|null $identifier, array $args = [])
         </code>
@@ -468,8 +487,90 @@
 
             </div>
                     <div class="method-item">
+                    <h3 id="method_setContAction">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L141">line 141</a></div>
+        <code>                    
+    <strong>setContAction</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $sender, callable $action)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="pocketmine\command\CommandSender">CommandSender</abbr></td>
+                <td>$sender</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td>callable</td>
+                <td>$action</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_consumeContAction">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L145">line 145</a></div>
+        <code>                    
+    <strong>consumeContAction</strong>(<abbr title="pocketmine\command\CommandSender">CommandSender</abbr> $sender)
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table class="table table-condensed">
+                    <tr>
+                <td><abbr title="pocketmine\command\CommandSender">CommandSender</abbr></td>
+                <td>$sender</td>
+                <td></td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
+                    <h3 id="method_cleanContAction">
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L155">line 155</a></div>
+        <code>                    
+    <strong>cleanContAction</strong>()
+        </code>
+    </h3>
+    <div class="details">
+            
+    
+
+                <div class="tags">
+            
+            
+            
+                    </div>
+    </div>
+
+            </div>
+                    <div class="method-item">
                     <h3 id="method_requireTranslation">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L136">line 136</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L168">line 168</a></div>
         <code>                    
     <strong>requireTranslation</strong>(<a href="../../SOFe/Libkinetic/KineticNode.html"><abbr title="SOFe\Libkinetic\KineticNode">KineticNode</abbr></a> $node, string $key)
         </code>
@@ -503,7 +604,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_resolveClass">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L142">line 142</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/KineticManager.php#L174">line 174</a></div>
         <code>                    
     <strong>resolveClass</strong>(<a href="../../SOFe/Libkinetic/KineticNode.html"><abbr title="SOFe\Libkinetic\KineticNode">KineticNode</abbr></a> $node, string|null $fqn, string|null $super)
         </code>

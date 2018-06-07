@@ -86,7 +86,7 @@ var searchData=
   ['asinputcomponent',['asInputComponent',['../namespace_s_o_fe_1_1_libkinetic.html#a05399c0bad2e7c5919436e2e191c68f5',1,'SOFe::Libkinetic']]],
   ['asinteractentrycomponent',['asInteractEntryComponent',['../namespace_s_o_fe_1_1_libkinetic.html#ac2625c2ffbfce4b61d7f558f4dd4689b',1,'SOFe::Libkinetic']]],
   ['asinteractfilterinterface',['asInteractFilterInterface',['../namespace_s_o_fe_1_1_libkinetic.html#a4b0eb475f2a242cfa4d30634964b62ed',1,'SOFe::Libkinetic']]],
-  ['asintermediatenodeinterface',['asIntermediateNodeInterface',['../namespace_s_o_fe_1_1_libkinetic.html#a4b31df5be2583403a84bd8f1eafd9569',1,'SOFe::Libkinetic']]],
+  ['asintermediatelinkinterface',['asIntermediateLinkInterface',['../namespace_s_o_fe_1_1_libkinetic.html#a8c4e8f4b5c4678ea4b97f5a35d1c411e',1,'SOFe::Libkinetic']]],
   ['asitemfiltercomponent',['asItemFilterComponent',['../namespace_s_o_fe_1_1_libkinetic.html#a841c808e445a364e485c41783bcd0e95',1,'SOFe::Libkinetic']]],
   ['aslabelcomponent',['asLabelComponent',['../namespace_s_o_fe_1_1_libkinetic.html#a958b786e4829f448a773d9d1e004199e',1,'SOFe::Libkinetic']]],
   ['aslinkcomponent',['asLinkComponent',['../namespace_s_o_fe_1_1_libkinetic.html#a72b819d60a167ed2a092e35e23b398a8',1,'SOFe::Libkinetic']]],

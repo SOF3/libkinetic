@@ -10,7 +10,6 @@ var namespace_s_o_fe_1_1_libkinetic =
     [ "Util", "namespace_s_o_fe_1_1_libkinetic_1_1_util.html", "namespace_s_o_fe_1_1_libkinetic_1_1_util" ],
     [ "AbsoluteIdComponent", "class_s_o_fe_1_1_libkinetic_1_1_absolute_id_component.html", "class_s_o_fe_1_1_libkinetic_1_1_absolute_id_component" ],
     [ "ClickInterruptedException", "class_s_o_fe_1_1_libkinetic_1_1_click_interrupted_exception.html", "class_s_o_fe_1_1_libkinetic_1_1_click_interrupted_exception" ],
-    [ "IntermediateNodeInterface", "interface_s_o_fe_1_1_libkinetic_1_1_intermediate_node_interface.html", null ],
     [ "InvalidFormResponseException", "class_s_o_fe_1_1_libkinetic_1_1_invalid_form_response_exception.html", null ],
     [ "InvalidNodeException", "class_s_o_fe_1_1_libkinetic_1_1_invalid_node_exception.html", "class_s_o_fe_1_1_libkinetic_1_1_invalid_node_exception" ],
     [ "KineticAdapter", "interface_s_o_fe_1_1_libkinetic_1_1_kinetic_adapter.html", "interface_s_o_fe_1_1_libkinetic_1_1_kinetic_adapter" ],

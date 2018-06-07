@@ -20,11 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Types;
 
 use Iterator;
 use SOFe\Libkinetic\AbsoluteIdComponent;
-use SOFe\Libkinetic\IntermediateNodeInterface;
+use SOFe\Libkinetic\Clickable\ClickableComponent;
+use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
@@ -42,7 +43,7 @@ class LinkComponent extends KineticComponent implements ClickableInterface{
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "TARGET"){
 			if($value === '$parent'){
-				for($parent = $this->node->nodeParent; !empty($parent->findComponentsByInterface(IntermediateNodeInterface::class)); $parent = $parent->nodeParent){
+				for($parent = $this->node->nodeParent; !empty($parent->findComponentsByInterface(IntermediateLinkInterface::class)); $parent = $parent->nodeParent){
 					// find grandparent if node has a IntermediateNodeInterface component
 				}
 				if($parent !== null && !$parent->hasComponent(AbsoluteIdComponent::class)){

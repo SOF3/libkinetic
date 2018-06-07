@@ -20,18 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable\Window;
+namespace SOFe\Libkinetic\Clickable\Container;
 
-use Iterator;
-use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
-use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
-use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\WindowComponent;
+use SOFe\Libkinetic\Clickable\ClickableTrait;
 
-class ListComponent extends KineticComponent{
-	public function dependsComponents() : Iterator{
-		yield DirectEntryClickableComponent::class;
-		yield WindowComponent::class;
-		yield ArguableComponent::class;
-	}
+trait ClickableContainerTrait{
+	use ClickableTrait;
 }

@@ -20,24 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable\Window;
+namespace SOFe\Libkinetic\Clickable\Types;
 
 use InvalidArgumentException;
 use Iterator;
 use pocketmine\Player;
-use SOFe\Libkinetic\Clickable\ClickableContainerInterface;
-use SOFe\Libkinetic\Clickable\ClickableContainerTrait;
 use SOFe\Libkinetic\Clickable\ClickableInterface;
-use SOFe\Libkinetic\Clickable\ClickableParentComponent;
-use SOFe\Libkinetic\Clickable\ClickableTrait;
+use SOFe\Libkinetic\Clickable\Container\ClickableContainerInterface;
+use SOFe\Libkinetic\Clickable\Container\ClickableContainerTrait;
+use SOFe\Libkinetic\Clickable\Container\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
 use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
-use function array_map;
+use function array_reverse;
+use function implode;
 
 class IndexComponent extends KineticComponent implements ClickableContainerInterface{
 	use ClickableContainerTrait;
@@ -52,7 +53,7 @@ class IndexComponent extends KineticComponent implements ClickableContainerInter
 		/** @var ClickableInterface[]|KineticComponent[] $list */
 		$list = [];
 		foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
-			if($clickable->getNode()->hasComponent(PermissionClickableComponent::class)){
+			if($clickable->node->hasComponent(PermissionClickableComponent::class)){
 				$perm = $clickable->asPermissionClickableComponent()->getPermission();
 				if($perm !== null && !$perm->testPermission($request->getUser())){
 					continue;
@@ -81,14 +82,32 @@ class IndexComponent extends KineticComponent implements ClickableContainerInter
 				if(!isset($list[$id])){
 					throw new InvalidFormResponseException("Undefined \$list[$id]");
 				}
-				$list[$id]->onClick($request);
+				$list[$id]->onClick($request->push());
 			});
 		}else{
 			$request->send($this->asWindowComponent()->getTitle());
 			$request->send($this->asWindowComponent()->getSynopsis());
-			foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
-				$request->getUser()->sendMessage($request->translate($clickable->asClickableComponent()->getArgName()) . ": " .
-					ClickableTrait::findCommandPath($this->node)); // TODO use translations API
+
+			// if ContCommand is present, use ContCommand; otherwise, only support direct-entry-through-index-path suggestions
+			$cont = $this->node->findRoot()->asRootComponent()->getContCmd();
+			if($cont !== null){
+				$prefix = "/{$cont->getName()}";
+			}else{
+				$path = [];
+				for($node = $this->node; !($node->nodeParent->hasComponent(DirectEntryClickableComponent::class) &&
+					!empty($node->nodeParent->asDirectEntryClickableComponent()->getCommands())); $node = $node->nodeParent){
+					if($node->nodeParent->hasComponent(IndexComponent::class)){
+						$path[] = $node->asClickableComponent()->getArgName();
+					}else{
+						$request->send(libkinetic::MESSAGE_RUN_IN_GAME_FOR_INDEX);
+						return;
+					}
+				}
+				$prefix = "/{$node->asDirectEntryClickableComponent()->getCommands()[0]->getName()} " . implode(" ", array_reverse($path));
+			}
+
+			foreach($list as $component){
+				$request->getUser()->sendMessage("/$prefix {$component->asClickableComponent()->getArgName()}: " . $request->translate($component->asClickableComponent()->getIndexName()));
 			}
 		}
 	}
@@ -100,13 +119,5 @@ class IndexComponent extends KineticComponent implements ClickableContainerInter
 			}
 		}
 		throw new InvalidArgumentException("Attempt to get command path for non-child node");
-	}
-
-	public function getCommandPaths() : array{
-		$output = [];
-
-		return array_map(function(KineticComponent $component) : string{
-			return $component->asClickableComponent()->getArgName();
-		}, $this->asClickableParentComponent()->getClickableList());
 	}
 }

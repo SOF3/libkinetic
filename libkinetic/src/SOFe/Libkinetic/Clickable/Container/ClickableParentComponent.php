@@ -20,11 +20,14 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Container;
 
-use SOFe\Libkinetic\Clickable\Window\IndexComponent;
-use SOFe\Libkinetic\Clickable\Window\InfoComponent;
-use SOFe\Libkinetic\Clickable\Window\ListComponent;
+use SOFe\Libkinetic\Clickable\ClickableInterface;
+use SOFe\Libkinetic\Clickable\Types\ExitComponent;
+use SOFe\Libkinetic\Clickable\Types\IndexComponent;
+use SOFe\Libkinetic\Clickable\Types\InfoComponent;
+use SOFe\Libkinetic\Clickable\Types\LinkComponent;
+use SOFe\Libkinetic\Clickable\Types\ListComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use function assert;

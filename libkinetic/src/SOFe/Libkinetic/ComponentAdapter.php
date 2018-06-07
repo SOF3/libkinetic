@@ -27,10 +27,11 @@ use SOFe\Libkinetic\Clickable\Argument\ArgInterface;
 use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
 use SOFe\Libkinetic\Clickable\Argument\SimpleArgComponent;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
-use SOFe\Libkinetic\Clickable\ClickableContainerInterface;
 use SOFe\Libkinetic\Clickable\ClickableInterface;
-use SOFe\Libkinetic\Clickable\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
+use SOFe\Libkinetic\Clickable\ContCommandComponent;
+use SOFe\Libkinetic\Clickable\Container\ClickableContainerInterface;
+use SOFe\Libkinetic\Clickable\Container\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
@@ -40,13 +41,14 @@ use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractFilterInterface;
 use SOFe\Libkinetic\Clickable\Entry\Interact\ItemFilterComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\TouchModeFilterInterfaceComponent;
-use SOFe\Libkinetic\Clickable\ExitComponent;
-use SOFe\Libkinetic\Clickable\LinkComponent;
 use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
 use SOFe\Libkinetic\Clickable\PermissionComponent;
-use SOFe\Libkinetic\Clickable\Window\IndexComponent;
-use SOFe\Libkinetic\Clickable\Window\InfoComponent;
-use SOFe\Libkinetic\Clickable\Window\ListComponent;
+use SOFe\Libkinetic\Clickable\Types\ExitComponent;
+use SOFe\Libkinetic\Clickable\Types\IndexComponent;
+use SOFe\Libkinetic\Clickable\Types\InfoComponent;
+use SOFe\Libkinetic\Clickable\Types\IntermediateLinkInterface;
+use SOFe\Libkinetic\Clickable\Types\LinkComponent;
+use SOFe\Libkinetic\Clickable\Types\ListComponent;
 use SOFe\Libkinetic\Element\DropdownOptionComponent;
 use SOFe\Libkinetic\Element\DynamicDropdownComponent;
 use SOFe\Libkinetic\Element\DynamicStepSliderComponent;
@@ -63,7 +65,6 @@ use SOFe\Libkinetic\Element\SliderComponent;
 use SOFe\Libkinetic\Element\StaticDropdownComponent;
 use SOFe\Libkinetic\Element\StaticStepSliderComponent;
 use SOFe\Libkinetic\Element\ToggleComponent;
-use SOFe\Libkinetic\Root\ContCommandComponent;
 use SOFe\Libkinetic\Root\RootComponent;
 
 /**
@@ -717,12 +718,12 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asIntermediateNodeInterface() : IntermediateNodeInterface{
-		return $this->findComponentsByInterface(IntermediateNodeInterface::class, 1)[0];
+	public final function asIntermediateLinkInterface() : IntermediateLinkInterface{
+		return $this->findComponentsByInterface(IntermediateLinkInterface::class, 1)[0];
 	}
 
-	/** @return IntermediateNodeInterface[] */
-	public final function getIntermediateNodeInterfaces(int $assertMinimum = 0) : array{
-		return $this->findComponentsByInterface(IntermediateNodeInterface::class, $assertMinimum);
+	/** @return IntermediateLinkInterface[] */
+	public final function getIntermediateLinkInterfaces(int $assertMinimum = 0) : array{
+		return $this->findComponentsByInterface(IntermediateLinkInterface::class, $assertMinimum);
 	}
 }

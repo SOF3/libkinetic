@@ -23,10 +23,16 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 final class libkinetic{
+	public const MESSAGE_RUN_IN_GAME_FOR_INDEX = "libkinetic.index.run-in-game";
+	public const MESSAGE_ENUM_ADD_ITEM = "libkinetic.enum-args.add-item";
+
 	public const MESSAGES = [
-		"libkinetic.enum-args.add-item" => [
-			"en_US" => "Add Item"
-		]
+		self::MESSAGE_RUN_IN_GAME_FOR_INDEX => [
+			"en_US" => "Run this command in-game to use more features",
+		],
+		self::MESSAGE_ENUM_ADD_ITEM => [
+			"en_US" => "Add Item",
+		],
 	];
 
 	public const GH_RAW = "https://raw.githubusercontent.com/SOF3/libkinetic/master/";

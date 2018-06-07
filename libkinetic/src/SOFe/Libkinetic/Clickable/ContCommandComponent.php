@@ -20,15 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Root;
+namespace SOFe\Libkinetic\Clickable;
 
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 
 class ContCommandComponent extends KineticComponent{
+	/** @var string */
 	protected $name;
+	/** @var string */
 	protected $description;
+	/** @var CommandAliasComponent[] */
 	protected $aliases = [];
 
 	public function setAttribute(string $name, string $value) : bool{
@@ -55,5 +58,20 @@ class ContCommandComponent extends KineticComponent{
 	public function resolve() : void{
 		$this->resolveConfigString($this->name);
 		$this->requireTranslation($this->description);
+	}
+
+	public function getName() : string{
+		return $this->name;
+	}
+
+	public function getDescription() : string{
+		return $this->description;
+	}
+
+	/**
+	 * @return CommandAliasComponent[]
+	 */
+	public function getAliases() : array{
+		return $this->aliases;
 	}
 }

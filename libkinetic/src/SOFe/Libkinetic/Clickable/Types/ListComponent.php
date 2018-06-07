@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable\Window;
+namespace SOFe\Libkinetic\Clickable\Types;
 
 use Iterator;
 use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
@@ -28,7 +28,7 @@ use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowComponent;
 
-class InfoComponent extends KineticComponent{
+class ListComponent extends KineticComponent{
 	public function dependsComponents() : Iterator{
 		yield DirectEntryClickableComponent::class;
 		yield WindowComponent::class;

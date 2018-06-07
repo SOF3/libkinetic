@@ -20,8 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Clickable\Types;
 
-interface IntermediateNodeInterface{
+use Iterator;
+use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
+use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
+use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\WindowComponent;
 
+class InfoComponent extends KineticComponent{
+	public function dependsComponents() : Iterator{
+		yield DirectEntryClickableComponent::class;
+		yield WindowComponent::class;
+		yield ArguableComponent::class;
+	}
 }

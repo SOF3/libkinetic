@@ -20,8 +20,24 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Types;
 
-trait ClickableContainerTrait{
+use Iterator;
+use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
+use SOFe\Libkinetic\Clickable\ClickableInterface;
+use SOFe\Libkinetic\Clickable\ClickableTrait;
+use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
+use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\WindowRequest;
+
+class ExitComponent extends KineticComponent implements ClickableInterface{
 	use ClickableTrait;
+
+	public function dependsComponents() : Iterator{
+		yield DirectEntryClickableComponent::class;
+		yield ArguableComponent::class;
+	}
+
+	protected function onClickImpl(WindowRequest $request) : void{
+	}
 }

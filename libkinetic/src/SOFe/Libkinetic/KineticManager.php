@@ -32,15 +32,20 @@ use SOFe\Libkinetic\Form\FormHandler;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
+use SOFe\Libkinetic\Util\CallbackTask;
+use SplObjectStorage;
 use function class_uses;
 use function extension_loaded;
 use function in_array;
 use function mb_strpos;
 use function mb_substr;
+use function microtime;
 use function str_replace;
 use function substr;
 
 class KineticManager{
+	public static $CONT_ACTION_EXPIRY_TIME = 300.0;
+
 	/** @var Plugin */
 	protected $plugin;
 	/** @var KineticAdapter */
@@ -49,6 +54,9 @@ class KineticManager{
 	protected $parser;
 	/** @var FormHandler */
 	protected $formHandler;
+
+	/** @var SplObjectStorage|CommandSender[] */
+	protected $contAction = [];
 
 	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
 		KineticFileParser::$hasPm = true;
@@ -74,6 +82,8 @@ class KineticManager{
 		foreach($this->parser->allNodes as $node){
 			$node->init($this);
 		}
+
+		$this->getPlugin()->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "cleanContAction"]), 600);
 	}
 
 	public function getNodeById(string $id) : ?KineticNode{
@@ -102,10 +112,6 @@ class KineticManager{
 		return $this->adapter;
 	}
 
-	public function getParser() : KineticFileParser{
-		return $this->parser;
-	}
-
 	public function getFormHandler() : FormHandler{
 		return $this->formHandler;
 	}
@@ -129,6 +135,32 @@ class KineticManager{
 			}
 
 			throw $ex;
+		}
+	}
+
+	public function setContAction(CommandSender $sender, callable $action) : void{
+		$this->contAction[$sender] = [$action, microtime(true) + self::$CONT_ACTION_EXPIRY_TIME];
+	}
+
+	public function consumeContAction(CommandSender $sender) : ?callable{
+		if($this->contAction->contains($sender)){
+			$callable = $this->contAction[$sender];
+			$this->contAction->detach($sender);
+			return $callable;
+		}
+
+		return null;
+	}
+
+	public function cleanContAction() : void{
+		$detaches = [];
+		foreach($this->contAction as $sender){
+			if($this->contAction[$sender][1] < microtime(true)){
+				$detaches[] = $sender;
+			}
+		}
+		foreach($detaches as $detach){
+			$this->contAction->detach($detach);
 		}
 	}
 
@@ -202,17 +234,4 @@ class KineticManager{
 
 		return $class->newInstance($args);
 	}
-
-//	public function clickWindow(Player $player, string $id, WindowRequest $request) : void{
-//		if(!isset($this->parser->idMap[$id]) || !($this->parser->idMap[$id] instanceof WindowNode)){
-//			throw new \InvalidArgumentException("$id does not exist or is not a window node");
-//		}
-//
-//		/** @var WindowNode $window */
-//		$window = $this->parser->idMap[$id];
-//		try{
-//			$window->onClick($request);
-//		}/** @noinspection BadExceptionsProcessingInspection */catch(ClickInterruptedException $ex){
-//		}
-//	}
 }

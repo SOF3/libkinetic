@@ -22,8 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Entry\Command;
 
-use function implode;
-use function iterator_to_array;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
@@ -31,6 +29,8 @@ use pocketmine\plugin\Plugin;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\KineticNode;
 use function array_map;
+use function implode;
+use function iterator_to_array;
 
 class KineticCommand extends Command implements PluginIdentifiableCommand{
 	/** @var KineticManager */

@@ -20,9 +20,11 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Container;
 
+use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\WindowRequest;
 
 interface ClickableContainerInterface extends ClickableInterface{
 	/**
@@ -36,13 +38,15 @@ interface ClickableContainerInterface extends ClickableInterface{
 	public function getCommandPathFor(KineticNode $node) : ?array;
 
 	/**
-	 * @return string[][]|KineticNode[] a binary array where, for each element, the first sub-element is a string[] and the second sub-element is a KineticNode.
+	 * @param WindowRequest $request
+	 * @return string[][][]|KineticNode[][] a binary array where, for each element, the first sub-element is a string[] and the second sub-element is a KineticNode.
 	 */
-	public function getCommandPaths() : array;
+	public function getCommandPaths(WindowRequest $request) : array;
 
 	/**
-	 * @param string $commandPath
+	 * @param WindowRequest $request
+	 * @param string        $commandPath
 	 * @return KineticNode|null
 	 */
-	public function getNodeFor(string $commandPath) : ?KineticNode;
+	public function getNodeFor(WindowRequest $request, string $commandPath) : ?KineticNode;
 }

@@ -171,6 +171,14 @@ final class KineticNode implements JsonSerializable{
 		return $this->nodeParent === null;
 	}
 
+	public function findRoot() : KineticNode{
+		$node = $this;
+		while($node->nodeParent !== null){
+			$node = $node->nodeParent;
+		}
+		return $node;
+	}
+
 	public function getHierarchyName() : string{
 		$elementNameStack = [];
 		for($node = $this; !$node->hasComponent(AbsoluteIdComponent::class); $node = $node->nodeParent){

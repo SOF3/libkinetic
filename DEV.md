@@ -71,5 +71,5 @@ protected final function requireTranslation(?string $identifier); // check if th
 protected final function resolveClass(?string $fqn, ?string $super); // check if the class exists according to the libkinetic Instantiable notation and implements the interface $super
 protected final function resolveConfigString(?string &$string); // resolve the field $string into a string from config if it starts with `config:`
 protected final function resolveConfigNumber(&$number); // resolve the field $number into a number from config if it starts with `config:`, otherwise parse it
-protected final function resolveConfigBool(&$bool); // resolve the field $bool into a boolean from config if it starts with `config:`, otherwise prase it
+protected final function resolveConfigBool(&$bool); // resolve the field $bool into a boolean from config if it starts with `config:`, otherwise parse it
 ```

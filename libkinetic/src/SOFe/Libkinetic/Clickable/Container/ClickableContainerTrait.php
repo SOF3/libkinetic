@@ -22,11 +22,18 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Container;
 
+use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use SOFe\Libkinetic\Clickable\ClickableTrait;
-use SOFe\Libkinetic\Clickable\Cont\ContCommand;
+use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
+use SOFe\Libkinetic\Clickable\Permission\PermissionClickableComponent;
+use SOFe\Libkinetic\Clickable\Types\IndexComponent;
+use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\WindowRequest;
+use function array_reverse;
+use function implode;
 
 trait ClickableContainerTrait{
 	use ClickableTrait;
@@ -36,17 +43,102 @@ trait ClickableContainerTrait{
 		if($user instanceof Player){
 			$this->onClickForm($request, $user);
 		}else{
-			$this->onClickCommandPrefix($request);
+			$this->onClickCommandHeader($request);
 
-			if($this->getManager()->getRootNode()->hasComponent(ContCommand::class)){
-				$command = "/{$this->getManager()}";
+			$subCmds = $this->getSubCommands($user);
+
+			if(!empty($subCmds)){
+				if($this->getManager()->hasCont()){
+					$command = "/{$this->getManager()->getContComponents()[0]->getName()}";
+
+					$this->getManager()->setContAction($user, function(array $args) use ($subCmds, $user, $command){
+						$result = $this->handleSubCommand($user, $args);
+
+						if(!$result){
+							$user->sendMessage("Usage:");
+							self::sendSubCommands($user, $command, $subCmds);
+						}
+					});
+				}else{
+					$path = [];
+					for($node = $this->getNode(); $node !== null && !self::hasCommand($node, $user); $node = $node->nodeParent){
+						if($node->nodeParent->hasComponent(IndexComponent::class)){
+							$path[] = $node->asClickableComponent()->getArgName();
+						}else{
+							$request->send(libkinetic::MESSAGE_RUN_IN_GAME_FOR_INDEX);
+							goto after_subcommands;
+						}
+					}
+
+					if($node === null){
+						goto after_subcommands;
+					}
+
+					$command = "/{$node->asDirectEntryClickableComponent()->getCommands()[0]->getName()} " . implode(" ", array_reverse($path));
+				}
+
+				self::sendSubCommands($user, $command, $subCmds);
 			}
+
+			after_subcommands:
+			$this->onClickCommandFooter($request);
 		}
+	}
+
+	private static function sendSubCommands(CommandSender $user, string $command, array $subCommands) : void{
+		foreach($subCommands as $subCommand => $description){
+			$user->sendMessage("/{$command} {$subCommand}: $description");
+		}
+	}
+
+	private static function hasCommand(KineticNode $node, CommandSender $user) : ?string{
+		if(!$node->hasComponent(DirectEntryClickableComponent::class)){
+			return null;
+		}
+		if($node->hasComponent(PermissionClickableComponent::class) && !$node->asPermissionClickableComponent()->testPermission($user)){
+			return null;
+		}
+		$cmds = $node->nodeParent->asDirectEntryClickableComponent()->getCommands();
+		return empty($cmds) ? null : $cmds[0]->getName();
 	}
 
 	protected abstract function onClickForm(WindowRequest $request, Player $player) : void;
 
-	protected abstract function onClickCommandPrefix(WindowRequest $request) : void;
+	protected function onClickCommandHeader(WindowRequest $request) : void{
+	}
+
+	protected function onClickCommandFooter(WindowRequest $request) : void{
+	}
+
+	/**
+	 * Consume args that shall be consumed before the subcommand arg, e.g. take arguments for config.
+	 *
+	 * @param string[] &$args
+	 */
+	protected function handleBeforeSubCommand(array &$args) : void{
+	}
+
+	/**
+	 * @return string[]
+	 */
+	protected function getArgsBeforeSubCommand() : array{
+		return [];
+	}
+
+	/**
+	 * @param WindowRequest $request
+	 * @return string[]
+	 */
+	protected abstract function getSubCommands(WindowRequest $request) : array;
+
+	/**
+	 * @param WindowRequest $request
+	 * @param string[]      $args
+	 * @return bool
+	 */
+	protected abstract function handleSubCommand(WindowRequest $request, array $args) : bool;
 
 	protected abstract function getNode() : KineticNode;
+
+	protected abstract function getManager() : KineticManager;
 }

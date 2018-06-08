@@ -22,59 +22,28 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Types;
 
-use InvalidArgumentException;
+use function array_shift;
 use Iterator;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use SOFe\Libkinetic\Clickable\ClickableInterface;
-use SOFe\Libkinetic\Clickable\Container\ClickableContainerInterface;
 use SOFe\Libkinetic\Clickable\Container\ClickableContainerTrait;
 use SOFe\Libkinetic\Clickable\Container\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
 use SOFe\Libkinetic\Clickable\Permission\PermissionClickableComponent;
 use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\KineticNode;
-use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
-use function array_reverse;
-use function implode;
+use function mb_strtolower;
 
-class IndexComponent extends KineticComponent implements ClickableContainerInterface{
+class IndexComponent extends KineticComponent{
 	use ClickableContainerTrait;
 
 	public function dependsComponents() : Iterator{
 		yield DirectEntryClickableComponent::class;
 		yield WindowComponent::class;
 		yield ClickableParentComponent::class;
-	}
-
-	protected function onClickImpl(WindowRequest $request) : void{
-		// if ContCommand is present, use ContCommand; otherwise, only support direct-entry-through-index-path suggestions
-		$cont = $this->node->findRoot()->asRootComponent()->getContCmd();
-		if($cont !== null){
-			$prefix = "/{$cont->getName()}";
-			$this->manager->setContAction($request->getUser(), function(array $args){
-
-			});
-		}else{
-			$path = [];
-			for($node = $this->node; !($node->nodeParent->hasComponent(DirectEntryClickableComponent::class) &&
-				!empty($node->nodeParent->asDirectEntryClickableComponent()->getCommands())); $node = $node->nodeParent){
-				if($node->nodeParent->hasComponent(IndexComponent::class)){
-					$path[] = $node->asClickableComponent()->getArgName();
-				}else{
-					$request->send(libkinetic::MESSAGE_RUN_IN_GAME_FOR_INDEX);
-					return;
-				}
-			}
-			$prefix = "/{$node->asDirectEntryClickableComponent()->getCommands()[0]->getName()} " . implode(" ", array_reverse($path));
-		}
-
-		foreach($list as $component){
-			$request->getUser()->sendMessage("/$prefix {$component->asClickableComponent()->getArgName()}: " . $request->translate($component->asClickableComponent()->getIndexName()));
-		}
 	}
 
 	protected function onClickForm(WindowRequest $request, Player $player) : void{
@@ -102,7 +71,7 @@ class IndexComponent extends KineticComponent implements ClickableContainerInter
 		});
 	}
 
-	protected function onClickCommandPrefix(WindowRequest $request) : void{
+	protected function onClickCommandHeader(WindowRequest $request) : void{
 		$request->send($this->asWindowComponent()->getTitle());
 		$request->send($this->asWindowComponent()->getSynopsis());
 	}
@@ -114,23 +83,39 @@ class IndexComponent extends KineticComponent implements ClickableContainerInter
 	protected function getClickableListFor(CommandSender $user) : array{
 		$list = [];
 		foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
-			if($clickable->node->hasComponent(PermissionClickableComponent::class)){
-				$perm = $clickable->asPermissionClickableComponent()->getPermission();
-				if($perm !== null && !$perm->testPermission($user)){
-					continue;
-				}
+			if($clickable->node->hasComponent(PermissionClickableComponent::class) &&
+				!$clickable->asPermissionClickableComponent()->testPermission($user)){
+				continue;
 			}
 			$list[] = $clickable;
 		}
 		return $list;
 	}
 
-	public function getCommandPathFor(KineticNode $node) : ?array{
-		foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
-			if($clickable->getNode() === $node){
-				return [$clickable->asClickableComponent()->getArgName()];
+	/**
+	 * @param WindowRequest $request
+	 * @return string[]
+	 */
+	protected function getSubCommands(WindowRequest $request) : array{
+		$cmds = [];
+		foreach($this->getClickableListFor($request->getUser()) as $clickable){
+			$cc = $clickable->asClickableComponent();
+			$cmds[$cc->getArgName()] = $request->translate($cc->getIndexName());
+		}
+		return $cmds;
+	}
+
+	protected function handleSubCommand(WindowRequest $request, array $args) : bool{
+		if(!isset($args[0])){
+			return false;
+		}
+		foreach($this->getClickableListFor($request->getUser()) as $clickable){
+			if(mb_strtolower($clickable->asClickableComponent()->getArgName()) === mb_strtolower($args[0])){
+				array_shift($args);
+				$clickable->onClick($request); // TODO what about the remaining args?
+				return true;
 			}
 		}
-		throw new InvalidArgumentException("Attempt to get command path for non-child node");
+		return false;
 	}
 }

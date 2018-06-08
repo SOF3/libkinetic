@@ -26,6 +26,7 @@ use pocketmine\utils\TextFormat;
 
 final class libkinetic{
 	public const MESSAGE_CONT_NIL = "libkinetic.cont.nil";
+	public const MESSAGE_CONT_USAGE_HEADER = "libkinetic.cont.usage.header";
 	public const MESSAGE_ENUM_ADD_ITEM = "libkinetic.enum-args.add-item";
 	public const MESSAGE_RUN_IN_GAME_FOR_INDEX = "libkinetic.index.run-in-game";
 
@@ -33,11 +34,14 @@ final class libkinetic{
 		self::MESSAGE_CONT_NIL => [
 			"en_US" => TextFormat::RED . "You don't have anything to continue.",
 		],
+		self::MESSAGE_CONT_USAGE_HEADER=> [
+			"en_US" => TextFormat::RED . TextFormat::RED . "Usage:",
+		],
 		self::MESSAGE_ENUM_ADD_ITEM => [
 			"en_US" => "Add Item",
 		],
 		self::MESSAGE_RUN_IN_GAME_FOR_INDEX => [
-			"en_US" => "Run this command in-game to use more features",
+			"en_US" => TextFormat::AQUA . "Run this command in-game to use more features",
 		],
 	];
 

@@ -65,6 +65,8 @@ class KineticManager{
 
 	/** @var bool */
 	protected $hasCont = false;
+	/** @var ContCommandComponent[] */
+	protected $contComponents = [];
 	/** @var SplObjectStorage|CommandSender[] */
 	protected $contAction = [];
 
@@ -112,6 +114,7 @@ class KineticManager{
 					$this->idMap[$id] = $node;
 				}elseif($node->hasComponent(ContCommandComponent::class)){
 					$this->hasCont = true;
+					$this->contComponents[] = $node->asContCommandComponent();
 				}
 			}
 		}
@@ -140,10 +143,26 @@ class KineticManager{
 		return $this->formHandler;
 	}
 
+	public function hasCont() : bool{
+		return $this->hasCont;
+	}
+
+	/**
+	 * @return ContCommandComponent[]
+	 */
+	public function getContComponents() : array{
+		return $this->contComponents;
+	}
+
 
 	public function setContAction(CommandSender $sender, callable $action) : void{
 		assert($this->hasCont);
 		$this->contAction[$sender] = [$action, microtime(true) + self::$CONT_ACTION_EXPIRY_TIME];
+	}
+
+	public function getContAction(CommandSender $sender) : ?callable{
+		assert($this->hasCont);
+		return $this->contAction->contains($sender) ? $this->contAction[$sender] : null;
 	}
 
 	public function consumeContAction(CommandSender $sender) : ?callable{

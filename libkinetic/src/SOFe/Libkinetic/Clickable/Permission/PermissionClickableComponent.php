@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Permission;
 
 use Iterator;
+use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
 use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
 use SOFe\Libkinetic\KineticComponent;
@@ -46,6 +47,10 @@ class PermissionClickableComponent extends KineticComponent implements Clickable
 
 	public function getPermission() : ?PermissionComponent{
 		return $this->permission;
+	}
+
+	public function testPermission(CommandSender $user) : bool{
+		return $this->permission === null || $this->permission->testPermission($user);
 	}
 
 	public function onClick(WindowRequest $request, callable $onComplete) : void{

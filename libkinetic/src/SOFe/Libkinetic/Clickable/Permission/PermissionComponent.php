@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Permission;
 
 use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\API\NamedUserPredicate;

@@ -24,13 +24,14 @@ namespace SOFe\Libkinetic\Clickable\Types;
 
 use InvalidArgumentException;
 use Iterator;
+use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\Clickable\Container\ClickableContainerInterface;
 use SOFe\Libkinetic\Clickable\Container\ClickableContainerTrait;
 use SOFe\Libkinetic\Clickable\Container\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\DirectEntryClickableComponent;
-use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
+use SOFe\Libkinetic\Clickable\Permission\PermissionClickableComponent;
 use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
@@ -50,66 +51,78 @@ class IndexComponent extends KineticComponent implements ClickableContainerInter
 	}
 
 	protected function onClickImpl(WindowRequest $request) : void{
-		/** @var ClickableInterface[]|KineticComponent[] $list */
+		// if ContCommand is present, use ContCommand; otherwise, only support direct-entry-through-index-path suggestions
+		$cont = $this->node->findRoot()->asRootComponent()->getContCmd();
+		if($cont !== null){
+			$prefix = "/{$cont->getName()}";
+			$this->manager->setContAction($request->getUser(), function(array $args){
+
+			});
+		}else{
+			$path = [];
+			for($node = $this->node; !($node->nodeParent->hasComponent(DirectEntryClickableComponent::class) &&
+				!empty($node->nodeParent->asDirectEntryClickableComponent()->getCommands())); $node = $node->nodeParent){
+				if($node->nodeParent->hasComponent(IndexComponent::class)){
+					$path[] = $node->asClickableComponent()->getArgName();
+				}else{
+					$request->send(libkinetic::MESSAGE_RUN_IN_GAME_FOR_INDEX);
+					return;
+				}
+			}
+			$prefix = "/{$node->asDirectEntryClickableComponent()->getCommands()[0]->getName()} " . implode(" ", array_reverse($path));
+		}
+
+		foreach($list as $component){
+			$request->getUser()->sendMessage("/$prefix {$component->asClickableComponent()->getArgName()}: " . $request->translate($component->asClickableComponent()->getIndexName()));
+		}
+	}
+
+	protected function onClickForm(WindowRequest $request, Player $player) : void{
+		$list = $this->getClickableListFor($player);
+		/** @var array[] $buttons */
+		$buttons = [];
+		foreach($list as $clickable){
+			$buttons[] = [
+				"text" => $request->translate($clickable->asClickableComponent()->getIndexName()),
+			]; // TODO add icon
+		}
+		$form = [
+			"type" => "form",
+			"title" => $request->translate($this->asWindowComponent()->getTitle()),
+			"content" => $request->translate($this->asWindowComponent()->getSynopsis()),
+			"buttons" => $buttons,
+		];
+
+		$push = $request->push();
+		$this->manager->getFormHandler()->sendForm($player, $form, function(int $id) use ($push, $list){
+			if(!isset($list[$id])){
+				throw new InvalidFormResponseException("Undefined \$list[$id]");
+			}
+			$list[$id]->onClick($push);
+		});
+	}
+
+	protected function onClickCommandPrefix(WindowRequest $request) : void{
+		$request->send($this->asWindowComponent()->getTitle());
+		$request->send($this->asWindowComponent()->getSynopsis());
+	}
+
+	/**
+	 * @param CommandSender $user
+	 * @return ClickableInterface[]|KineticComponent[]
+	 */
+	protected function getClickableListFor(CommandSender $user) : array{
 		$list = [];
 		foreach($this->asClickableParentComponent()->getClickableList() as $clickable){
 			if($clickable->node->hasComponent(PermissionClickableComponent::class)){
 				$perm = $clickable->asPermissionClickableComponent()->getPermission();
-				if($perm !== null && !$perm->testPermission($request->getUser())){
+				if($perm !== null && !$perm->testPermission($user)){
 					continue;
 				}
 			}
 			$list[] = $clickable;
 		}
-
-		if($request->getUser() instanceof Player){
-			/** @var Player $player */
-			$player = $request->getUser();
-			/** @var array[] $buttons */
-			$buttons = [];
-			foreach($list as $clickable){
-				$buttons[] = [
-					"text" => $request->translate($clickable->asClickableComponent()->getIndexName()),
-				]; // TODO add icon
-			}
-			$form = [
-				"type" => "form",
-				"title" => $request->translate($this->asWindowComponent()->getTitle()),
-				"content" => $request->translate($this->asWindowComponent()->getSynopsis()),
-				"buttons" => $buttons,
-			];
-			$this->manager->getFormHandler()->sendForm($player, $form, function(int $id) use ($request, $list){
-				if(!isset($list[$id])){
-					throw new InvalidFormResponseException("Undefined \$list[$id]");
-				}
-				$list[$id]->onClick($request->push());
-			});
-		}else{
-			$request->send($this->asWindowComponent()->getTitle());
-			$request->send($this->asWindowComponent()->getSynopsis());
-
-			// if ContCommand is present, use ContCommand; otherwise, only support direct-entry-through-index-path suggestions
-			$cont = $this->node->findRoot()->asRootComponent()->getContCmd();
-			if($cont !== null){
-				$prefix = "/{$cont->getName()}";
-			}else{
-				$path = [];
-				for($node = $this->node; !($node->nodeParent->hasComponent(DirectEntryClickableComponent::class) &&
-					!empty($node->nodeParent->asDirectEntryClickableComponent()->getCommands())); $node = $node->nodeParent){
-					if($node->nodeParent->hasComponent(IndexComponent::class)){
-						$path[] = $node->asClickableComponent()->getArgName();
-					}else{
-						$request->send(libkinetic::MESSAGE_RUN_IN_GAME_FOR_INDEX);
-						return;
-					}
-				}
-				$prefix = "/{$node->asDirectEntryClickableComponent()->getCommands()[0]->getName()} " . implode(" ", array_reverse($path));
-			}
-
-			foreach($list as $component){
-				$request->getUser()->sendMessage("/$prefix {$component->asClickableComponent()->getArgName()}: " . $request->translate($component->asClickableComponent()->getIndexName()));
-			}
-		}
+		return $list;
 	}
 
 	public function getCommandPathFor(KineticNode $node) : ?array{

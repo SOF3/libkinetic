@@ -25,7 +25,7 @@ namespace SOFe\Libkinetic\Clickable\Entry;
 use Iterator;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
 use SOFe\Libkinetic\Clickable\Entry\Interact\InteractEntryComponent;
-use SOFe\Libkinetic\Clickable\PermissionClickableComponent;
+use SOFe\Libkinetic\Clickable\Permission\PermissionClickableComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 

@@ -23,8 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Root;
 
 use Iterator;
+use SOFe\Libkinetic\Clickable\Cont\ContCommandComponent;
 use SOFe\Libkinetic\Clickable\Container\ClickableParentComponent;
-use SOFe\Libkinetic\Clickable\ContCommandComponent;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 

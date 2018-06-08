@@ -22,8 +22,31 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Container;
 
+use pocketmine\Player;
 use SOFe\Libkinetic\Clickable\ClickableTrait;
+use SOFe\Libkinetic\Clickable\Cont\ContCommand;
+use SOFe\Libkinetic\KineticNode;
+use SOFe\Libkinetic\WindowRequest;
 
 trait ClickableContainerTrait{
 	use ClickableTrait;
+
+	protected function onClickImpl(WindowRequest $request) : void{
+		$user = $request->getUser();
+		if($user instanceof Player){
+			$this->onClickForm($request, $user);
+		}else{
+			$this->onClickCommandPrefix($request);
+
+			if($this->getManager()->getRootNode()->hasComponent(ContCommand::class)){
+				$command = "/{$this->getManager()}";
+			}
+		}
+	}
+
+	protected abstract function onClickForm(WindowRequest $request, Player $player) : void;
+
+	protected abstract function onClickCommandPrefix(WindowRequest $request) : void;
+
+	protected abstract function getNode() : KineticNode;
 }

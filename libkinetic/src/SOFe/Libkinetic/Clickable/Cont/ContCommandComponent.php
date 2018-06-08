@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Cont;
 
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\KineticComponent;
@@ -58,6 +58,10 @@ class ContCommandComponent extends KineticComponent{
 	public function resolve() : void{
 		$this->resolveConfigString($this->name);
 		$this->requireTranslation($this->description);
+	}
+
+	public function init() : void{
+		$this->manager->getPlugin()->getServer()->getCommandMap()->register($this->manager->getPlugin()->getName(), new ContCommand($this));
 	}
 
 	public function getName() : string{

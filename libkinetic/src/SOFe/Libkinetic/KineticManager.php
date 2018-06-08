@@ -28,14 +28,17 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
 use SOFe\Libkinetic\Clickable\ClickableInterface;
+use SOFe\Libkinetic\Clickable\Cont\ContCommandComponent;
 use SOFe\Libkinetic\Form\FormHandler;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
 use SOFe\Libkinetic\Util\CallbackTask;
 use SplObjectStorage;
+use function assert;
 use function class_uses;
 use function extension_loaded;
+use function implode;
 use function in_array;
 use function mb_strpos;
 use function mb_substr;
@@ -50,15 +53,29 @@ class KineticManager{
 	protected $plugin;
 	/** @var KineticAdapter */
 	protected $adapter;
-	/** @var KineticFileParser */
-	protected $parser;
 	/** @var FormHandler */
 	protected $formHandler;
 
+	/** @var KineticFileParser[] */
+	protected $parsers = [];
+	/** @var KineticNode[] */
+	protected $allNodes = [];
+	/** @var KineticNode[] */
+	protected $idMap = [];
+
+	/** @var bool */
+	protected $hasCont = false;
 	/** @var SplObjectStorage|CommandSender[] */
 	protected $contAction = [];
 
-	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $xmlResource = "kinetic.xml", string $jsonResource = "kinetic.json"){
+	/**
+	 * KineticManager constructor.
+	 * @param Plugin          $plugin
+	 * @param KineticAdapter  $adapter
+	 * @param string|string[] $xmlResources
+	 * @param string|string[] $jsonResources
+	 */
+	public function __construct(Plugin $plugin, KineticAdapter $adapter, $xmlResources = ["kinetic.xml"], $jsonResources = ["kinetic.json"]){
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
 		if(in_array(KineticAdapterBase::class, class_uses($adapter), true)){
@@ -70,24 +87,93 @@ class KineticManager{
 		$this->formHandler = new FormHandler($this);
 
 		if(extension_loaded("xml")){
-			$plugin->getLogger()->info("Loading XML kinetic file $xmlResource");
-			$this->parser = new XmlFileParser($plugin->getResource($xmlResource), $xmlResource);
+			$xmlResources = (array) $xmlResources;
+			$plugin->getLogger()->debug("Loading XML kinetic file(s) " . implode(", ", $xmlResources));
+			foreach($xmlResources as $resource){
+				$this->parsers[] = new XmlFileParser($plugin->getResource($resource), $resource);
+			}
 		}else{
-			$plugin->getLogger()->info("Loading JSON kinetic file $jsonResource");
-			$this->parser = new JsonFileParser($plugin->getResource($jsonResource), $jsonResource);
+			$jsonResources = (array) $jsonResources;
+			$plugin->getLogger()->debug("Loading JSON kinetic file(s) " . implode(", ", $jsonResources));
+			foreach($jsonResources as $resource){
+				$this->parsers[] = new JsonFileParser($plugin->getResource($resource), $resource);
+			}
 		}
 
-		$this->parser->parse();
-
-		foreach($this->parser->allNodes as $node){
-			$node->init($this);
+		foreach($this->parsers as $parser){
+			$parser->parse();
+			foreach($parser->allNodes as $node){
+				$this->allNodes[] = $node;
+				if($node->hasComponent(AbsoluteIdComponent::class)){
+					$id = $node->asAbsoluteIdComponent()->getId();
+					if(isset($this->idMap[$id])){
+						throw new InvalidNodeException("Duplicate node ID $id with another file's " . $this->idMap[$id]->getHierarchyName(), $node);
+					}
+					$this->idMap[$id] = $node;
+				}elseif($node->hasComponent(ContCommandComponent::class)){
+					$this->hasCont = true;
+				}
+			}
 		}
 
-		$this->getPlugin()->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "cleanContAction"]), 600);
+		foreach($this->allNodes as $node){
+			$node->resolve($this);
+		}
+		foreach($this->allNodes as $node){
+			$node->init();
+		}
+
+		if($this->hasCont){
+			$this->getPlugin()->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "cleanContAction"]), 600);
+		}
 	}
 
+	public function getPlugin() : Plugin{
+		return $this->plugin;
+	}
+
+	public function getAdapter() : KineticAdapter{
+		return $this->adapter;
+	}
+
+	public function getFormHandler() : FormHandler{
+		return $this->formHandler;
+	}
+
+
+	public function setContAction(CommandSender $sender, callable $action) : void{
+		assert($this->hasCont);
+		$this->contAction[$sender] = [$action, microtime(true) + self::$CONT_ACTION_EXPIRY_TIME];
+	}
+
+	public function consumeContAction(CommandSender $sender) : ?callable{
+		assert($this->hasCont);
+		if($this->contAction->contains($sender)){
+			$callable = $this->contAction[$sender];
+			$this->contAction->detach($sender);
+			return $callable;
+		}
+
+		return null;
+	}
+
+	public function cleanContAction() : void{
+		assert($this->hasCont);
+
+		$detaches = [];
+		foreach($this->contAction as $sender){
+			if($this->contAction[$sender][1] < microtime(true)){
+				$detaches[] = $sender;
+			}
+		}
+		foreach($detaches as $detach){
+			$this->contAction->detach($detach);
+		}
+	}
+
+
 	public function getNodeById(string $id) : ?KineticNode{
-		return $this->parser->idMap[$id] ?? null;
+		return $this->idMap[$id] ?? null;
 	}
 
 	public function clickNode(string $id, CommandSender $user) : void{
@@ -102,18 +188,6 @@ class KineticManager{
 		$request = new WindowRequest($this, $user);
 
 		$clickable->onClick($request);
-	}
-
-	public function getPlugin() : Plugin{
-		return $this->plugin;
-	}
-
-	public function getAdapter() : KineticAdapter{
-		return $this->adapter;
-	}
-
-	public function getFormHandler() : FormHandler{
-		return $this->formHandler;
 	}
 
 
@@ -138,32 +212,6 @@ class KineticManager{
 		}
 	}
 
-	public function setContAction(CommandSender $sender, callable $action) : void{
-		$this->contAction[$sender] = [$action, microtime(true) + self::$CONT_ACTION_EXPIRY_TIME];
-	}
-
-	public function consumeContAction(CommandSender $sender) : ?callable{
-		if($this->contAction->contains($sender)){
-			$callable = $this->contAction[$sender];
-			$this->contAction->detach($sender);
-			return $callable;
-		}
-
-		return null;
-	}
-
-	public function cleanContAction() : void{
-		$detaches = [];
-		foreach($this->contAction as $sender){
-			if($this->contAction[$sender][1] < microtime(true)){
-				$detaches[] = $sender;
-			}
-		}
-		foreach($detaches as $detach){
-			$this->contAction->detach($detach);
-		}
-	}
-
 
 	public function requireTranslation(KineticNode $node, string $key) : void{
 		if($key !== "" && !$this->adapter->hasMessage($key)){
@@ -171,7 +219,7 @@ class KineticManager{
 		}
 	}
 
-	public function resolveClass(KineticNode $node, ?string $fqn, ?string $super) : ?object{
+	public function resolveClass(KineticNode $node, ?string $fqn, ?string $super, string $namespace) : ?object{
 		if($fqn === null){
 			return null;
 		}
@@ -195,7 +243,7 @@ class KineticManager{
 		}elseif($fqn{0} === "!"){
 			$class = libkinetic::getNamespace() . "\\Defaults\\" . substr($fqn, 1);
 		}else{
-			$class = $this->parser->getRoot()->asRootComponent()->getNamespace() . $fqn;
+			$class = $namespace . $fqn;
 		}
 
 		if(!class_exists($class)){

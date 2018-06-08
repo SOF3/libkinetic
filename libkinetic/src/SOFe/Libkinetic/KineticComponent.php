@@ -186,7 +186,7 @@ abstract class KineticComponent{
 		if($fqn === null){
 			return null;
 		}
-		return $this->manager->resolveClass($this->node, $fqn, $super);
+		return $this->manager->resolveClass($this->node, $fqn, $super, $this->node->getParser()->getNamespace());
 	}
 
 	protected final function resolveConfigString(?string &$string) : void{

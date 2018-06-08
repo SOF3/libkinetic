@@ -20,9 +20,11 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Clickable\Permission;
 
 use Iterator;
+use SOFe\Libkinetic\Clickable\ClickableComponent;
+use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;

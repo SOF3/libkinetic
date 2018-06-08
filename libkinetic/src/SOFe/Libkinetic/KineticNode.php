@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic;
 
 use AssertionError;
 use JsonSerializable;
+use SOFe\Libkinetic\Parser\KineticFileParser;
 use function array_unshift;
 use function assert;
 use function count;
@@ -31,6 +32,8 @@ use function count;
 final class KineticNode implements JsonSerializable{
 	use ComponentAdapter;
 
+	/** @var KineticFileParser */
+	protected $parser;
 	/** @var KineticManager */
 	protected $manager;
 
@@ -100,6 +103,10 @@ final class KineticNode implements JsonSerializable{
 		return $this->nodeParent !== null ? $this->nodeParent->findFirstAncestorComponent($class) : null;
 	}
 
+	public function getParser() : KineticFileParser{
+		return $this->parser;
+	}
+
 	public function getManager() : KineticManager{
 		return $this->manager;
 	}
@@ -152,16 +159,16 @@ final class KineticNode implements JsonSerializable{
 		throw new InvalidNodeException("Text content is not allowed", $this);
 	}
 
-	public function init(KineticManager $manager) : void{
+	public function resolve(KineticManager $manager) : void{
 		$this->manager = $manager;
 
-		// validate and resolve runtime-only values
 		foreach($this->components as $component){
 			$component->setManager($manager);
 			$component->resolve();
 		}
+	}
 
-		// register handlers against the PocketMine interface as necessary
+	public function init() : void{
 		foreach($this->components as $component){
 			$component->init();
 		}
@@ -169,14 +176,6 @@ final class KineticNode implements JsonSerializable{
 
 	public function isRoot() : bool{
 		return $this->nodeParent === null;
-	}
-
-	public function findRoot() : KineticNode{
-		$node = $this;
-		while($node->nodeParent !== null){
-			$node = $node->nodeParent;
-		}
-		return $node;
 	}
 
 	public function getHierarchyName() : string{

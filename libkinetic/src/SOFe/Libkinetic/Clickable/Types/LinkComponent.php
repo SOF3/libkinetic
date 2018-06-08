@@ -43,7 +43,7 @@ class LinkComponent extends KineticComponent implements ClickableInterface{
 	public function setAttribute(string $name, string $value) : bool{
 		if($name === "TARGET"){
 			if($value === '$parent'){
-				for($parent = $this->node->nodeParent; !empty($parent->findComponentsByInterface(IntermediateLinkInterface::class)); $parent = $parent->nodeParent){
+				for($parent = $this->node->nodeParent; !empty($parent->getIntermediateLinkInterfaces()); $parent = $parent->nodeParent){
 					// find grandparent if node has a IntermediateNodeInterface component
 				}
 				if($parent !== null && !$parent->hasComponent(AbsoluteIdComponent::class)){
@@ -68,7 +68,7 @@ class LinkComponent extends KineticComponent implements ClickableInterface{
 		}
 	}
 
-	public function onClick(WindowRequest $request) : void{
-		$this->target->findComponentsByInterface(ClickableInterface::class, 1)[0];
+	public function onClick(WindowRequest $request, array $args) : void{
+		$this->target->asClickableInterface()->onClick($request, $args);
 	}
 }

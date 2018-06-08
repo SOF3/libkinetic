@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Types;
 
-use function array_shift;
 use Iterator;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -35,6 +34,7 @@ use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
+use function array_slice;
 use function mb_strtolower;
 
 class IndexComponent extends KineticComponent{
@@ -67,7 +67,7 @@ class IndexComponent extends KineticComponent{
 			if(!isset($list[$id])){
 				throw new InvalidFormResponseException("Undefined \$list[$id]");
 			}
-			$list[$id]->onClick($push);
+			$list[$id]->onClick($push, []);
 		});
 	}
 
@@ -111,8 +111,7 @@ class IndexComponent extends KineticComponent{
 		}
 		foreach($this->getClickableListFor($request->getUser()) as $clickable){
 			if(mb_strtolower($clickable->asClickableComponent()->getArgName()) === mb_strtolower($args[0])){
-				array_shift($args);
-				$clickable->onClick($request); // TODO what about the remaining args?
+				$clickable->onClick($request, array_slice($args, 1)); // TODO what about the remaining args?
 				return true;
 			}
 		}

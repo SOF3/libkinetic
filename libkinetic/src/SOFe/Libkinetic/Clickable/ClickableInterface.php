@@ -59,5 +59,9 @@ use SOFe\Libkinetic\WindowRequest;
  * - `<editArg>` is only allowed in arguable window clickables, which will explicitly open an argument form.
  */
 interface ClickableInterface{
-	public function onClick(WindowRequest $request) : void;
+	/**
+	 * @param WindowRequest $request
+	 * @param string[]      $args
+	 */
+	public function onClick(WindowRequest $request, array $args) : void;
 }

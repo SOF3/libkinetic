@@ -43,7 +43,7 @@ trait ClickableTrait{
 		if(isset($this->peers)){
 			return $this->peers;
 		}
-		$this->peers = $this->getNode()->findComponentsByInterface(ClickablePeerInterface::class);
+		$this->peers = $this->getNode()->getClickablePeerInterfaces();
 		usort($this->peers, function(ClickablePeerInterface $a, ClickablePeerInterface $b) : int{
 			return $b->getPriority() <=> $a->getPriority();
 		});

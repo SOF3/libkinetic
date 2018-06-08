@@ -31,6 +31,8 @@ use SOFe\Libkinetic\KineticNode;
 use function array_map;
 use function implode;
 use function iterator_to_array;
+use SOFe\Libkinetic\libkinetic;
+use SOFe\Libkinetic\WindowRequest;
 
 class KineticCommand extends Command implements PluginIdentifiableCommand{
 	/** @var KineticManager */
@@ -47,17 +49,17 @@ class KineticCommand extends Command implements PluginIdentifiableCommand{
 
 		$name = $comp->getName();
 		$desc = $this->manager->translate(null, $comp->getDescription());
-		$usage = iterator_to_array($this->yieldUsage());
-
+		$usage = $this->manager->translate(null, libkinetic::MESSAGE_GENERIC_USAGE, ["cmd" => $name]);
 		$aliases = array_map(function(CommandAliasComponent $alias) : string{
 			return $alias->getValue();
 		}, $comp->getAliases());
 
-		parent::__construct($name, $desc, implode(" ", $usage), $aliases);
+		parent::__construct($name, $desc, $usage, $aliases);
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : void{
-
+		$request = new WindowRequest($this->manager, $sender);
+		$this->node->asClickableInterface()->onClick($request, $args);
 	}
 
 	public function getPlugin() : Plugin{

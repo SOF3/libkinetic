@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 use function assert;
-use AssertionError;
 
 class AbsoluteIdComponent extends KineticComponent{
 	protected $my;

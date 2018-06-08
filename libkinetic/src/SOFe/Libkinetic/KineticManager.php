@@ -195,18 +195,18 @@ class KineticManager{
 		return $this->idMap[$id] ?? null;
 	}
 
-	public function clickNode(string $id, CommandSender $user) : void{
+	public function clickNode(string $id, CommandSender $user, array $args = []) : void{
 		$node = $this->getNodeById($id);
 		if($node === null){
 			throw new InvalidArgumentException("$id: no such node");
 		}
 
 		/** @var ClickableInterface $clickable */
-		$clickable = $node->findComponentsByInterface(ClickableInterface::class, 1)[0];
+		$clickable = $node->asClickableInterface();
 
 		$request = new WindowRequest($this, $user);
 
-		$clickable->onClick($request);
+		$clickable->onClick($request, $args);
 	}
 
 

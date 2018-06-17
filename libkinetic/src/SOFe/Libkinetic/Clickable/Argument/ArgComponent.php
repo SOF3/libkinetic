@@ -68,7 +68,7 @@ class ArgComponent extends KineticComponent{
 		throw new AssertionError("\$this is not among parent node's arguments");
 	}
 
-	public function getId() : ?string{
+	public function &getId() : ?string{
 		return $this->id;
 	}
 

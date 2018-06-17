@@ -56,7 +56,7 @@ use SOFe\Libkinetic\Element\EditableElementInterface;
 use SOFe\Libkinetic\Element\ElementComponent;
 use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Element\ElementParentComponent;
-use SOFe\Libkinetic\Element\ElementParentWithFallbackRequiredComponent;
+use SOFe\Libkinetic\Element\ElementParentWithRequiredFallbackComponent;
 use SOFe\Libkinetic\Element\InputComponent;
 use SOFe\Libkinetic\Element\LabelComponent;
 use SOFe\Libkinetic\Element\RequiredComponent;
@@ -303,17 +303,17 @@ trait ComponentAdapter{
 	}
 
 
-	public final function asElementParentWithFallbackRequiredComponent() : ElementParentWithFallbackRequiredComponent{
-		return $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
+	public final function asElementParentWithRequiredFallbackComponent() : ElementParentWithRequiredFallbackComponent{
+		return $this->getComponent(ElementParentWithRequiredFallbackComponent::class);
 	}
 
 	public final function getElementParentWithFallbackRequiredComponent(&$component) : KineticNode{
-		$component = $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
+		$component = $this->getComponent(ElementParentWithRequiredFallbackComponent::class);
 		return $this;
 	}
 
 	public final function addElementParentWithFallbackRequiredComponent(array &$component) : KineticNode{
-		$component[] = $this->getComponent(ElementParentWithFallbackRequiredComponent::class);
+		$component[] = $this->getComponent(ElementParentWithRequiredFallbackComponent::class);
 		return $this;
 	}
 

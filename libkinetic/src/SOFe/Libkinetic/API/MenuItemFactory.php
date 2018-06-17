@@ -28,8 +28,8 @@ class MenuItemFactory{
 	/** @var array[] */
 	protected $values = [];
 
-	public function addItem($value, string $expression, ?Icon $icon = null) : void{
-		$this->values[] = [$value, $expression, $icon];
+	public function addItem($value, string $string, ?Icon $icon = null) : void{
+		$this->values[] = [$value, $string, $icon];
 	}
 
 	public function getValues() : array{

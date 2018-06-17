@@ -42,7 +42,7 @@ final class libkinetic{
 			"en_US" => 'Add Item',
 		],
 		self::MESSAGE_GENERIC_USAGE => [
-			"en_US"=>'/${cmd}',
+			"en_US" => '/${cmd}',
 		],
 		self::MESSAGE_RUN_IN_GAME_FOR_INDEX => [
 			"en_US" => TextFormat::AQUA . 'Run this command in-game to use more features',

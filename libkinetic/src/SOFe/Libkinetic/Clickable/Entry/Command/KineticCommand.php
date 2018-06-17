@@ -28,11 +28,9 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\plugin\Plugin;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\KineticNode;
-use function array_map;
-use function implode;
-use function iterator_to_array;
 use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\WindowRequest;
+use function array_map;
 
 class KineticCommand extends Command implements PluginIdentifiableCommand{
 	/** @var KineticManager */

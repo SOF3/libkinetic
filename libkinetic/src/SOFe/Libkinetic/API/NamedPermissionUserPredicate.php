@@ -20,12 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\API;
 
-use Generator;
+use pocketmine\command\CommandSender;
 
-class ElementParentWithFallbackRequiredComponent extends ElementParentComponent{
-	protected function extraComponents() : Generator{
-		yield RequiredWithFallbackComponent::class;
+class NamedPermissionUserPredicate implements UserPredicate{
+	/** @var string */
+	protected $permissionName;
+	/** @var bool */
+	protected $need;
+
+	public function __construct(string $permissionName, bool $need){
+		$this->permissionName = $permissionName;
+		$this->need = $need;
+	}
+
+	public function test(CommandSender $sender) : bool{
+		return $sender->hasPermission($this->permissionName) === $this->need;
 	}
 }

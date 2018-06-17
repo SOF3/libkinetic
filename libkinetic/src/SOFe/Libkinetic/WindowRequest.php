@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
+use function is_array;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use function assert;
@@ -78,6 +79,15 @@ class WindowRequest{
 
 		assert($value !== null, "Undefined kinetic config $key");
 		assert(is_float($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as float");
+
+		return $value;
+	}
+
+	public function getArray(string $key) : array{
+		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
+
+		assert($value !== null, "Undefined kinetic config $key");
+		assert(is_array($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as array");
 
 		return $value;
 	}

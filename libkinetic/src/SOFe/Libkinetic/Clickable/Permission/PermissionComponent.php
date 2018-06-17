@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Clickable\Permission;
 
 use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\API\NamedUserPredicate;
+use SOFe\Libkinetic\API\NamedPermissionUserPredicate;
 use SOFe\Libkinetic\API\UserPredicate;
 use SOFe\Libkinetic\KineticComponent;
 
@@ -67,7 +67,7 @@ class PermissionComponent extends KineticComponent{
 	}
 
 	public function resolve() : void{
-		$this->predicate = $this->usesPredicate ? $this->resolveClass($this->name, UserPredicate::class) : new NamedUserPredicate($this->name, $this->need);
+		$this->predicate = $this->usesPredicate ? $this->resolveClass($this->name, UserPredicate::class) : new NamedPermissionUserPredicate($this->name, $this->need);
 		$this->requireTranslation($this->message);
 	}
 

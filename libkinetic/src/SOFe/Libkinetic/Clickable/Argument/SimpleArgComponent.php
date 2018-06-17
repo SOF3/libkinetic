@@ -24,7 +24,8 @@ namespace SOFe\Libkinetic\Clickable\Argument;
 
 use Iterator;
 use pocketmine\Player;
-use SOFe\Libkinetic\Element\ElementParentWithFallbackRequiredComponent;
+use SOFe\Libkinetic\Element\ElementParentWithRequiredFallbackComponent;
+use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\Util\CallSequence;
 use SOFe\Libkinetic\WindowComponent;
@@ -33,37 +34,38 @@ use SOFe\Libkinetic\WindowRequest;
 class SimpleArgComponent extends KineticComponent implements ArgInterface{
 	use ArgTrait;
 
-	protected $title;
-
 	public function dependsComponents() : Iterator{
 		yield ArgComponent::class;
 		yield WindowComponent::class;
-		yield ElementParentWithFallbackRequiredComponent::class;
+		yield ElementParentWithRequiredFallbackComponent::class;
 	}
 
-	public function setAttribute(string $name, string $value) : bool{
-		if($name === "TITLE"){
-			$this->title = $value;
-			return true;
-		}
-		return false;
-	}
-
-	public function resolve() : void{
-		$this->requireTranslation($this->title);
-	}
-
-	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured) : void{
-		CallSequence::forMethod($this->asElementParentWithFallbackRequiredComponent()->getElements(), "asFormComponent", function($elements) use ($onConfigured, $error, $player, $request, $explicit){
+	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured, $cache) : void{
+		CallSequence::forMethod($this->asElementParentWithRequiredFallbackComponent()->getElements(), "asFormComponent", function($elements) use ($onConfigured, $error, $player, $request, $explicit){
 			$content = [];
 			$callback = [];
+
+			if($this->asWindowComponent()->getSynopsis() !== null){
+				$content[] = [
+					"type" => "label",
+					"text" => $request->translate($this->asElementComponent()->getTitle()),
+				];
+				$callback[] = function($value){
+					if($value !== null){
+						throw new InvalidFormResponseException("Value should be null");
+					}
+					return null;
+				};
+			}
+
 			foreach($elements as $element){
 				$content[] = $element[0];
 				$callback[] = $element[1];
 			}
+
 			$formData = [
 				"type" => "custom_form",
-				"title" => $request->translate($this->title) . ($error !== null ? "\n$error" : ""),
+				"title" => $request->translate($this->asWindowComponent()->getTitle()) . ($error !== null ? "\n$error" : ""),
 				"content" => $content,
 			];
 
@@ -75,7 +77,10 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 					return;
 				}
 
-				foreach($this->asElementParentWithFallbackRequiredComponent()->getElements() as $i => $element){
+				foreach($this->asElementParentWithRequiredFallbackComponent()->getElements() as $i => $element){
+					if($this->asWindowComponent()->getSynopsis() !== null){
+						++$i;
+					}
 					$id = $this->composeId($element->getNode()->asElementComponent()->getId());
 					$value = $callback[$i]();
 					$local = $element->getNode()->asRequiredComponent()->test($request->getUser());
@@ -87,12 +92,12 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 		}, [$request], [], CallSequence::YIELD_ALL);
 	}
 
-	protected function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void{
+	protected function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured, $cache) : void{
 
 	}
 
-	protected function isRequestSufficient(WindowRequest $request, bool $baseRequired) : bool{
-		foreach($this->asElementParentWithFallbackRequiredComponent()->getElements() as $iElement){
+	protected function isRequestSufficient(WindowRequest $request, bool $baseRequired, callable $sufficient, callable $insufficient) : void{
+		foreach($this->asElementParentWithRequiredFallbackComponent()->getElements() as $iElement){
 			$element = $iElement->getNode()->asElementComponent();
 			$required = $iElement->getNode()->asRequiredComponent()->test($request->getUser()) ?? $baseRequired;
 			if(!$required){
@@ -100,10 +105,11 @@ class SimpleArgComponent extends KineticComponent implements ArgInterface{
 			}
 			$id = $this->composeId($element->getId());
 			if(!$request->hasKey($id)){
-				return false;
+				$insufficient();
+				return;
 			}
 		}
-		return true;
+		$sufficient();
 	}
 
 	private function composeId(string $childId) : string{

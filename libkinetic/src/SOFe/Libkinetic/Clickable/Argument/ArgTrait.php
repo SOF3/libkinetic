@@ -33,14 +33,13 @@ trait ArgTrait{
 	 * @param bool          $explicit     if the user explicitly requested to change this arg
 	 * @param callable      $onConfigured action to execute after successful configuration of this arg; might never get called if user abandons this arg
 	 */
-	public function configure(WindowRequest $request, bool $explicit, callable $onConfigured) : void{
-		if(!$explicit && $this->isRequestSufficient($request, $this->asArgComponent()->isRequired())){
-			// if args are sufficient, skip this arg
+	public final function configure(WindowRequest $request, bool $explicit, callable $onConfigured) : void{
+		$sufficient = function($cache = null) use ($explicit, $onConfigured, $request){
 			$validator = $this->asArgComponent()->getValidator();
 			if($validator !== null){
 				// if validator exists, validate the current args. if invalid, still request
-				$validator->validate($request, $onConfigured, function(string $error = null) use ($explicit, $onConfigured, $request): void{
-					$this->sendInterface($request, $explicit, $error, $onConfigured);
+				$validator->validate($request, $onConfigured, function(string $error = null) use ($cache, $explicit, $onConfigured, $request): void{
+					$this->sendInterface($request, $explicit, $error, $onConfigured, $cache);
 				});
 			}else{
 				// everything's ok, let's skip this arg
@@ -51,30 +50,36 @@ trait ArgTrait{
 					$onConfigured();
 				}
 			}
-			return;
-		}
+		};
+		$insufficient = function($cache = null) use ($onConfigured, $request, $explicit){
+			$this->sendInterface($request, $explicit, null, $onConfigured, $cache);
+		};
 
-		$this->sendInterface($request, $explicit, null, $onConfigured);
+		if($explicit){
+			$insufficient();
+		}else{
+			$this->isRequestSufficient($request, $this->asArgComponent()->isRequired(), $sufficient, $insufficient);
+		}
 	}
 
-	public function sendInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void{
+	public final function sendInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured, $cache) : void{
 		$user = $request->getUser();
 		if($user instanceof Player){
-			$this->sendFormInterface($request, $user, $explicit, $error, $onConfigured);
+			$this->sendFormInterface($request, $user, $explicit, $error, $onConfigured, $cache);
 		}else{
-			$this->sendCommandInterface($request, $explicit, $error, $onConfigured);
+			$this->sendCommandInterface($request, $explicit, $error, $onConfigured, $cache);
 		}
 	}
 
-	protected abstract function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured) : void;
+	protected abstract function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured, $cache) : void;
 
-	protected abstract function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void;
+	protected abstract function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured, $cache) : void;
 
-	public function afterResponse(WindowRequest $request, callable $onConfigured) : void{
+	public final function afterResponse(WindowRequest $request, callable $onConfigured) : void{
 		$this->configure($request, false, $onConfigured);
 	}
 
-	protected abstract function isRequestSufficient(WindowRequest $request, bool $baseRequired) : bool;
+	protected abstract function isRequestSufficient(WindowRequest $request, bool $baseRequired, callable $sufficient, callable $insufficient) : void;
 
 	protected abstract function getNode() : KineticNode;
 

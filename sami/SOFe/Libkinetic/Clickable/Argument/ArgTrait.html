@@ -94,10 +94,10 @@
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <a target="_blank" href="http://php.net/Generator">Generator</a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_configure">configure</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, callable $onConfigured)
+                    <a href="#method_configure">configure</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $explicit)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -108,7 +108,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_sendInterface">sendInterface</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, string|null $error, callable $onConfigured)
+                    <a href="#method_sendInterface">sendInterface</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $explicit, string|null $error, $cache)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -119,7 +119,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_sendFormInterface">sendFormInterface</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, <abbr title="pocketmine\Player">Player</abbr> $player, bool $explicit, string|null $error, callable $onConfigured)
+                    <a href="#method_sendFormInterface">sendFormInterface</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, <abbr title="pocketmine\Player">Player</abbr> $player, bool $explicit, string|null $error, $cache)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -130,7 +130,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_sendCommandInterface">sendCommandInterface</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, string|null $error, callable $onConfigured)
+                    <a href="#method_sendCommandInterface">sendCommandInterface</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $explicit, string|null $error, $cache)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -141,7 +141,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_afterResponse">afterResponse</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, callable $onConfigured)
+                    <a href="#method_afterResponse">afterResponse</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -152,7 +152,7 @@
                     
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_isRequestSufficient">isRequestSufficient</a>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $baseRequired)
+                    <a href="#method_isRequestSufficient">isRequestSufficient</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $baseRequired, $cache)
         
                                             <p class="no-description">No description</p>
                                     </div>
@@ -199,9 +199,9 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_configure">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L36">line 36</a></div>
-        <code>                    
-    <strong>configure</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, callable $onConfigured)
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L38">line 38</a></div>
+        <code>final                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+    <strong>configure</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $explicit)
         </code>
     </h3>
     <div class="details">
@@ -213,7 +213,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
                 <td></td>
             </tr>
@@ -222,14 +222,18 @@
                 <td>$explicit</td>
                 <td>if the user explicitly requested to change this arg</td>
             </tr>
-                    <tr>
-                <td>callable</td>
-                <td>$onConfigured</td>
-                <td>action to execute after successful configuration of this arg; might never get called if user abandons this arg</td>
-            </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" href="http://php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>
@@ -238,9 +242,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_sendInterface">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L60">line 60</a></div>
-        <code>                    
-    <strong>sendInterface</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, string|null $error, callable $onConfigured)
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L54">line 54</a></div>
+        <code>final                    
+    <strong>sendInterface</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $explicit, string|null $error, $cache)
         </code>
     </h3>
     <div class="details">
@@ -252,7 +256,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
                 <td></td>
             </tr>
@@ -267,8 +271,8 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>callable</td>
-                <td>$onConfigured</td>
+                <td></td>
+                <td>$cache</td>
                 <td></td>
             </tr>
             </table>
@@ -282,9 +286,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_sendFormInterface">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L69">line 69</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L60">line 60</a></div>
         <code>    abstract        protected        
-    <strong>sendFormInterface</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, <abbr title="pocketmine\Player">Player</abbr> $player, bool $explicit, string|null $error, callable $onConfigured)
+    <strong>sendFormInterface</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, <abbr title="pocketmine\Player">Player</abbr> $player, bool $explicit, string|null $error, $cache)
         </code>
     </h3>
     <div class="details">
@@ -296,7 +300,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
                 <td></td>
             </tr>
@@ -316,8 +320,8 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>callable</td>
-                <td>$onConfigured</td>
+                <td></td>
+                <td>$cache</td>
                 <td></td>
             </tr>
             </table>
@@ -331,9 +335,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_sendCommandInterface">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L71">line 71</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L62">line 62</a></div>
         <code>    abstract        protected        
-    <strong>sendCommandInterface</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $explicit, string|null $error, callable $onConfigured)
+    <strong>sendCommandInterface</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $explicit, string|null $error, $cache)
         </code>
     </h3>
     <div class="details">
@@ -345,7 +349,7 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
                 <td></td>
             </tr>
@@ -360,8 +364,8 @@
                 <td></td>
             </tr>
                     <tr>
-                <td>callable</td>
-                <td>$onConfigured</td>
+                <td></td>
+                <td>$cache</td>
                 <td></td>
             </tr>
             </table>
@@ -375,9 +379,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_afterResponse">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L73">line 73</a></div>
-        <code>                    
-    <strong>afterResponse</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, callable $onConfigured)
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L64">line 64</a></div>
+        <code>final                    
+    <strong>afterResponse</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request)
         </code>
     </h3>
     <div class="details">
@@ -389,13 +393,8 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td>callable</td>
-                <td>$onConfigured</td>
                 <td></td>
             </tr>
             </table>
@@ -409,9 +408,9 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_isRequestSufficient">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L77">line 77</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L68">line 68</a></div>
         <code>    abstract        protected        
-    <strong>isRequestSufficient</strong>(<a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, bool $baseRequired)
+    <strong>isRequestSufficient</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, bool $baseRequired, $cache)
         </code>
     </h3>
     <div class="details">
@@ -423,13 +422,18 @@
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
                 <td></td>
             </tr>
                     <tr>
                 <td>bool</td>
                 <td>$baseRequired</td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td></td>
+                <td>$cache</td>
                 <td></td>
             </tr>
             </table>
@@ -443,7 +447,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getNode">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L79">line 79</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L70">line 70</a></div>
         <code>    abstract        protected        
     <strong>getNode</strong>()
         </code>
@@ -462,7 +466,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_getManager">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L81">line 81</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L72">line 72</a></div>
         <code>    abstract        protected        
     <strong>getManager</strong>()
         </code>
@@ -481,7 +485,7 @@
             </div>
                     <div class="method-item">
                     <h3 id="method_asArgComponent">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L83">line 83</a></div>
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/Clickable/Argument/ArgTrait.php#L74">line 74</a></div>
         <code>    abstract        protected        
     <strong>asArgComponent</strong>()
         </code>

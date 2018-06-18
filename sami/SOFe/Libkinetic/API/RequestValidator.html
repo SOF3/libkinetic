@@ -94,13 +94,12 @@
             <div class="container-fluid underlined">
                     <div class="row">
                 <div class="col-md-2 type">
-                    
+                    <a target="_blank" href="http://php.net/Generator">Generator</a>
                 </div>
                 <div class="col-md-8 type">
-                    <a href="#method_validate">validate</a>(<a href="../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, callable $onValid, callable $onInvalid)
+                    <a href="#method_validate">validate</a>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, <abbr title="SOFe\Libkinetic\API\&$error">&$error</abbr> $error)
         
-                                            <p class="no-description">No description</p>
-                                    </div>
+                                            <p>The generator function should return a boolean (valid or not) or an array <code>[valid bool, error string]</code>.</p>                </div>
                 <div class="col-md-2"></div>
             </div>
             </div>
@@ -111,37 +110,43 @@
             <div id="method-details">
                     <div class="method-item">
                     <h3 id="method_validate">
-        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/API/RequestValidator.php#L28">line 28</a></div>
-        <code>                    
-    <strong>validate</strong>(<a href="../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a> $request, callable $onValid, callable $onInvalid)
+        <div class="location">at         <a href="https://github.com/SOF3/libkinetic/blob/master/libkinetic/src/SOFe/Libkinetic/API/RequestValidator.php#L36">line 36</a></div>
+        <code>                    <a target="_blank" href="http://php.net/Generator">Generator</a>
+    <strong>validate</strong>(<abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr> $request, <abbr title="SOFe\Libkinetic\API\&$error">&$error</abbr> $error)
         </code>
     </h3>
     <div class="details">
             
     
 
+                    <div class="method-description">
+                                    <p>The generator function should return a boolean (valid or not) or an array <code>[valid bool, error string]</code>.</p>                                                </div>
                 <div class="tags">
                             <h4>Parameters</h4>
 
                     <table class="table table-condensed">
                     <tr>
-                <td><a href="../../../SOFe/Libkinetic/WindowRequest.html"><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></a></td>
+                <td><abbr title="SOFe\Libkinetic\WindowRequest">WindowRequest</abbr></td>
                 <td>$request</td>
                 <td></td>
             </tr>
                     <tr>
-                <td>callable</td>
-                <td>$onValid</td>
-                <td></td>
-            </tr>
-                    <tr>
-                <td>callable</td>
-                <td>$onInvalid</td>
+                <td><abbr title="SOFe\Libkinetic\API\&$error">&$error</abbr></td>
+                <td>$error</td>
                 <td></td>
             </tr>
             </table>
 
             
+                            <h4>Return Value</h4>
+
+                    <table class="table table-condensed">
+        <tr>
+            <td><a target="_blank" href="http://php.net/Generator">Generator</a></td>
+            <td></td>
+        </tr>
+    </table>
+
             
             
                     </div>

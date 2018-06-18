@@ -23,8 +23,8 @@ var dir_ba3650b3e8af869474e4b28cb5baca8f =
     [ "ElementParentComponent.php", "_element_parent_component_8php.html", [
       [ "ElementParentComponent", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_component.html", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_component" ]
     ] ],
-    [ "ElementParentWithFallbackRequiredComponent.php", "_element_parent_with_fallback_required_component_8php.html", [
-      [ "ElementParentWithFallbackRequiredComponent", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_with_fallback_required_component.html", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_with_fallback_required_component" ]
+    [ "ElementParentWithRequiredFallbackComponent.php", "_element_parent_with_required_fallback_component_8php.html", [
+      [ "ElementParentWithRequiredFallbackComponent", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_with_required_fallback_component.html", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_element_parent_with_required_fallback_component" ]
     ] ],
     [ "InputComponent.php", "_input_component_8php.html", [
       [ "InputComponent", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_input_component.html", "class_s_o_fe_1_1_libkinetic_1_1_element_1_1_input_component" ]

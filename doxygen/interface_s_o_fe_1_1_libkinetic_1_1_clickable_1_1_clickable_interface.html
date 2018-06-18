@@ -99,17 +99,15 @@ Inheritance diagram for ClickableInterface:</div>
  <div class="center">
   <img src="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_interface.png" usemap="#ClickableInterface_map" alt=""/>
   <map id="ClickableInterface_map" name="ClickableInterface_map">
-<area href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_container_1_1_clickable_container_interface.html" alt="ClickableContainerInterface" shape="rect" coords="0,56,169,80"/>
-<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_exit_component.html" alt="ExitComponent" shape="rect" coords="179,56,348,80"/>
-<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_link_component.html" alt="LinkComponent" shape="rect" coords="358,56,527,80"/>
-<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_index_component.html" alt="IndexComponent" shape="rect" coords="0,112,169,136"/>
+<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_exit_component.html" alt="ExitComponent" shape="rect" coords="0,56,114,80"/>
+<area href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_link_component.html" alt="LinkComponent" shape="rect" coords="124,56,238,80"/>
 </map>
  </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6cc5ea54f6da8a72c4ebf342f035ecc3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_interface.html#a6cc5ea54f6da8a72c4ebf342f035ecc3">onClick</a> (<a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> $request)</td></tr>
-<tr class="separator:a6cc5ea54f6da8a72c4ebf342f035ecc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abea80f4c12366903bd2e480e06e690f1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_interface.html#abea80f4c12366903bd2e480e06e690f1">onClick</a> (<a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> $request, array $args)</td></tr>
+<tr class="separator:abea80f4c12366903bd2e480e06e690f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a> represents an action that can be executed. They are all valid as children in a master menu (<code>&lt;index&gt;</code>), except <code>&lt;editArg&gt;</code>, which is only applicable in an arguable window clickable (both ArguableClickableComponent and <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_component.html">WindowComponent</a> are depended).</p>
@@ -118,7 +116,7 @@ Public Member Functions</h2></td></tr>
 <p>There are two builtin ways of direct entry: commands and item clicks. Developers can also use <code>KineticManager-&gt;clickNode()</code> to initiate a direct entry. Non-players can still use the command interface to use a <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a>.</p>
 <h2>ClickablePeer</h2>
 <p>ClickablePeer executes something before the <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a> itself is run. Their executions are listed as follows, from the earliest to the latest:</p><ul>
-<li><em>Permission</em>: Checks if the user has the permissions described in <code>&lt;permission&gt;</code> to use this <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a>. Abandons this request if the user has no permission.</li>
+<li><em><a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission.html">Permission</a></em>: Checks if the user has the permissions described in <code>&lt;permission&gt;</code> to use this <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a>. Abandons this request if the user has no permission.</li>
 <li><em>Arguable</em>: Ensures that the <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> consists of sufficient arguments to use this <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a>. Abandons this request if the user cancelled the forms asking for the arguments.</li>
 <li><em>All</em>: Triggers the <code>onClick</code> and <code>onClickAsync</code> handler of the <a class="el" href="namespace_s_o_fe_1_1_libkinetic_1_1_clickable.html">Clickable</a> node if any. Abandons this request if the handler throws a <code><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_click_interrupted_exception.html">ClickInterruptedException</a></code>.</li>
 </ul>
@@ -153,8 +151,8 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_clickable_interface_8php_source.html#l00061">61</a> of file <a class="el" href="_clickable_interface_8php_source.html">ClickableInterface.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a6cc5ea54f6da8a72c4ebf342f035ecc3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cc5ea54f6da8a72c4ebf342f035ecc3">&#9670;&nbsp;</a></span>onClick()</h2>
+<a id="abea80f4c12366903bd2e480e06e690f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abea80f4c12366903bd2e480e06e690f1">&#9670;&nbsp;</a></span>onClick()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,13 +161,30 @@ Public Member Functions</h2></td></tr>
           <td class="memname">onClick </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a>&#160;</td>
-          <td class="paramname"><em>$request</em></td><td>)</td>
+          <td class="paramname"><em>$request</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">array&#160;</td>
+          <td class="paramname"><em>$args</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a></td><td class="paramname">$request</td><td></td></tr>
+    <tr><td class="paramtype"></td><td class="paramname">string[]</td><td>$args </td></tr>
+  </table>
+  </dd>
+</dl>
 
-<p>Implemented in <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_link_component.html#a6cc5ea54f6da8a72c4ebf342f035ecc3">LinkComponent</a>.</p>
+<p>Implemented in <a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_types_1_1_link_component.html#abea80f4c12366903bd2e480e06e690f1">LinkComponent</a>.</p>
 
 </div>
 </div>

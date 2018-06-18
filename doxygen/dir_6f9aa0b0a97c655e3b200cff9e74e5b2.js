@@ -24,8 +24,8 @@ var dir_6f9aa0b0a97c655e3b200cff9e74e5b2 =
     [ "MenuProvider.php", "_menu_provider_8php.html", [
       [ "MenuProvider", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_menu_provider.html", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_menu_provider" ]
     ] ],
-    [ "NamedUserPredicate.php", "_named_user_predicate_8php.html", [
-      [ "NamedUserPredicate", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_named_user_predicate.html", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_named_user_predicate" ]
+    [ "NamedPermissionUserPredicate.php", "_named_permission_user_predicate_8php.html", [
+      [ "NamedPermissionUserPredicate", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_named_permission_user_predicate.html", "class_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_named_permission_user_predicate" ]
     ] ],
     [ "RequestValidator.php", "_request_validator_8php.html", [
       [ "RequestValidator", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_request_validator.html", "interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_request_validator" ]

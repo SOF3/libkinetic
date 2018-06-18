@@ -96,15 +96,15 @@ $(document).ready(function(){initNavTree('interface_s_o_fe_1_1_libkinetic_1_1_a_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4b5d158205d0b43a1ec2463912efae64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_request_validator.html#a4b5d158205d0b43a1ec2463912efae64">validate</a> (<a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> $request, callable $onValid, callable $onInvalid)</td></tr>
-<tr class="separator:a4b5d158205d0b43a1ec2463912efae64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab074b99a3d078895106ca862d0f97cd3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_request_validator.html#ab074b99a3d078895106ca862d0f97cd3">validate</a> (<a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a> $request, &amp;$error)</td></tr>
+<tr class="separator:ab074b99a3d078895106ca862d0f97cd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_request_validator_8php_source.html#l00027">27</a> of file <a class="el" href="_request_validator_8php_source.html">RequestValidator.php</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_request_validator_8php_source.html#l00028">28</a> of file <a class="el" href="_request_validator_8php_source.html">RequestValidator.php</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4b5d158205d0b43a1ec2463912efae64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b5d158205d0b43a1ec2463912efae64">&#9670;&nbsp;</a></span>validate()</h2>
+<a id="ab074b99a3d078895106ca862d0f97cd3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab074b99a3d078895106ca862d0f97cd3">&#9670;&nbsp;</a></span>validate()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,14 +118,8 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">callable&#160;</td>
-          <td class="paramname"><em>$onValid</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">callable&#160;</td>
-          <td class="paramname"><em>$onInvalid</em>&#160;</td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>$error</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -134,6 +128,15 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The generator function should return a boolean (valid or not) or an array <code>[valid bool, error string]</code>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramtype"><a class="el" href="class_s_o_fe_1_1_libkinetic_1_1_window_request.html">WindowRequest</a></td><td class="paramname">$request</td><td></td></tr>
+    <tr><td class="paramtype"></td><td class="paramname">&amp;$error</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Generator </dd></dl>
 
 </div>
 </div>

@@ -1,0 +1,5 @@
+var namespace_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission =
+[
+    [ "PermissionClickableComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_1_1_permission_clickable_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_1_1_permission_clickable_component" ],
+    [ "PermissionComponent", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_1_1_permission_component.html", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_1_1_permission_component" ]
+];

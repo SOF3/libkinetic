@@ -2,9 +2,5 @@ var class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_compon
 [
     [ "dependsComponents", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#aec1ee80905f69cdf447b76c6b83acdd3", null ],
     [ "isRequestSufficient", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#aad4611798454df532f76fe3f0be1002f", null ],
-    [ "resolve", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#a1d1ec0a7c626e389e04eaa472c33cce8", null ],
-    [ "sendCommandInterface", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#a5577bbb130665c9bed0028db6dfbf740", null ],
-    [ "sendFormInterface", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#affdaf7c2052b3e6cd920ea1cf414746b", null ],
-    [ "setAttribute", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#ad91b3468f18c5c5aaacd38643a6df559", null ],
-    [ "$title", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#ada57e7bb7c152edad18fe2f166188691", null ]
+    [ "sendCommandInterface", "class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_argument_1_1_simple_arg_component.html#a7270c7a4cef6d5a255a2321138e4d656", null ]
 ];

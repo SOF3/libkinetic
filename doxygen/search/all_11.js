@@ -7,9 +7,9 @@ var searchData=
   ['parsefloat',['parseFloat',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#ac6cd5a27e202655bcac0012f617f7a71',1,'SOFe::Libkinetic::KineticComponent']]],
   ['parseint',['parseInt',['../class_s_o_fe_1_1_libkinetic_1_1_kinetic_component.html#a76ec38da9037ede0cb10528fda6ea81e',1,'SOFe::Libkinetic::KineticComponent']]],
   ['parsetext',['parseText',['../class_s_o_fe_1_1_libkinetic_1_1_parser_1_1_kinetic_file_parser.html#a1630f71eaa3a175e177f78a8b3687e89',1,'SOFe::Libkinetic::Parser::KineticFileParser']]],
-  ['permissionclickablecomponent',['PermissionClickableComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_clickable_component.html',1,'SOFe::Libkinetic::Clickable']]],
+  ['permissionclickablecomponent',['PermissionClickableComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_1_1_permission_clickable_component.html',1,'SOFe::Libkinetic::Clickable::Permission']]],
   ['permissionclickablecomponent_2ephp',['PermissionClickableComponent.php',['../_permission_clickable_component_8php.html',1,'']]],
-  ['permissioncomponent',['PermissionComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_component.html',1,'SOFe::Libkinetic::Clickable']]],
+  ['permissioncomponent',['PermissionComponent',['../class_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_permission_1_1_permission_component.html',1,'SOFe::Libkinetic::Clickable::Permission']]],
   ['permissioncomponent_2ephp',['PermissionComponent.php',['../_permission_component_8php.html',1,'']]],
   ['priority_5fearlier',['PRIORITY_EARLIER',['../interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer_interface.html#aabba82351ad7e8a4e29bf979f2850a03',1,'SOFe::Libkinetic::Clickable::ClickablePeerInterface']]],
   ['priority_5fearly',['PRIORITY_EARLY',['../interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer_interface.html#a1ea28ebc9b51893faa562cb3c9c1098f',1,'SOFe::Libkinetic::Clickable::ClickablePeerInterface']]],
@@ -17,6 +17,5 @@ var searchData=
   ['priority_5flater',['PRIORITY_LATER',['../interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer_interface.html#a5e1da4af2279d4dbf27a66a4920e2a40',1,'SOFe::Libkinetic::Clickable::ClickablePeerInterface']]],
   ['priority_5fnormal',['PRIORITY_NORMAL',['../interface_s_o_fe_1_1_libkinetic_1_1_clickable_1_1_clickable_peer_interface.html#aa9cecf975875ef3af97d6019caf9b29a',1,'SOFe::Libkinetic::Clickable::ClickablePeerInterface']]],
   ['provide',['provide',['../interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_complex_provider.html#a4e6d22adadf43aa629199b12d79957a2',1,'SOFe\Libkinetic\API\ComplexProvider\provide()'],['../interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_dropdown_provider.html#a5bb9e5ecc98c1342b522895796e9f091',1,'SOFe\Libkinetic\API\DropdownProvider\provide()'],['../interface_s_o_fe_1_1_libkinetic_1_1_a_p_i_1_1_menu_provider.html#aa8c30b33b0d372e2318e68e1883b63a7',1,'SOFe\Libkinetic\API\MenuProvider\provide()'],['../class_s_o_fe_1_1_libkinetic_1_1_defaults_1_1_all_players_dropdown_provider.html#a5bb9e5ecc98c1342b522895796e9f091',1,'SOFe\Libkinetic\Defaults\AllPlayersDropdownProvider\provide()'],['../class_s_o_fe_1_1_libkinetic_1_1_defaults_1_1_all_players_menu_provider.html#aa8c30b33b0d372e2318e68e1883b63a7',1,'SOFe\Libkinetic\Defaults\AllPlayersMenuProvider\provide()']]],
-  ['push',['push',['../class_s_o_fe_1_1_libkinetic_1_1_window_request.html#aa9e892cf9ba1a191af9fe1157a783490',1,'SOFe::Libkinetic::WindowRequest']]],
-  ['put',['put',['../class_s_o_fe_1_1_libkinetic_1_1_window_request.html#ad5603bce1e774afd9476f634c38b8d50',1,'SOFe::Libkinetic::WindowRequest']]]
+  ['push',['push',['../class_s_o_fe_1_1_libkinetic_1_1_window_request.html#aa9e892cf9ba1a191af9fe1157a783490',1,'SOFe::Libkinetic::WindowRequest']]]
 ];

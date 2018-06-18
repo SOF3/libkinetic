@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Permission;
 
+use Generator;
 use Iterator;
 use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
@@ -53,11 +54,12 @@ class PermissionClickableComponent extends KineticComponent implements Clickable
 		return $this->permission === null || $this->permission->testPermission($user);
 	}
 
-	public function onClick(WindowRequest $request, callable $onComplete) : void{
-		$perm = $this->getPermission();
-		if($perm === null || $perm->testPermissionNoisy($request->getUser())){
-			$onComplete();
+	public function onClick(WindowRequest $request) : Generator{
+		if(false){
+			yield;
 		}
+		$perm = $this->getPermission();
+		return $perm === null || $perm->testPermissionNoisy($request->getUser());
 	}
 
 	public function getPriority() : int{

@@ -22,12 +22,14 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable;
 
+use Generator;
 use Iterator;
 use SOFe\Libkinetic\AbsoluteIdComponent;
 use SOFe\Libkinetic\API\AsyncClickHandler;
 use SOFe\Libkinetic\API\ClickHandler;
 use SOFe\Libkinetic\ClickInterruptedException;
 use SOFe\Libkinetic\KineticComponent;
+use SOFe\Libkinetic\Util\Await;
 use SOFe\Libkinetic\WindowRequest;
 
 class ClickableComponent extends KineticComponent implements ClickablePeerInterface{
@@ -101,19 +103,18 @@ class ClickableComponent extends KineticComponent implements ClickablePeerInterf
 		return $this->onClickAsync;
 	}
 
-	public function onClick(WindowRequest $request, callable $onComplete) : void{
+	public function onClick(WindowRequest $request) : Generator{
 		if($this->onClick !== null){
 			try{
 				$this->onClick->onClick($request);
 			}catch(ClickInterruptedException $e){
-				return;
+				return false;
 			}
 		}
 		if($this->onClickAsync !== null){
-			$this->onClickAsync->onClick($request, $onComplete);
-			return;
+			yield Await::ASYNC => $this->onClickAsync->onClick($request, yield);
 		}
-		$onComplete();
+		return true;
 	}
 
 	public function getPriority() : int{

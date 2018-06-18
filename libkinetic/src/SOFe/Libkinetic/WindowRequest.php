@@ -22,12 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-use function is_array;
+use InvalidArgumentException;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
+use function array_slice;
 use function assert;
+use function explode;
 use function get_class;
 use function gettype;
+use function is_array;
 use function is_bool;
 use function is_float;
 use function is_int;
@@ -48,7 +51,7 @@ class WindowRequest{
 	}
 
 	public function getBoolean(string $key) : bool{
-		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
+		$value = $this->getValue($key);
 
 		assert($value !== null, "Undefined kinetic config $key");
 		assert(is_bool($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as bool");
@@ -57,7 +60,7 @@ class WindowRequest{
 	}
 
 	public function getInt(string $key) : int{
-		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
+		$value = $this->getValue($key);
 
 		assert($value !== null, "Undefined kinetic config $key");
 		assert(is_int($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as int");
@@ -66,7 +69,7 @@ class WindowRequest{
 	}
 
 	public function getString(string $key) : string{
-		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
+		$value = $this->getValue($key);
 
 		assert($value !== null, "Undefined kinetic config $key");
 		assert(is_string($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as string");
@@ -75,7 +78,7 @@ class WindowRequest{
 	}
 
 	public function getFloat(string $key) : float{
-		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
+		$value = $this->getValue($key);
 
 		assert($value !== null, "Undefined kinetic config $key");
 		assert(is_float($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as float");
@@ -83,17 +86,8 @@ class WindowRequest{
 		return $value;
 	}
 
-	public function getArray(string $key) : array{
-		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
-
-		assert($value !== null, "Undefined kinetic config $key");
-		assert(is_array($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as array");
-
-		return $value;
-	}
-
 	public function getObject(string $key, string $class) : object{
-		$value = $this->local[$key] ?? $this->inherit[$key] ?? null;
+		$value = $this->getValue($key);
 
 		assert($value !== null, "Undefined kinetic config $key");
 		assert(is_object($value), "Kinetic config $key has type " . gettype($value) . ", attempted to get as object");
@@ -102,16 +96,46 @@ class WindowRequest{
 		return $value;
 	}
 
+	protected function getValue(string $key){
+		$keyParts = explode(".", $key);
+		foreach([$this->local, $this->inherit] as $array){
+			foreach($keyParts as $keyPart){
+				if(!is_array($array)){
+					throw new InvalidArgumentException("Encountered non-array value while diving into multi-dimensional array");
+				}
+				if(!isset($array[$keyPart])){
+					continue 2;
+				}
+				$array = $array[$keyPart];
+			}
+			return $array;
+		}
+		return null;
+	}
+
 	public function hasKey(string $key) : bool{
-		return isset($this->local[$key]) || isset($this->inherit[$key]);
+		return $this->getValue($key) !== null;
 	}
 
 	public function put(bool $local, string $key, $value) : void{
-		if($local){
-			$this->local[$key] = $value;
-		}else{
-			$this->inherit[$key] = $value;
+		if($value === null){
+			throw new InvalidArgumentException("Cannot put null value");
 		}
+
+		$array =& ($local ? $this->local : $this->inherit);
+		/** @var string[] $keyParts */
+		$keyParts = explode(".", $key);
+		foreach(array_slice($keyParts, 0, -1) as $keyPart){
+			if(!isset($array[$keyPart])){
+				$array[$keyPart] = [];
+			}elseif(!is_array($array[$keyPart])){
+				throw new InvalidArgumentException("Encountered non-array value while diving into multi-dimensional array");
+			}
+			$array =& $array[$keyPart];
+		}
+		/** @var mixed $last */
+		$last = array_slice($keyParts, -1)[0];
+		$array[$last] = null;
 	}
 
 	public function push() : WindowRequest{

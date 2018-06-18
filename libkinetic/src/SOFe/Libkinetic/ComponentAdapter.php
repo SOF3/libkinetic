@@ -25,12 +25,12 @@ namespace SOFe\Libkinetic;
 use SOFe\Libkinetic\Clickable\Argument\ArgComponent;
 use SOFe\Libkinetic\Clickable\Argument\ArgInterface;
 use SOFe\Libkinetic\Clickable\Argument\ArguableComponent;
+use SOFe\Libkinetic\Clickable\Argument\CycleArgComponent;
 use SOFe\Libkinetic\Clickable\Argument\SimpleArgComponent;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
 use SOFe\Libkinetic\Clickable\ClickableInterface;
 use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
 use SOFe\Libkinetic\Clickable\Cont\ContCommandComponent;
-use SOFe\Libkinetic\Clickable\Container\ClickableContainerInterface;
 use SOFe\Libkinetic\Clickable\Container\ClickableParentComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandAliasComponent;
 use SOFe\Libkinetic\Clickable\Entry\Command\CommandEntryComponent;
@@ -213,6 +213,21 @@ trait ComponentAdapter{
 	}
 
 
+	public final function asCycleArgComponent() : CycleArgComponent{
+		return $this->getComponent(CycleArgComponent::class);
+	}
+
+	public final function getCycleArgComponent(&$component) : KineticNode{
+		$component = $this->getComponent(CycleArgComponent::class);
+		return $this;
+	}
+
+	public final function addCycleArgComponent(array &$component) : KineticNode{
+		$component[] = $this->getComponent(CycleArgComponent::class);
+		return $this;
+	}
+
+
 	public final function asDirectEntryClickableComponent() : DirectEntryClickableComponent{
 		return $this->getComponent(DirectEntryClickableComponent::class);
 	}
@@ -307,12 +322,12 @@ trait ComponentAdapter{
 		return $this->getComponent(ElementParentWithRequiredFallbackComponent::class);
 	}
 
-	public final function getElementParentWithFallbackRequiredComponent(&$component) : KineticNode{
+	public final function getElementParentWithRequiredFallbackComponent(&$component) : KineticNode{
 		$component = $this->getComponent(ElementParentWithRequiredFallbackComponent::class);
 		return $this;
 	}
 
-	public final function addElementParentWithFallbackRequiredComponent(array &$component) : KineticNode{
+	public final function addElementParentWithRequiredFallbackComponent(array &$component) : KineticNode{
 		$component[] = $this->getComponent(ElementParentWithRequiredFallbackComponent::class);
 		return $this;
 	}
@@ -655,16 +670,6 @@ trait ComponentAdapter{
 	/** @return ArgInterface[] */
 	public final function getArgInterfaces(int $assertMinimum = 0) : array{
 		return $this->findComponentsByInterface(ArgInterface::class, $assertMinimum);
-	}
-
-
-	public final function asClickableContainerInterface() : ClickableContainerInterface{
-		return $this->findComponentsByInterface(ClickableContainerInterface::class, 1)[0];
-	}
-
-	/** @return ClickableContainerInterface[] */
-	public final function getClickableContainerInterfaces(int $assertMinimum = 0) : array{
-		return $this->findComponentsByInterface(ClickableContainerInterface::class, $assertMinimum);
 	}
 
 

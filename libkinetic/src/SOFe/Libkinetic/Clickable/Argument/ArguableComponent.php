@@ -22,12 +22,13 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Argument;
 
+use Generator;
 use Iterator;
 use SOFe\Libkinetic\Clickable\ClickableComponent;
 use SOFe\Libkinetic\Clickable\ClickablePeerInterface;
 use SOFe\Libkinetic\KineticComponent;
 use SOFe\Libkinetic\KineticNode;
-use SOFe\Libkinetic\Util\CallSequence;
+use SOFe\Libkinetic\Util\Await;
 use SOFe\Libkinetic\WindowRequest;
 
 class ArguableComponent extends KineticComponent implements ClickablePeerInterface{
@@ -45,14 +46,19 @@ class ArguableComponent extends KineticComponent implements ClickablePeerInterfa
 		return null;
 	}
 
-	public function onClick(WindowRequest $request, callable $onComplete) : void{
+	public function onClick(WindowRequest $request) : Generator{
 		if(empty($this->args)){
-			$onComplete();
-			return;
+			return true;
 		}
 
-		$this->args[0]->configure($request, false, $onComplete);
-		CallSequence::forMethod($this->args, "configure", $onComplete, [$request], [false]);
+		foreach($this->args as $arg){
+			$cont = yield Await::FROM => $arg->configure($request, false);
+			if(!$cont){
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

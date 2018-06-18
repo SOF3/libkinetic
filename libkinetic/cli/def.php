@@ -21,7 +21,6 @@
 declare(strict_types=1);
 
 use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\Node\KineticNodeWithId;
 use SOFe\Libkinetic\ParseException;
 use SOFe\Libkinetic\Parser\XmlFileParser;

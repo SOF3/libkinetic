@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Argument;
 
+use Generator;
 use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\WindowRequest;
 
@@ -64,7 +65,7 @@ use SOFe\Libkinetic\WindowRequest;
  *   - Command interface: needs an adapter from the plugin to implement command syntax parsing.
  */
 interface ArgInterface{
-	public function configure(WindowRequest $request, bool $explicit, callable $onConfigured) : void;
+	public function configure(WindowRequest $request, bool $explicit) : Generator;
 
 	public function getNode() : KineticNode;
 }

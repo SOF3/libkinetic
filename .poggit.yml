@@ -4,5 +4,5 @@ projects:
     type: library
     model: virion
     libs:
-      - src: SOF3/await-generator/~
-        version: 1.0.0
+    - src: SOF3/await-generator/~
+      version: 1.0.0

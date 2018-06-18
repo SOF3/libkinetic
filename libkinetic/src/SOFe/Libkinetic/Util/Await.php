@@ -20,19 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Clickable;
+namespace SOFe\Libkinetic\Util;
 
-use Generator;
-use SOFe\Libkinetic\WindowRequest;
-
-interface ClickablePeerInterface{
-	public const PRIORITY_EARLIER = 2;
-	public const PRIORITY_EARLY = 1;
-	public const PRIORITY_NORMAL = 0;
-	public const PRIORITY_LATE = -1;
-	public const PRIORITY_LATER = -2;
-
-	public function onClick(WindowRequest $request) : Generator;
-
-	public function getPriority() : int;
+class Await extends \SOFe\AwaitGenerator\Await{
 }

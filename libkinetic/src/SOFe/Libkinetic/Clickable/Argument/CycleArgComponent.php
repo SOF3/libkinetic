@@ -22,13 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Clickable\Argument;
 
+use Generator;
 use Iterator;
 use pocketmine\Player;
 use SOFe\Libkinetic\API\MenuItemFactory;
 use SOFe\Libkinetic\API\MenuProvider;
 use SOFe\Libkinetic\Element\ElementParentWithRequiredFallbackComponent;
+use SOFe\Libkinetic\InvalidFormResponseException;
 use SOFe\Libkinetic\KineticComponent;
-use SOFe\Libkinetic\Util\CallSequence;
+use SOFe\Libkinetic\Util\Await;
 use SOFe\Libkinetic\WindowComponent;
 use SOFe\Libkinetic\WindowRequest;
 
@@ -63,51 +65,91 @@ class CycleArgComponent extends KineticComponent implements ArgInterface{
 		$this->provider = $this->resolveClass($this->providerClass, MenuProvider::class);
 	}
 
-	protected function isRequestSufficient(WindowRequest $request, bool $required, callable $sufficient, callable $insufficient) : void{
-		if(!$required){
-			$sufficient();
-			return;
+	protected function isRequestSufficient(WindowRequest $request, bool $baseRequired, &$cache) : Generator{
+		if(!$baseRequired){
+			return true;
 		}
 		if(!$request->hasKey($this->asArgComponent()->getId())){
-			$insufficient();
-			return;
+			return false;
 		}
+
 		$factory = new MenuItemFactory();
-		$this->provider->provide($factory, $request, function() use ($sufficient, $insufficient, $request, $factory){
-			$array = $request->getArray($this->asArgComponent()->getId());
-
-			/** @var string $id */
-			foreach($factory->getValues() as [, $id]){
-				if(!isset($array[$id])){
-					$insufficient($factory->getValues());
-					return;
+		yield Await::ASYNC => $this->provider->provide($factory, $request, yield);
+		$cache = $factory->getValues();
+		$argId = $this->asArgComponent()->getId();
+		foreach($cache as [, $entryId]){
+			foreach($this->asElementParentWithRequiredFallbackComponent()->getElements() as $element){
+				$elementId = $element->getNode()->asElementComponent()->getId();
+				if(!$request->hasKey("$argId.$entryId.$elementId")){
+					return false;
 				}
 			}
-
-			$sufficient($factory->getValues());
-		});
-	}
-
-	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, callable $onConfigured, $cache) : void{
-		$func = function(array $values) use ($request){
-			$content = [];
-
-			foreach($values as [$config, $key]){
-				foreach($this->asElementParentWithRequiredFallbackComponent()->getElements() as $element){
-				}
-			}
-		};
-		if($cache !== null){
-			$func($cache);
-		}else{
-			$factory = new MenuItemFactory();
-			$this->provider->provide($factory, $request, function() use($factory, $func){
-				$func($factory->getValues());
-			});
 		}
+		return true;
 	}
 
-	protected function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, callable $onConfigured) : void{
+	protected function sendFormInterface(WindowRequest $request, Player $player, bool $explicit, ?string $error, $values) : Generator{
+		if($values === null){
+			$factory = new MenuItemFactory();
+			yield Await::ASYNC => $this->provider->provide($factory, $request, yield);
+			$values = $factory->getValues();
+		}
 
+		$content = [];
+		$callback = [];
+		$synopsis = $this->asWindowComponent()->getSynopsis();
+		if($synopsis !== null){
+			$content[] = [
+				"type" => "label",
+				"text" => $request->translate($synopsis),
+			];
+			$callback[] = function($value){
+				if($value !== null){
+					throw new InvalidFormResponseException("Value should be null");
+				}
+				return null;
+			};
+		}
+
+		foreach($values as [$config, $entryId]){
+			$push = $request->push();
+			foreach($config as $k => $v){
+				$push->put(true, $k, $v);
+			}
+
+			foreach($this->asElementParentWithRequiredFallbackComponent()->getElements() as $element){
+				[$ct, $cb] = yield Await::ASYNC => $element->asFormComponent($request, yield);
+				$content[] = $ct;
+				$callback[] = $cb;
+			}
+		}
+
+		$formData = [
+			"type" => "custom_form",
+			"title" => $request->translate($this->asWindowComponent()->getTitle()) . ($error !== null ? " ($error)" : ""),
+			"content" => $content,
+		];
+
+		$response = yield Await::ASYNC => $this->getManager()->getFormHandler()->sendForm($player, $formData, yield);
+		if($response === null){
+			return $explicit; // if explicit, flag as configured, else, flag as abandoned
+		}
+
+		$i = $synopsis !== null ? 1 : 0;
+		$argId = $this->asArgComponent()->getId();
+		foreach($values as [, $entryId]){
+			foreach($this->asElementParentWithRequiredFallbackComponent()->getElements() as $element){
+				$elementId = $element->getNode()->asElementComponent()->getId();
+				$request->put(true, "$argId.$entryId.$elementId", $callback[$i++]());
+			}
+		}
+
+		return true;
+	}
+
+	protected function sendCommandInterface(WindowRequest $request, bool $explicit, ?string $error, $cache) : Generator{
+		0 && yield;
+
+		// TODO implement
 	}
 }

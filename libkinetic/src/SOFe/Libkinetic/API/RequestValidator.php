@@ -22,8 +22,16 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use Generator;
 use SOFe\Libkinetic\WindowRequest;
 
 interface RequestValidator{
-	public function validate(WindowRequest $request, callable $onValid, callable $onInvalid) : void;
+	/**
+	 * The generator function should return a boolean (valid or not) or an array `[valid bool, error string]`.
+	 *
+	 * @param WindowRequest $request
+	 * @param               &$error
+	 * @return Generator
+	 */
+	public function validate(WindowRequest $request, &$error) : Generator;
 }

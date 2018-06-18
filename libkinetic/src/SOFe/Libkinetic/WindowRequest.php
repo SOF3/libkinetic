@@ -122,7 +122,11 @@ class WindowRequest{
 			throw new InvalidArgumentException("Cannot put null value");
 		}
 
-		$array =& ($local ? $this->local : $this->inherit);
+		if($local){
+			$array =& $this->local;
+		}else{
+			$array =& $this->inherit;
+		}
 		/** @var string[] $keyParts */
 		$keyParts = explode(".", $key);
 		foreach(array_slice($keyParts, 0, -1) as $keyPart){

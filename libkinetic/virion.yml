@@ -3,4 +3,4 @@ version: 0.0.2
 antigen: SOFe\Libkinetic
 author: SOFe
 api:
-- 3.0.0-ALPHA12
+  - 3.0.0

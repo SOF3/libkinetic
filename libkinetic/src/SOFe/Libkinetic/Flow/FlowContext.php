@@ -20,35 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Flow;
 
-use InvalidArgumentException;
 use pocketmine\command\CommandSender;
 
-interface KineticAdapter{
-	/**
-	 * @param string $identifier
-	 *
-	 * @return bool
-	 */
-	public function hasMessage(string $identifier) : bool;
-
-	/**
-	 * @param CommandSender|null $sender
-	 * @param string             $identifier
-	 * @param mixed[]            $parameters
-	 *
-	 * @return string
-	 *
-	 * @throws InvalidArgumentException
-	 */
-	public function getMessage(?CommandSender $sender, string $identifier, array $parameters) : string;
-
-	public function getController(string $name) : object;
-
-	/**
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function getKineticConfig(string $key);
+class FlowContext{
+	/** @var CommandSender */
+	protected $user;
+	/** @var FlowContext|null */
+	protected $parent;
+	/** @var VariableScope */
+	protected $variableScope;
 }

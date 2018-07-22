@@ -20,15 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\API\Adapter;
 
+use SOFe\Libkinetic\API\ClickHandlerA;
+use SOFe\Libkinetic\API\ClickHandlerG;
 use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Util\Await;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class ClickHandlerAdapterG implements ClickHandlerA{
+	/** @var ClickHandlerG */
+	private $handler;
+
+	public function __construct(ClickHandlerG $handler){
+		$this->handler = $handler;
+	}
+
+	public function onClick(FlowContext $context, callable $onComplete) : void{
+		Await::func($this->handler->onClick($context), $onComplete);
+	}
 }

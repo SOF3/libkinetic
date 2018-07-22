@@ -20,15 +20,28 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\API\Adapter;
 
+use Generator;
+use SOFe\Libkinetic\API\RequestValidator;
+use SOFe\Libkinetic\API\RequestValidatorG;
 use SOFe\Libkinetic\Flow\FlowContext;
+use function assert;
+use function is_string;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class RequestValidatorAdapter implements RequestValidatorG{
+	/** @var RequestValidator */
+	private $validator;
+
+	public function __construct(RequestValidator $validator){
+		$this->validator = $validator;
+	}
+
+	public function validate(FlowContext $context) : Generator{
+		0 && yield;
+		$error = "";
+		$bool = $this->validator->validate($context, $error);
+		assert(is_string($error));
+		return $bool ? true : $error;
+	}
 }

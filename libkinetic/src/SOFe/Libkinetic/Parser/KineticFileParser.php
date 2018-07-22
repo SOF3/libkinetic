@@ -22,11 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser;
 
-use SOFe\Libkinetic\AbsoluteIdComponent;
+use SOFe\Libkinetic\Attributes\AttributeRouter;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Base\RootComponent;
 use SOFe\Libkinetic\InvalidNodeException;
-use SOFe\Libkinetic\KineticNode;
 use SOFe\Libkinetic\ParseException;
-use SOFe\Libkinetic\Root\RootComponent;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 use function explode;
 use function strpos;
 use function substr;
@@ -37,95 +38,88 @@ abstract class KineticFileParser{
 
 	public static $hasPm = false;
 
-	public $xmlnsMap = [
+	protected $xmlnsMap = [
 		"" => self::LIBKINETIC_XMLNS,
 	];
 
-	/** @var KineticNode[] */
-	public $idMap = [];
-	/** @var KineticNode[] */
-	public $allNodes = [];
-
-	/** @var KineticNode|null */
-	protected $root = null;
+	/** @var KineticNode */
+	protected $root;
 	/** @var KineticNode|null */
 	protected $leaf = null;
+	/** @var KineticNode[] */
+	protected $allNodes = [];
 
 	protected $dataBuffer = "";
 
 	public function __construct(){
+		$this->leaf = $this->root = new KineticNode($this, self::LIBKINETIC_XMLNS, "KINETIC", null, [
+			new RootComponent(),
+		]);
 	}
 
 	public function startElement(/** @noinspection PhpUnusedParameterInspection */
 		$parser, string $elementName, array $attrs) : void{
 		$this->flushBuffer();
 
-		$isRoot = $this->leaf === null;
+		$isRoot = $this->leaf === $this->root;
+
+		if($isRoot){
+			foreach($attrs as $key => $value){
+				if(strpos($key, "xmlns:") === 0){
+					$nsName = substr($key, 6);
+					$this->xmlnsMap[$nsName] = $value;
+					unset($attrs[$key]);
+				}
+			}
+		}
+
 		if(strpos($elementName, ":") !== false){
 			[$ns, $elementName] = explode(":", $elementName, 2);
-			if(!$isRoot && !isset($this->xmlnsMap[$ns])){
+			if(!isset($this->xmlnsMap[$ns])){
 				throw new ParseException("Undefined XML element namespace $ns");
 			}
 		}else{
 			$ns = "";
 		}
+		$ns = $this->xmlnsMap[$ns];
+
 		if($isRoot){
-			if($elementName !== "KINETIC" && $elementName !== "ROOT"){
+			if($ns !== self::LIBKINETIC_XMLNS || ($elementName !== "KINETIC" && $elementName !== "ROOT")){
 				throw new ParseException("The root element must be <kinetic> or <root>");
 			}
-
-			$this->allNodes[] = $this->leaf = $this->root = KineticNode::create(RootComponent::class);
 		}else{
-			$leaf = $this->xmlnsMap[$ns] === self::LIBKINETIC_XMLNS ? $this->leaf->startChild($elementName) : $this->leaf->startChildNS($elementName, $this->xmlnsMap[$ns]);
-			if($leaf === null){
-				$xmlns = $this->xmlnsMap[$ns] === self::LIBKINETIC_XMLNS ? "" : ($this->xmlnsMap[$ns] . " : ");
-				throw new InvalidNodeException("<{$xmlns}{$elementName}> is not a valid child node", $this->leaf);
+			$gen = $ns === self::LIBKINETIC_XMLNS ? $this->leaf->startChild($elementName) : $this->leaf->startChildNS($elementName, $ns);
+
+			if(!GeneratorUtil::resolveValues($gen, $components)){
+				$nsReadable = $ns === self::LIBKINETIC_XMLNS ? "" : "\"{$ns}\":";
+				throw new InvalidNodeException("<{$nsReadable}{$elementName}> is not a valid child node", $this->leaf);
 			}
-			$leaf->nodeParent = $this->leaf;
-			$this->allNodes[] = $this->leaf = $leaf;
+
+			$node = new KineticNode($parser, $ns, $elementName, $this->leaf, $components);
+			$this->allNodes[] = $this->leaf = $node;
 		}
 
-		$this->leaf->nodeName = $elementName;
-
+		$mappedAttributes = [];
 		foreach($attrs as $attr => $value){
-			if($isRoot){
-				if($attr === "XMLNS"){
-					$this->xmlnsMap[""] = $value;
-					continue;
-				}
-				if(strpos($attr, "XMLNS:") === 0){
-					$this->xmlnsMap[substr($attr, 6)] = $value;
-					continue;
-				}
-			}
-
-			$ns = "";
+			$attrNs = "";
 			if(strpos($attr, ":") !== false){
-				[$ns, $attr] = explode(":", $attr, 2);
+				[$attrNs, $attr] = explode(":", $attr, 2);
 			}
+			if(!isset($this->xmlnsMap[$attrNs])){
+				throw new ParseException("Undefined XML attribute namespace $attrNs");
+			}
+			$attrNs = $this->xmlnsMap[$attrNs];
 
-			if(!($this->xmlnsMap[$ns] === self::LIBKINETIC_XMLNS ? $this->leaf->setAttribute($attr, $value) : $this->leaf->setAttributeNS($attr, $value, $this->xmlnsMap[$ns]))){
-				$xmlns = $this->xmlnsMap[$ns] === self::LIBKINETIC_XMLNS ? "" : ($this->xmlnsMap[$ns] . " : ");
-				throw new InvalidNodeException("<{$xmlns}{$elementName}> does not accept the attribute $attr", $this->leaf);
-			}
+			$mappedAttributes["{$attrNs}:{$attr}"] = $value;
 		}
-
-		if($this->leaf->hasComponent(AbsoluteIdComponent::class)){
-			if(isset($this->idMap[$this->leaf->asAbsoluteIdComponent()->getId()])){
-				throw new InvalidNodeException("Duplicate ID {$this->leaf->asAbsoluteIdComponent()->getId()}", $this->leaf);
-			}
-			$this->idMap[$this->leaf->asAbsoluteIdComponent()->getId()] = $this->leaf;
-		}
+		$this->leaf->setAttributes($mappedAttributes);
 	}
 
 	public function endElement(/** @noinspection PhpUnusedParameterInspection */
 		$parser, string $name) : void{
 		$this->flushBuffer();
-		if($name !== $this->leaf->nodeName){
-			throw new ParseException("Closing tag </$name> does not match opening tag <{$this->leaf->nodeName}>");
-		}
 		$this->leaf->endElement();
-		$this->leaf = $this->leaf->nodeParent;
+		$this->leaf = $this->leaf->getParent();
 	}
 
 	protected function flushBuffer() : void{
@@ -151,9 +145,5 @@ abstract class KineticFileParser{
 		return $this->root;
 	}
 
-	public function getNamespace() : string{
-		return $this->root->asRootComponent()->getNamespace();
-	}
-
-	public abstract function parse();
+	public abstract function parse() : void;
 }

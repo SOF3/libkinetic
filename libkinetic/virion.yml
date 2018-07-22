@@ -1,5 +1,5 @@
 name: libkinetic
-version: 0.0.2
+version: 0.0.3
 antigen: SOFe\Libkinetic
 author: SOFe
 api:

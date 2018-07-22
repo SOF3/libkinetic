@@ -4,6 +4,10 @@ root = yes
 indent_size = 4
 indent_style = tab
 
+[*.php]
+indent_size = 3
+indent_style = tab
+
 [*.yml]
 indent_style = space
 indent_size = 2

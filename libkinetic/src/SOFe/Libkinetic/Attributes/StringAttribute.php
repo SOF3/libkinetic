@@ -20,15 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Attributes;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Base\KineticNode;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class StringAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value){
+		return $value;
+	}
 }

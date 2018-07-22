@@ -20,15 +20,14 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Form;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use Generator;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+interface FormsAdapter{
+	public function sendModalForm(string $title, string $text, string $trueText, string $falseText) : Generator;
+
+	public function sendMenuForm(string $title, string $text, array $options) : Generator;
+
+	public function sendCustomForm(string $title, array $elements) : Generator;
 }

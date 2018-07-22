@@ -20,15 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Attributes;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use function is_numeric;
+use SOFe\Libkinetic\Base\KineticNode;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class FloatAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value){
+		if(!is_numeric($value)){
+			throw $node->throw("$value is not a number");
+		}
+		return (float) $value;
+	}
 }

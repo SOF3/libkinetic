@@ -20,15 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Attributes;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Base\KineticNode;
 
-interface RequestValidator{
+class AttributeFieldPair{
+	/** @var ResolvableNodeAttribute */
+	protected $attribute;
+	/** @var &mixed */
+	protected $fieldRef;
+
 	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
+	 * AttributeFieldPair constructor.
+	 * @param ResolvableNodeAttribute $attribute
+	 * @param mixed                   &$fieldRef
 	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+	public function __construct(ResolvableNodeAttribute $attribute, &$fieldRef){
+		$this->attribute = $attribute;
+		$this->fieldRef =& $fieldRef;
+	}
+
+	public function resolve(KineticNode $node) : void{
+		$this->fieldRef = $this->attribute->resolve($node, $this->fieldRef);
+	}
 }

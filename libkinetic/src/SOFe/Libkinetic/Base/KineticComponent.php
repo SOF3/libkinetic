@@ -20,15 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Base;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use Generator;
+use SOFe\Libkinetic\Attributes\AttributeRouter;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class KineticComponent{
+	public function acceptAttributes(AttributeRouter $attributes) : void{
+	}
+	
+	public function startChild(string $name) : Generator{
+		return GeneratorUtil::empty(false);
+	}
+
+	public function startChildNS(string $nsUri, string $name) : Generator{
+		return GeneratorUtil::empty(false);
+	}
+
+	public function acceptText(string $text) : bool{
+		return false;
+	}
 }

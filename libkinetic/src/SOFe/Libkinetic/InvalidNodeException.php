@@ -23,10 +23,11 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic;
 
 use RuntimeException;
+use SOFe\Libkinetic\Base\KineticNode;
 
 class InvalidNodeException extends RuntimeException{
 	public function __construct(string $message, KineticNode $node){
-		parent::__construct($message . " in " . $node->getHierarchyName() . ".<" . $node->nodeName . ">");
+		parent::__construct($message . " in " . $node->getHierarchyName());
 	}
 
 	public function setMessage(string $message) : void{

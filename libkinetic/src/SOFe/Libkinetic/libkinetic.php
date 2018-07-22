@@ -24,6 +24,9 @@ namespace SOFe\Libkinetic;
 
 use pocketmine\utils\TextFormat;
 
+/**
+ * Some translations are temporarily hardcoded in this class. They are not part of the API, and plugins must not use them. They are not valid user strings in the kinetic file.
+ */
 final class libkinetic{
 	public const MESSAGE_CONT_NIL = "libkinetic.cont.nil";
 	public const MESSAGE_CONT_USAGE_HEADER = "libkinetic.cont.usage.header";
@@ -53,12 +56,15 @@ final class libkinetic{
 
 	private static $raw;
 
-	public static function isRaw() : bool{
+	/**
+	 * @return bool
+	 */
+	public static function isShaded() : bool{
 		return self::$raw;
 	}
 
 	public static function internalInit() : void{
-		self::$raw = self::class !== "SOFe\\libkinetic\\libkinetic";
+		self::$raw = self::class !== "SOFe\\lib" . "kinetic\\libkinetic";
 	}
 
 	public static function getNamespace() : string{

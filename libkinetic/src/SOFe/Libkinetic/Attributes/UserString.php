@@ -20,35 +20,21 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Attributes;
 
-use InvalidArgumentException;
 use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\KineticManager;
 
-interface KineticAdapter{
-	/**
-	 * @param string $identifier
-	 *
-	 * @return bool
-	 */
-	public function hasMessage(string $identifier) : bool;
+class UserString{
+	/** @var string  */
+	protected $id;
 
-	/**
-	 * @param CommandSender|null $sender
-	 * @param string             $identifier
-	 * @param mixed[]            $parameters
-	 *
-	 * @return string
-	 *
-	 * @throws InvalidArgumentException
-	 */
-	public function getMessage(?CommandSender $sender, string $identifier, array $parameters) : string;
+	public function __construct(string $id){
+		$this->id = $id;
+	}
 
-	public function getController(string $name) : object;
-
-	/**
-	 * @param string $key
-	 * @return mixed
-	 */
-	public function getKineticConfig(string $key);
+	public function translate(KineticManager $manager, CommandSender $user, array $args = []) : string{
+		return $manager->translate($user, $this->id, $args);
+}
 }

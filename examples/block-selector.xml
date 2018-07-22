@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<root xmlns="https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd">
+<kinetic xmlns="https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd">
   <info id="count-blocks" indexName="Count number of blocks in region" synopsis="TODO">
     <enumArgs id="blockTypes" title="Block Types" addItem="Add Block" eachFormat="${blockId}:${blockDamage}"
               submit="Continue" required="true">
@@ -10,4 +10,10 @@
       </each>
     </enumArgs>
   </info>
-</root>
+
+  <wizard id="blockTypes">
+    <return name="types"/>
+
+
+  </wizard>
+</kinetic>

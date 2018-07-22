@@ -22,13 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+interface ClickHandlerG{
+	public function onClick(FlowContext $context) : Generator;
 }

@@ -24,11 +24,6 @@ namespace SOFe\Libkinetic\API;
 
 use SOFe\Libkinetic\Flow\FlowContext;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+interface ClickHandlerA{
+	public function onClick(FlowContext $context, callable $onComplete) : void;
 }

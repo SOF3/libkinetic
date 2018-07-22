@@ -1,52 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<kinetic>
+<kinetic namespace="SimpleWarp" xmlns="https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd">
+  <cont name="swc"/>
+
   <index id="simplewarp">
-    <command name="simplewarp" description="SimpleWarp master menu">
+    <command name="simplewarp">
       <alias>sw</alias>
     </command>
 
-    <exit id="goto" subcmd="to" indexName="Warp to..." onClick="GotoWarpController"
-          icon="https://example.com/SimpleWarp/goto.png">
-      <command name="warp" description="Warp to a specific warp"/>
-
-      <listArg id="player" provider="!PlayerMenuProvider" requiredPredicate="!IsPlayerPredicate:not"/>
-      <listArg id="warp" argName="target warp" required="true" provider="WarpListProvider"/>
-    </exit>
-
-    <index id="add" indexName="Add Warp" icon="https://example.com/SimpleWarp/add.png">
-      <exit id="here" indexName="at your current position" onClick="AddWarpHereController">
-        <permission predicate="!IsPlayerPredicate"/>
-      </exit>
-      <exit id="player" indexName="at the current position of" subcmd="at" onClick="AddWarpAtPlayerController">
-        <listArg id="player" provider="!PlayerMenuProvider"/>
-      </exit>
-    </index>
-
-    <list id="list" indexName="Warp list" icon="https://example.com/SimpleWarp/list.png">
-      <before>
-        <link indexName="Add Warp" target="simplewarp.add"/>
-        <link indexName="Delete Warp" target="simplewarp.del"/>
-      </before>
-      <each argName="warp">
-        <info title="Warp: ${warp}"
-              synopsis="Created by ${creator} on ${created_on}\nVisibility: ${visibility}\nLocation: ${location}"
-              onClick="WarpInfoProvider">
-          <button1 name="Edit">
-            <editArg target="edit"/>
-          </button1>
-          <button2 name="Back to warp list">
-            <link target="$parent"/>
-          </button2>
-
-          <simpleArg id="edit">
-            <input id="name"/>
-            <input id="loc.x" typeCast="float"/>
-            <input id="loc.y" typeCast="float"/>
-            <input id="loc.z" typeCast="float"/>
-            <dynDropdown id="level" provider="LevelListProvider"/>
-          </simpleArg>
-        </info>
-      </each>
-    </list>
+    <!-- if ID starts with a dot, prepend parent ID -->
+    <series id=".add" indexName="Add Warp" onComplete="AddWarpExecutor">
+      <permission name="simplewarp.add-warp"/>
+      <require id="simplewarp.selectPos">
+        <!-- this <return> node simply renames the return variable from "loc" to "position". -->
+        <return name="loc" as="position"/>
+      </require>
+      <form>
+        <input id="name" text="Warp name"/>
+        <stepSlider id="access" text="Accessible by">
+          <step text="Everyone" value="everyone"/>
+          <step text="Everyone in that world" value="level"/>
+          <step text="Ops only" value="ops"/>
+        </stepSlider>
+        <!-- name="*" will group all variables into a single associative array -->
+        <return name="*" as="details"/>
+      </form>
+    </series>
   </index>
+
+  <wizard id="simplewarp.selectPos">
+    <return name="loc" type="location"/>
+    <index id="simplewarp.selectPos">
+      <list id="simplewarp.selectPos.player" indexName="At player's position" var="loc" provider="PlayerListProvider?meTop=true"/>
+      <form id="simplewarp.selectPos.form" indexName="Enter coordinates" onComplete="FormToLocationAdapter?var=loc">
+        <input id="x" text="X"/>
+        <input id="y" text="Y"/>
+        <input id="z" text="Z"/>
+        <dropdown id="level" text="World" provider="LevelListProvider"/>
+      </form>
+    </index>
+  </wizard>
 </kinetic>

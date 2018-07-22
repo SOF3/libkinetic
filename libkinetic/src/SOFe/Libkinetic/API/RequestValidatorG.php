@@ -25,22 +25,13 @@ namespace SOFe\Libkinetic\API;
 use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
 
-interface DropdownProvider{
-	public const FLAG_DEFAULT = "flag:default";
-
+interface RequestValidatorG{
 	/**
-	 * Returns a generator that yields the represented variable as keys and the option display text as values.
-	 *
-	 * Each key can have any data type compatible with the receiver.
-	 *
-	 * Each value can be a string or a TextContainer. It can also be an array where the first item (index 0) is a string
-	 * or a TextContainer, and the following items are modifiers for this value. Modifiers can be used as the value if no
-	 * value is required, or used as the key if a value is required.
-	 *
-	 * @see DropdownProvider::FLAG_DEFAULT Use this as the value to indicate that this option is the default.
+	 * The generator should return a boolean (valid or not) or a string (indicating this is invalid and explain why in
+	 * the string).
 	 *
 	 * @param FlowContext $context
 	 * @return Generator
 	 */
-	public function provide(FlowContext $context) : Generator;
+	public function validate(FlowContext $context) : Generator;
 }

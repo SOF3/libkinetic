@@ -20,35 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic;
+namespace SOFe\Libkinetic\Attributes;
 
-use InvalidArgumentException;
-use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\Base\KineticNode;
 
-interface KineticAdapter{
+abstract class NodeAttribute{
 	/**
-	 * @param string $identifier
-	 *
-	 * @return bool
-	 */
-	public function hasMessage(string $identifier) : bool;
-
-	/**
-	 * @param CommandSender|null $sender
-	 * @param string             $identifier
-	 * @param mixed[]            $parameters
-	 *
-	 * @return string
-	 *
-	 * @throws InvalidArgumentException
-	 */
-	public function getMessage(?CommandSender $sender, string $identifier, array $parameters) : string;
-
-	public function getController(string $name) : object;
-
-	/**
-	 * @param string $key
+	 * @param KineticNode $node
+	 * @param string      $value
 	 * @return mixed
 	 */
-	public function getKineticConfig(string $key);
+	public abstract function accept(KineticNode $node, string $value);
 }

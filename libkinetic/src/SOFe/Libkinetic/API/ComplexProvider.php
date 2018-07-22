@@ -22,8 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
-use SOFe\Libkinetic\WindowRequest;
+use Generator;
+use SOFe\Libkinetic\Flow\FlowContext;
 
 interface ComplexProvider{
-	public function provide(ComplexItemFactory $factory, WindowRequest $request, callable $onComplete) : void;
+	/**
+	 * Returns a generator that yields complex group ID as keys and complex group variable as values
+	 *
+	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
+	 * @return Generator
+	 */
+	public function provide(FlowContext $context) : Generator;
 }

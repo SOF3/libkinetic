@@ -20,15 +20,19 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Attributes;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Base\KineticNode;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class Configurable extends ResolvableNodeAttribute{
+	/** @var NodeAttribute */
+	protected $base;
+
+	public function accept(KineticNode $node, string $value) : string{
+		return $value;
+	}
+
+	public function resolve(KineticNode $node, $tempValue){
+		return $node->getManager()->getAdapter()->getKineticConfig($tempValue);
+	}
 }

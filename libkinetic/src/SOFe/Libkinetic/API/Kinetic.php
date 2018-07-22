@@ -22,13 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
-use SOFe\Libkinetic\Flow\FlowContext;
-
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class Kinetic{
+	public static function menuOption(string $text, $value, $icon) : array{
+		return ["text" => $text, "value" => $value, "icon" => $icon];
+	}
 }

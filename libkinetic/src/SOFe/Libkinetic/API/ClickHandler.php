@@ -22,8 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
-use SOFe\Libkinetic\WindowRequest;
+use SOFe\Libkinetic\Flow\FlowContext;
 
 interface ClickHandler{
-	public function onClick(WindowRequest $request) : void;
+	public function onClick(FlowContext $context) : void;
 }

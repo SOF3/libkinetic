@@ -27,22 +27,21 @@ use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use ReflectionClass;
-use SOFe\Libkinetic\Clickable\ClickableInterface;
-use SOFe\Libkinetic\Clickable\Cont\ContCommandComponent;
-use SOFe\Libkinetic\Form\FormHandler;
+use ReflectionParameter;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Form\FormsAdapter;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
-use SOFe\Libkinetic\Util\CallbackTask;
-use SplObjectStorage;
+use function array_keys;
+use function array_merge;
 use function assert;
 use function class_uses;
-use function extension_loaded;
+use function explode;
 use function implode;
 use function in_array;
 use function mb_strpos;
 use function mb_substr;
-use function microtime;
 use function str_replace;
 use function substr;
 
@@ -53,82 +52,36 @@ class KineticManager{
 	protected $plugin;
 	/** @var KineticAdapter */
 	protected $adapter;
-	/** @var FormHandler */
-	protected $formHandler;
-
-	/** @var KineticFileParser[] */
-	protected $parsers = [];
-	/** @var KineticNode[] */
-	protected $allNodes = [];
-	/** @var KineticNode[] */
-	protected $idMap = [];
-
-	/** @var bool */
-	protected $hasCont = false;
-	/** @var ContCommandComponent[] */
-	protected $contComponents = [];
-	/** @var SplObjectStorage|CommandSender[] */
-	protected $contAction = [];
+	/** @var FormsAdapter */
+	protected $formsAdapter;
 
 	/**
 	 * KineticManager constructor.
-	 * @param Plugin          $plugin
-	 * @param KineticAdapter  $adapter
-	 * @param string|string[] $xmlResources
-	 * @param string|string[] $jsonResources
+	 * @param Plugin         $plugin
+	 * @param KineticAdapter $adapter
+	 * @param string         $xml
+	 * @param string         $file
 	 */
-	public function __construct(Plugin $plugin, KineticAdapter $adapter, $xmlResources = ["kinetic.xml"], $jsonResources = ["kinetic.json"]){
+	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $file = "kinetic"){
 		KineticFileParser::$hasPm = true;
 		$this->plugin = $plugin;
 		if(in_array(KineticAdapterBase::class, class_uses($adapter), true)){
 			/** @noinspection PhpUndefinedMethodInspection */
+			/** @var KineticAdapterBase $adapter */
 			$adapter->kinetic_setPlugin($plugin);
 		}
 		$this->adapter = $adapter;
 
-		$this->formHandler = new FormHandler($this);
+		$parser = $this->createParser($file);
 
-		if(extension_loaded("xml")){
-			$xmlResources = (array) $xmlResources;
-			$plugin->getLogger()->debug("Loading XML kinetic file(s) " . implode(", ", $xmlResources));
-			foreach($xmlResources as $resource){
-				$this->parsers[] = new XmlFileParser($plugin->getResource($resource), $resource);
-			}
-		}else{
-			$jsonResources = (array) $jsonResources;
-			$plugin->getLogger()->debug("Loading JSON kinetic file(s) " . implode(", ", $jsonResources));
-			foreach($jsonResources as $resource){
-				$this->parsers[] = new JsonFileParser($plugin->getResource($resource), $resource);
-			}
-		}
+		$parser->parse();
 
-		foreach($this->parsers as $parser){
-			$parser->parse();
-			foreach($parser->allNodes as $node){
-				$this->allNodes[] = $node;
-				if($node->hasComponent(AbsoluteIdComponent::class)){
-					$id = $node->asAbsoluteIdComponent()->getId();
-					if(isset($this->idMap[$id])){
-						throw new InvalidNodeException("Duplicate node ID $id with another file's " . $this->idMap[$id]->getHierarchyName(), $node);
-					}
-					$this->idMap[$id] = $node;
-				}elseif($node->hasComponent(ContCommandComponent::class)){
-					$this->hasCont = true;
-					$this->contComponents[] = $node->asContCommandComponent();
-				}
-			}
-		}
+	}
 
-		foreach($this->allNodes as $node){
-			$node->resolve($this);
-		}
-		foreach($this->allNodes as $node){
-			$node->init();
-		}
-
-		if($this->hasCont){
-			$this->getPlugin()->getScheduler()->scheduleRepeatingTask(new CallbackTask([$this, "cleanContAction"]), 600);
-		}
+	protected function createParser(string $file) : KineticFileParser{
+		return libkinetic::isShaded() ?
+			new XmlFileParser($this->plugin->getResource($file . ".xml"), $file . ".xml") :
+			new JsonFileParser($this->plugin->getResource($file . ".json"), $file . ".json");
 	}
 
 	public function getPlugin() : Plugin{
@@ -139,76 +92,9 @@ class KineticManager{
 		return $this->adapter;
 	}
 
-	public function getFormHandler() : FormHandler{
-		return $this->formHandler;
+	public function getFormsAdapter() : FormsAdapter{
+		return $this->formsAdapter;
 	}
-
-	public function hasCont() : bool{
-		return $this->hasCont;
-	}
-
-	/**
-	 * @return ContCommandComponent[]
-	 */
-	public function getContComponents() : array{
-		return $this->contComponents;
-	}
-
-
-	public function setContAction(CommandSender $sender, callable $action) : void{
-		assert($this->hasCont);
-		$this->contAction[$sender] = [$action, microtime(true) + self::$CONT_ACTION_EXPIRY_TIME];
-	}
-
-	public function getContAction(CommandSender $sender) : ?callable{
-		assert($this->hasCont);
-		return $this->contAction->contains($sender) ? $this->contAction[$sender] : null;
-	}
-
-	public function consumeContAction(CommandSender $sender) : ?callable{
-		assert($this->hasCont);
-		if($this->contAction->contains($sender)){
-			$callable = $this->contAction[$sender];
-			$this->contAction->detach($sender);
-			return $callable;
-		}
-
-		return null;
-	}
-
-	public function cleanContAction() : void{
-		assert($this->hasCont);
-
-		$detaches = [];
-		foreach($this->contAction as $sender){
-			if($this->contAction[$sender][1] < microtime(true)){
-				$detaches[] = $sender;
-			}
-		}
-		foreach($detaches as $detach){
-			$this->contAction->detach($detach);
-		}
-	}
-
-
-	public function getNodeById(string $id) : ?KineticNode{
-		return $this->idMap[$id] ?? null;
-	}
-
-	public function clickNode(string $id, CommandSender $user, array $args = []) : void{
-		$node = $this->getNodeById($id);
-		if($node === null){
-			throw new InvalidArgumentException("$id: no such node");
-		}
-
-		/** @var ClickableInterface $clickable */
-		$clickable = $node->asClickableInterface();
-
-		$request = new WindowRequest($this, $user);
-
-		$clickable->onClick($request, $args);
-	}
-
 
 	public function translate(?CommandSender $context, ?string $identifier, array $args = []) : string{
 		if($identifier === "" || $identifier === null){
@@ -238,23 +124,27 @@ class KineticManager{
 		}
 	}
 
-	public function resolveClass(KineticNode $node, ?string $fqn, ?string $super, string $namespace) : ?object{
+	public function resolveClass(KineticNode $node, ?string $fqn, string $interface, array $adapters, string $namespace) : ?object{
 		if($fqn === null){
 			return null;
 		}
 
 		if($fqn{0} === '$'){
-			$object = $this->adapter->getInstantiable(substr($fqn, 1));
-			if($super !== null && !($object instanceof $super)){
-				throw new InvalidNodeException("$fqn does not extend/implement $super", $node);
+			$object = $this->adapter->getController(substr($fqn, 1));
+			$output = self::adaptObject($object, $interface, $adapters);
+			if($output === null){
+				$node->throw("KineticAdapter::getController(\"$fqn\") does not implement one of " . implode(", ", array_merge([$interface], array_keys($adapters))));
 			}
-			return $object;
 		}
 
-		$args = "";
-		if(($pos = mb_strpos($fqn, ":")) !== false){
-			$args = mb_substr($fqn, $pos + 1);
+		$args = [];
+		if(($pos = mb_strpos($fqn, ";")) !== false){
+			$argsString = mb_substr($fqn, $pos + 1);
 			$fqn = mb_substr($fqn, 0, $pos);
+			foreach(explode(";", $argsString) as $arg){
+				[$argName, $argValue] = explode("=", $arg);
+				$args[$argName] = $argValue;
+			}
 		}
 
 		if($fqn{0} === "\\"){
@@ -266,39 +156,86 @@ class KineticManager{
 		}
 
 		if(!class_exists($class)){
-			throw new InvalidNodeException("Class \"$class\" ($fqn) does not exist", $node);
+			$node->throw("Class $class ($fqn) does not exist");
 		}
 
-		if($super !== null && !is_subclass_of($class, $super)){
-			throw new InvalidNodeException("Class \"$class\" ($fqn) does not extend/implement $super", $node);
+		if(!self::isClassApplicableToAdapter($class, $interface, $adapters)){
+			$node->throw("Class $class ($fqn) does not implement one of " . implode(", ", array_merge([$interface], array_keys($adapters))));
 		}
 
 		$class = new ReflectionClass($class);
 		if(!$class->isInstantiable()){
-			throw new InvalidNodeException("Class \"$class\" ($fqn) is not instantiable", $node);
+			$node->throw("Class $class ($fqn) is not instantiable");
 		}
+
+		$controller = $this->constructControllerFromClass($class, $node, $fqn, $args);
+		$output = self::adaptObject($controller, $interface, $adapters);
+		if($output === null){
+			$node->throw("KineticAdapter::getController(\"$fqn\") does not implement one of " . implode(", ", array_merge([$interface], array_keys($adapters))));
+		}
+		return $output;
+	}
+
+	protected function constructControllerFromClass(ReflectionClass $class, KineticNode $node, string $fqn, array $args){
 		$constructor = $class->getConstructor();
-		if($constructor === null || $constructor->getNumberOfParameters() === 0){
+		if($constructor === null){
 			return $class->newInstance();
 		}
-
-		if($constructor->getNumberOfRequiredParameters() > 1){
-			throw new InvalidNodeException("Class must only accept one required parameter", $node);
+		$requiredParams = $constructor->getNumberOfRequiredParameters();
+		if($requiredParams !== $constructor->getNumberOfParameters()){
+			$node->throw("Class $class ($fqn) __construct must not have any optional parameters");
 		}
 
-		$param = $constructor->getParameters()[0];
-		if($param->getClass() === null){
+		if($requiredParams === 0){
+			return $class->newInstance();
+		}
+		$params = $constructor->getParameters();
+		if(self::isArrayParameter($params[0])){
 			return $class->newInstance($args);
 		}
-
-		if($param->getClass()->isInstance($this)){
-			return $class->newInstance($this, $args);
+		$paramClass = $params[0]->getClass();
+		if($paramClass !== null){
+			$isArraySecond = isset($params[1]) && self::isArrayParameter($params[1]);
+			if($paramClass->getName() === self::class){
+				return $isArraySecond ? $class->newInstance($this, $args) : $class->newInstance($this);
+			}
+			if($paramClass->isInstance($this->plugin)){
+				return $isArraySecond ? $class->newInstance($this->plugin, $args) : $class->newInstance($this->plugin);
+			}
 		}
 
-		if($param->getClass()->isInstance($this->plugin)){
-			return $class->newInstance($this->plugin, $args);
-		}
+		throw $node->throw("The constructor signature for class $class is invalid");
+	}
 
-		return $class->newInstance($args);
+	protected static function isArrayParameter(ReflectionParameter $parameter) : bool{
+		if($parameter->getClass() !== null || $parameter->getType() === null){
+			return false;
+		}
+		return $parameter->getType()->getName() === "array";
+	}
+
+	protected static function isClassApplicableToAdapter(string $class, string $interface, array $adapters) : bool{
+		if($class instanceof $interface){
+			return true;
+		}
+		foreach($adapters as $inter => $adapter){
+			if($class instanceof $inter){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	protected static function adaptObject(object $object, string $interface, array $adapters) : ?object{
+		if($object instanceof $interface){
+			return $object;
+		}
+		foreach($adapters as $class => $adapter){
+			if($object instanceof $class){
+				$adapted = $adapter($object);
+				assert($adapted instanceof $interface, "Invalid adapter implementation for $class");
+			}
+		}
+		return null;
 	}
 }

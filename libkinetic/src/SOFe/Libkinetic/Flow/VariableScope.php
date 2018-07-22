@@ -20,15 +20,9 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Flow;
 
-use SOFe\Libkinetic\Flow\FlowContext;
-
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class VariableScope{
+	/** @var VariableScope|null */
+	protected $parent;
 }

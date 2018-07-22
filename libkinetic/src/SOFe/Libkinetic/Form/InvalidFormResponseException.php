@@ -20,15 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\Form;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use RuntimeException;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class InvalidFormResponseException extends RuntimeException{
+
 }

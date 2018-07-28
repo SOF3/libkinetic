@@ -20,12 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Base;
 
-use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\StringAttribute;
 
-class StringAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value){
-		return $value;
+class IncludeComponent extends KineticComponent{
+	/** @var string */
+	protected $path;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->required("path", new StringAttribute(), $this->path);
+	}
+
+	public function getPath() : string{
+		return $this->path;
 	}
 }

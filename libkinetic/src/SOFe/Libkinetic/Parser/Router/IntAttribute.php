@@ -20,27 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
 use SOFe\Libkinetic\Base\KineticNode;
+use function ctype_digit;
 
-class AttributeFieldPair{
-	/** @var ResolvableNodeAttribute */
-	protected $attribute;
-	/** @var &mixed */
-	protected $fieldRef;
-
-	/**
-	 * AttributeFieldPair constructor.
-	 * @param ResolvableNodeAttribute $attribute
-	 * @param mixed                   &$fieldRef
-	 */
-	public function __construct(ResolvableNodeAttribute $attribute, &$fieldRef){
-		$this->attribute = $attribute;
-		$this->fieldRef =& $fieldRef;
-	}
-
-	public function resolve(KineticNode $node) : void{
-		$this->fieldRef = $this->attribute->resolve($node, $this->fieldRef);
+class IntAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value){
+		if(!ctype_digit($value)){
+			throw $node->throw("$value is not an integer");
+		}
+		return (int) $value;
 	}
 }

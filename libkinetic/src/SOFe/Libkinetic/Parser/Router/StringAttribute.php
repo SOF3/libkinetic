@@ -20,15 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
 use SOFe\Libkinetic\Base\KineticNode;
 
-abstract class ResolvableNodeAttribute extends NodeAttribute{
-	/**
-	 * @param KineticNode $node
-	 * @param mixed       $tempValue
-	 * @return mixed
-	 */
-	public abstract function resolve(KineticNode $node, $tempValue);
+class StringAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value){
+		return $value;
+	}
 }

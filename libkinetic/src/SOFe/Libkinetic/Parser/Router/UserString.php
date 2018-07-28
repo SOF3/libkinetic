@@ -20,15 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
-use SOFe\Libkinetic\Base\KineticNode;
+use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\KineticManager;
 
-abstract class NodeAttribute{
-	/**
-	 * @param KineticNode $node
-	 * @param string      $value
-	 * @return mixed
-	 */
-	public abstract function accept(KineticNode $node, string $value);
+class UserString{
+	/** @var string */
+	protected $id;
+
+	public function __construct(string $id){
+		$this->id = $id;
+	}
+
+	public function translate(KineticManager $manager, CommandSender $user, array $args = []) : string{
+		return $manager->translate($user, $this->id, $args);
+	}
 }

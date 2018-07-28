@@ -23,22 +23,58 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Base;
 
 use Generator;
-use SOFe\Libkinetic\Attributes\AttributeRouter;
+use SOFe\Libkinetic\KineticManager;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use function get_class;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 
 class KineticComponent{
-	public function acceptAttributes(AttributeRouter $attributes) : void{
-	}
-	
-	public function startChild(string $name) : Generator{
-		return GeneratorUtil::empty(false);
+	/** @var KineticManager */
+	protected $manager;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
 	}
 
-	public function startChildNS(string $nsUri, string $name) : Generator{
-		return GeneratorUtil::empty(false);
+	public function acceptChildren(ChildNodeRouter $router) : void{
 	}
 
 	public function acceptText(string $text) : bool{
 		return false;
+	}
+
+	public function resolve() : void{
+	}
+
+	public function init() : void{
+	}
+
+	public function getDependencies() : Generator{
+		return GeneratorUtil::empty();
+	}
+
+	/**
+	 * If multiple components in the node require components of the same getComponentClass(), this method will be invoked
+	 * on the older object (which one is older is very difficult to define, though). This method should return $this if
+	 * the new required component can be safely ignored, or return $that if the new required component can safely replace
+	 * $this, or return null to trigger an error.
+	 *
+	 * @param KineticComponent $that
+	 * @return null|KineticComponent
+	 */
+	public function thisOrThat(KineticComponent $that) : ?KineticComponent{
+		return $this;
+	}
+
+	public function getComponentClass() : string{
+		return get_class($this);
+	}
+
+	public function getManager() : KineticManager{
+		return $this->manager;
+	}
+
+	public function setManager(KineticManager $manager) : void{
+		$this->manager = $manager;
 	}
 }

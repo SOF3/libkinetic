@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Parser\KineticFileParser;
@@ -40,11 +40,11 @@ class AttributeRouter{
 		$this->attributes = $attributes;
 	}
 
-	public function required(string $name, NodeAttribute $attribute, &$field, string $ns = KineticFileParser::LIBKINETIC_XMLNS) : AttributeRouter{
+	public function required(string $name, NodeAttribute $attribute, &$field, string $ns = KineticFileParser::XMLNS_DEFAULT) : AttributeRouter{
 		$fullName = $ns . ":" . mb_strtoupper($name);
 		if(!isset($this->attributes[$fullName])){
-			$nsPrefix = $ns === KineticFileParser::LIBKINETIC_XMLNS ? "" : "\"$ns:\"";
-			throw $this->node->throw("Required attribute $nsPrefix$name missing");
+			$nsPrefix = $ns === KineticFileParser::XMLNS_DEFAULT ? "" : "\"$ns\":";
+			throw $this->node->throw("Required attribute {$nsPrefix}{$name} missing");
 		}
 		$attr = $this->attributes[$fullName];
 		unset($this->attributes[$fullName]);
@@ -56,7 +56,7 @@ class AttributeRouter{
 		return $this;
 	}
 
-	public function optional(string $name, NodeAttribute $attribute, &$field, string $ns = KineticFileParser::LIBKINETIC_XMLNS) : AttributeRouter{
+	public function optional(string $name, NodeAttribute $attribute, &$field, string $ns = KineticFileParser::XMLNS_DEFAULT) : AttributeRouter{
 		$fullName = $ns . ":" . mb_strtoupper($name);
 		if(!isset($this->attributes[$fullName])){
 			return $this;

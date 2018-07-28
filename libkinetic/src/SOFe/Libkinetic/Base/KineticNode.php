@@ -22,13 +22,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
-use Generator;
 use InvalidStateException;
-use SOFe\Libkinetic\Attributes\AttributeRouter;
+use RuntimeException;
 use SOFe\Libkinetic\InvalidNodeException;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\Parser\KineticFileParser;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use function array_unshift;
+use function assert;
 use function implode;
 
 final class KineticNode{
@@ -45,7 +47,12 @@ final class KineticNode{
 	protected $parent = null;
 
 	/** @var KineticComponent[] */
-	protected $components;
+	protected $components = [];
+
+	/** @var AttributeRouter */
+	protected $attrRouter;
+	/** @var ChildNodeRouter */
+	protected $childRouter;
 
 	/**
 	 * KineticNode constructor.
@@ -60,7 +67,26 @@ final class KineticNode{
 		$this->ns = $ns;
 		$this->name = $name;
 		$this->parent = $parent;
-		$this->components = $components;
+		foreach($components as $component){
+			$this->addComponent($component);
+		}
+	}
+
+	protected function addComponent(KineticComponent $component) : void{
+		$componentClass = $component->getComponentClass();
+		if(isset($this->components[$componentClass])){
+			$next = $this->components[$componentClass]->thisOrThat($component);
+			if($next === null){
+				throw new RuntimeException("Split-join found with component type " . $componentClass);
+			}
+			$this->components[$componentClass] = $next;
+		}else{
+			$this->components[$componentClass] = $component;
+		}
+		foreach($component->getDependencies() as $dependency){
+			assert($dependency instanceof KineticComponent);
+			$this->addComponent($dependency);
+		}
 	}
 
 	public function getParser() : KineticFileParser{
@@ -80,7 +106,7 @@ final class KineticNode{
 	}
 
 	public function getHumanName() : string{
-		return ($this->ns === KineticFileParser::LIBKINETIC_XMLNS ? "" : "{$this->ns}:") . $this->name;
+		return ($this->ns === KineticFileParser::XMLNS_DEFAULT ? "" : "{$this->ns}:") . $this->name;
 	}
 
 	public function getHierarchyName() : string{
@@ -103,32 +129,24 @@ final class KineticNode{
 	}
 
 	public function setAttributes($attributes) : void{
-		$router = new AttributeRouter($this, $attributes);
+		$this->attrRouter = new AttributeRouter($this, $attributes);
 		foreach($this->components as $component){
-			$component->acceptAttributes($router);
+			$component->acceptAttributes($this->attrRouter);
 		}
-		$router->checkEmpty();
+		$this->attrRouter->checkEmpty();
+
+		$this->childRouter = new ChildNodeRouter($this);
+		foreach($this->components as $component){
+			$component->acceptChildren($this->childRouter);
+		}
 	}
 
-	public function startChild(string $name) : Generator{
-		foreach($this->components as $component){
-			if(yield from $component->startChild($name)){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public function startChildNS(string $name, string $ns) : Generator{
-		foreach($this->components as $component){
-			if(yield from $component->startChildNS($name, $ns)){
-				return true;
-			}
-		}
-		return false;
+	public function startChild(string $ns, string $name) : KineticNode{
+		return $this->childRouter->startChild($ns, $name);
 	}
 
 	public function endElement() : void{
+		$this->childRouter->validate();
 	}
 
 	public function acceptText(string $text) : void{
@@ -142,6 +160,8 @@ final class KineticNode{
 
 	public function resolve(KineticManager $manager) : void{
 		$this->manager = $manager;
+
+		$this->attrRouter->resolveAll();
 
 		foreach($this->components as $component){
 			$component->setManager($manager);

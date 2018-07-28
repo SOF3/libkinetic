@@ -24,22 +24,28 @@ namespace SOFe\Libkinetic\Base;
 
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Router\Configurable;
 use SOFe\Libkinetic\Parser\Router\StringAttribute;
 
-class RootComponent extends KineticComponent{
+class CommandComponent extends KineticComponent{
 	/** @var string */
-	protected $namespace;
-	/** @var IncludeComponent[] */
-	protected $includes = [];
-	/** @var CommandComponent */
-	protected $cont = null;
+	protected $name;
+	/** @var AliasComponent[] */
+	protected $aliases = [];
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->required("namespace", new StringAttribute(), $this->namespace);
+		$router->required("name", new Configurable(new StringAttribute()), $this->name);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("include", IncludeComponent::class, $this->includes, 0);
-		$router->acceptSingle("cont", CommandComponent::class, $this->cont, true);
+		$router->acceptMulti("alias", AliasComponent::class, $this->aliases, 0);
+	}
+
+	public function getName() : string{
+		return $this->name;
+	}
+
+	public function getAliases() : array{
+		return $this->aliases;
 	}
 }

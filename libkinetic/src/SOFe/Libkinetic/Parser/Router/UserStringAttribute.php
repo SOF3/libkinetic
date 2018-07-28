@@ -20,16 +20,17 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
-use function is_numeric;
 use SOFe\Libkinetic\Base\KineticNode;
 
-class FloatAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value){
-		if(!is_numeric($value)){
-			throw $node->throw("$value is not a number");
-		}
-		return (float) $value;
+class UserStringAttribute extends ResolvableNodeAttribute{
+	public function accept(KineticNode $node, string $value) : string{
+		return $value;
+	}
+
+	public function resolve(KineticNode $node, $tempValue){
+		$node->getManager()->requireTranslation($node, $tempValue);
+		return $tempValue;
 	}
 }

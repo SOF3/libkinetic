@@ -22,24 +22,21 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser;
 
-use SOFe\Libkinetic\Attributes\AttributeRouter;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Base\RootComponent;
-use SOFe\Libkinetic\InvalidNodeException;
 use SOFe\Libkinetic\ParseException;
-use SOFe\Libkinetic\Util\GeneratorUtil;
 use function explode;
 use function strpos;
 use function substr;
 use function trim;
 
 abstract class KineticFileParser{
-	public const LIBKINETIC_XMLNS = "https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd";
+	public const XMLNS_DEFAULT = "https://rawgit.com/SOF3/libkinetic/master/libkinetic.xsd";
 
 	public static $hasPm = false;
 
 	protected $xmlnsMap = [
-		"" => self::LIBKINETIC_XMLNS,
+		"" => self::XMLNS_DEFAULT,
 	];
 
 	/** @var KineticNode */
@@ -52,7 +49,7 @@ abstract class KineticFileParser{
 	protected $dataBuffer = "";
 
 	public function __construct(){
-		$this->leaf = $this->root = new KineticNode($this, self::LIBKINETIC_XMLNS, "KINETIC", null, [
+		$this->leaf = $this->root = new KineticNode($this, self::XMLNS_DEFAULT, "KINETIC", null, [
 			new RootComponent(),
 		]);
 	}
@@ -84,18 +81,11 @@ abstract class KineticFileParser{
 		$ns = $this->xmlnsMap[$ns];
 
 		if($isRoot){
-			if($ns !== self::LIBKINETIC_XMLNS || ($elementName !== "KINETIC" && $elementName !== "ROOT")){
+			if($ns !== self::XMLNS_DEFAULT || ($elementName !== "KINETIC" && $elementName !== "ROOT")){
 				throw new ParseException("The root element must be <kinetic> or <root>");
 			}
 		}else{
-			$gen = $ns === self::LIBKINETIC_XMLNS ? $this->leaf->startChild($elementName) : $this->leaf->startChildNS($elementName, $ns);
-
-			if(!GeneratorUtil::resolveValues($gen, $components)){
-				$nsReadable = $ns === self::LIBKINETIC_XMLNS ? "" : "\"{$ns}\":";
-				throw new InvalidNodeException("<{$nsReadable}{$elementName}> is not a valid child node", $this->leaf);
-			}
-
-			$node = new KineticNode($parser, $ns, $elementName, $this->leaf, $components);
+			$node = $this->leaf->startChild($ns, $elementName);
 			$this->allNodes[] = $this->leaf = $node;
 		}
 

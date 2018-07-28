@@ -20,17 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
 use SOFe\Libkinetic\Base\KineticNode;
 
-class UserStringAttribute extends ResolvableNodeAttribute{
-	public function accept(KineticNode $node, string $value) : string{
-		return $value;
+class AttributeFieldPair{
+	/** @var ResolvableNodeAttribute */
+	protected $attribute;
+	/** @var mixed & */
+	protected $fieldRef;
+
+	/**
+	 * AttributeFieldPair constructor.
+	 * @param ResolvableNodeAttribute $attribute
+	 * @param mixed                   &$fieldRef
+	 */
+	public function __construct(ResolvableNodeAttribute $attribute, &$fieldRef){
+		$this->attribute = $attribute;
+		$this->fieldRef =& $fieldRef;
 	}
 
-	public function resolve(KineticNode $node, $tempValue){
-		$node->getManager()->requireTranslation($node, $tempValue);
-		return $tempValue;
+	public function resolve(KineticNode $node) : void{
+		$this->fieldRef = $this->attribute->resolve($node, $this->fieldRef);
 	}
 }

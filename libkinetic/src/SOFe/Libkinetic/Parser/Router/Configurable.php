@@ -20,21 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Attributes;
+namespace SOFe\Libkinetic\Parser\Router;
 
-use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\Base\KineticNode;
-use SOFe\Libkinetic\KineticManager;
 
-class UserString{
-	/** @var string  */
-	protected $id;
+class Configurable extends ResolvableNodeAttribute{
+	/** @var NodeAttribute */
+	protected $base;
 
-	public function __construct(string $id){
-		$this->id = $id;
+	public function __construct(NodeAttribute $base){
+		$this->base = $base;
 	}
 
-	public function translate(KineticManager $manager, CommandSender $user, array $args = []) : string{
-		return $manager->translate($user, $this->id, $args);
-}
+	public function accept(KineticNode $node, string $value) : string{
+		return $value;
+	}
+
+	public function resolve(KineticNode $node, $tempValue){
+		return $this->base->accept($node, (string) $node->getManager()->getAdapter()->getKineticConfig($tempValue));
+	}
 }

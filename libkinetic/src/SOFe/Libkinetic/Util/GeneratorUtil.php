@@ -35,12 +35,15 @@ class GeneratorUtil{
 	/**
 	 * @param Generator $generator
 	 * @param mixed[][] &$yields
+	 * @param null      $send
 	 * @return mixed
 	 */
-	public static function resolveKeyValuePairs(Generator $generator, &$yields){
+	public static function resolveKeyValuePairs(Generator $generator, &$yields, $send = null){
 		$yields = [];
-		foreach($generator as $key => $value){
-			$yields[] = [$key, $value];
+		$generator->rewind();
+		while($generator->valid()){
+			$yields[] = [$generator->key(), $generator->current()];
+			$generator->send($send);
 		}
 		return $generator->getReturn();
 	}
@@ -48,26 +51,30 @@ class GeneratorUtil{
 	/**
 	 * @param Generator $generator
 	 * @param mixed[]   &$yields
+	 * @param null      $send
 	 * @return mixed
 	 */
-	public static function resolveKeys(Generator $generator, &$yields){
-		$yields = [];
-		foreach($generator as $key => $_){
-			$yields[] = $key;
+	public static function resolveKeys(Generator $generator, &$yields, $send = null){
+		/** @noinspection PhpParamsInspection */
+		$ret = self::resolveKeyValuePairs($generator, $yields, $send);
+		foreach($yields as &$value){
+			$value = $value[0];
 		}
-		return $generator->getReturn();
+		return $ret;
 	}
 
 	/**
 	 * @param Generator $generator
 	 * @param mixed[]   &$yields
+	 * @param null      $send
 	 * @return mixed
 	 */
-	public static function resolveValues(Generator $generator, &$yields){
-		$yields = [];
-		foreach($generator as $value){
-			$yields[] = $value;
+	public static function resolveValues(Generator $generator, &$yields, $send = null){
+		/** @noinspection PhpParamsInspection */
+		$ret = self::resolveKeyValuePairs($generator, $yields, $send);
+		foreach($yields as &$value){
+			$value = $value[1];
 		}
-		return $generator->getReturn();
+		return $ret;
 	}
 }

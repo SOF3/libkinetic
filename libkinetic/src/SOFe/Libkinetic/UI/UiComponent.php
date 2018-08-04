@@ -20,23 +20,13 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Flow;
+namespace SOFe\Libkinetic\UI;
 
-use Generator;
-use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 
-class FlowContext{
-	/** @var CommandSender */
-	protected $user;
-	/** @var UiComponent */
-	protected $group;
-	/** @var FlowContext|null */
-	protected $parent;
-	/** @var VariableScope */
-	protected $variableScope;
-
-	public function execute() : ?Generator{
-		return null;
+class UiComponent extends KineticComponent{
+	public function acceptAttributes(AttributeRouter $router) : void{
 	}
 }

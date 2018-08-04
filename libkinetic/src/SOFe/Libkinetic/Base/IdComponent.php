@@ -20,23 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Flow;
+namespace SOFe\Libkinetic\Base;
 
-use Generator;
-use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\IdAttribute;
 
-class FlowContext{
-	/** @var CommandSender */
-	protected $user;
-	/** @var UiComponent */
-	protected $group;
-	/** @var FlowContext|null */
-	protected $parent;
-	/** @var VariableScope */
-	protected $variableScope;
+class IdComponent extends KineticComponent{
+	/** @var string|null */
+	protected $id;
 
-	public function execute() : ?Generator{
-		return null;
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->optional("id",new IdAttribute(), $this->id);
+	}
+
+	public function getId() : ?string{
+		return $this->id;
 	}
 }

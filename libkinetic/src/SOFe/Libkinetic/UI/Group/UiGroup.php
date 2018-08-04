@@ -20,10 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\Group;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\UI\UiNode;
 
-interface ClickHandler{
-	public function onClick(FlowContext $context) : void;
+interface UiGroup extends UiNode{
+
 }

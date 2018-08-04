@@ -20,11 +20,11 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\OnStart;
 
 use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
 
-interface ClickHandlerG{
-	public function onClick(FlowContext $context) : Generator;
+interface OnStart{
+	public function onStart(FlowContext $context) : Generator;
 }

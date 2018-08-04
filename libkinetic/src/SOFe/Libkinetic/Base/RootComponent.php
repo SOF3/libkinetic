@@ -22,9 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
+use Generator;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\UI\Group\UiParentComponent;
+use SOFe\Libkinetic\Wizard\WizardComponent;
 
 class RootComponent extends KineticComponent{
 	/** @var string */
@@ -33,6 +36,12 @@ class RootComponent extends KineticComponent{
 	protected $includes = [];
 	/** @var CommandComponent */
 	protected $cont = null;
+	/** @var WizardComponent[] */
+	protected $wizards = [];
+
+	public function getDependencies() : Generator{
+		yield UiParentComponent::class;
+	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->required("namespace", new StringAttribute(), $this->namespace);
@@ -41,5 +50,6 @@ class RootComponent extends KineticComponent{
 	public function acceptChildren(ChildNodeRouter $router) : void{
 		$router->acceptMulti("include", IncludeComponent::class, $this->includes, 0);
 		$router->acceptSingle("cont", CommandComponent::class, $this->cont, true);
+		$router->acceptMulti("wizard", WizardComponent::class, $this->wizards, 0);
 	}
 }

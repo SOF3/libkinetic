@@ -20,10 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\Group;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use Generator;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\UI\UiComponent;
 
-interface ClickHandlerA{
-	public function onClick(FlowContext $context, callable $onComplete) : void;
+class IndexComponent extends KineticComponent implements UiGroup{
+	public function getDependencies() : Generator{
+		yield UiComponent::class;
+		yield UiParentComponent::class;
+	}
 }

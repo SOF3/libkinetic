@@ -20,22 +20,14 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API\Adapter;
+namespace SOFe\Libkinetic\Wizard;
 
-use SOFe\Libkinetic\API\ClickHandlerA;
-use SOFe\Libkinetic\API\ClickHandlerG;
-use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Util\Await;
+use Generator;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\UI\Group\UiParentComponent;
 
-class ClickHandlerAdapterG implements ClickHandlerA{
-	/** @var ClickHandlerG */
-	private $handler;
-
-	public function __construct(ClickHandlerG $handler){
-		$this->handler = $handler;
-	}
-
-	public function onClick(FlowContext $context, callable $onComplete) : void{
-		Await::func($this->handler->onClick($context), $onComplete);
+class WizardComponent extends KineticComponent{
+	public function getDependencies() : Generator{
+		yield UiParentComponent::class;
 	}
 }

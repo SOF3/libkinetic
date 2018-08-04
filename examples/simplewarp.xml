@@ -9,7 +9,9 @@
 
     <!-- if ID starts with a dot, prepend parent ID -->
     <series id=".add" indexName="Add Warp" onComplete="AddWarpExecutor">
-      <permission name="simplewarp.add-warp"/>
+      <onStart>
+        <permission name="simplewarp.add-warp"/>
+      </onStart>
       <require id="simplewarp.selectPos">
         <!-- this <return> node simply renames the return variable from "loc" to "position". -->
         <return name="loc" as="position"/>

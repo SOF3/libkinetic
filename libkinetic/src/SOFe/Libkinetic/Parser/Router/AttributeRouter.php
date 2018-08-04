@@ -22,6 +22,10 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Router;
 
+use function array_keys;
+use function array_slice;
+use function count;
+use function explode;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use function implode;
@@ -73,7 +77,14 @@ class AttributeRouter{
 
 	public function checkEmpty() : void{
 		if(!empty($this->attributes)){
-			$this->node->throw("Unknown attribute(s) " . implode(", ", $this->attributes));
+			$attributes = [];
+			foreach($this->attributes as $key => $value){
+				$pieces = explode(":", $key);
+				$ns = implode(":", array_slice($pieces, 0, -1));
+				$name = $pieces[count($pieces) - 1];
+				$attributes[] = ($ns === KineticFileParser::XMLNS_DEFAULT ? "" : "\"{$ns}\":") . $name;
+			}
+			$this->node->throw("Unknown attribute(s) " . implode(", ", $attributes));
 		}
 	}
 

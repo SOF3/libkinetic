@@ -20,28 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API\Adapter;
+namespace SOFe\Libkinetic\API;
 
 use Generator;
-use SOFe\Libkinetic\API\RequestValidator;
-use SOFe\Libkinetic\API\RequestValidatorG;
 use SOFe\Libkinetic\Flow\FlowContext;
-use function assert;
-use function is_string;
 
-class RequestValidatorAdapter implements RequestValidatorG{
-	/** @var RequestValidator */
-	private $validator;
+interface OnNodeStartHandler{
+	/** @var string Signals that the node should be executed normally. Default behaviour if no value is returned. */
+	public const ACTION_EXECUTE = "execute";
+	/** @var string Signals that the node should skip the execution phase and jump to completion phase. */
+	public const ACTION_COMPLETE = "complete";
+	/** @var string Signals that the node should skip both the execution phase and the completion phase. */
+	public const ACTION_POST_COMPLETE = "postComplete";
 
-	public function __construct(RequestValidator $validator){
-		$this->validator = $validator;
-	}
-
-	public function validate(FlowContext $context) : Generator{
-		0 && yield;
-		$error = "";
-		$bool = $this->validator->validate($context, $error);
-		assert(is_string($error));
-		return $bool ? true : $error;
-	}
+	public function onClick(FlowContext $context) : ?Generator;
 }

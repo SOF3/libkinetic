@@ -20,23 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Flow;
+namespace SOFe\Libkinetic\UI\OnComplete;
 
 use Generator;
-use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
 
-class FlowContext{
-	/** @var CommandSender */
-	protected $user;
-	/** @var UiComponent */
-	protected $group;
-	/** @var FlowContext|null */
-	protected $parent;
-	/** @var VariableScope */
-	protected $variableScope;
+interface OnComplete{
 
-	public function execute() : ?Generator{
-		return null;
-	}
+	public function onComplete(FlowContext $context) : Generator;
 }

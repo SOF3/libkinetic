@@ -20,23 +20,17 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Flow;
+namespace SOFe\Libkinetic\UI\Group;
 
-use Generator;
-use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 
-class FlowContext{
-	/** @var CommandSender */
-	protected $user;
-	/** @var UiComponent */
-	protected $group;
-	/** @var FlowContext|null */
-	protected $parent;
-	/** @var VariableScope */
-	protected $variableScope;
+class UiParentComponent extends KineticComponent{
+	/** @var array */
+	protected $children = [];
 
-	public function execute() : ?Generator{
-		return null;
+	public function acceptChildren(ChildNodeRouter $router) : void{
+		$router->acceptMulti("series", SeriesComponent::class, $this->children, 0);
+		$router->acceptMulti("index", IndexComponent::class, $this->children, 0);
 	}
 }

@@ -20,23 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Flow;
+namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
-use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\UI\UiComponent;
 
-class FlowContext{
-	/** @var CommandSender */
-	protected $user;
-	/** @var UiComponent */
-	protected $group;
-	/** @var FlowContext|null */
-	protected $parent;
-	/** @var VariableScope */
-	protected $variableScope;
-
-	public function execute() : ?Generator{
-		return null;
+class SeriesComponent extends KineticComponent implements UiGroup{
+	public function getDependencies() : Generator{
+		yield UiComponent::class;
+		yield UiParentComponent::class;
 	}
 }

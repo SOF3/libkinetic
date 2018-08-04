@@ -49,7 +49,7 @@ abstract class KineticFileParser{
 	protected $dataBuffer = "";
 
 	public function __construct(){
-		$this->leaf = $this->root = new KineticNode($this, self::XMLNS_DEFAULT, "KINETIC", null, [
+		$this->root = new KineticNode($this, self::XMLNS_DEFAULT, "KINETIC", null, [
 			new RootComponent(),
 		]);
 	}
@@ -58,14 +58,17 @@ abstract class KineticFileParser{
 		$parser, string $elementName, array $attrs) : void{
 		$this->flushBuffer();
 
-		$isRoot = $this->leaf === $this->root;
+		$isRoot = $this->leaf === null;
 
 		if($isRoot){
 			foreach($attrs as $key => $value){
-				if(strpos($key, "xmlns:") === 0){
+				if(strpos($key, "XMLNS:") === 0){
 					$nsName = substr($key, 6);
 					$this->xmlnsMap[$nsName] = $value;
 					unset($attrs[$key]);
+				}elseif($key === "XMLNS"){
+					$this->xmlnsMap[""] = $value;
+					unset($attrs["XMLNS"]);
 				}
 			}
 		}
@@ -82,8 +85,11 @@ abstract class KineticFileParser{
 
 		if($isRoot){
 			if($ns !== self::XMLNS_DEFAULT || ($elementName !== "KINETIC" && $elementName !== "ROOT")){
-				throw new ParseException("The root element must be <kinetic> or <root>");
+				throw new ParseException("The root element must be <kinetic> or <root>, got <$elementName>");
 			}
+			$this->leaf = $this->root = new KineticNode($this, self::XMLNS_DEFAULT, $elementName, null, [
+				new RootComponent(),
+			]);
 		}else{
 			$node = $this->leaf->startChild($ns, $elementName);
 			$this->allNodes[] = $this->leaf = $node;

@@ -44,7 +44,8 @@ class ChildNodeAccept{
 	/** @var int */
 	protected $counter = 0;
 
-	public function __construct(string $ns, string $name, &$field, bool $array, int $min, int $max, callable $componentsProvider){
+	public function __construct(KineticNode $parent, string $ns, string $name, &$field, bool $array, int $min, int $max, callable $componentsProvider){
+		$this->parent = $parent;
 		$this->ns = $ns;
 		$this->name = $name;
 		$this->humanName = ($ns === KineticFileParser::XMLNS_DEFAULT ? "" : "\"{$ns}\":") . $name;

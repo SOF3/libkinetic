@@ -28,7 +28,7 @@ use SOFe\Libkinetic\ParseException;
 use function extension_loaded;
 use function fclose;
 use function feof;
-use function fread;
+use function fgets;
 use function xml_error_string;
 use function xml_get_current_column_number;
 use function xml_get_current_line_number;
@@ -68,7 +68,7 @@ class XmlFileParser extends KineticFileParser{
 		xml_set_character_data_handler($parser, "parseText");
 		try{
 			while(!feof($this->fh)){
-				$buffer = fread($this->fh, 4096);
+				$buffer = fgets($this->fh);
 				if(xml_parse($parser, $buffer, feof($this->fh)) === 0){
 					$errorCode = xml_get_error_code($parser);
 					throw new ParseException(xml_error_string($errorCode));

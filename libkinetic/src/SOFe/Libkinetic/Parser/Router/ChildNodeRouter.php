@@ -60,7 +60,7 @@ class ChildNodeRouter{
 	}
 
 	public function acceptSingleFunc(string $name, callable $componentsProvider, bool $optional, ?KineticNode &$node = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
-		$this->accepts["$ns:" . mb_strtoupper($name)] = new ChildNodeAccept($ns, $name, $node, false, $optional ? 0 : 1, 1, $componentsProvider);
+		$this->accepts["$ns:" . mb_strtoupper($name)] = new ChildNodeAccept($this->parent, $ns, $name, $node, false, $optional ? 0 : 1, 1, $componentsProvider);
 		return $this;
 	}
 
@@ -88,7 +88,7 @@ class ChildNodeRouter{
 	}
 
 	public function acceptMultiFunc(string $name, callable $componentsProvider, array &$nodes, int $min = 0, int $max = PHP_INT_MAX, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
-		$this->accepts["$ns:" . mb_strtoupper($name)] = new ChildNodeAccept($ns, $name, $nodes, true, $min, $max, $componentsProvider);
+		$this->accepts["$ns:" . mb_strtoupper($name)] = new ChildNodeAccept($this->parent, $ns, $name, $nodes, true, $min, $max, $componentsProvider);
 		return $this;
 	}
 

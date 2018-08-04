@@ -32,6 +32,7 @@ use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use function array_unshift;
 use function assert;
 use function implode;
+use function is_string;
 
 final class KineticNode{
 	/** @var KineticFileParser */
@@ -84,9 +85,20 @@ final class KineticNode{
 			$this->components[$componentClass] = $component;
 		}
 		foreach($component->getDependencies() as $dependency){
+			if(is_string($dependency)){
+				$dependency = new $dependency;
+			}
 			assert($dependency instanceof KineticComponent);
 			$this->addComponent($dependency);
 		}
+	}
+
+	public function hasComponent(string $componentClass) : bool{
+		return isset($this->components[$componentClass]);
+	}
+
+	public function getComponent(string $componentClass) : ?KineticComponent{
+		return $this->components[$componentClass] ?? null;
 	}
 
 	public function getParser() : KineticFileParser{
@@ -128,7 +140,7 @@ final class KineticNode{
 		return $this->manager;
 	}
 
-	public function setAttributes($attributes) : void{
+	public function setAttributes(array $attributes) : void{
 		$this->attrRouter = new AttributeRouter($this, $attributes);
 		foreach($this->components as $component){
 			$component->acceptAttributes($this->attrRouter);

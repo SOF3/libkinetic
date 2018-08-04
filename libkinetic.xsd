@@ -55,6 +55,7 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
+      <xs:group ref="UiNode"/>
     </xs:choice>
     <xs:attribute name="namespace" use="required">
       <xs:annotation>
@@ -88,11 +89,24 @@
       <xs:documentation>Represents a step in a UI flow</xs:documentation>
     </xs:annotation>
     <xs:choice>
+      <xs:element name="exit" type="ExitNode"/>
+      <xs:element name="buffer" type="BufferNode"/>
+
+      <xs:element name="switch" type="SwitchNode"/>
+      <xs:element name="series" type="SeriesNode"/>
+      <xs:element name="index" type="IndexNode"/>
+
+      <xs:element name="form" type="BasicFormNode"/>
+      <xs:element name="list" type="ListFormNode"/>
+      <xs:element name="info" type="InfoFormNode"/>
+
+      <xs:element name="recurForm" type="RecurFormNode"/>
+      <xs:element name="dynForm" type="DynFormNode"/>
     </xs:choice>
   </xs:group>
-  <xs:complexType name="UiNodeBase">
+  <xs:complexType name="UiNode">
     <xs:annotation>
-      <xs:documentation>Base type of UiNode</xs:documentation>
+      <xs:documentation> type of UiNode</xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="onStart" minOccurs="1" maxOccurs="1">
@@ -118,10 +132,26 @@
                 <xs:attribute name="onFail" default="skip">
                   <xs:simpleType>
                     <xs:restriction>
-                      <xs:enumeration value="skip"><xs:annotation><xs:documentation>Skip UiNode execution, start onComplete</xs:documentation></xs:annotation></xs:enumeration>
-                      <xs:enumeration value="complete"><xs:annotation><xs:documentation>Skip UiNode execution and onComplete</xs:documentation></xs:annotation></xs:enumeration>
-                      <xs:enumeration value="exit"><xs:annotation><xs:documentation>Terminate all stacked flows</xs:documentation></xs:annotation></xs:enumeration>
-                      <xs:enumeration value="break"><xs:annotation><xs:documentation>Terminate the innermost subflow</xs:documentation></xs:annotation></xs:enumeration>
+                      <xs:enumeration value="skip">
+                        <xs:annotation>
+                          <xs:documentation>Skip UiNode execution, start onComplete</xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
+                      <xs:enumeration value="complete">
+                        <xs:annotation>
+                          <xs:documentation>Skip UiNode execution and onComplete</xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
+                      <xs:enumeration value="exit">
+                        <xs:annotation>
+                          <xs:documentation>Terminate all stacked flows</xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
+                      <xs:enumeration value="break">
+                        <xs:annotation>
+                          <xs:documentation>Terminate the innermost subflow</xs:documentation>
+                        </xs:annotation>
+                      </xs:enumeration>
                     </xs:restriction>
                   </xs:simpleType>
                 </xs:attribute>
@@ -135,5 +165,84 @@
 
       </xs:element>
     </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="UiGroupNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="command" type="CommandType" minOccurs="0" maxOccurs="1"/>
+          <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute name="id" type="IdFull"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="ExitNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BufferNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="SwitchNode">
+    <xs:complexContent>
+      <xs:extension base="UiGroupNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SeriesNode">
+    <xs:complexContent>
+      <xs:extension base="UiGroupNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="IndexNode">
+    <xs:complexContent>
+      <xs:extension base="UiGroupNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BasicFormNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ListFormNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InfoFormNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="RecurFormNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="DynFormNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 </xs:schema>

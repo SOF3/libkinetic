@@ -26,8 +26,8 @@ use Generator;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
-use function get_class;
 use SOFe\Libkinetic\Util\GeneratorUtil;
+use function get_class;
 
 class KineticComponent{
 	/** @var KineticManager */

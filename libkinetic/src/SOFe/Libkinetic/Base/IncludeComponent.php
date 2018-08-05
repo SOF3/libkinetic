@@ -30,7 +30,7 @@ class IncludeComponent extends KineticComponent{
 	protected $path;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->required("path", new StringAttribute(), $this->path);
+		$router->use("path", new StringAttribute(), $this->path, true);
 	}
 
 	public function getPath() : string{

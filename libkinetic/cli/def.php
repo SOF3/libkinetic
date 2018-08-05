@@ -20,8 +20,8 @@
 
 declare(strict_types=1);
 
-use SOFe\Libkinetic\InvalidNodeException;
 use SOFe\Libkinetic\Base\KineticNodeWithId;
+use SOFe\Libkinetic\InvalidNodeException;
 use SOFe\Libkinetic\ParseException;
 use SOFe\Libkinetic\Parser\XmlFileParser;
 

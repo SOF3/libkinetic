@@ -34,7 +34,7 @@ class CommandComponent extends KineticComponent{
 	protected $aliases = [];
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->required("name", new Configurable(new StringAttribute()), $this->name);
+		$router->use("name", new Configurable(new StringAttribute()), $this->name, true);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{

@@ -44,7 +44,7 @@ class RootComponent extends KineticComponent{
 	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->required("namespace", new StringAttribute(), $this->namespace);
+		$router->use("namespace", new StringAttribute(), $this->namespace, true);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{

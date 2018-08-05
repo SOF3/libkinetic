@@ -22,11 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI;
 
+use Generator;
+use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 
 class UiComponent extends KineticComponent{
-	public function acceptAttributes(AttributeRouter $router) : void{
+	public function getDependencies() : Generator{
+		yield IdComponent::class;
 	}
 }

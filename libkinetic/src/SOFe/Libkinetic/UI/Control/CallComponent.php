@@ -20,27 +20,15 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Base;
+namespace SOFe\Libkinetic\UI\Control;
 
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\IdAttribute;
+use Generator;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\UI\UiNode;
 
-class IdComponent extends KineticComponent{
-	/** @var bool */
-	protected $required;
-
-	/** @var string|null */
-	protected $id;
-
-	public function __construct(bool $required = false){
-		$this->required = $required;
-	}
-
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("id", new IdAttribute(), $this->id, $this->required);
-	}
-
-	public function getId() : ?string{
-		return $this->id;
+class CallComponent extends KineticComponent implements UiNode{
+	public function getDependencies() : Generator{
+		yield UiComponent::class;
 	}
 }

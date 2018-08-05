@@ -20,27 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Base;
+namespace SOFe\Libkinetic\UI\OnStart;
 
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\IdAttribute;
+use SOFe\Libkinetic\Base\KineticComponent;
 
-class IdComponent extends KineticComponent{
-	/** @var bool */
-	protected $required;
+class RequireWizardComponent extends KineticComponent implements OnStart{
 
-	/** @var string|null */
-	protected $id;
-
-	public function __construct(bool $required = false){
-		$this->required = $required;
-	}
-
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("id", new IdAttribute(), $this->id, $this->required);
-	}
-
-	public function getId() : ?string{
-		return $this->id;
-	}
 }

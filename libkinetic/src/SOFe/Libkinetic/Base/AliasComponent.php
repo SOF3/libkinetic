@@ -31,7 +31,7 @@ class AliasComponent extends KineticComponent{
 	protected $text;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->required("name", new Configurable(new StringAttribute()), $this->text);
+		$router->use("name", new Configurable(new StringAttribute()), $this->text, true);
 	}
 
 	public function getText() : string{

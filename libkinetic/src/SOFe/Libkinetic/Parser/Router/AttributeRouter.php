@@ -22,12 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Router;
 
-use function array_keys;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Parser\KineticFileParser;
 use function array_slice;
 use function count;
 use function explode;
-use SOFe\Libkinetic\Base\KineticNode;
-use SOFe\Libkinetic\Parser\KineticFileParser;
 use function implode;
 use function mb_strtoupper;
 
@@ -44,25 +43,13 @@ class AttributeRouter{
 		$this->attributes = $attributes;
 	}
 
-	public function required(string $name, NodeAttribute $attribute, &$field, string $ns = KineticFileParser::XMLNS_DEFAULT) : AttributeRouter{
+	public function use(string $name, NodeAttribute $attribute, &$field, bool $required, string $ns = KineticFileParser::XMLNS_DEFAULT) : AttributeRouter{
 		$fullName = $ns . ":" . mb_strtoupper($name);
 		if(!isset($this->attributes[$fullName])){
-			$nsPrefix = $ns === KineticFileParser::XMLNS_DEFAULT ? "" : "\"$ns\":";
-			throw $this->node->throw("Required attribute {$nsPrefix}{$name} missing");
-		}
-		$attr = $this->attributes[$fullName];
-		unset($this->attributes[$fullName]);
-
-		$field = $attribute->accept($this->node, $attr);
-		if($attribute instanceof ResolvableNodeAttribute){
-			$this->resolves[] = new AttributeFieldPair($attribute, $field);
-		}
-		return $this;
-	}
-
-	public function optional(string $name, NodeAttribute $attribute, &$field, string $ns = KineticFileParser::XMLNS_DEFAULT) : AttributeRouter{
-		$fullName = $ns . ":" . mb_strtoupper($name);
-		if(!isset($this->attributes[$fullName])){
+			if($required){
+				$nsPrefix = $ns === KineticFileParser::XMLNS_DEFAULT ? "" : "\"$ns\":";
+				throw $this->node->throw("Required attribute {$nsPrefix}{$name} missing");
+			}
 			return $this;
 		}
 		$attr = $this->attributes[$fullName];

@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Router;
 
-use function assert;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticNode;
+use function assert;
 
 class IdAttribute extends NodeAttribute{
 	public function accept(KineticNode $node, string $value){

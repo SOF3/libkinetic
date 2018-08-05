@@ -21,14 +21,17 @@
       <xs:pattern value="([\\!]?[a-zA-Z_]\w+(\\[a-zA-Z_]\w+)*)|(\$.*)"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="IdFull">
+  <xs:simpleType name="IdString">
     <xs:restriction base="xs:string">
       <xs:pattern value="\w+(\.\w+)+"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="VarName">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
   <xs:simpleType name="CommandName">
     <xs:restriction base="xs:string">
-      <xs:pattern value="[^: ]+"/>
+      <xs:pattern value="^[^: ]+$"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="PermissionName">
@@ -104,80 +107,128 @@
       <xs:element name="dynForm" type="DynFormNode"/>
     </xs:choice>
   </xs:group>
-  <xs:complexType name="UiNode">
+  <xs:complexType name="UiNode" abstract="true">
     <xs:annotation>
-      <xs:documentation> type of UiNode</xs:documentation>
+      <xs:documentation>type of UiNode</xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="onStart" minOccurs="1" maxOccurs="1">
+      <xs:element name="onStart" type="NodeStateControllerList" minOccurs="1" maxOccurs="1"/>
+      <xs:element name="onComplete" minOccurs="1" maxOccurs="1">
         <xs:complexType>
-          <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="controller" type="ControllerName" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation>
-                <xs:documentation>FQN of an OnStartHandler controller</xs:documentation>
-              </xs:annotation>
-            </xs:element>
-            <xs:element name="permission" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation>
-                <xs:documentation>Checks if a user has the required permission</xs:documentation>
-              </xs:annotation>
-              <xs:complexType>
-                <xs:attribute name="name" type="PermissionName" use="optional"/>
-                <xs:attribute name="predicate" type="ControllerName" use="optional">
-                  <xs:annotation>
-                    <xs:documentation>FQN of a UserPredicate controller</xs:documentation>
-                  </xs:annotation>
-                </xs:attribute>
-                <xs:attribute name="invert" type="xs:boolean" default="false"/>
-                <xs:attribute name="onFail" default="skip">
-                  <xs:simpleType>
-                    <xs:restriction>
-                      <xs:enumeration value="skip">
-                        <xs:annotation>
-                          <xs:documentation>Skip UiNode execution, start onComplete</xs:documentation>
-                        </xs:annotation>
-                      </xs:enumeration>
-                      <xs:enumeration value="complete">
-                        <xs:annotation>
-                          <xs:documentation>Skip UiNode execution and onComplete</xs:documentation>
-                        </xs:annotation>
-                      </xs:enumeration>
-                      <xs:enumeration value="exit">
-                        <xs:annotation>
-                          <xs:documentation>Terminate all stacked flows</xs:documentation>
-                        </xs:annotation>
-                      </xs:enumeration>
-                      <xs:enumeration value="break">
-                        <xs:annotation>
-                          <xs:documentation>Terminate the innermost subflow</xs:documentation>
-                        </xs:annotation>
-                      </xs:enumeration>
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="breakTarget" type="IdFull"/>
-              </xs:complexType>
-            </xs:element>
-          </xs:choice>
+          <xs:complexContent>
+            <xs:extension base="NodeStateControllerList">
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="always">
+                  <xs:complexType>
+                    <xs:attribute name="action" type="NodeStateBehaviour" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element name="goto">
+                  <xs:complexType>
+                    <xs:attribute name="target" type="IdString" use="required"/>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
-      </xs:element>
-      <xs:element name="onComplete">
-
       </xs:element>
     </xs:choice>
   </xs:complexType>
 
-  <xs:complexType name="UiGroupNode">
-    <xs:complexContent>
-      <xs:extension base="UiNode">
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="command" type="CommandType" minOccurs="0" maxOccurs="1"/>
-          <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
-        </xs:choice>
-        <xs:attribute name="id" type="IdFull"/>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:complexType name="NodeStateControllerList">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="controller" type="ControllerName" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation>
+          <xs:documentation>FQN of an OnStartHandler controller</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:group ref="ConditionalHandler" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
   </xs:complexType>
+
+  <xs:group name="ConditionalHandler">
+    <xs:annotation>
+      <xs:documentation>Modifies state behaviour if a condition is matched</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:element name="or">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="shortCircuit" type="xs:boolean" use="optional" default="true"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="and">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
+          </xs:sequence>
+          <xs:attribute name="shortCircuit" type="xs:boolean" use="optional" default="true"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="xor">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+
+      <xs:element name="predicate">
+        <xs:annotation>
+          <xs:documentation>Triggers a UserPredicate controller</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="controller" type="ControllerName" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="hasVar">
+        <xs:annotation>
+          <xs:documentation>Checks if a flow variable is set</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="name" type="VarName" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="permission">
+        <xs:annotation>
+          <xs:documentation>Checks if a user has the required permission</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="name" type="PermissionName" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="const">
+        <xs:annotation>
+          <xs:documentation>Outputs a constant boolean value</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="value" type="xs:boolean" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="ConditionalHandler">
+    <xs:attribute name="not" type="xs:boolean" use="optional" default="false"/>
+    <xs:attribute name="onTrue" type="NodeStateBehaviour" use="optional"/>
+    <xs:attribute name="onTrueTarget" type="IdString" use="optional"/>
+    <xs:attribute name="onFalse" type="NodeStateBehaviour" use="optional"/>
+    <xs:attribute name="onFalseTarget" type="IdString" use="optional"/>
+  </xs:complexType>
+
+  <xs:simpleType name="NodeStateBehaviour">
+    <xs:restriction>
+      <xs:enumeration value="start"/>
+      <xs:enumeration value="nil"/>
+      <xs:enumeration value="execute"/>
+      <xs:enumeration value="complete"/>
+      <xs:enumeration value="skip"/>
+      <xs:enumeration value="exit"/>
+      <xs:enumeration value="break"/>
+    </xs:restriction>
+  </xs:simpleType>
 
   <xs:complexType name="ExitNode">
     <xs:complexContent>
@@ -186,7 +237,6 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-
   <xs:complexType name="BufferNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
@@ -195,6 +245,17 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="UiGroupNode" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="command" type="CommandType" minOccurs="0" maxOccurs="1"/>
+          <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:choice>
+        <xs:attribute name="id" type="IdString"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
   <xs:complexType name="SwitchNode">
     <xs:complexContent>
       <xs:extension base="UiGroupNode">

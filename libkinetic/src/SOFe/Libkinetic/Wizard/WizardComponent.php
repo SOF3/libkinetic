@@ -23,11 +23,13 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Wizard;
 
 use Generator;
+use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\UI\Group\UiParentComponent;
 
 class WizardComponent extends KineticComponent{
 	public function getDependencies() : Generator{
 		yield UiParentComponent::class;
+		yield new IdComponent(true);
 	}
 }

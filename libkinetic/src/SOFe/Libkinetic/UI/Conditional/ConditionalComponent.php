@@ -20,17 +20,21 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\Conditional;
 
-use Generator;
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
 
-interface ComplexProvider{
-	/**
-	 * Returns a generator that yields complex group ID as keys and complex group variable as values
-	 *
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @return Generator
-	 */
-	public function provide(FlowContext $context) : Generator;
+class ConditionalComponent extends KineticComponent{
+	/** @var bool */
+	protected $not = false;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("not", new BooleanAttribute(), $this->not, false);
+	}
+
+	public function applyNot(bool $bool) : bool{
+		return $bool !== $this->not;
+	}
 }

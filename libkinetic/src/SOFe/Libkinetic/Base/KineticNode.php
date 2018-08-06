@@ -35,6 +35,8 @@ use function implode;
 use function is_string;
 
 final class KineticNode{
+	use ComponentAdapter;
+
 	/** @var KineticFileParser */
 	protected $parser;
 	/** @var KineticManager */
@@ -176,7 +178,7 @@ final class KineticNode{
 		$this->attrRouter->resolveAll();
 
 		foreach($this->components as $component){
-			$component->setManager($manager);
+			$component->internalInit($this, $manager);
 			$component->resolve();
 		}
 	}

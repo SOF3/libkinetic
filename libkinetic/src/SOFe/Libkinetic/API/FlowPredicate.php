@@ -22,8 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use Generator;
 use pocketmine\command\CommandSender;
 
-interface UserPredicate{
-	public function test(CommandSender $sender) : bool;
+interface FlowPredicate{
+	public function test(CommandSender $sender) : Generator;
 }

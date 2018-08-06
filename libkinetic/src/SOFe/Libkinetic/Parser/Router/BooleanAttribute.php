@@ -20,21 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI;
+namespace SOFe\Libkinetic\Parser\Router;
 
-use Generator;
-use SOFe\Libkinetic\Base\IdComponent;
-use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
-use SOFe\Libkinetic\UI\NodeState\OnStartComponent;
+use SOFe\Libkinetic\Base\KineticNode;
+use function mb_strtolower;
 
-class UiComponent extends KineticComponent{
-	/** @var OnStartComponent */
-	protected $onStart;
-	/** @var OnCompleteComponent */
-	protected $onComplete;
-
-	public function getDependencies() : Generator{
-		yield IdComponent::class;
+class BooleanAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value){
+		$value = mb_strtolower($value);
+		if($value === "true" || $value === "1" || $value === "i" || $value === "on" || $value === "y" || $value === "yes"){
+			return true;
+		}
+		if($value === "false" || $value === "0" || $value === "o" || $value === "off" || $value === "n" || $value === "no"){
+			return false;
+		}
+		throw $node->throw("Not a boolean value");
 	}
 }

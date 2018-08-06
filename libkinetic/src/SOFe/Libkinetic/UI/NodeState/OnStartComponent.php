@@ -20,10 +20,13 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\OnStart;
+namespace SOFe\Libkinetic\UI\NodeState;
 
+use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 
-class RequireWizardComponent extends KineticComponent implements OnStart{
-
+class OnStartComponent extends KineticComponent{
+	public function getDependencies() : Generator{
+		yield BaseUiNodeStateComponent::class;
+	}
 }

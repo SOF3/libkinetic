@@ -20,10 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\OnStart;
+namespace SOFe\Libkinetic\UI\Conditional;
 
-use SOFe\Libkinetic\Base\KineticComponent;
+use Generator;
+use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Util\Await;
 
-class OnStartControllerComponent extends KineticComponent implements OnStart{
+trait ConditionalTrait{
+	public final function test(CommandSender $sender) : Generator{
+		$bool = yield Await::FROM => $this->testCondition($sender);
+		return $this->getNode()->asConditionalComponent()->applyNot($bool);
+	}
 
+	protected abstract function testCondition(CommandSender $sender) : Generator;
+
+	protected abstract function getNode() : KineticNode;
 }

@@ -20,12 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\OnComplete;
+namespace SOFe\Libkinetic\UI\Conditional\Group;
 
-use Generator;
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\API\FlowPredicate;
+use SOFe\Libkinetic\Base\KineticComponent;
 
-interface OnComplete{
+class AndComponent extends KineticComponent implements FlowPredicate{
+	use ConditionalGroupTrait;
 
-	public function onComplete(FlowContext $context) : Generator;
+	protected function reduce(bool $left, bool $right) : bool{
+		return $left && $right;
+	}
+
+	protected function canShortCircuit() : bool{
+		return true;
+	}
+
+	protected function shouldShortCircuit(bool $bool) : bool{
+		return !$bool; // if left is false, no need to evaluate right
+	}
 }

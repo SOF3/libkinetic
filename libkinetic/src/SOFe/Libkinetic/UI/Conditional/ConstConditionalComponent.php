@@ -20,10 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\OnStart;
+namespace SOFe\Libkinetic\UI\Conditional;
 
+use Generator;
+use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 
-class PermissionComponent extends KineticComponent{
+class ConstConditionalComponent extends KineticComponent implements FlowPredicate{
+	use ConditionalTrait;
 
+	/** @var bool */
+	protected $value;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("value", new BooleanAttribute(), $this->value, true);
+	}
+
+	protected function testCondition(CommandSender $sender) : Generator{
+		return GeneratorUtil::empty($this->value);
+	}
 }

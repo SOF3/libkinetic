@@ -20,11 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\OnStart;
+namespace SOFe\Libkinetic\UI\NodeState;
 
 use Generator;
+use SOFe\Libkinetic\API\UiNodeStateHandler;
+use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 
-interface OnStart{
-	public function onStart(FlowContext $context) : Generator;
+class GotoOnCompleteComponent extends KineticComponent implements UiNodeStateHandler{
+	/** @var string */
+	protected $target;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("target", new StringAttribute(), $this->target, true);
+	}
+
+	public function onStartComplete(FlowContext $context) : Generator{
+		return GeneratorUtil::empty([self::STATE_SKIP, $this->target]);
+	}
 }

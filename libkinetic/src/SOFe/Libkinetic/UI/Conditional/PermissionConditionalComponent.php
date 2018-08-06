@@ -20,21 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI;
+namespace SOFe\Libkinetic\UI\Conditional;
 
 use Generator;
-use SOFe\Libkinetic\Base\IdComponent;
+use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
-use SOFe\Libkinetic\UI\NodeState\OnStartComponent;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 
-class UiComponent extends KineticComponent{
-	/** @var OnStartComponent */
-	protected $onStart;
-	/** @var OnCompleteComponent */
-	protected $onComplete;
+class PermissionConditionalComponent extends KineticComponent implements FlowPredicate{
+	use ConditionalTrait;
 
-	public function getDependencies() : Generator{
-		yield IdComponent::class;
+	/** @var string */
+	protected $name;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("permission", new StringAttribute(), $this->name, true);
+	}
+
+	protected function testCondition(CommandSender $sender) : Generator{
+		return GeneratorUtil::empty($sender->hasPermission($this->name));
 	}
 }

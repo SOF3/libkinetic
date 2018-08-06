@@ -25,22 +25,31 @@ namespace SOFe\Libkinetic\API;
 use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
 
-interface DropdownProvider{
-	public const FLAG_DEFAULT = "flag:default";
+interface UiNodeStateHandler{
+	public const STATE_START = "start";
+	public const STATE_NIL = "nil";
+	public const STATE_EXECUTE = "execute";
+	public const STATE_COMPLETE = "complete";
+	public const STATE_SKIP = "skip";
+	public const STATE_BREAK = "break";
+	public const STATE_EXIT = "exit";
+
+	public const ALL_STATES = [
+		self::STATE_START,
+		self::STATE_NIL,
+		self::STATE_EXECUTE,
+		self::STATE_COMPLETE,
+		self::STATE_SKIP,
+		self::STATE_BREAK,
+		self::STATE_EXIT,
+	];
 
 	/**
-	 * Returns a generator that yields the represented variable as keys and the option display text as values.
-	 *
-	 * Each key can have any data type compatible with the receiver.
-	 *
-	 * Each value can be a string or a TextContainer. It can also be an array where the first item (index 0) is a string
-	 * or a TextContainer, and the following items are modifiers for this value. Modifiers can be used as the value if no
-	 * value is required, or used as the key if a value is required.
-	 *
-	 * @see DropdownProvider::FLAG_DEFAULT Use this as the value to indicate that this option is the default.
+	 * The generator returns one of the STATE_* constants, or an array [0 => STATE_*, 1 => target]. See the UiNode
+	 * article in the wiki for explanation.
 	 *
 	 * @param FlowContext $context
 	 * @return Generator
 	 */
-	public function provide(FlowContext $context) : Generator;
+	public function onStartComplete(FlowContext $context) : Generator;
 }

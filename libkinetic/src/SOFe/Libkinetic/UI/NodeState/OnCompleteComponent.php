@@ -20,15 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\NodeState;
 
-use SOFe\Libkinetic\Flow\FlowContext;
+use Generator;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 
-interface RequestValidator{
-	/**
-	 * @param \SOFe\Libkinetic\Flow\FlowContext $context
-	 * @param string                            &$error
-	 * @return bool
-	 */
-	public function validate(FlowContext $context, string &$error) : bool;
+class OnCompleteComponent extends KineticComponent{
+	public function getDependencies() : Generator{
+		yield BaseUiNodeStateComponent::class;
+	}
+
+	public function acceptChildren(ChildNodeRouter $router) : void{
+		$handlers =& $this->asBaseUiNodeStateComponent()->getHandlers();
+		$router->acceptMulti("always", AlwaysOnCompleteComponent::class, $handlers, 0);
+		$router->acceptMulti("goto", GotoOnCompleteComponent::class, $handlers, 0);
+	}
 }

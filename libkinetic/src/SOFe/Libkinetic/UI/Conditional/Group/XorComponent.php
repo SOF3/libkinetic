@@ -20,21 +20,19 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI;
+namespace SOFe\Libkinetic\UI\Conditional\Group;
 
-use Generator;
-use SOFe\Libkinetic\Base\IdComponent;
+use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
-use SOFe\Libkinetic\UI\NodeState\OnStartComponent;
 
-class UiComponent extends KineticComponent{
-	/** @var OnStartComponent */
-	protected $onStart;
-	/** @var OnCompleteComponent */
-	protected $onComplete;
+class XorComponent extends KineticComponent implements FlowPredicate{
+	use ConditionalGroupTrait;
 
-	public function getDependencies() : Generator{
-		yield IdComponent::class;
+	protected function reduce(bool $left, bool $right) : bool{
+		return $left !== $right;
+	}
+
+	protected function canShortCircuit() : bool{
+		return false;
 	}
 }

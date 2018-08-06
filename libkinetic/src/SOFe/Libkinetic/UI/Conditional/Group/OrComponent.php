@@ -20,18 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\Conditional\Group;
 
-use Generator;
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\API\FlowPredicate;
+use SOFe\Libkinetic\Base\KineticComponent;
 
-interface OnNodeStartHandler{
-	/** @var string Signals that the node should be executed normally. Default behaviour if no value is returned. */
-	public const ACTION_EXECUTE = "execute";
-	/** @var string Signals that the node should skip the execution phase and jump to completion phase. */
-	public const ACTION_COMPLETE = "complete";
-	/** @var string Signals that the node should skip both the execution phase and the completion phase. */
-	public const ACTION_POST_COMPLETE = "postComplete";
+class OrComponent extends KineticComponent implements FlowPredicate{
+	use ConditionalGroupTrait;
 
-	public function onClick(FlowContext $context) : ?Generator;
+	protected function reduce(bool $left, bool $right) : bool{
+		return $left || $right;
+	}
+
+	protected function canShortCircuit() : bool{
+		return true;
+	}
+
+	protected function shouldShortCircuit(bool $bool) : bool{
+		return $bool; // if left is true, no need to evaluate right
+	}
 }

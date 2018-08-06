@@ -29,7 +29,11 @@ use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 use function get_class;
 
-class KineticComponent{
+abstract class KineticComponent{
+	use ComponentAdapter;
+
+	/** @var KineticNode */
+	protected $node;
 	/** @var KineticManager */
 	protected $manager;
 
@@ -70,11 +74,20 @@ class KineticComponent{
 		return get_class($this);
 	}
 
+	public function getNode() : KineticNode{
+		return $this->node;
+	}
+
 	public function getManager() : KineticManager{
 		return $this->manager;
 	}
 
-	public function setManager(KineticManager $manager) : void{
+	public final function internalInit(KineticNode $node, KineticManager $manager) : void{
+		$this->node = $node;
 		$this->manager = $manager;
+	}
+
+	public function getComponent(string $class) : KineticComponent{
+		return $this->node->getComponent($class);
 	}
 }

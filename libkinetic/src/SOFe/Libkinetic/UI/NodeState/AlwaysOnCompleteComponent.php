@@ -20,18 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\API;
+namespace SOFe\Libkinetic\UI\NodeState;
 
 use Generator;
+use SOFe\Libkinetic\API\UiNodeStateHandler;
+use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 
-interface RequestValidatorG{
-	/**
-	 * The generator should return a boolean (valid or not) or a string (indicating this is invalid and explain why in
-	 * the string).
-	 *
-	 * @param FlowContext $context
-	 * @return Generator
-	 */
-	public function validate(FlowContext $context) : Generator;
+class AlwaysOnCompleteComponent extends KineticComponent implements UiNodeStateHandler{
+	/** @var string */
+	protected $action;
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("action", new StringEnumAttribute(self::ALL_STATES, true), $this->action, true);
+	}
+
+	public function onStartComplete(FlowContext $context) : Generator{
+		return GeneratorUtil::empty($this->action);
+	}
 }

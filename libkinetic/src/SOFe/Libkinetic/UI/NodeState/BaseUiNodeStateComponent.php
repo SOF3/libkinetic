@@ -20,10 +20,27 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\OnComplete;
+namespace SOFe\Libkinetic\UI\NodeState;
 
+use Generator;
+use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 
-class OnCompleteControllerComponent extends KineticComponent implements OnComplete{
+class BaseUiNodeStateComponent extends KineticComponent{
+	/** @var UiNodeStateHandler[] */
+	protected $handlers = [];
 
+	public function getDependencies() : Generator{
+		yield ConditionalParentComponent::class;
+	}
+
+	public function acceptChildren(ChildNodeRouter $router) : void{
+		$router->acceptMulti("controller", UiNodeStateControllerComponent::class, $this->handlers, 0);
+	}
+
+	public function &getHandlers() : array{
+		return $this->handlers;
+	}
 }

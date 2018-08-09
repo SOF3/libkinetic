@@ -43,6 +43,9 @@ abstract class KineticComponent{
 	public function acceptChildren(ChildNodeRouter $router) : void{
 	}
 
+	public function endElement() : void{
+	}
+
 	public function acceptText(string $text) : bool{
 		return false;
 	}

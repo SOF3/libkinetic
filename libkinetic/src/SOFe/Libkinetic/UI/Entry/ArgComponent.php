@@ -20,25 +20,32 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\NodeState;
+namespace SOFe\Libkinetic\UI\Entry;
 
-use Generator;
-use SOFe\Libkinetic\API\UiNodeStateHandler;
+use SOFe\Libkinetic\API\StringInputAdapter;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
 use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
-use SOFe\Libkinetic\Util\Await;
+use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Router\UserStringAttribute;
 
-class UiNodeStateControllerComponent extends KineticComponent implements UiNodeStateHandler{
-	/** @var UiNodeStateHandler */
-	protected $controller;
+class ArgComponent extends KineticComponent{
+	protected $name;
+	protected $required = true;
+	protected $type = "string";
+	/** @var StringInputAdapter|null */
+	protected $adapter = null;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("class", new ControllerAttribute(UiNodeStateHandler::class, []), $this->controller, true);
-	}
-
-	public function onStartComplete(FlowContext $context) : Generator{
-		return yield Await::FROM => $this->controller->onStartComplete($context);
+		$router->use("name", new UserStringAttribute(), $this->name, true);
+		$router->use("required", new BooleanAttribute(), $this->required, false);
+		$router->use("type", new StringEnumAttribute([
+			"string",
+			"int",
+			"float",
+			"boolean",
+		], true), $this->type, false);
+		$router->use("adapter", new ControllerAttribute(StringInputAdapter::class, []), $this->adapter, false);
 	}
 }

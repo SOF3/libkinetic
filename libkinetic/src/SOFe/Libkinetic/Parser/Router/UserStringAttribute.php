@@ -31,6 +31,6 @@ class UserStringAttribute extends ResolvableNodeAttribute{
 
 	public function resolve(KineticNode $node, $tempValue){
 		$node->getManager()->requireTranslation($node, $tempValue);
-		return $tempValue;
+		return new UserString($tempValue);
 	}
 }

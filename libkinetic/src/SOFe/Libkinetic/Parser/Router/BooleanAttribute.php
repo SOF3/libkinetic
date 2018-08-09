@@ -26,7 +26,7 @@ use SOFe\Libkinetic\Base\KineticNode;
 use function mb_strtolower;
 
 class BooleanAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value){
+	public function accept(KineticNode $node, string $value) : bool{
 		$value = mb_strtolower($value);
 		if($value === "true" || $value === "1" || $value === "i" || $value === "on" || $value === "y" || $value === "yes"){
 			return true;

@@ -27,7 +27,7 @@ use SOFe\Libkinetic\Base\KineticNode;
 use function assert;
 
 class IdAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value){
+	public function accept(KineticNode $node, string $value) : string{
 		if($value{0} === "."){
 			$parent = $node->getParent();
 			assert($parent !== null);
@@ -39,5 +39,6 @@ class IdAttribute extends NodeAttribute{
 			}
 			return $idComp->getId() . $value;
 		}
+		return $value;
 	}
 }

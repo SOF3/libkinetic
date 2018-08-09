@@ -22,11 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Router;
 
-use function array_map;
-use function implode;
-use function in_array;
-use function mb_strtolower;
 use SOFe\Libkinetic\Base\KineticNode;
+use function implode;
+use function mb_strtolower;
 
 class StringEnumAttribute extends NodeAttribute{
 	/** @var string[] */
@@ -41,7 +39,7 @@ class StringEnumAttribute extends NodeAttribute{
 		}
 	}
 
-	public function accept(KineticNode $node, string $value){
+	public function accept(KineticNode $node, string $value) : string{
 		$corrected = $this->noCase ? mb_strtolower($value) : $value;
 		if(!isset($this->enum[$corrected])){
 			throw $node->throw("$value is not one of [" . implode(", ", $this->enum) . "]");

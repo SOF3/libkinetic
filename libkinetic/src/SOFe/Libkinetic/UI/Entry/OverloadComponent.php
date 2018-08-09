@@ -20,16 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\UI\Entry;
 
-use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value):int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
-		}
-		return (int) $value;
+class OverloadComponent extends KineticComponent{
+	/** @var ArgComponent[] */
+	protected $args = [];
+
+	public function acceptChildren(ChildNodeRouter $router) : void{
+		$router->acceptMulti("arg", ArgComponent::class, $this->args, 0);
 	}
 }

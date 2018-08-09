@@ -268,13 +268,48 @@
     <xs:complexContent>
       <xs:extension base="UiNode">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="command" type="CommandType" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="command" minOccurs="0" maxOccurs="unbounded">
+            <xs:complexType>
+              <xs:complexContent>
+                <xs:extension base="CommandType">
+                  <xs:choice>
+                    <xs:sequence>
+                      <xs:element name="arg" type="CommandArg" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+
+                    <xs:element name="overload" minOccurs="1" maxOccurs="unbounded">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="arg" type="CommandArg" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                </xs:extension>
+              </xs:complexContent>
+            </xs:complexType>
+          </xs:element>
           <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="id" type="IdString"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+  <xs:complexType name="CommandArg">
+    <xs:attribute name="name" type="MessageRef" use="required"/>
+    <xs:attribute name="type" use="optional" default="string">
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:enumeration value="string"/>
+          <xs:enumeration value="int"/>
+          <xs:enumeration value="float"/>
+          <xs:enumeration value="boolean"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="adapter" type="ControllerName" use="optional"/>
+  </xs:complexType>
+
   <xs:complexType name="SwitchNode">
     <xs:complexContent>
       <xs:extension base="UiGroupNode">

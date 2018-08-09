@@ -24,7 +24,7 @@ namespace SOFe\Libkinetic\Parser\Router;
 
 use SOFe\Libkinetic\Base\KineticNode;
 
-class Controller extends ResolvableNodeAttribute{
+class ControllerAttribute extends ResolvableNodeAttribute{
 	/** @var string */
 	protected $interface;
 	/** @var callable[] */
@@ -40,7 +40,7 @@ class Controller extends ResolvableNodeAttribute{
 		$this->adapters = $adapters;
 	}
 
-	public function accept(KineticNode $node, string $value){
+	public function accept(KineticNode $node, string $value) : string{
 		return $value;
 	}
 

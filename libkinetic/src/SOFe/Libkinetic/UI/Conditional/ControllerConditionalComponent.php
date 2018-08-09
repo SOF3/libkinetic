@@ -27,7 +27,7 @@ use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\Controller;
+use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
 use SOFe\Libkinetic\Util\Await;
 
 class ControllerConditionalComponent extends KineticComponent implements FlowPredicate{
@@ -37,7 +37,7 @@ class ControllerConditionalComponent extends KineticComponent implements FlowPre
 	protected $controller;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("controller", new Controller(FlowPredicate::class, []), $this->controller, true);
+		$router->use("controller", new ControllerAttribute(FlowPredicate::class, []), $this->controller, true);
 	}
 
 	protected function testCondition(CommandSender $sender) : Generator{

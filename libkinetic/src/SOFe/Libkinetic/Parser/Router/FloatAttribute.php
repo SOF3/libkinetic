@@ -26,7 +26,7 @@ use SOFe\Libkinetic\Base\KineticNode;
 use function is_numeric;
 
 class FloatAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value){
+	public function accept(KineticNode $node, string $value) : float{
 		if(!is_numeric($value)){
 			throw $node->throw("$value is not a number");
 		}

@@ -161,6 +161,9 @@ final class KineticNode{
 
 	public function endElement() : void{
 		$this->childRouter->validate();
+		foreach($this->components as $component){
+			$component->endElement();
+		}
 	}
 
 	public function acceptText(string $text) : void{

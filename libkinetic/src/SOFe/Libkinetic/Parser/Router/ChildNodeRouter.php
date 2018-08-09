@@ -32,9 +32,10 @@ use const PHP_INT_MAX;
 class ChildNodeRouter{
 	/** @var KineticNode */
 	protected $parent;
-
 	/** @var ChildNodeAccept[] */
 	protected $accepts = [];
+	/** @var callable[] */
+	protected $validators = [];
 
 	public function __construct(KineticNode $parent){
 		$this->parent = $parent;
@@ -117,5 +118,12 @@ class ChildNodeRouter{
 		foreach($this->accepts as $accept){
 			$accept->validate();
 		}
+		foreach($this->validators as $validator){
+			$validator();
+		}
+	}
+
+	public function addValidator(callable $callback) : void{
+		$this->validators[] = $callback;
 	}
 }

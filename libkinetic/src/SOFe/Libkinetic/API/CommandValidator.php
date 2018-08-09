@@ -20,16 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\API;
 
-use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
+use Generator;
 
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value):int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
-		}
-		return (int) $value;
-	}
+interface CommandValidator{
+	public function validate(array $vars) : Generator;
 }

@@ -24,11 +24,22 @@ namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Flow\GroupFlowContext;
 use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\UI\UiNodeTrait;
+use SOFe\Libkinetic\Util\Await;
 
 class SeriesComponent extends KineticComponent implements UiGroup{
+	use UiNodeTrait;
+
 	public function getDependencies() : Generator{
 		yield UiComponent::class;
-		yield UiParentComponent::class;
+		yield UiGroupComponent::class;
+	}
+
+	protected function executeNode(FlowContext $context) : Generator{
+		$child = new GroupFlowContext($this, $context);
+		yield Await::FROM => $child->execute();
 	}
 }

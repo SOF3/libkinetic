@@ -25,8 +25,10 @@ namespace SOFe\Libkinetic\UI;
 use Generator;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
 use SOFe\Libkinetic\UI\NodeState\OnStartComponent;
+use SOFe\Libkinetic\Variable\ReturnComponent;
 
 class UiComponent extends KineticComponent{
 	/** @var OnStartComponent */
@@ -34,7 +36,22 @@ class UiComponent extends KineticComponent{
 	/** @var OnCompleteComponent */
 	protected $onComplete;
 
+	/** @var ReturnComponent[] */
+	protected $returns = [];
+
 	public function getDependencies() : Generator{
 		yield IdComponent::class;
+	}
+
+	public function getOnStart() : OnStartComponent{
+		return $this->onStart;
+	}
+
+	public function getOnComplete() : OnCompleteComponent{
+		return $this->onComplete;
+	}
+
+	public function acceptChildren(ChildNodeRouter $router) : void{
+		$router->acceptMulti("return", ReturnComponent::class, $this->returns, 0);
 	}
 }

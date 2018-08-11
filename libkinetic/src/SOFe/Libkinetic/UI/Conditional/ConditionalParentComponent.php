@@ -27,8 +27,8 @@ use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Conditional\Group\AndComponent;
 use SOFe\Libkinetic\UI\Conditional\Group\OrComponent;
-use const PHP_INT_MAX;
 use SOFe\Libkinetic\UI\Conditional\Group\XorComponent;
+use const PHP_INT_MAX;
 
 class ConditionalParentComponent extends KineticComponent{
 	/** @var int */

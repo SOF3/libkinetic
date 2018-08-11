@@ -24,15 +24,16 @@ namespace SOFe\Libkinetic\API;
 
 use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\UI\UiNodeOutcome;
 
 interface UiNodeStateHandler{
-	public const STATE_START = "start";
-	public const STATE_NIL = "nil";
-	public const STATE_EXECUTE = "execute";
-	public const STATE_COMPLETE = "complete";
-	public const STATE_SKIP = "skip";
-	public const STATE_BREAK = "break";
-	public const STATE_EXIT = "exit";
+	public const STATE_START = 1747818303; // crc32("START")
+	public const STATE_NIL = 3683942447;
+	public const STATE_EXECUTE = 3223776964;
+	public const STATE_COMPLETE = 2220117103;
+	public const STATE_SKIP = UiNodeOutcome::OUTCOME_SKIP;
+	public const STATE_BREAK = UiNodeOutcome::OUTCOME_BREAK;
+	public const STATE_EXIT = UiNodeOutcome::OUTCOME_EXIT;
 
 	public const ALL_STATES = [
 		self::STATE_START,

@@ -24,13 +24,29 @@ namespace SOFe\Libkinetic\UI\Group;
 
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Util\ArrayUtil;
 
 class UiParentComponent extends KineticComponent{
-	/** @var array */
+	/** @var UiGroup[] */
 	protected $children = [];
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
 		$router->acceptMulti("series", SeriesComponent::class, $this->children, 0);
 		$router->acceptMulti("index", IndexComponent::class, $this->children, 0);
+		$router->acceptMulti("switch", SwitchComponent::class, $this->children, 0);
+	}
+
+	public function endElement() : void{
+		$i = 0;
+		$this->children = ArrayUtil::indexByProperty($this->children, function(UiGroup $group) use (&$i): string{
+			return $group->getNode()->asIdComponent()->getId() ?? "libkinetic.internal.unnamedComponent#" . ($i++);
+		});
+	}
+
+	/**
+	 * @return UiGroup[]
+	 */
+	public function getChildren() : array{
+		return $this->children;
 	}
 }

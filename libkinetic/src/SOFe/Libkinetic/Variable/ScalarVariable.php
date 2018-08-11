@@ -20,16 +20,31 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Variable;
 
-use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
+use function assert;
+use function gettype;
 
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
-		}
-		return (int) $value;
+class ScalarVariable extends Variable{
+	/** @var string */
+	protected $type;
+	/** @var bool|int|float|string */
+	protected $value;
+
+	public function __construct(string $type){
+		$this->type = $type;
+	}
+
+	public function getType() : string{
+		return $this->type;
+	}
+
+	public function getValue(){
+		return $this->value;
+	}
+
+	public function setValueImpl($value) : void{
+		assert(gettype($value) === $this->value);
+		$this->value = $value;
 	}
 }

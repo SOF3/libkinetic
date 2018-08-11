@@ -20,16 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Flow;
 
-use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
+use SOFe\Libkinetic\Variable\Variable;
 
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
-		}
-		return (int) $value;
-	}
+interface IObjectVariable{
+	public function get(string $key) : ?Variable;
 }

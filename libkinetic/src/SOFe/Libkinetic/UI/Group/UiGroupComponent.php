@@ -20,30 +20,29 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\NodeState;
+namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
-use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
-use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
+use SOFe\Libkinetic\Variable\VarDeclarationComponent;
 
-class BaseUiNodeStateComponent extends KineticComponent{
-	/** @var UiNodeStateHandler[] */
-	protected $handlers = [];
+class UiGroupComponent extends KineticComponent{
+	/** @var VarDeclarationComponent[] */
+	protected $vars = [];
 
 	public function getDependencies() : Generator{
-		yield ConditionalParentComponent::class;
+		yield UiParentComponent::class;
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("controller", UiNodeStateControllerComponent::class, $this->handlers, 0);
+		$router->acceptMulti("var", VarDeclarationComponent::class, $this->vars, 0);
 	}
 
 	/**
-	 * @return UiNodeStateHandler[]
+	 * @return VarDeclarationComponent[]
 	 */
-	public function &getHandlers() : array{
-		return $this->handlers;
+	public function getVars() : array{
+		return $this->vars;
 	}
 }

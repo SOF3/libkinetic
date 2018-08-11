@@ -46,7 +46,7 @@ use function str_replace;
 use function substr;
 
 class KineticManager{
-	public static $CONT_ACTION_EXPIRY_TIME = 300.0;
+	public static $CONT_EXPIRY_TIME = 300.0;
 
 	/** @var Plugin */
 	protected $plugin;

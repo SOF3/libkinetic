@@ -99,21 +99,16 @@ $output .= "\tpublic abstract function getComponent(string \$class) : KineticCom
 
 foreach($componentList as $item){
 	$baseNameComponent = array_slice(explode("\\", $item), -1)[0];
-//	$output .= "\n";
+	$output .= "\n";
 	$output .= "\tpublic final function as{$baseNameComponent}() : {$baseNameComponent}{\n";
 	$output .= "\t\treturn \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t}\n";
 }
 foreach($interfaceList as $item){
 	$baseNameInterface = array_slice(explode("\\", $item), -1)[0];
-	$output .= "\n\n";
+	$output .= "\n";
 	$output .= "\tpublic final function as{$baseNameInterface}() : {$baseNameInterface}{\n";
 	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, 1)[0];\n";
-	$output .= "\t}\n";
-	$output .= "\n";
-	$output .= "\t/** @return {$baseNameInterface}[] */\n";
-	$output .= "\tpublic final function get{$baseNameInterface}s(int \$assertMinimum = 0) : array{\n";
-	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, \$assertMinimum);\n";
 	$output .= "\t}\n";
 }
 $output .= "}\n";

@@ -20,30 +20,34 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\NodeState;
+namespace SOFe\Libkinetic\Variable;
 
-use Generator;
-use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
-use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
+use SOFe\Libkinetic\Parser\Router\AttributeRouter;
+use SOFe\Libkinetic\Parser\Router\StringAttribute;
 
-class BaseUiNodeStateComponent extends KineticComponent{
-	/** @var UiNodeStateHandler[] */
-	protected $handlers = [];
+class ReturnComponent extends KineticComponent{
+	/** @var string */
+	protected $name;
+	/** @var string */
+	protected $as = null;
 
-	public function getDependencies() : Generator{
-		yield ConditionalParentComponent::class;
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("name", new StringAttribute(), $this->name, true);
+		$router->use("as", new StringAttribute(), $this->as, true);
 	}
 
-	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("controller", UiNodeStateControllerComponent::class, $this->handlers, 0);
+	public function endElement() : void{
+		if($this->as === null){
+			$this->as = $this->name;
+		}
 	}
 
-	/**
-	 * @return UiNodeStateHandler[]
-	 */
-	public function &getHandlers() : array{
-		return $this->handlers;
+	public function getName() : string{
+		return $this->name;
+	}
+
+	public function getAs() : string{
+		return $this->as;
 	}
 }

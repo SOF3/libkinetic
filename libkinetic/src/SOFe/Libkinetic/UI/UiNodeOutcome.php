@@ -20,16 +20,28 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\UI;
 
-use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
+class UiNodeOutcome{
+	public const OUTCOME_SKIP = 3471030473;
+	public const OUTCOME_BREAK = 4213740138;
+	public const OUTCOME_EXIT = 2728159674;
 
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
-		}
-		return (int) $value;
+	/** @var int */
+	protected $outcome;
+	/** @var string|null */
+	protected $target;
+
+	public function __construct(int $outcome = self::OUTCOME_SKIP, ?string $target = null){
+		$this->outcome = $outcome;
+		$this->target = $target;
+	}
+
+	public function getOutcome() : int{
+		return $this->outcome;
+	}
+
+	public function getTarget() : ?string{
+		return $this->target;
 	}
 }

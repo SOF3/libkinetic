@@ -22,35 +22,32 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Flow;
 
+use Generator;
 use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\UiNode;
+use SOFe\Libkinetic\Util\Await;
 
-abstract class FlowContext{
-	/** @var UiNode */
-	protected $interface;
-	/** @var UiComponent */
-	protected $component;
-	/** @var CommandSender */
-	protected $user;
-	/** @var VariableScope */
-	protected $variableScope;
+class EntryFlowContext extends FlowContext{
+	public function __construct(UiNode $interface, CommandSender $user){
+		parent::__construct($interface, $user);
 
-	protected function __construct(UiNode $interface, CommandSender $user){
-		$this->interface = $interface;
-		$this->component = $interface->getNode()->asUiComponent();
-		$this->user = $user;
+		$vars = [];
+		for($node = $interface->getNode(); $node !== null; $node = $node->getParent()){
+			if($node->getComponent(UiGroupComponent::class) !== null){
+				foreach($node->asUiGroupComponent()->getVars() as $var){
+					$vars[] = $var;
+				}
+			}
+		}
+		$this->variableScope = new VariableScope($vars, null);
 	}
 
-	public function getId() : ?string{
-		return $this->component->asIdComponent()->getId();
+	public function isRoot() : bool{
+		return true;
 	}
 
-	public function getUser() : CommandSender{
-		return $this->user;
-	}
-
-	public function getVariables() : VariableScope{
-		return $this->variableScope;
+	public function execute() : Generator{
+		yield Await::FROM => $this->interface->execute($this);
 	}
 }

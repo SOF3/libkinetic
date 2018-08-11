@@ -26,8 +26,11 @@ use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
+use SOFe\Libkinetic\UI\UiNodeTrait;
 
 class InfoFormComponent extends KineticComponent implements UiNode{
+	use UiNodeTrait;
+
 	public function getDependencies() : Generator{
 		yield UiComponent::class;
 	}

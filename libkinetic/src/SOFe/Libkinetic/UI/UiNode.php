@@ -22,6 +22,18 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI;
 
-interface UiNode{
+use Generator;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowContext;
 
+interface UiNode{
+	public function getNode() : KineticNode;
+
+	/**
+	 * Executes the node fully and returns a UiNodeOutcome object.
+	 *
+	 * @param FlowContext $context
+	 * @return Generator
+	 */
+	public function execute(FlowContext $context) : Generator;
 }

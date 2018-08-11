@@ -25,7 +25,7 @@ namespace SOFe\Libkinetic\Parser\Router;
 use SOFe\Libkinetic\Base\KineticNode;
 
 class StringAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value):string{
+	public function accept(KineticNode $node, string $value) : string{
 		return $value;
 	}
 }

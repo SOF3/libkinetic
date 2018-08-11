@@ -20,16 +20,17 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Util;
 
-use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
-
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
+final class ArrayUtil{
+	public static function indexByProperty(array $array, callable $toIndex) : array{
+		$output = [];
+		foreach($array as $value){
+			$output[$toIndex($value)] = $value;
 		}
-		return (int) $value;
+		return $output;
+	}
+
+	private function __construct(){
 	}
 }

@@ -289,12 +289,49 @@
               </xs:complexContent>
             </xs:complexType>
           </xs:element>
+
+          <xs:element name="var" minOccurs="0" maxOccurs="unbounded" type="VarDeclaration"/>
+
           <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
         <xs:attribute name="id" type="IdString"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
+  <xs:complexType name="VarDeclaration">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="field"
+    </xs:choice>
+
+    <xs:attribute name="name" type="VarName"/>
+    <xs:attribute name="type">
+      <xs:simpleType>
+        <xs:union>
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="bool"/>
+              <xs:enumeration value="int"/>
+              <xs:enumeration value="float"/>
+              <xs:enumeration value="string"/>
+              <xs:enumeration value="object"/>
+              <xs:enumeration value="list:bool"/>
+              <xs:enumeration value="list:int"/>
+              <xs:enumeration value="list:float"/>
+              <xs:enumeration value="list:string"/>
+              <xs:enumeration value="list:object"/>
+            </xs:restriction>
+          </xs:simpleType>
+          <xs:simpleType>
+            <xs:restriction>
+              <xs:pattern value="(list:)*(bool|int|float|string|object)"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:union>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:complexType>
+
   <xs:complexType name="CommandArg">
     <xs:attribute name="name" type="MessageRef" use="required"/>
     <xs:attribute name="type" use="optional" default="string">

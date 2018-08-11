@@ -28,11 +28,15 @@ use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
 use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
 use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Router\UserString;
 use SOFe\Libkinetic\Parser\Router\UserStringAttribute;
 
 class ArgComponent extends KineticComponent{
+	/** @var UserString */
 	protected $name;
+	/** @var bool */
 	protected $required = true;
+	/** @var string */
 	protected $type = "string";
 	/** @var StringInputAdapter|null */
 	protected $adapter = null;
@@ -44,7 +48,7 @@ class ArgComponent extends KineticComponent{
 			"string",
 			"int",
 			"float",
-			"boolean",
+			"bool",
 		], true), $this->type, false);
 		$router->use("adapter", new ControllerAttribute(StringInputAdapter::class, []), $this->adapter, false);
 	}

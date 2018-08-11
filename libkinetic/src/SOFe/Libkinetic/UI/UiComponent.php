@@ -51,6 +51,13 @@ class UiComponent extends KineticComponent{
 		return $this->onComplete;
 	}
 
+	/**
+	 * @return ReturnComponent[]
+	 */
+	public function getReturns() : array{
+		return $this->returns;
+	}
+
 	public function acceptChildren(ChildNodeRouter $router) : void{
 		$router->acceptMulti("return", ReturnComponent::class, $this->returns, 0);
 	}

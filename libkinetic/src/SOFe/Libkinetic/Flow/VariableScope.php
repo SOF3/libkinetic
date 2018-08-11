@@ -44,7 +44,15 @@ class VariableScope implements IObjectVariable{
 		}
 	}
 
-	public function getNested(string $key) : Variable{
+	public function setNested(string $key, $value) : void{
+		$this->getNestedVariable($key)->setValue($value);
+	}
+
+	public function getNested(string $key){
+		return $this->getNestedVariable($key)->getValue();
+	}
+
+	public function getNestedVariable(string $key) : Variable{
 		$parts = explode(".", $key);
 
 		for($scope = $this; $scope !== null; $scope = $scope->parent){

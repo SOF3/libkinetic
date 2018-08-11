@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Flow;
 
 use Generator;
-use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeOutcome;

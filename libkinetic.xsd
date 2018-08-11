@@ -301,7 +301,7 @@
 
   <xs:complexType name="VarDeclaration">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="field"
+      <xs:element name="field" type="VarDeclaration" minOccurs="0" maxOccurs="unbounded"/>
     </xs:choice>
 
     <xs:attribute name="name" type="VarName"/>

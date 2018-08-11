@@ -131,6 +131,28 @@
       <xs:documentation>type of UiNode</xs:documentation>
     </xs:annotation>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="command" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="CommandType">
+              <xs:choice>
+                <xs:sequence>
+                  <xs:element name="arg" type="CommandArg" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+
+                <xs:element name="overload" minOccurs="1" maxOccurs="unbounded">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="arg" type="CommandArg" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+
       <xs:element name="onStart" type="NodeStateControllerList" minOccurs="1" maxOccurs="1"/>
       <xs:element name="onComplete" minOccurs="1" maxOccurs="1">
         <xs:complexType>
@@ -268,28 +290,6 @@
     <xs:complexContent>
       <xs:extension base="UiNode">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="command" minOccurs="0" maxOccurs="unbounded">
-            <xs:complexType>
-              <xs:complexContent>
-                <xs:extension base="CommandType">
-                  <xs:choice>
-                    <xs:sequence>
-                      <xs:element name="arg" type="CommandArg" minOccurs="0" maxOccurs="unbounded"/>
-                    </xs:sequence>
-
-                    <xs:element name="overload" minOccurs="1" maxOccurs="unbounded">
-                      <xs:complexType>
-                        <xs:sequence>
-                          <xs:element name="arg" type="CommandArg" minOccurs="0" maxOccurs="unbounded"/>
-                        </xs:sequence>
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:choice>
-                </xs:extension>
-              </xs:complexContent>
-            </xs:complexType>
-          </xs:element>
-
           <xs:element name="var" minOccurs="0" maxOccurs="unbounded" type="VarDeclaration"/>
 
           <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>

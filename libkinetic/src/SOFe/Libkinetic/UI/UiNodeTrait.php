@@ -72,6 +72,7 @@ trait UiNodeTrait{
 			if(in_array($state, [UiNodeStateHandler::STATE_SKIP, UiNodeStateHandler::STATE_BREAK, UiNodeStateHandler::STATE_EXIT], true)){
 				if($state === UiNodeStateHandler::STATE_EXIT && $target !== null){
 					$context->send($target);
+					$target = null;
 				}
 				return new UiNodeOutcome($state, $target);
 			}

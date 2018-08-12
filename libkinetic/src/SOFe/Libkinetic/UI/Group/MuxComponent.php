@@ -28,7 +28,7 @@ use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
 
-class SwitchComponent extends KineticComponent implements UiNode{
+class MuxComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
 
 	public function getDependencies() : Generator{

@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Control;
 
 use Generator;
-use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\UI\UiComponent;
@@ -39,15 +38,7 @@ class ExitComponent extends KineticComponent implements UiNode{
 		yield UiComponent::class;
 	}
 
-	public function resolve() : void{
-		$this->asUiComponent()->getOnComplete()->asBaseUiNodeStateComponent()->getHandlers()[] = new class implements UiNodeStateHandler{
-			public function onStartComplete(FlowContext $context) : Generator{
-				return GeneratorUtil::empty(UiNodeStateHandler::STATE_EXIT);
-			}
-		};
-	}
-
 	protected function executeNode(FlowContext $context) : Generator{
-		return GeneratorUtil::empty(new UiNodeOutcome);
+		return GeneratorUtil::empty(new UiNodeOutcome(UiNodeOutcome::OUTCOME_EXIT));
 	}
 }

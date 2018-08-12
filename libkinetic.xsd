@@ -117,7 +117,7 @@
       <xs:element name="exit" type="ExitNode"/>
       <xs:element name="buffer" type="BufferNode"/>
 
-      <xs:element name="switch" type="SwitchNode"/>
+      <xs:element name="mux" type="MuxNode"/>
       <xs:element name="series" type="SeriesNode"/>
       <xs:element name="index" type="IndexNode"/>
 
@@ -394,9 +394,11 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="SwitchNode">
+  <xs:complexType name="MuxNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+        <xs:group ref="UiNode"/>
+        <xs:attribute name="var"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -404,6 +406,7 @@
   <xs:complexType name="IndexNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+        <xs:group ref="UiNode"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -418,6 +421,20 @@
   <xs:complexType name="ListFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+        <xs:all>
+          <xs:element name="before">
+            <xs:complexType>
+              <xs:group ref="UiNode"/>
+            </xs:complexType>
+          </xs:element>
+          <xs:element name="after">
+            <xs:complexType>
+              <xs:group ref="UiNode"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:all>
+        <xs:attribute name="provider" type="ControllerName"/>
+        <xs:attribute name="autoSelect" type="xs:boolean" default="true"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

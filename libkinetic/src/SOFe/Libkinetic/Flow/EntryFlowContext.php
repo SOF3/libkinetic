@@ -22,10 +22,13 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Flow;
 
+use function assert;
 use Generator;
 use pocketmine\command\CommandSender;
+use RuntimeException;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\UiNode;
+use SOFe\Libkinetic\UI\UiNodeOutcome;
 use SOFe\Libkinetic\Util\Await;
 
 class EntryFlowContext extends FlowContext{
@@ -48,6 +51,25 @@ class EntryFlowContext extends FlowContext{
 	}
 
 	public function execute() : Generator{
-		yield Await::FROM => $this->interface->execute($this);
+		$outcome = yield Await::FROM => $this->interface->execute($this);
+		assert($outcome instanceof UiNodeOutcome);
+
+		if($outcome->getOutcome() === UiNodeOutcome::OUTCOME_EXIT){
+			if($outcome->getTarget() !== null){
+				$this->send($outcome->getTarget());
+			}
+		}elseif($outcome->getOutcome() === UiNodeOutcome::OUTCOME_BREAK){
+			if($outcome->getTarget() !== null && $outcome->getTarget() !== $this->getId()){
+				throw new RuntimeException("Cannot break beyond an entry node");
+			}
+		}elseif($outcome->getOutcome() === UiNodeOutcome::OUTCOME_SKIP){
+			if($outcome->getTarget() !== null && $outcome->getTarget() !== $this->getId()){
+				throw new RuntimeException("Cannot skip beyond an entry node");
+			}
+		}
+	}
+
+	public function executeCallback(?callable $callback = null) : void{
+		Await::func($this->execute(), $callback);
 	}
 }

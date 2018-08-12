@@ -50,8 +50,8 @@ use SOFe\Libkinetic\UI\Entry\ArgComponent;
 use SOFe\Libkinetic\UI\Entry\EntryCommandComponent;
 use SOFe\Libkinetic\UI\Entry\OverloadComponent;
 use SOFe\Libkinetic\UI\Group\IndexComponent;
+use SOFe\Libkinetic\UI\Group\MuxComponent;
 use SOFe\Libkinetic\UI\Group\SeriesComponent;
-use SOFe\Libkinetic\UI\Group\SwitchComponent;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\Group\UiParentComponent;
 use SOFe\Libkinetic\UI\NodeState\AlwaysOnCompleteComponent;
@@ -172,6 +172,10 @@ trait ComponentAdapter{
 		return $this->getComponent(ListFormComponent::class);
 	}
 
+	public final function asMuxComponent() : MuxComponent{
+		return $this->getComponent(MuxComponent::class);
+	}
+
 	public final function asOnCompleteComponent() : OnCompleteComponent{
 		return $this->getComponent(OnCompleteComponent::class);
 	}
@@ -206,10 +210,6 @@ trait ComponentAdapter{
 
 	public final function asSeriesComponent() : SeriesComponent{
 		return $this->getComponent(SeriesComponent::class);
-	}
-
-	public final function asSwitchComponent() : SwitchComponent{
-		return $this->getComponent(SwitchComponent::class);
 	}
 
 	public final function asUiComponent() : UiComponent{

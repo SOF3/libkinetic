@@ -59,6 +59,31 @@ class ConditionalComponent extends KineticComponent{
 		$this->root = $root;
 	}
 
+	public function getOnTrue() : int{
+		return $this->onTrue;
+	}
+
+	public function getOnTrueTarget() : ?string{
+		return $this->onTrueTarget;
+	}
+
+	public function getOnFalse() : int{
+		return $this->onFalse;
+	}
+
+	public function getOnFalseTarget() : ?string{
+		return $this->onFalseTarget;
+	}
+
+	public function resolve() : void{
+		if($this->onTrue === UiNodeStateHandler::STATE_EXIT && $this->onTrueTarget !== null){
+			$this->manager->requireTranslation($this->getNode(), $this->onTrueTarget);
+		}
+		if($this->onFalse === UiNodeStateHandler::STATE_EXIT && $this->onFalseTarget !== null){
+			$this->manager->requireTranslation($this->getNode(), $this->onFalseTarget);
+		}
+	}
+
 	public function thisOrThat(KineticComponent $that) : ?KineticComponent{
 		if(!($that instanceof ConditionalComponent)){
 			return null;

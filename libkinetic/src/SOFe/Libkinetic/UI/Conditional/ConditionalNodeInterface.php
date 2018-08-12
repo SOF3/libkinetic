@@ -23,7 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Conditional;
 
 use SOFe\Libkinetic\API\FlowPredicate;
+use SOFe\Libkinetic\API\UiNodeStateHandler;
 
-interface ConditionalNodeInterface extends FlowPredicate{
+interface ConditionalNodeInterface extends FlowPredicate, UiNodeStateHandler{
 
 }

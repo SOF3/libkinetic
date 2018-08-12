@@ -36,20 +36,27 @@ class ConditionalParentComponent extends KineticComponent{
 	/** @var ConditionalNodeInterface[] */
 	protected $predicates = [];
 
-	public function __construct(int $min = 0, int $max = PHP_INT_MAX){
+	/** @var array & */
+	protected $receiver2;
+
+	public function __construct(int $min = 0, int $max = PHP_INT_MAX, ?array &$receiver2 = null){
+		if($receiver2 === null){
+			$receiver2 = [];
+		}
+		$this->receiver2 =& $receiver2;
 		$this->min = $min;
 		$this->max = $max;
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("or", OrComponent::class, $this->predicates, $this->min, $this->max);
-		$router->acceptMulti("and", AndComponent::class, $this->predicates, $this->min, $this->max);
-		$router->acceptMulti("xor", XorComponent::class, $this->predicates, $this->min, $this->max);
+		$router->acceptMulti2("or", OrComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
+		$router->acceptMulti2("and", AndComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
+		$router->acceptMulti2("xor", XorComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
 
-		$router->acceptMulti("predicate", ControllerConditionalComponent::class, $this->predicates, $this->min, $this->max);
-		$router->acceptMulti("hasVar", HasVarConditionalComponent::class, $this->predicates, $this->min, $this->max);
-		$router->acceptMulti("permission", PermissionConditionalComponent::class, $this->predicates, $this->min, $this->max);
-		$router->acceptMulti("const", ConstConditionalComponent::class, $this->predicates, $this->min, $this->max);
+		$router->acceptMulti2("predicate", ControllerConditionalComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
+		$router->acceptMulti2("hasVar", HasVarConditionalComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
+		$router->acceptMulti2("permission", PermissionConditionalComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
+		$router->acceptMulti2("const", ConstConditionalComponent::class, $this->predicates, $this->receiver2, $this->min, $this->max);
 	}
 
 	/**

@@ -53,4 +53,8 @@ abstract class FlowContext{
 	public function getVariables() : VariableScope{
 		return $this->variableScope;
 	}
+
+	public function send(string $message) : void{
+		$this->component->getManager()->translate($this->getUser(), $message, $this->variableScope->asArray());
+	}
 }

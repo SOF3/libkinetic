@@ -36,6 +36,20 @@ trait ConditionalTrait{
 		yield new ConditionalComponent($parent->hasComponent(BaseUiNodeStateComponent::class));
 	}
 
+	public final function onStartComplete(FlowContext $context) : Generator{
+		$bool = yield Await::FROM => $this->test($context);
+		$conditional = $this->getNode()->asConditionalComponent();
+		if($bool){
+			$state = $conditional->getOnTrue();
+			$target = $conditional->getOnTrueTarget();
+		}else{
+			$state = $conditional->getOnFalse();
+			$target = $conditional->getOnFalseTarget();
+		}
+
+		return [$state, $target];
+	}
+
 	public final function test(FlowContext $context) : Generator{
 		$bool = yield Await::FROM => $this->testCondition($context);
 		return $this->getNode()->asConditionalComponent()->applyNot($bool);

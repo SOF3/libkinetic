@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\NodeState;
 
 use Generator;
+use const PHP_INT_MAX;
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
@@ -33,7 +34,7 @@ class BaseUiNodeStateComponent extends KineticComponent{
 	protected $handlers = [];
 
 	public function getDependencies() : Generator{
-		yield new ConditionalParentComponent();
+		yield new ConditionalParentComponent(0, PHP_INT_MAX, $this->handlers);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{

@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpIncompatibleReturnTypeInspection */
-/** @noinspection PhpUnusedAliasInspection */
+<?php /** @noinspection PhpIncompatibleReturnTypeInspection */ /** @noinspection PhpUnusedAliasInspection */
 
 /*
  * libkinetic
@@ -26,9 +25,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
+use SOFe\Libkinetic\Base\AliasComponent;
+use SOFe\Libkinetic\Base\CommandComponent;
+use SOFe\Libkinetic\Base\IdComponent;
+use SOFe\Libkinetic\Base\IncludeComponent;
+use SOFe\Libkinetic\Base\RootComponent;
 use SOFe\Libkinetic\UI\Advanced\DynFormComponent;
 use SOFe\Libkinetic\UI\Advanced\RecurFormComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalComponent;
+use SOFe\Libkinetic\UI\Conditional\ConditionalNodeInterface;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 use SOFe\Libkinetic\UI\Conditional\ConstConditionalComponent;
 use SOFe\Libkinetic\UI\Conditional\ControllerConditionalComponent;
@@ -36,6 +41,7 @@ use SOFe\Libkinetic\UI\Conditional\Group\AndComponent;
 use SOFe\Libkinetic\UI\Conditional\Group\ConditionalGroupComponent;
 use SOFe\Libkinetic\UI\Conditional\Group\OrComponent;
 use SOFe\Libkinetic\UI\Conditional\Group\XorComponent;
+use SOFe\Libkinetic\UI\Conditional\HasVarConditionalComponent;
 use SOFe\Libkinetic\UI\Conditional\PermissionConditionalComponent;
 use SOFe\Libkinetic\UI\Control\BufferComponent;
 use SOFe\Libkinetic\UI\Control\CallComponent;
@@ -142,6 +148,10 @@ trait ComponentAdapter{
 		return $this->getComponent(GotoOnCompleteComponent::class);
 	}
 
+	public final function asHasVarConditionalComponent() : HasVarConditionalComponent{
+		return $this->getComponent(HasVarConditionalComponent::class);
+	}
+
 	public final function asIdComponent() : IdComponent{
 		return $this->getComponent(IdComponent::class);
 	}
@@ -228,5 +238,9 @@ trait ComponentAdapter{
 
 	public final function asXorComponent() : XorComponent{
 		return $this->getComponent(XorComponent::class);
+	}
+
+	public final function asConditionalNodeInterface() : ConditionalNodeInterface{
+		return $this->findComponentsByInterface(ConditionalNodeInterface::class, 1)[0];
 	}
 }

@@ -33,6 +33,6 @@ class SwitchComponent extends KineticComponent implements UiNode{
 
 	public function getDependencies() : Generator{
 		yield UiComponent::class;
-		yield UiGroupComponent::class;
+		yield UiParentComponent::class;
 	}
 }

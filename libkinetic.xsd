@@ -178,6 +178,7 @@
         </xs:complexType>
       </xs:element>
     </xs:choice>
+    <xs:attribute name="id" type="IdString"/>
   </xs:complexType>
 
   <xs:complexType name="NodeStateControllerList">
@@ -309,6 +310,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
   <xs:complexType name="BufferNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
@@ -317,15 +319,22 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="UiGroupNode" abstract="true">
+  <xs:complexType name="UiParentNode" abstract="true">
     <xs:complexContent>
       <xs:extension base="UiNode">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-          <xs:element name="var" minOccurs="0" maxOccurs="unbounded" type="VarDeclaration"/>
-
           <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
         </xs:choice>
-        <xs:attribute name="id" type="IdString"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="UiGroupNode" abstract="true">
+    <xs:complexContent>
+      <xs:extension base="UiParentNode">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="var" minOccurs="0" maxOccurs="unbounded" type="VarDeclaration"/>
+        </xs:choice>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -378,21 +387,23 @@
     <xs:attribute name="adapter" type="ControllerName" use="optional"/>
   </xs:complexType>
 
-  <xs:complexType name="SwitchNode">
-    <xs:complexContent>
-      <xs:extension base="UiGroupNode">
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
   <xs:complexType name="SeriesNode">
     <xs:complexContent>
       <xs:extension base="UiGroupNode">
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
+  <xs:complexType name="SwitchNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="IndexNode">
     <xs:complexContent>
-      <xs:extension base="UiGroupNode">
+      <xs:extension base="UiNode">
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -403,12 +414,14 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
   <xs:complexType name="ListFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
   <xs:complexType name="InfoFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
@@ -422,6 +435,7 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
+
   <xs:complexType name="DynFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">

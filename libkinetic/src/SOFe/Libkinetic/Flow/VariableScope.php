@@ -81,4 +81,12 @@ class VariableScope implements IObjectVariable{
 
 		return $object;
 	}
+
+	public function asArray() : array{
+		$vars = [];
+		foreach($this->variables as $k => $v){
+			$vars[$k] = $v->getValue();
+		}
+		return $vars;
+	}
 }

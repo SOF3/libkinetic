@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Conditional\Group;
 
+use function assert;
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
@@ -29,6 +30,7 @@ use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
 use SOFe\Libkinetic\UI\Conditional\ConditionalComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 use const PHP_INT_MAX;
+use SOFe\Libkinetic\UI\NodeState\BaseUiNodeStateComponent;
 
 class ConditionalGroupComponent extends KineticComponent{
 	/** @var bool */
@@ -37,6 +39,7 @@ class ConditionalGroupComponent extends KineticComponent{
 	private $min;
 	/** @var int */
 	private $max;
+	/** @var bool */
 	protected $shortCircuit;
 
 	public function __construct(bool $canShortCircuit, bool $defaultShortCircuit = true, int $min = 0, int $max = PHP_INT_MAX){
@@ -48,7 +51,9 @@ class ConditionalGroupComponent extends KineticComponent{
 	}
 
 	public function getDependencies() : Generator{
-		yield ConditionalComponent::class;
+		$parent = $this->getNode()->getParent();
+		assert($parent !== null);
+		yield new ConditionalComponent($parent->hasComponent(BaseUiNodeStateComponent::class));
 		yield new ConditionalParentComponent($this->min, $this->max);
 	}
 

@@ -93,10 +93,13 @@
 
   <xs:complexType name="CommandType">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="alias" type="CommandName" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="alias" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>An alias of the command, without the leading slash</xs:documentation>
         </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="name" type="CommandName"/>
+        </xs:complexType>
       </xs:element>
     </xs:choice>
     <xs:attribute name="name" type="CommandName" use="required">
@@ -195,25 +198,37 @@
     <xs:choice>
       <xs:element name="or">
         <xs:complexType>
-          <xs:sequence>
-            <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
-          </xs:sequence>
-          <xs:attribute name="shortCircuit" type="xs:boolean" use="optional" default="true"/>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:sequence>
+                <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
+              </xs:sequence>
+              <xs:attribute name="shortCircuit" type="xs:boolean" use="optional" default="true"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
       <xs:element name="and">
         <xs:complexType>
-          <xs:sequence>
-            <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
-          </xs:sequence>
-          <xs:attribute name="shortCircuit" type="xs:boolean" use="optional" default="true"/>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:sequence>
+                <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
+              </xs:sequence>
+              <xs:attribute name="shortCircuit" type="xs:boolean" use="optional" default="true"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
       <xs:element name="xor">
         <xs:complexType>
-          <xs:sequence>
-            <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
-          </xs:sequence>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:sequence>
+                <xs:group ref="ConditionalHandler" minOccurs="2" maxOccurs="unbounded"/>
+              </xs:sequence>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
 
@@ -222,7 +237,11 @@
           <xs:documentation>Triggers a UserPredicate controller</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="controller" type="ControllerName" use="required"/>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:attribute name="controller" type="ControllerName" use="required"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
       <xs:element name="hasVar">
@@ -230,7 +249,11 @@
           <xs:documentation>Checks if a flow variable is set</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="name" type="VarName" use="required"/>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:attribute name="name" type="VarName" use="required"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
       <xs:element name="permission">
@@ -238,7 +261,11 @@
           <xs:documentation>Checks if a user has the required permission</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="name" type="PermissionName" use="required"/>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:attribute name="name" type="PermissionName" use="required"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
       <xs:element name="const">
@@ -246,7 +273,11 @@
           <xs:documentation>Outputs a constant boolean value</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="value" type="xs:boolean" use="required"/>
+          <xs:complexContent>
+            <xs:extension base="ConditionalHandler">
+              <xs:attribute name="value" type="xs:boolean" use="required"/>
+            </xs:extension>
+          </xs:complexContent>
         </xs:complexType>
       </xs:element>
     </xs:choice>

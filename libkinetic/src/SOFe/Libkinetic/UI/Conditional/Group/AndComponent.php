@@ -24,8 +24,9 @@ namespace SOFe\Libkinetic\UI\Conditional\Group;
 
 use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\UI\Conditional\ConditionalNodeInterface;
 
-class AndComponent extends KineticComponent implements FlowPredicate{
+class AndComponent extends KineticComponent implements ConditionalNodeInterface{
 	use ConditionalGroupTrait;
 
 	protected function reduce(bool $left, bool $right) : bool{

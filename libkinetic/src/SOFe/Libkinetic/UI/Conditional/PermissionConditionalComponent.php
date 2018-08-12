@@ -30,14 +30,14 @@ use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\StringAttribute;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 
-class PermissionConditionalComponent extends KineticComponent implements FlowPredicate{
+class PermissionConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
 	use ConditionalTrait;
 
 	/** @var string */
 	protected $name;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("permission", new StringAttribute(), $this->name, true);
+		$router->use("name", new StringAttribute(), $this->name, true);
 	}
 
 	protected function testCondition(CommandSender $sender) : Generator{

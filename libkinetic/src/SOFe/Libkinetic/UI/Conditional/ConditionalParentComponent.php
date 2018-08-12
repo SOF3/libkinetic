@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Conditional;
 
-use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Conditional\Group\AndComponent;
@@ -34,7 +33,7 @@ class ConditionalParentComponent extends KineticComponent{
 	/** @var int */
 	protected $min, $max;
 
-	/** @var FlowPredicate[] */
+	/** @var ConditionalNodeInterface[] */
 	protected $predicates = [];
 
 	public function __construct(int $min = 0, int $max = PHP_INT_MAX){
@@ -46,10 +45,14 @@ class ConditionalParentComponent extends KineticComponent{
 		$router->acceptMulti("or", OrComponent::class, $this->predicates, $this->min, $this->max);
 		$router->acceptMulti("and", AndComponent::class, $this->predicates, $this->min, $this->max);
 		$router->acceptMulti("xor", XorComponent::class, $this->predicates, $this->min, $this->max);
+
+		$router->acceptMulti("predicate", ControllerConditionalComponent::class, $this->predicates, $this->min, $this->max);
+		$router->acceptMulti("permission", PermissionConditionalComponent::class, $this->predicates, $this->min, $this->max);
+		$router->acceptMulti("const", ConstConditionalComponent::class, $this->predicates, $this->min, $this->max);
 	}
 
 	/**
-	 * @return FlowPredicate[]
+	 * @return ConditionalNodeInterface[]
 	 */
 	public function getPredicates() : array{
 		return $this->predicates;

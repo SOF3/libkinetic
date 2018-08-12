@@ -26,6 +26,7 @@ use Generator;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\UI\Entry\EntryCommandComponent;
 use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
 use SOFe\Libkinetic\UI\NodeState\OnStartComponent;
 use SOFe\Libkinetic\Variable\ReturnComponent;
@@ -38,6 +39,9 @@ class UiComponent extends KineticComponent{
 
 	/** @var ReturnComponent[] */
 	protected $returns = [];
+
+	/** @var EntryCommandComponent[] */
+	protected $entryCommands = [];
 
 	public function getDependencies() : Generator{
 		yield IdComponent::class;
@@ -59,6 +63,9 @@ class UiComponent extends KineticComponent{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
+		$router->acceptSingle("onStart", OnStartComponent::class, $this->onStart, true);
+		$router->acceptSingle("onComplete", OnCompleteComponent::class, $this->onComplete, true);
 		$router->acceptMulti("return", ReturnComponent::class, $this->returns, 0);
+		$router->acceptMulti("command", EntryCommandComponent::class, $this->entryCommands, 0);
 	}
 }

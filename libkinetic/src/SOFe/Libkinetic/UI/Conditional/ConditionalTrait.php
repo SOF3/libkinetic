@@ -25,9 +25,17 @@ namespace SOFe\Libkinetic\UI\Conditional;
 use Generator;
 use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\UI\NodeState\BaseUiNodeStateComponent;
 use SOFe\Libkinetic\Util\Await;
+use function assert;
 
 trait ConditionalTrait{
+	public function getDependencies() : Generator{
+		$parent = $this->getNode()->getParent();
+		assert($parent !== null);
+		yield new ConditionalComponent($parent->hasComponent(BaseUiNodeStateComponent::class));
+	}
+
 	public final function test(CommandSender $sender) : Generator{
 		$bool = yield Await::FROM => $this->testCondition($sender);
 		return $this->getNode()->asConditionalComponent()->applyNot($bool);

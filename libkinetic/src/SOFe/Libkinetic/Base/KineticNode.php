@@ -82,10 +82,13 @@ final class KineticNode{
 			if($next === null){
 				throw new RuntimeException("Split-join found with component type " . $componentClass);
 			}
-			$this->components[$componentClass] = $next;
-		}else{
-			$this->components[$componentClass] = $component;
+			if($next !== $component){
+				return;
+			}
 		}
+		$this->components[$componentClass] = $component;
+		$component->internalInitNode($this);
+
 		foreach($component->getDependencies() as $dependency){
 			if(is_string($dependency)){
 				$dependency = new $dependency;
@@ -101,6 +104,13 @@ final class KineticNode{
 
 	public function getComponent(string $componentClass) : ?KineticComponent{
 		return $this->components[$componentClass] ?? null;
+	}
+
+	/**
+	 * @return KineticComponent[]
+	 */
+	public function getComponents() : array{
+		return $this->components;
 	}
 
 	public function getParser() : KineticFileParser{
@@ -181,7 +191,7 @@ final class KineticNode{
 		$this->attrRouter->resolveAll();
 
 		foreach($this->components as $component){
-			$component->internalInit($this, $manager);
+			$component->internalInitManager($manager);
 			$component->resolve();
 		}
 	}

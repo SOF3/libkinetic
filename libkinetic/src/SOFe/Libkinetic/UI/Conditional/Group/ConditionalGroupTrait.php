@@ -33,7 +33,9 @@ use function assert;
 use function is_bool;
 
 trait ConditionalGroupTrait{
-	use ConditionalTrait;
+	use ConditionalTrait{
+		getDependencies as ct_gd;
+	}
 
 	protected function testCondition(CommandSender $sender) : Generator{
 		/** @var bool|null $left */

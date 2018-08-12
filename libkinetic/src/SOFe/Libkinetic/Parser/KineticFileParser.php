@@ -49,7 +49,7 @@ abstract class KineticFileParser{
 	protected $dataBuffer = "";
 
 	public function __construct(){
-		$this->root = new KineticNode($this, self::XMLNS_DEFAULT, "KINETIC", null, [
+		$this->root = new KineticNode($this, self::XMLNS_DEFAULT, "kinetic", null, [
 			new RootComponent(),
 		]);
 	}

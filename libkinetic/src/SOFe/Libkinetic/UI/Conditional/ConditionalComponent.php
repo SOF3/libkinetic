@@ -22,16 +22,71 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Conditional;
 
+use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
+use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use function array_keys;
+use function var_dump;
 
 class ConditionalComponent extends KineticComponent{
+	public const ACTION_MAP = [
+		"start" => UiNodeStateHandler::STATE_START,
+		"nil" => UiNodeStateHandler::STATE_NIL,
+		"execute" => UiNodeStateHandler::STATE_EXECUTE,
+		"complete" => UiNodeStateHandler::STATE_COMPLETE,
+		"skip" => UiNodeStateHandler::STATE_SKIP,
+		"exit" => UiNodeStateHandler::STATE_EXIT,
+		"break" => UiNodeStateHandler::STATE_BREAK,
+	];
+
+	/** @var bool */
+	protected $root;
 	/** @var bool */
 	protected $not = false;
 
+	/** @var int */
+	protected $onTrue = "nil";
+	/** @var string|null */
+	protected $onTrueTarget = null;
+	/** @var int */
+	protected $onFalse = "nil";
+	/** @var string|null */
+	protected $onFalseTarget = null;
+
+	public function __construct(bool $root = false){
+		$this->root = $root;
+	}
+
+	public function thisOrThat(KineticComponent $that) : ?KineticComponent{
+		if(!($that instanceof ConditionalComponent)){
+			return null;
+		}
+		if($this->root){
+			return $this;
+		}elseif($that->root){
+			return $that;
+		}else{
+			return $this;
+		}
+	}
+
 	public function acceptAttributes(AttributeRouter $router) : void{
+		if($this->root){
+			$router->use("onTrue", new StringEnumAttribute(array_keys(self::ACTION_MAP), true), $this->onTrue, false);
+			$router->use("onTrueTarget", new StringAttribute(), $this->onTrueTarget, false);
+			$router->use("onFalse", new StringEnumAttribute(array_keys(self::ACTION_MAP), true), $this->onFalse, false);
+			$router->use("onFalseTarget", new StringAttribute(), $this->onFalseTarget, false);
+		}
+
 		$router->use("not", new BooleanAttribute(), $this->not, false);
+	}
+
+	public function endElement() : void{
+		$this->onTrue = self::ACTION_MAP[$this->onTrue];
+		$this->onFalse = self::ACTION_MAP[$this->onFalse];
 	}
 
 	public function applyNot(bool $bool) : bool{

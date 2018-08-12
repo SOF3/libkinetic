@@ -30,7 +30,7 @@ use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 
-class ConstConditionalComponent extends KineticComponent implements FlowPredicate{
+class ConstConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
 	use ConditionalTrait;
 
 	/** @var bool */

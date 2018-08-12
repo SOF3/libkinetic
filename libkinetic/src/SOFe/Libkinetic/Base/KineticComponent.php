@@ -85,8 +85,11 @@ abstract class KineticComponent{
 		return $this->manager;
 	}
 
-	public final function internalInit(KineticNode $node, KineticManager $manager) : void{
+	public final function internalInitNode(KineticNode $node) : void{
 		$this->node = $node;
+	}
+
+	public final function internalInitManager(KineticManager $manager) : void{
 		$this->manager = $manager;
 	}
 

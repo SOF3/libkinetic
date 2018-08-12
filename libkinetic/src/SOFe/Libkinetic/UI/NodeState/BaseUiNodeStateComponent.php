@@ -33,7 +33,7 @@ class BaseUiNodeStateComponent extends KineticComponent{
 	protected $handlers = [];
 
 	public function getDependencies() : Generator{
-		yield ConditionalParentComponent::class;
+		yield new ConditionalParentComponent();
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{

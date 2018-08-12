@@ -22,25 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Conditional;
 
-use Generator;
-use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\API\FlowPredicate;
-use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
-use SOFe\Libkinetic\Util\Await;
 
-class ControllerConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
-	use ConditionalTrait;
+interface ConditionalNodeInterface extends FlowPredicate{
 
-	/** @var FlowPredicate */
-	protected $controller;
-
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("controller", new ControllerAttribute(FlowPredicate::class, []), $this->controller, true);
-	}
-
-	protected function testCondition(CommandSender $sender) : Generator{
-		return yield Await::FROM => $this->controller->test($sender);
-	}
 }

@@ -52,13 +52,24 @@ class JsonFileParser extends KineticFileParser{
 	}
 
 	public function traverseNode(array $node) : void{
-		$this->startElement(null, strtoupper($node["name"]), array_change_key_case($node["attrs"] ?? [], CASE_UPPER));
-		foreach($node["children"] as $child){
+		/** @var string $nodeName */
+		$nodeName = $node["<"];
+		/** @var array[] $children */
+		$children = $node["/"] ?? [];
+		/** @var string|null $nodeText */
+		$nodeText = $node[">"] ?? null;
+		$attrs = $node;
+		unset($attrs["<"]);
+		if(isset($attrs["/"])){
+			unset($attrs["/"]);
+		}
+		$this->startElement(null, strtoupper($nodeName), array_change_key_case($attrs ?? [], CASE_UPPER));
+		foreach($children as $child){
 			$this->traverseNode($child);
 		}
-		if(isset($node["text"])){
-			$this->parseText(null, $node["text"]);
+		if($nodeText !== null){
+			$this->parseText(null, $nodeText);
 		}
-		$this->endElement(null, $node["name"]);
+		$this->endElement(null, $nodeName);
 	}
 }

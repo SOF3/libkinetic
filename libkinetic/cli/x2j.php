@@ -32,21 +32,19 @@ if(!is_file($xml)){
 $json = $argv[3];
 
 $parser = xml_parser_create();
-xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 1);
+xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
 
 $stack = [];
 $last = null;
 
 xml_set_element_handler($parser, function($parser, $name, $attrs) use (&$stack){
-	$node = [
-		"name" => $name,
-	];
-	if(!empty($attrs)){
-		$node["attrs"] = $attrs;
+	$node = ["<" => $name];
+	foreach($attrs as $k => $v){
+		$node[$k] = $v;
 	}
 	if(!empty($stack)){
-		$stack[count($stack) - 1]["children"][] =& $node;
+		$stack[count($stack) - 1]["/"][] =& $node;
 	}
 	$stack[] =& $node;
 }, function() use (&$stack, &$last){
@@ -72,4 +70,4 @@ xml_set_character_data_handler($parser, function($parser, $text) use (&$stack){
 xml_parse($parser, file_get_contents($xml), true);
 xml_parser_free($parser);
 
-file_put_contents($json, json_encode($last, isset($argv[4]) && $argv[4] === "min" ? 0 : JSON_PRETTY_PRINT) . "\n");
+file_put_contents($json, json_encode($last, (isset($argv[4]) && $argv[4] === "min" ? 0 : JSON_PRETTY_PRINT) | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n");

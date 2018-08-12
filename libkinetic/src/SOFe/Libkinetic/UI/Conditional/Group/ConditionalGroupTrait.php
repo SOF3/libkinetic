@@ -24,8 +24,8 @@ namespace SOFe\Libkinetic\UI\Conditional\Group;
 
 use Generator;
 use LogicException;
-use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalTrait;
 use SOFe\Libkinetic\Util\Await;
@@ -33,11 +33,11 @@ use function assert;
 use function is_bool;
 
 trait ConditionalGroupTrait{
-	use ConditionalTrait{
+	use ConditionalTrait {
 		getDependencies as ct_gd;
 	}
 
-	protected function testCondition(CommandSender $sender) : Generator{
+	protected function testCondition(FlowContext $context) : Generator{
 		/** @var bool|null $left */
 		$left = null;
 
@@ -46,7 +46,7 @@ trait ConditionalGroupTrait{
 		/** @var ConditionalGroupComponent $group */
 		$group = $this->getNode()->getComponent(ConditionalGroupComponent::class);
 		foreach($parent->getPredicates() as $predicate){
-			$right = yield Await::FROM => $predicate->test($sender);
+			$right = yield Await::FROM => $predicate->test($context);
 			assert(is_bool($right));
 
 			if($left !== null){

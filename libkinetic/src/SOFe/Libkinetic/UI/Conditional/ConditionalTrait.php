@@ -23,8 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Conditional;
 
 use Generator;
-use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\UI\NodeState\BaseUiNodeStateComponent;
 use SOFe\Libkinetic\Util\Await;
 use function assert;
@@ -36,12 +36,12 @@ trait ConditionalTrait{
 		yield new ConditionalComponent($parent->hasComponent(BaseUiNodeStateComponent::class));
 	}
 
-	public final function test(CommandSender $sender) : Generator{
-		$bool = yield Await::FROM => $this->testCondition($sender);
+	public final function test(FlowContext $context) : Generator{
+		$bool = yield Await::FROM => $this->testCondition($context);
 		return $this->getNode()->asConditionalComponent()->applyNot($bool);
 	}
 
-	protected abstract function testCondition(CommandSender $sender) : Generator;
+	protected abstract function testCondition(FlowContext $context) : Generator;
 
 	protected abstract function getNode() : KineticNode;
 }

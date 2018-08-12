@@ -47,6 +47,7 @@ class ConditionalParentComponent extends KineticComponent{
 		$router->acceptMulti("xor", XorComponent::class, $this->predicates, $this->min, $this->max);
 
 		$router->acceptMulti("predicate", ControllerConditionalComponent::class, $this->predicates, $this->min, $this->max);
+		$router->acceptMulti("hasVar", HasVarConditionalComponent::class, $this->predicates, $this->min, $this->max);
 		$router->acceptMulti("permission", PermissionConditionalComponent::class, $this->predicates, $this->min, $this->max);
 		$router->acceptMulti("const", ConstConditionalComponent::class, $this->predicates, $this->min, $this->max);
 	}

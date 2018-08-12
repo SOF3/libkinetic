@@ -23,9 +23,9 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Conditional;
 
 use Generator;
-use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
 use SOFe\Libkinetic\Util\Await;
@@ -40,7 +40,7 @@ class ControllerConditionalComponent extends KineticComponent implements Conditi
 		$router->use("controller", new ControllerAttribute(FlowPredicate::class, []), $this->controller, true);
 	}
 
-	protected function testCondition(CommandSender $sender) : Generator{
-		return yield Await::FROM => $this->controller->test($sender);
+	protected function testCondition(FlowContext $context) : Generator{
+		return yield Await::FROM => $this->controller->test($context);
 	}
 }

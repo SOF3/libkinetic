@@ -23,9 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Conditional;
 
 use Generator;
-use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
 use SOFe\Libkinetic\Parser\Router\StringAttribute;
 use SOFe\Libkinetic\Util\GeneratorUtil;
@@ -40,7 +39,7 @@ class PermissionConditionalComponent extends KineticComponent implements Conditi
 		$router->use("name", new StringAttribute(), $this->name, true);
 	}
 
-	protected function testCondition(CommandSender $sender) : Generator{
-		return GeneratorUtil::empty($sender->hasPermission($this->name));
+	protected function testCondition(FlowContext $context) : Generator{
+		return GeneratorUtil::empty($context->getUser()->hasPermission($this->name));
 	}
 }

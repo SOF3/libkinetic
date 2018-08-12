@@ -29,7 +29,6 @@ use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
 use SOFe\Libkinetic\Parser\Router\StringAttribute;
 use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
 use function array_keys;
-use function var_dump;
 
 class ConditionalComponent extends KineticComponent{
 	public const ACTION_MAP = [

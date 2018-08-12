@@ -26,20 +26,20 @@ use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
+use SOFe\Libkinetic\Parser\Router\StringAttribute;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 
-class ConstConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
+class HasVarConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
 	use ConditionalTrait;
 
-	/** @var bool */
-	protected $value;
+	/** @var string */
+	protected $name;
 
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("value", new BooleanAttribute(), $this->value, true);
-	}
+public function acceptAttributes(AttributeRouter $router) : void{
+$router->use("name", new StringAttribute(), $this->name, true);
+}
 
 	protected function testCondition(FlowContext $context) : Generator{
-		return GeneratorUtil::empty($this->value);
+		return GeneratorUtil::empty($context->getVariables()->getNestedVariable($this->name)->isSet());
 	}
 }

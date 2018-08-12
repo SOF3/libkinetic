@@ -23,8 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\API;
 
 use Generator;
-use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\Flow\FlowContext;
 
 interface FlowPredicate{
-	public function test(CommandSender $sender) : Generator;
+	public function test(FlowContext $context) : Generator;
 }

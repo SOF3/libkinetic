@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Group;
 
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\Util\ArrayUtil;
 

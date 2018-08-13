@@ -23,8 +23,8 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Variable;
 
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 
 class ReturnComponent extends KineticComponent{
 	/** @var string */

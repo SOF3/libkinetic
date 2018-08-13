@@ -20,16 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\KineticNode;
-use function is_numeric;
+use function mb_strtolower;
 
-class FloatAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : float{
-		if(!is_numeric($value)){
-			throw $node->throw("$value is not a number");
+class BooleanAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value) : bool{
+		$value = mb_strtolower($value);
+		if($value === "true" || $value === "1" || $value === "i" || $value === "on" || $value === "y" || $value === "yes"){
+			return true;
 		}
-		return (float) $value;
+		if($value === "false" || $value === "0" || $value === "o" || $value === "off" || $value === "n" || $value === "no"){
+			return false;
+		}
+		throw $node->throw("Not a boolean value");
 	}
 }

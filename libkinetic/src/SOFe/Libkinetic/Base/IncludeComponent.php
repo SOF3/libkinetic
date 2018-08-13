@@ -22,8 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 
 class IncludeComponent extends KineticComponent{
 	/** @var string */

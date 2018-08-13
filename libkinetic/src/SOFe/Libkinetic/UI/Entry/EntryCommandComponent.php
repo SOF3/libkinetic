@@ -27,9 +27,9 @@ use SOFe\Libkinetic\API\ArgumentAssigner;
 use SOFe\Libkinetic\API\CommandValidator;
 use SOFe\Libkinetic\Base\CommandComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
-use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 
 class EntryCommandComponent extends KineticComponent{
 	/** @var ArgumentAssigner|null */

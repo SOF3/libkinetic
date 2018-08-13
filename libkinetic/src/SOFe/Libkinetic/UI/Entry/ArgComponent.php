@@ -24,12 +24,12 @@ namespace SOFe\Libkinetic\UI\Entry;
 
 use SOFe\Libkinetic\API\StringInputAdapter;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
-use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
-use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
-use SOFe\Libkinetic\Parser\Router\UserString;
-use SOFe\Libkinetic\Parser\Router\UserStringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
+use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
+use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
+use SOFe\Libkinetic\UserString;
 
 class ArgComponent extends KineticComponent{
 	/** @var UserString */

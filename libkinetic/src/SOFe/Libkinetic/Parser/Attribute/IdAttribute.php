@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticNode;

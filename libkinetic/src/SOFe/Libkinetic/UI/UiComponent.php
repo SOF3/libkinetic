@@ -25,7 +25,7 @@ namespace SOFe\Libkinetic\UI;
 use Generator;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Entry\EntryCommandComponent;
 use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
 use SOFe\Libkinetic\UI\NodeState\OnStartComponent;

@@ -20,30 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\KineticNode;
-use function implode;
-use function mb_strtolower;
 
-class StringEnumAttribute extends NodeAttribute{
-	/** @var string[] */
-	protected $enum = [];
-	/** @var bool */
-	private $noCase;
-
-	public function __construct(array $enum, bool $noCase = false){
-		$this->noCase = $noCase;
-		foreach($enum as $string){
-			$this->enum[$noCase ? mb_strtolower($string) : $string] = $string;
-		}
-	}
-
+class StringAttribute extends NodeAttribute{
 	public function accept(KineticNode $node, string $value) : string{
-		$corrected = $this->noCase ? mb_strtolower($value) : $value;
-		if(!isset($this->enum[$corrected])){
-			throw $node->throw("$value is not one of [" . implode(", ", $this->enum) . "]");
-		}
-		return $this->enum[$corrected];
+		return $value;
 	}
 }

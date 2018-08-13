@@ -23,9 +23,9 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Base;
 
 use Generator;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
-use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Group\UiParentComponent;
 use SOFe\Libkinetic\Wizard\WizardComponent;
 

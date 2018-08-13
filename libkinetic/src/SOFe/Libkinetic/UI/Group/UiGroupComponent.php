@@ -24,7 +24,7 @@ namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\Variable\VarDeclarationComponent;
 
 class UiGroupComponent extends KineticComponent{

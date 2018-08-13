@@ -24,8 +24,8 @@ namespace SOFe\Libkinetic\Base;
 
 use Generator;
 use SOFe\Libkinetic\KineticManager;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 use function get_class;
 

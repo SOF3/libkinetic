@@ -20,20 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
-use pocketmine\command\CommandSender;
-use SOFe\Libkinetic\KineticManager;
+use SOFe\Libkinetic\Base\KineticNode;
+use function ctype_digit;
 
-class UserString{
-	/** @var string */
-	protected $id;
-
-	public function __construct(string $id){
-		$this->id = $id;
-	}
-
-	public function translate(KineticManager $manager, CommandSender $user, array $args = []) : string{
-		return $manager->translate($user, $this->id, $args);
+class IntAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value) : int{
+		if(!ctype_digit($value)){
+			throw $node->throw("$value is not an integer");
+		}
+		return (int) $value;
 	}
 }

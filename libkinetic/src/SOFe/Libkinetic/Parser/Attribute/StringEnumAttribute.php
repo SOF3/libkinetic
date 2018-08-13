@@ -20,20 +20,30 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\KineticNode;
+use function implode;
 use function mb_strtolower;
 
-class BooleanAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : bool{
-		$value = mb_strtolower($value);
-		if($value === "true" || $value === "1" || $value === "i" || $value === "on" || $value === "y" || $value === "yes"){
-			return true;
+class StringEnumAttribute extends NodeAttribute{
+	/** @var string[] */
+	protected $enum = [];
+	/** @var bool */
+	private $noCase;
+
+	public function __construct(array $enum, bool $noCase = false){
+		$this->noCase = $noCase;
+		foreach($enum as $string){
+			$this->enum[$noCase ? mb_strtolower($string) : $string] = $string;
 		}
-		if($value === "false" || $value === "0" || $value === "o" || $value === "off" || $value === "n" || $value === "no"){
-			return false;
+	}
+
+	public function accept(KineticNode $node, string $value) : string{
+		$corrected = $this->noCase ? mb_strtolower($value) : $value;
+		if(!isset($this->enum[$corrected])){
+			throw $node->throw("$value is not one of [" . implode(", ", $this->enum) . "]");
 		}
-		throw $node->throw("Not a boolean value");
+		return $this->enum[$corrected];
 	}
 }

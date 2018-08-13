@@ -23,7 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Entry;
 
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 
 class OverloadComponent extends KineticComponent{
 	/** @var ArgComponent[] */

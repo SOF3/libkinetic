@@ -24,8 +24,8 @@ namespace SOFe\Libkinetic\UI\Conditional\Group;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
 use SOFe\Libkinetic\UI\Conditional\ConditionalComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 use SOFe\Libkinetic\UI\NodeState\BaseUiNodeStateComponent;

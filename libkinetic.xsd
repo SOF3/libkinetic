@@ -398,7 +398,7 @@
     <xs:complexContent>
       <xs:extension base="UiNode">
         <xs:group ref="UiNode"/>
-        <xs:attribute name="var"/>
+        <xs:attribute name="var" type="VarName"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

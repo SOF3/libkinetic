@@ -20,15 +20,16 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\KineticNode;
+use function is_numeric;
 
-abstract class ResolvableNodeAttribute extends NodeAttribute{
-	/**
-	 * @param KineticNode $node
-	 * @param mixed       $tempValue
-	 * @return mixed
-	 */
-	public abstract function resolve(KineticNode $node, $tempValue);
+class FloatAttribute extends NodeAttribute{
+	public function accept(KineticNode $node, string $value) : float{
+		if(!is_numeric($value)){
+			throw $node->throw("$value is not a number");
+		}
+		return (float) $value;
+	}
 }

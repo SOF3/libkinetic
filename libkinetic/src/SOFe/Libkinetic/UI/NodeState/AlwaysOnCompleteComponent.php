@@ -26,8 +26,8 @@ use Generator;
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 
 class AlwaysOnCompleteComponent extends KineticComponent implements UiNodeStateHandler{

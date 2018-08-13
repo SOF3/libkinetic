@@ -20,16 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\KineticNode;
-use function ctype_digit;
+use SOFe\Libkinetic\UserString;
 
-class IntAttribute extends NodeAttribute{
-	public function accept(KineticNode $node, string $value) : int{
-		if(!ctype_digit($value)){
-			throw $node->throw("$value is not an integer");
-		}
-		return (int) $value;
+class UserStringAttribute extends ResolvableNodeAttribute{
+	public function accept(KineticNode $node, string $value) : string{
+		return $value;
+	}
+
+	public function resolve(KineticNode $node, $tempValue){
+		$node->getManager()->requireTranslation($node, $tempValue);
+		return new UserString($tempValue);
 	}
 }

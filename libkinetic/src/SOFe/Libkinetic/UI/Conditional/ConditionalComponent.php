@@ -24,10 +24,10 @@ namespace SOFe\Libkinetic\UI\Conditional;
 
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\BooleanAttribute;
-use SOFe\Libkinetic\Parser\Router\StringAttribute;
-use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use function array_keys;
 
 class ConditionalComponent extends KineticComponent{

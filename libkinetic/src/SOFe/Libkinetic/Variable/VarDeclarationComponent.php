@@ -23,10 +23,10 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Variable;
 
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
-use SOFe\Libkinetic\Parser\Router\StringAttribute;
-use SOFe\Libkinetic\Parser\Router\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use function array_merge;
 use function count;
 use function in_array;

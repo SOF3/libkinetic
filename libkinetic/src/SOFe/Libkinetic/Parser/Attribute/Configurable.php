@@ -20,12 +20,23 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Parser\Router;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\KineticNode;
 
-class StringAttribute extends NodeAttribute{
+class Configurable extends ResolvableNodeAttribute{
+	/** @var NodeAttribute */
+	protected $base;
+
+	public function __construct(NodeAttribute $base){
+		$this->base = $base;
+	}
+
 	public function accept(KineticNode $node, string $value) : string{
 		return $value;
+	}
+
+	public function resolve(KineticNode $node, $tempValue){
+		return $this->base->accept($node, (string) $node->getManager()->getAdapter()->getKineticConfig($tempValue));
 	}
 }

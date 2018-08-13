@@ -26,7 +26,7 @@ use Generator;
 use const PHP_INT_MAX;
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 
 class BaseUiNodeStateComponent extends KineticComponent{

@@ -25,8 +25,8 @@ namespace SOFe\Libkinetic\UI\Conditional;
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Util\GeneratorUtil;
 
 class PermissionConditionalComponent extends KineticComponent implements ConditionalNodeInterface{

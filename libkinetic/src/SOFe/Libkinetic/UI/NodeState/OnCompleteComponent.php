@@ -24,7 +24,7 @@ namespace SOFe\Libkinetic\UI\NodeState;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Router\ChildNodeRouter;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 
 class OnCompleteComponent extends KineticComponent{
 	public function getDependencies() : Generator{

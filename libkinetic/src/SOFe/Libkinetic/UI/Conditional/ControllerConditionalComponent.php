@@ -26,8 +26,8 @@ use Generator;
 use SOFe\Libkinetic\API\FlowPredicate;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Parser\Router\AttributeRouter;
-use SOFe\Libkinetic\Parser\Router\ControllerAttribute;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
 use SOFe\Libkinetic\Util\Await;
 
 class ControllerConditionalComponent extends KineticComponent implements ConditionalNodeInterface{

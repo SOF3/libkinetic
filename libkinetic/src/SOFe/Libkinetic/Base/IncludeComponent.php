@@ -22,12 +22,25 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
+use function basename;
+use RuntimeException;
+use SOFe\Libkinetic\KineticManager;
+use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use function fopen;
+use function mb_strtolower;
+use function parse_url;
+use const PHP_URL_SCHEME;
+use SOFe\Libkinetic\Parser\JsonFileParser;
+use SOFe\Libkinetic\Parser\KineticFileParser;
+use SOFe\Libkinetic\Parser\XmlFileParser;
 
 class IncludeComponent extends KineticComponent{
 	/** @var string */
 	protected $path;
+	/** @var RootComponent */
+	protected $child;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("path", new StringAttribute(), $this->path, true);
@@ -35,5 +48,38 @@ class IncludeComponent extends KineticComponent{
 
 	public function getPath() : string{
 		return $this->path;
+	}
+
+	public function load(KineticManager $manager) : array{
+		$resource = $this->openPath($manager, $baseName);
+		/** @var KineticFileParser $parser */
+		$parser = libkinetic::isShaded() ? new JsonFileParser($resource, $baseName) : new XmlFileParser($resource, $baseName);
+		$parser->parse();
+		$this->child = $parser->getRoot()->asRootComponent();
+
+		$allNodes = $parser->getAllNodes();
+		$this->child->loadIncludes($manager, $allNodes);
+		return $allNodes;
+	}
+
+	/**
+	 * @param KineticManager $manager
+	 * @param                $baseName
+	 * @return resource
+	 */
+	public function openPath(KineticManager $manager, &$baseName){
+		$ext = libkinetic::isShaded() ? ".json" : ".xml";
+		$baseName = basename($this->path) . $ext;
+		switch($protocol = mb_strtolower(parse_url($this->path, PHP_URL_SCHEME) ?? "")){
+			case "":
+				return $manager->getPlugin()->getResource($this->path);
+			case "http":
+			case "https":
+			case "ftp":
+			case "file":
+				return fopen($this->path, "rb");
+			default:
+				throw new RuntimeException("Cannot resolve unknown URL scheme $protocol");
+		}
 	}
 }

@@ -43,7 +43,7 @@ final class KineticNode{
 	protected $manager;
 
 	/** @var string */
-	protected $ns;
+	protected $xmlns;
 	/** @var string */
 	protected $name;
 	/** @var KineticNode|null */
@@ -67,7 +67,7 @@ final class KineticNode{
 	 */
 	public function __construct(KineticFileParser $parser, string $ns, string $name, ?KineticNode $parent, array $components){
 		$this->parser = $parser;
-		$this->ns = $ns;
+		$this->xmlns = $ns;
 		$this->name = $name;
 		$this->parent = $parent;
 		foreach($components as $component){
@@ -117,8 +117,8 @@ final class KineticNode{
 		return $this->parser;
 	}
 
-	public function getNs() : string{
-		return $this->ns;
+	public function getXmlns() : string{
+		return $this->xmlns;
 	}
 
 	public function getName() : string{
@@ -130,7 +130,7 @@ final class KineticNode{
 	}
 
 	public function getHumanName() : string{
-		return ($this->ns === KineticFileParser::XMLNS_DEFAULT ? "" : "{$this->ns}:") . $this->name;
+		return ($this->xmlns === KineticFileParser::XMLNS_DEFAULT ? "" : "{$this->xmlns}:") . $this->name;
 	}
 
 	public function getHierarchyName() : string{
@@ -143,6 +143,18 @@ final class KineticNode{
 
 	public function getParent() : ?KineticNode{
 		return $this->parent;
+	}
+
+	public function getRoot() : KineticNode{
+		$root = $this;
+		while($root->getParent() !== null){
+			$root = $root->getParent();
+		}
+		return $root;
+	}
+
+	public function getRootComponent() : RootComponent{
+		return $this->getRoot()->asRootComponent();
 	}
 
 	public function getManager() : KineticManager{
@@ -165,8 +177,8 @@ final class KineticNode{
 		}
 	}
 
-	public function startChild(string $ns, string $name) : KineticNode{
-		return $this->childRouter->startChild($ns, $name);
+	public function startChild(string $xmlns, string $name) : KineticNode{
+		return $this->childRouter->startChild($xmlns, $name);
 	}
 
 	public function endElement() : void{

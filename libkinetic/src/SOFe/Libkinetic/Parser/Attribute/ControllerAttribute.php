@@ -45,6 +45,6 @@ class ControllerAttribute extends ResolvableNodeAttribute{
 	}
 
 	public function resolve(KineticNode $node, $tempValue) : ?object{
-		return $node->getManager()->resolveClass($node, $tempValue, $this->interface, $this->adapters); // TODO provide namespace
+		return $node->getManager()->resolveClass($node, $tempValue, $this->interface, $this->adapters, $node->getRootComponent()->getNamespace());
 	}
 }

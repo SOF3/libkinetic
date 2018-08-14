@@ -142,4 +142,11 @@ abstract class KineticFileParser{
 	}
 
 	public abstract function parse() : void;
+
+	/**
+	 * @return KineticNode[]
+	 */
+	public function getAllNodes() : array{
+		return $this->allNodes;
+	}
 }

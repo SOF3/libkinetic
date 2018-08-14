@@ -29,6 +29,7 @@ use pocketmine\plugin\Plugin;
 use ReflectionClass;
 use ReflectionParameter;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Base\RootComponent;
 use SOFe\Libkinetic\Form\FormsAdapter;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
@@ -55,6 +56,9 @@ class KineticManager{
 	/** @var FormsAdapter */
 	protected $formsAdapter;
 
+	/** @var RootComponent */
+	protected $root;
+
 	/**
 	 * KineticManager constructor.
 	 * @param Plugin         $plugin
@@ -76,6 +80,16 @@ class KineticManager{
 
 		$parser->parse();
 
+		$allNodes = $parser->getAllNodes();
+		$root = $parser->getRoot()->asRootComponent();
+		$root->loadIncludes($this, $allNodes);
+
+		foreach($allNodes as $node){
+			$node->resolve($this);
+		}
+		foreach($allNodes as $node){
+			$node->init();
+		}
 	}
 
 	protected function createParser(string $file) : KineticFileParser{

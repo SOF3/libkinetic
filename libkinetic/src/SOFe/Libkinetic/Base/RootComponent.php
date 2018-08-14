@@ -22,7 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
+use function array_push;
 use Generator;
+use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
@@ -51,5 +53,27 @@ class RootComponent extends KineticComponent{
 		$router->acceptMulti("include", IncludeComponent::class, $this->includes, 0);
 		$router->acceptSingle("cont", CommandComponent::class, $this->cont, true);
 		$router->acceptMulti("wizard", WizardComponent::class, $this->wizards, 0);
+	}
+
+	public function getNamespace() : string{
+		return $this->namespace;
+	}
+
+	public function getIncludes() : array{
+		return $this->includes;
+	}
+
+	public function getCont() : CommandComponent{
+		return $this->cont;
+	}
+
+	public function getWizards() : array{
+		return $this->wizards;
+	}
+
+	public function loadIncludes(KineticManager $manager, array &$allNodes) : void{
+		foreach($this->includes as $include){
+			array_push($allNodes, ...$include->load($manager));
+		}
 	}
 }

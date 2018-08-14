@@ -48,9 +48,9 @@ class HybridForms{
 		}
 
 		$user = $context->getUser();
-		$choice = yield Await::FROM => $user instanceof Player
-			? self::listPlayer($context, $user, $title, $synopsis, $displays)
-			: self::listNonPlayer($context, $user, $title, $synopsis, array_combine($mnemonics, $displays));
+		$choice = yield Await::FROM => $user instanceof Player ?
+			self::listPlayer($context, $user, $title, $synopsis, $displays) :
+			self::listNonPlayer($context, $user, $title, $synopsis, array_combine($mnemonics, $displays));
 
 		return $choice !== null ? $values[$choice] : $choice;
 	}

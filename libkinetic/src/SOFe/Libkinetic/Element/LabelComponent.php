@@ -20,28 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\Standard;
+namespace SOFe\Libkinetic\Element;
 
-use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
-use SOFe\Libkinetic\UI\UiComponent;
-use SOFe\Libkinetic\UI\UiNode;
-use SOFe\Libkinetic\UI\UiNodeTrait;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
+use SOFe\Libkinetic\UserString;
 
-class BasicFormComponent extends KineticComponent implements UiNode{
-	use UiNodeTrait;
+class LabelComponent extends KineticComponent{
+	use ElementTrait;
 
-	public function getDependencies() : Generator{
-		yield UiComponent::class;
-	}
+	/** @var UserString */
+	protected $text;
 
-	public function acceptChildren(ChildNodeRouter $router) : void{
-
-	}
-
-	protected function executeNode(FlowContext $context) : Generator{
-
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("text", new UserStringAttribute(), $this->text, true);
 	}
 }

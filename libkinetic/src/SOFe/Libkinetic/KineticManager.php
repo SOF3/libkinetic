@@ -63,7 +63,6 @@ class KineticManager{
 	 * KineticManager constructor.
 	 * @param Plugin         $plugin
 	 * @param KineticAdapter $adapter
-	 * @param string         $xml
 	 * @param string         $file
 	 */
 	public function __construct(Plugin $plugin, KineticAdapter $adapter, string $file = "kinetic"){

@@ -1,5 +1,4 @@
-<?php /** @noinspection PhpIncompatibleReturnTypeInspection */
-/** @noinspection PhpUnusedAliasInspection */
+<?php /** @noinspection PhpIncompatibleReturnTypeInspection */ /** @noinspection PhpUnusedAliasInspection */
 
 /*
  * libkinetic
@@ -26,6 +25,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
+use SOFe\Libkinetic\Base\AliasComponent;
+use SOFe\Libkinetic\Base\CommandComponent;
+use SOFe\Libkinetic\Base\IdComponent;
+use SOFe\Libkinetic\Base\IncludeComponent;
+use SOFe\Libkinetic\Base\RootComponent;
 use SOFe\Libkinetic\UI\Advanced\DynFormComponent;
 use SOFe\Libkinetic\UI\Advanced\RecurFormComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalComponent;
@@ -45,8 +49,8 @@ use SOFe\Libkinetic\UI\Control\ExitComponent;
 use SOFe\Libkinetic\UI\Entry\ArgComponent;
 use SOFe\Libkinetic\UI\Entry\EntryCommandComponent;
 use SOFe\Libkinetic\UI\Entry\OverloadComponent;
-use SOFe\Libkinetic\UI\Group\IndexComponent;
 use SOFe\Libkinetic\UI\Group\MuxComponent;
+use SOFe\Libkinetic\UI\Group\MuxOptionComponent;
 use SOFe\Libkinetic\UI\Group\SeriesComponent;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\Group\UiParentComponent;
@@ -156,10 +160,6 @@ trait ComponentAdapter{
 		return $this->getComponent(IncludeComponent::class);
 	}
 
-	public final function asIndexComponent() : IndexComponent{
-		return $this->getComponent(IndexComponent::class);
-	}
-
 	public final function asInfoFormComponent() : InfoFormComponent{
 		return $this->getComponent(InfoFormComponent::class);
 	}
@@ -170,6 +170,10 @@ trait ComponentAdapter{
 
 	public final function asMuxComponent() : MuxComponent{
 		return $this->getComponent(MuxComponent::class);
+	}
+
+	public final function asMuxOptionComponent() : MuxOptionComponent{
+		return $this->getComponent(MuxOptionComponent::class);
 	}
 
 	public final function asOnCompleteComponent() : OnCompleteComponent{
@@ -234,9 +238,5 @@ trait ComponentAdapter{
 
 	public final function asXorComponent() : XorComponent{
 		return $this->getComponent(XorComponent::class);
-	}
-
-	public final function asConditionalNodeInterface() : ConditionalNodeInterface{
-		return $this->findComponentsByInterface(ConditionalNodeInterface::class, 1)[0];
 	}
 }

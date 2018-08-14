@@ -87,6 +87,16 @@ class ChildNodeRouter{
 			return [$comp];
 		}, $nodes, $min, $max, $ns);
 	}
+	public function acceptMultiArgs(string $name, string $componentClass, array $constructorArgs, array &$components, int $min, int $max = PHP_INT_MAX, ?array &$nodes = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
+		if($nodes === null){
+			$nodes = [];
+		}
+		return $this->acceptMultiFunc($name, function() use ($constructorArgs, $componentClass, &$components) : array{
+			$comp = new $componentClass($constructorArgs);
+			$components[] = $comp;
+			return [$comp];
+		}, $nodes, $min, $max, $ns);
+	}
 
 	public function acceptMulti2(string $name, string $componentClass, array &$components0, array &$components1, int $min, int $max = PHP_INT_MAX, ?array &$nodes = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
 		if($nodes === null){

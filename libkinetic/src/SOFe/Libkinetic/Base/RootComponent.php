@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
-use function array_push;
 use Generator;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
@@ -30,6 +29,7 @@ use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Group\UiParentComponent;
 use SOFe\Libkinetic\Wizard\WizardComponent;
+use function array_push;
 
 class RootComponent extends KineticComponent{
 	/** @var string */

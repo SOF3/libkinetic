@@ -22,19 +22,19 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
-use function basename;
 use RuntimeException;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use SOFe\Libkinetic\Parser\JsonFileParser;
+use SOFe\Libkinetic\Parser\KineticFileParser;
+use SOFe\Libkinetic\Parser\XmlFileParser;
+use function basename;
 use function fopen;
 use function mb_strtolower;
 use function parse_url;
 use const PHP_URL_SCHEME;
-use SOFe\Libkinetic\Parser\JsonFileParser;
-use SOFe\Libkinetic\Parser\KineticFileParser;
-use SOFe\Libkinetic\Parser\XmlFileParser;
 
 class IncludeComponent extends KineticComponent{
 	/** @var string */

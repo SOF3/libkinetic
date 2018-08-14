@@ -106,10 +106,10 @@ foreach($componentList as $item){
 }
 foreach($interfaceList as $item){
 	$baseNameInterface = array_slice(explode("\\", $item), -1)[0];
-	$output .= "\n";
-	$output .= "\tpublic final function as{$baseNameInterface}() : {$baseNameInterface}{\n";
-	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, 1)[0];\n";
-	$output .= "\t}\n";
+//	$output .= "\n";
+//	$output .= "\tpublic final function as{$baseNameInterface}() : {$baseNameInterface}{\n";
+//	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, 1)[0];\n";
+//	$output .= "\t}\n";
 }
 $output .= "}\n";
 file_put_contents($target, $output);

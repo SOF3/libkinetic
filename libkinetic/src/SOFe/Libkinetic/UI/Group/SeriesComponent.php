@@ -40,6 +40,6 @@ class SeriesComponent extends KineticComponent implements UiGroup{
 
 	protected function executeNode(FlowContext $context) : Generator{
 		$child = new GroupFlowContext($this, $context);
-		yield Await::FROM => $child->execute();
+		return yield Await::FROM => $child->execute();
 	}
 }

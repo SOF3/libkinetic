@@ -92,7 +92,7 @@ class ChildNodeRouter{
 		if($nodes === null){
 			$nodes = [];
 		}
-		return $this->acceptMultiFunc($name, function() use($componentClass, &$components0, &$components1) : array{
+		return $this->acceptMultiFunc($name, function() use ($componentClass, &$components0, &$components1) : array{
 			$comp = new $componentClass;
 			$components0[] = $comp;
 			$components1[] = $comp;

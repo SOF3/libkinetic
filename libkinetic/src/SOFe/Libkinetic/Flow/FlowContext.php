@@ -23,8 +23,10 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Flow;
 
 use pocketmine\command\CommandSender;
+use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
+use SOFe\Libkinetic\UserString;
 
 abstract class FlowContext{
 	/** @var UiNode */
@@ -54,7 +56,27 @@ abstract class FlowContext{
 		return $this->variableScope;
 	}
 
-	public function send(string $message) : void{
-		$this->component->getManager()->translate($this->getUser(), $message, $this->variableScope->asArray());
+	public function send(string $message, array $extraArgs = []) : void{
+		$this->user->sendMessage($this->translate($message, $extraArgs));
+	}
+
+	public function sendUserString(UserString $message, array $extraArgs = []) : void{
+		$this->user->sendMessage($this->translateUserString($message, $extraArgs));
+	}
+
+	public function translate(string $message, array $extraArgs = []) : string{
+		return $this->component->getManager()->translate($this->getUser(), $message, $this->getVarsAsArgs($extraArgs));
+	}
+
+	public function translateUserString(UserString $message, array $extraArgs = []) : string{
+		return $message->translate($this->getManager(), $this->getUser(), $this->getVarsAsArgs($extraArgs));
+	}
+
+	public function getManager() : KineticManager{
+		return $this->component->getManager();
+	}
+
+	public function getVarsAsArgs(array $extraArgs = []) : array{
+		return $extraArgs + $this->variableScope->asArray();
 	}
 }

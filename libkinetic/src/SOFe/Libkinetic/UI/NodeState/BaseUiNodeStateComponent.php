@@ -23,11 +23,11 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\NodeState;
 
 use Generator;
-use const PHP_INT_MAX;
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
+use const PHP_INT_MAX;
 
 class BaseUiNodeStateComponent extends KineticComponent{
 	/** @var UiNodeStateHandler[] */

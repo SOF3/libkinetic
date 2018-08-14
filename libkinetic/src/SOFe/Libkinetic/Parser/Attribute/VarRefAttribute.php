@@ -20,36 +20,22 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Variable;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
-use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
-use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
-use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
+use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
+use function explode;
 
-class ReturnComponent extends KineticComponent{
-	/** @var string */
-	protected $name;
-	/** @var string */
-	protected $as = null;
-
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("name", new StringAttribute(), $this->name, true);
-		$router->use("as", new VarRefAttribute(), $this->as, true);
+class VarRefAttribute extends ResolvableNodeAttribute{
+	public function accept(KineticNode $node, string $value) : string{
+		return $value;
 	}
 
-	public function endElement() : void{
-		if($this->as === null){
-			$this->as = $this->name;
-		}
-	}
-
-	public function resolve() : void{
-		$parts = explode(".", $this->as);
+	public function resolve(KineticNode $leaf, $tempValue) : string{
+		$parts = explode(".", $tempValue);
 
 		$ok = false;
-		for($node = $this->node; !$node->isRoot(); $node = $node->getParent()){
+		for($node = $leaf; !$node->isRoot(); $node = $node->getParent()){
 			if($node->hasComponent(UiGroupComponent::class)){
 				$vars = $node->asUiGroupComponent()->getVars();
 				foreach($vars as $var){
@@ -62,15 +48,9 @@ class ReturnComponent extends KineticComponent{
 		}
 
 		if(!$ok){
-			$this->node->throw("Unresolved variable {$this->as}");
+			$leaf->throw("Unresolved variable $tempValue");
 		}
-	}
 
-	public function getName() : string{
-		return $this->name;
-	}
-
-	public function getAs() : string{
-		return $this->as;
+		return $tempValue;
 	}
 }

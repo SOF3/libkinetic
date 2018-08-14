@@ -91,4 +91,21 @@ class VarDeclarationComponent extends KineticComponent{
 	public function getFields() : array{
 		return $this->fields;
 	}
+
+	public function declaresChild(array $parts) : bool{
+		if($parts[0] !== $this->name){
+			return false;
+		}
+
+		$dcl = $this;
+		for($i = 1, $iMax = count($parts); $i < $iMax; ++$i){
+			if(isset($dcl->fields[$parts[$i]])){
+				$dcl = $dcl->fields[$parts[$i]];
+			}else{
+				return false;
+			}
+		}
+
+		return true;
+	}
 }

@@ -24,17 +24,50 @@ namespace SOFe\Libkinetic\UI\Group;
 
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
+use SOFe\Libkinetic\UI\Advanced\DynFormComponent;
+use SOFe\Libkinetic\UI\Advanced\RecurFormComponent;
+use SOFe\Libkinetic\UI\Control\BufferComponent;
+use SOFe\Libkinetic\UI\Control\CallComponent;
+use SOFe\Libkinetic\UI\Control\ExitComponent;
+use SOFe\Libkinetic\UI\Standard\BasicFormComponent;
+use SOFe\Libkinetic\UI\Standard\InfoFormComponent;
+use SOFe\Libkinetic\UI\Standard\ListFormComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\Util\ArrayUtil;
+use const PHP_INT_MAX;
 
 class UiParentComponent extends KineticComponent{
 	/** @var UiNode[] */
 	protected $children = [];
+	/** @var int */
+	protected $min;
+	/** @var int */
+	protected $max;
+
+	public function __construct(int $min = 0, int $max = PHP_INT_MAX){
+		$this->min = $min;
+		$this->max = $max;
+	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("series", SeriesComponent::class, $this->children, 0);
-		$router->acceptMulti("mux", MuxComponent::class, $this->children, 0);
-		$router->acceptMulti("index", IndexComponent::class, $this->children, 0);
+		$components = [
+			"exit" => ExitComponent::class,
+			"buffer" => BufferComponent::class,
+			"noOp" => BufferComponent::class,
+			"call" => CallComponent::class,
+			"series" => SeriesComponent::class,
+			"mux" => MuxComponent::class,
+			"index" => MuxComponent::class,
+			"form" => BasicFormComponent::class,
+			"list" => ListFormComponent::class,
+			"info" => InfoFormComponent::class,
+			"recurForm" => RecurFormComponent::class,
+			"dynForm" => DynFormComponent::class,
+		];
+
+		foreach($components as $name => $class){
+			$router->acceptMulti($name, $class, $this->children, $this->min, $this->max);
+		}
 	}
 
 	public function endElement() : void{
@@ -45,7 +78,7 @@ class UiParentComponent extends KineticComponent{
 	}
 
 	/**
-	 * @return UiGroup[]
+	 * @return UiNode[]
 	 */
 	public function getChildren() : array{
 		return $this->children;

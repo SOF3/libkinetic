@@ -29,26 +29,22 @@ use pocketmine\utils\TextFormat;
  */
 final class libkinetic{
 	public const MESSAGE_CONT_NIL = "libkinetic.cont.nil";
-	public const MESSAGE_CONT_USAGE_HEADER = "libkinetic.cont.usage.header";
-	public const MESSAGE_ENUM_ADD_ITEM = "libkinetic.enum-args.add-item";
-	public const MESSAGE_GENERIC_USAGE = "libkinetic.generic-usage";
-	public const MESSAGE_RUN_IN_GAME_FOR_INDEX = "libkinetic.index.run-in-game";
+	public const MESSAGE_LIST_TITLE_CLI = "libkinetic.list.title.cli";
+	public const MESSAGE_LIST_SYNOPSIS_CLI = "libkinetic.list.synopsis.cli";
+	public const MESSAGE_LIST_OPTION_CLI = "libkinetic.list.option.cli";
 
 	public const MESSAGES = [
 		self::MESSAGE_CONT_NIL => [
 			"en_US" => TextFormat::RED . 'You don\'t have anything to continue.',
 		],
-		self::MESSAGE_CONT_USAGE_HEADER => [
-			"en_US" => TextFormat::RED . 'Usage:',
+		self::MESSAGE_LIST_TITLE_CLI => [
+			"en_US" => TextFormat::BOLD . '${title}',
 		],
-		self::MESSAGE_ENUM_ADD_ITEM => [
-			"en_US" => 'Add Item',
+		self::MESSAGE_LIST_SYNOPSIS_CLI => [
+			"en_US" => '${synopsis}',
 		],
-		self::MESSAGE_GENERIC_USAGE => [
-			"en_US" => '/${cmd}',
-		],
-		self::MESSAGE_RUN_IN_GAME_FOR_INDEX => [
-			"en_US" => TextFormat::AQUA . 'Run this command in-game to use more features',
+		self::MESSAGE_LIST_OPTION_CLI => [
+			"en_US" => TextFormat::LIGHT_PURPLE . '${mnemonic}' . TextFormat::GRAY . ' => ' . TextFormat::WHITE . '${display}',
 		],
 	];
 

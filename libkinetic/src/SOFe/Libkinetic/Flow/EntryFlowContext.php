@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Flow;
 
-use function assert;
 use Generator;
 use pocketmine\command\CommandSender;
 use RuntimeException;
@@ -30,6 +29,7 @@ use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeOutcome;
 use SOFe\Libkinetic\Util\Await;
+use function assert;
 
 class EntryFlowContext extends FlowContext{
 	public function __construct(UiNode $interface, CommandSender $user){

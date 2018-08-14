@@ -20,26 +20,40 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\Conditional;
+namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
-use SOFe\Libkinetic\Util\GeneratorUtil;
+use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
+use SOFe\Libkinetic\UI\UiNode;
+use SOFe\Libkinetic\UserString;
 
-class HasVarConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
-	use ConditionalTrait;
+class MuxOptionComponent extends KineticComponent{
+	/** @var UserString|null */
+	protected $displayName;
+	/** @var string|null */
+	protected $commandName;
 
-	/** @var string */
-	protected $name;
-
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("name", new StringAttribute(), $this->name, true);
+	public function getDependencies() : Generator{
+		yield new UiParentComponent(1, 1);
 	}
 
-	protected function testCondition(FlowContext $context) : Generator{
-		return GeneratorUtil::empty($context->getVariables()->getNestedVariable($this->name)->isSet());
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("displayName", new UserStringAttribute(), $this->displayName, false);
+		$router->use("commandName", new StringAttribute(), $this->commandName, false);
+	}
+
+	public function getDisplayName() : ?UserString{
+		return $this->displayName;
+	}
+
+	public function getCommandName() : ?string{
+		return $this->commandName;
+	}
+
+	public function getChild() : UiNode{
+		return $this->asUiParentComponent()->getChildren()[0];
 	}
 }

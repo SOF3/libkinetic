@@ -23,11 +23,12 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Form;
 
 use Generator;
+use pocketmine\Player;
 
 interface FormsAdapter{
-	public function sendModalForm(string $title, string $text, string $trueText, string $falseText) : Generator;
+	public function sendModalForm(Player $player, string $title, string $text, string $trueText, string $falseText) : Generator;
 
-	public function sendMenuForm(string $title, string $text, array $options) : Generator;
+	public function sendMenuForm(Player $player, string $title, string $text, array $options) : Generator;
 
-	public function sendCustomForm(string $title, array $elements) : Generator;
+	public function sendCustomForm(Player $player, string $title, array $elements) : Generator;
 }

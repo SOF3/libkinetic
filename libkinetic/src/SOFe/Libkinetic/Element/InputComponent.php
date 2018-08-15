@@ -24,16 +24,23 @@ namespace SOFe\Libkinetic\Element;
 
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
 
-class LabelComponent extends KineticComponent implements ElementInterface{
+class InputComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
 
 	/** @var UserString */
 	protected $text;
+	/** @var UserString|null */
+	protected $placeholder = null;
+	/** @var string */
+	protected $default = "";
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
+		$router->use("placeholder", new UserStringAttribute(), $this->placeholder, false);
+		$router->use("default", new StringAttribute(), $this->default, false);
 	}
 }

@@ -24,16 +24,20 @@ namespace SOFe\Libkinetic\Element;
 
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
 
-class LabelComponent extends KineticComponent implements ElementInterface{
+class ToggleComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
 
 	/** @var UserString */
 	protected $text;
+	/** @var bool */
+	protected $default = false;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
+		$router->use("default", new BooleanAttribute(), $this->default, false);
 	}
 }

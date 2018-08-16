@@ -1,4 +1,5 @@
-<?php /** @noinspection PhpIncompatibleReturnTypeInspection */ /** @noinspection PhpUnusedAliasInspection */
+<?php
+/** @noinspection PhpIncompatibleReturnTypeInspection */
 
 /*
  * libkinetic
@@ -25,15 +26,15 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Base;
 
-use SOFe\Libkinetic\Base\AliasComponent;
-use SOFe\Libkinetic\Base\CommandComponent;
-use SOFe\Libkinetic\Base\IdComponent;
-use SOFe\Libkinetic\Base\IncludeComponent;
-use SOFe\Libkinetic\Base\RootComponent;
+use SOFe\Libkinetic\Element\ElementComponent;
+use SOFe\Libkinetic\Element\ElementParentComponent;
+use SOFe\Libkinetic\Element\InputComponent;
+use SOFe\Libkinetic\Element\LabelComponent;
+use SOFe\Libkinetic\Element\SliderComponent;
+use SOFe\Libkinetic\Element\ToggleComponent;
 use SOFe\Libkinetic\UI\Advanced\DynFormComponent;
 use SOFe\Libkinetic\UI\Advanced\RecurFormComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalComponent;
-use SOFe\Libkinetic\UI\Conditional\ConditionalNodeInterface;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 use SOFe\Libkinetic\UI\Conditional\ConstConditionalComponent;
 use SOFe\Libkinetic\UI\Conditional\ControllerConditionalComponent;
@@ -49,6 +50,7 @@ use SOFe\Libkinetic\UI\Control\ExitComponent;
 use SOFe\Libkinetic\UI\Entry\ArgComponent;
 use SOFe\Libkinetic\UI\Entry\EntryCommandComponent;
 use SOFe\Libkinetic\UI\Entry\OverloadComponent;
+use SOFe\Libkinetic\UI\GenericFormComponent;
 use SOFe\Libkinetic\UI\Group\MuxComponent;
 use SOFe\Libkinetic\UI\Group\MuxOptionComponent;
 use SOFe\Libkinetic\UI\Group\SeriesComponent;
@@ -76,10 +78,6 @@ use SOFe\Libkinetic\Wizard\WizardComponent;
 trait ComponentAdapter{
 	public abstract function getComponent(string $class) : KineticComponent;
 
-	public final function asAliasComponent() : AliasComponent{
-		return $this->getComponent(AliasComponent::class);
-	}
-
 	public final function asAlwaysOnCompleteComponent() : AlwaysOnCompleteComponent{
 		return $this->getComponent(AlwaysOnCompleteComponent::class);
 	}
@@ -106,6 +104,10 @@ trait ComponentAdapter{
 
 	public final function asCallComponent() : CallComponent{
 		return $this->getComponent(CallComponent::class);
+	}
+
+	public final function asCommandAliasComponent() : CommandAliasComponent{
+		return $this->getComponent(CommandAliasComponent::class);
 	}
 
 	public final function asCommandComponent() : CommandComponent{
@@ -136,12 +138,24 @@ trait ComponentAdapter{
 		return $this->getComponent(DynFormComponent::class);
 	}
 
+	public final function asElementComponent() : ElementComponent{
+		return $this->getComponent(ElementComponent::class);
+	}
+
+	public final function asElementParentComponent() : ElementParentComponent{
+		return $this->getComponent(ElementParentComponent::class);
+	}
+
 	public final function asEntryCommandComponent() : EntryCommandComponent{
 		return $this->getComponent(EntryCommandComponent::class);
 	}
 
 	public final function asExitComponent() : ExitComponent{
 		return $this->getComponent(ExitComponent::class);
+	}
+
+	public final function asGenericFormComponent() : GenericFormComponent{
+		return $this->getComponent(GenericFormComponent::class);
 	}
 
 	public final function asGotoOnCompleteComponent() : GotoOnCompleteComponent{
@@ -162,6 +176,14 @@ trait ComponentAdapter{
 
 	public final function asInfoFormComponent() : InfoFormComponent{
 		return $this->getComponent(InfoFormComponent::class);
+	}
+
+	public final function asInputComponent() : InputComponent{
+		return $this->getComponent(InputComponent::class);
+	}
+
+	public final function asLabelComponent() : LabelComponent{
+		return $this->getComponent(LabelComponent::class);
 	}
 
 	public final function asListFormComponent() : ListFormComponent{
@@ -210,6 +232,14 @@ trait ComponentAdapter{
 
 	public final function asSeriesComponent() : SeriesComponent{
 		return $this->getComponent(SeriesComponent::class);
+	}
+
+	public final function asSliderComponent() : SliderComponent{
+		return $this->getComponent(SliderComponent::class);
+	}
+
+	public final function asToggleComponent() : ToggleComponent{
+		return $this->getComponent(ToggleComponent::class);
 	}
 
 	public final function asUiComponent() : UiComponent{

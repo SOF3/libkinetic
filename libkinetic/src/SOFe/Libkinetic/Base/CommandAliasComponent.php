@@ -20,25 +20,21 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\NodeState;
+namespace SOFe\Libkinetic\Base;
 
-use Generator;
-use SOFe\Libkinetic\API\UiNodeStateHandler;
-use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
-use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
-use SOFe\Libkinetic\Util\Await;
+use SOFe\Libkinetic\Parser\Attribute\Configurable;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 
-class UiNodeStateControllerComponent extends KineticComponent implements UiNodeStateHandler{
-	/** @var UiNodeStateHandler */
-	protected $controller;
+class CommandAliasComponent extends KineticComponent{
+	/** @var string */
+	protected $text;
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("class", new ControllerAttribute(UiNodeStateHandler::class, []), $this->controller, true);
+		$router->use("name", new Configurable(new StringAttribute()), $this->text, true);
 	}
 
-	public function onStartComplete(FlowContext $context) : Generator{
-		return $this->controller->onStartComplete($context);
+	public function getText() : string{
+		return $this->text;
 	}
 }

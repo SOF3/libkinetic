@@ -31,15 +31,7 @@ use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use function array_keys;
 
 class ConditionalComponent extends KineticComponent{
-	public const ACTION_MAP = [
-		"start" => UiNodeStateHandler::STATE_START,
-		"nil" => UiNodeStateHandler::STATE_NIL,
-		"execute" => UiNodeStateHandler::STATE_EXECUTE,
-		"complete" => UiNodeStateHandler::STATE_COMPLETE,
-		"skip" => UiNodeStateHandler::STATE_SKIP,
-		"exit" => UiNodeStateHandler::STATE_EXIT,
-		"break" => UiNodeStateHandler::STATE_BREAK,
-	];
+	public const ACTION_MAP = UiNodeStateHandler::ALL_STATES;
 
 	/** @var bool */
 	protected $root;

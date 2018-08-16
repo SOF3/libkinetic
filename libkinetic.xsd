@@ -48,6 +48,37 @@
   <xs:simpleType name="VarName">
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
+  <xs:simpleType name="ScalarVarType">
+    <xs:restriction>
+      <xs:enumeration value="bool"/>
+      <xs:enumeration value="int"/>
+      <xs:enumeration value="float"/>
+      <xs:enumeration value="string"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="VarType">
+    <xs:union>
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:enumeration value="bool"/>
+          <xs:enumeration value="int"/>
+          <xs:enumeration value="float"/>
+          <xs:enumeration value="string"/>
+          <xs:enumeration value="object"/>
+          <xs:enumeration value="list:bool"/>
+          <xs:enumeration value="list:int"/>
+          <xs:enumeration value="list:float"/>
+          <xs:enumeration value="list:string"/>
+          <xs:enumeration value="list:object"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:pattern value="(list:)*(bool|int|float|string|object)"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:union>
+  </xs:simpleType>
   <xs:simpleType name="CommandName">
     <xs:restriction base="xs:string">
       <xs:pattern value="^[^: ]+$"/>
@@ -57,6 +88,7 @@
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
 
+  <!-- element types -->
   <xs:complexType name="RootType">
     <xs:annotation>
       <xs:documentation>The root element of a kinetic file</xs:documentation>
@@ -109,6 +141,7 @@
     </xs:attribute>
   </xs:complexType>
 
+  <!-- UiNode stuff -->
   <xs:group name="UiNode">
     <xs:annotation>
       <xs:documentation>Represents a step in a UI flow</xs:documentation>
@@ -346,31 +379,7 @@
     </xs:choice>
 
     <xs:attribute name="name" type="VarName"/>
-    <xs:attribute name="type">
-      <xs:simpleType>
-        <xs:union>
-          <xs:simpleType>
-            <xs:restriction base="xs:string">
-              <xs:enumeration value="bool"/>
-              <xs:enumeration value="int"/>
-              <xs:enumeration value="float"/>
-              <xs:enumeration value="string"/>
-              <xs:enumeration value="object"/>
-              <xs:enumeration value="list:bool"/>
-              <xs:enumeration value="list:int"/>
-              <xs:enumeration value="list:float"/>
-              <xs:enumeration value="list:string"/>
-              <xs:enumeration value="list:object"/>
-            </xs:restriction>
-          </xs:simpleType>
-          <xs:simpleType>
-            <xs:restriction>
-              <xs:pattern value="(list:)*(bool|int|float|string|object)"/>
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:union>
-      </xs:simpleType>
-    </xs:attribute>
+    <xs:attribute name="type" type="VarType"/>
   </xs:complexType>
 
   <xs:complexType name="CommandArg">
@@ -465,6 +474,78 @@
   <xs:complexType name="DynFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- element implementation -->
+  <xs:complexType name="ElementNode" abstract="true">
+    <xs:attribute name="id" use="optional">
+      <xs:annotation>
+        <xs:documentation>The ID of the element inside its parent, sometimes required</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+
+  <xs:complexType name="LabelElementNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="text" type="UserString" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="InputElementNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="text" type="UserString" use="required"/>
+        <xs:attribute name="placeholder" type="UserString" use="required"/>
+        <xs:attribute name="default" type="xs:string" use="optional" default=""/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="ToggleElementNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="text" type="UserString" use="required"/>
+        <xs:attribute name="default" type="xs:boolean" use="optional" default="false"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SliderElementNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:attribute name="text" type="UserString" use="required"/>
+        <xs:attribute name="min" type="xs:decimal" use="required"/>
+        <xs:attribute name="max" type="xs:decimal" use="required"/>
+        <xs:attribute name="step" type="xs:decimal" use="optional" default="0"/>
+        <xs:attribute name="default" type="xs:decimal" use="optional"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="SelectElementNode">
+    <xs:complexContent>
+      <xs:extension base="ElementNode">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="option">
+            <xs:complexType>
+              <xs:attribute name="commandName" type="xs:string" use="required"/>
+              <xs:attribute name="displayName" type="UserString" use="required"/>
+              <xs:attribute name="value" type="UserString" use="required"/>
+              <xs:attribute name="default" type="xs:boolean" use="optional" default="false"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+        <xs:attribute name="text" type="UserString" use="required"/>
+        <xs:attribute name="mode" use="optional" default="dropdown">
+          <xs:simpleType>
+            <xs:restriction>
+              <xs:enumeration value="dropdown"/>
+              <xs:enumeration value="slider"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="provider" type="ControllerName" use="optional"/>
+        <xs:attribute name="valueType" type="ScalarVarType" use="optional" default="string"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

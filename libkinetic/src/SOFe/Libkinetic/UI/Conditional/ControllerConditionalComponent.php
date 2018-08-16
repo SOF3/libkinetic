@@ -41,6 +41,6 @@ class ControllerConditionalComponent extends KineticComponent implements Conditi
 	}
 
 	protected function testCondition(FlowContext $context) : Generator{
-		return yield Await::FROM => $this->controller->test($context);
+		return $this->controller->test($context);
 	}
 }

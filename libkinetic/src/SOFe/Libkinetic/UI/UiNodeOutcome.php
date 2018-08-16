@@ -27,6 +27,12 @@ class UiNodeOutcome{
 	public const OUTCOME_BREAK = 4213740138;
 	public const OUTCOME_EXIT = 2728159674;
 
+	public const ALL_OUTCOMES = [
+		"skip" => self::OUTCOME_SKIP,
+		"break" => self::OUTCOME_BREAK,
+		"exit" => self::OUTCOME_EXIT,
+	];
+
 	/** @var int */
 	protected $outcome;
 	/** @var string|null */

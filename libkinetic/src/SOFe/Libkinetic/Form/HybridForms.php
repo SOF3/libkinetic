@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Form;
 
 use Generator;
-use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\libkinetic;
@@ -32,7 +31,7 @@ use SOFe\Libkinetic\Util\Await;
 use function array_combine;
 
 class HybridForms{
-	public static function list(FlowContext $context, UserString $title, UserString $synopsis, array $options) : Generator{
+	public static function list(FlowContext $context, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
 		$mnemonics = [];
 		$displays = [];
 		$values = [];
@@ -49,17 +48,17 @@ class HybridForms{
 
 		$user = $context->getUser();
 		$choice = yield Await::FROM => $user instanceof Player ?
-			self::listPlayer($context, $user, $title, $synopsis, $displays) :
-			self::listNonPlayer($context, $user, $title, $synopsis, array_combine($mnemonics, $displays));
+			self::listPlayer($context, $user, $title, $synopsis, $displays, $timeout) :
+			self::listNonPlayer($context, $title, $synopsis, array_combine($mnemonics, $displays), $timeout);
 
 		return $choice !== null ? $values[$choice] : $choice;
 	}
 
-	protected static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $strings) : Generator{
+	protected static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
 		return $context->getManager()->getFormsAdapter()->sendMenuForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $strings);
 	}
 
-	protected static function listNonPlayer(FlowContext $context, CommandSender $user, UserString $title, UserString $synopsis, array $strings) : Generator{
+	protected static function listNonPlayer(FlowContext $context, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
 		$context->send(libkinetic::MESSAGE_LIST_TITLE_CLI, ["title" => $context->translateUserString($title)]);
 		$context->send(libkinetic::MESSAGE_LIST_SYNOPSIS_CLI, ["synopsis" => $context->translateUserString($synopsis)]);
 
@@ -70,6 +69,7 @@ class HybridForms{
 			]);
 		}
 
+		$context->getManager()->waitCont($context->getUser(), $timeout);
 		// TODO implement cont logic
 	}
 }

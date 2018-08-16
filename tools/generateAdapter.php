@@ -36,19 +36,20 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(".")) as $f
 			if($fqn !== "SOFe\\Libkinetic\\Base\\KineticComponent"){
 				$componentList[] = $fqn;
 			}
-		}elseif(str_endsWith($path, "Interface.php")){
-			$fqn = str_replace("/", "\\", substr($path, 2, -4));
-			$interfaceList[] = $fqn;
+//		}elseif(str_endsWith($path, "Interface.php")){
+//			$fqn = str_replace("/", "\\", substr($path, 2, -4));
+//			$interfaceList[] = $fqn;
 		}
 	}
 }
 usort($componentList, function(string $a, string $b){
 	return array_slice(explode("\\", $a), -1)[0] <=> array_slice(explode("\\", $b), -1)[0];
 });
-usort($interfaceList, function(string $a, string $b){
-	return array_slice(explode("\\", $a), -1)[0] <=> array_slice(explode("\\", $b), -1)[0];
-});
-$output = "<?php /** @noinspection PhpIncompatibleReturnTypeInspection */ /** @noinspection PhpUnusedAliasInspection */\n" .
+//usort($interfaceList, function(string $a, string $b){
+//	return array_slice(explode("\\", $a), -1)[0] <=> array_slice(explode("\\", $b), -1)[0];
+//});
+$output = "<?php\n" .
+	"/** @noinspection PhpIncompatibleReturnTypeInspection */\n" .
 	"\n" .
 	"/*\n" .
 	" * libkinetic\n" .
@@ -79,12 +80,14 @@ $uses = [];
 foreach($componentList as $item){
 	$uses[] = $item;
 }
-foreach($interfaceList as $item){
-	$uses[] = $item;
-}
+//foreach($interfaceList as $item){
+//	$uses[] = $item;
+//}
 sort($uses);
 foreach($uses as $item){
-	$output .= "use $item;\n";
+	if(strpos($item, "SOFe\\Libkinetic\\Base\\") !== 0){
+		$output .= "use $item;\n";
+	}
 }
 $output .= "\n";
 $output .= "/**\n";
@@ -104,13 +107,13 @@ foreach($componentList as $item){
 	$output .= "\t\treturn \$this->getComponent($baseNameComponent::class);\n";
 	$output .= "\t}\n";
 }
-foreach($interfaceList as $item){
-	$baseNameInterface = array_slice(explode("\\", $item), -1)[0];
+//foreach($interfaceList as $item){
+//	$baseNameInterface = array_slice(explode("\\", $item), -1)[0];
 //	$output .= "\n";
 //	$output .= "\tpublic final function as{$baseNameInterface}() : {$baseNameInterface}{\n";
 //	$output .= "\t\treturn \$this->findComponentsByInterface({$baseNameInterface}::class, 1)[0];\n";
 //	$output .= "\t}\n";
-}
+//}
 $output .= "}\n";
 file_put_contents($target, $output);
 function str_endsWith(string $string, string $suffix) : bool{

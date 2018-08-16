@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Attribute;
 
+use function is_int;
 use SOFe\Libkinetic\Base\KineticNode;
 use function implode;
 use function mb_strtolower;
@@ -34,8 +35,9 @@ class StringEnumAttribute extends NodeAttribute{
 
 	public function __construct(array $enum, bool $noCase = false){
 		$this->noCase = $noCase;
-		foreach($enum as $string){
-			$this->enum[$noCase ? mb_strtolower($string) : $string] = $string;
+		foreach($enum as $key => $value){
+			$string = is_int($key) ? $value : $key;
+			$this->enum[$noCase ? mb_strtolower($string) : $string] = $value;
 		}
 	}
 

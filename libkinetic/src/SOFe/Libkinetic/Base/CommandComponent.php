@@ -30,7 +30,7 @@ use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 class CommandComponent extends KineticComponent{
 	/** @var string */
 	protected $name;
-	/** @var AliasComponent[] */
+	/** @var CommandAliasComponent[] */
 	protected $aliases = [];
 
 	public function acceptAttributes(AttributeRouter $router) : void{
@@ -38,13 +38,16 @@ class CommandComponent extends KineticComponent{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("alias", AliasComponent::class, $this->aliases, 0);
+		$router->acceptMulti("alias", CommandAliasComponent::class, $this->aliases, 0);
 	}
 
 	public function getName() : string{
 		return $this->name;
 	}
 
+	/**
+	 * @return CommandAliasComponent[]
+	 */
 	public function getAliases() : array{
 		return $this->aliases;
 	}

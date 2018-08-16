@@ -20,21 +20,20 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Base;
+namespace SOFe\Libkinetic\Parser\Attribute;
 
-use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
-use SOFe\Libkinetic\Parser\Attribute\Configurable;
-use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Util\StringUtil;
 
-class AliasComponent extends KineticComponent{
-	/** @var string */
-	protected $text;
+class DurationAttribute extends NodeAttribute{
+	/** @var float */
+	protected $defaultUnit;
 
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("name", new Configurable(new StringAttribute()), $this->text, true);
+	public function __construct(float $defaultUnit){
+		$this->defaultUnit = $defaultUnit;
 	}
 
-	public function getText() : string{
-		return $this->text;
+	public function accept(KineticNode $node, string $value) : float{
+		return StringUtil::parseDuration($value, $this->defaultUnit);
 	}
 }

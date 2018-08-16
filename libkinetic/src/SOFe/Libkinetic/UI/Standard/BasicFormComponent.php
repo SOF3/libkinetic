@@ -24,8 +24,8 @@ namespace SOFe\Libkinetic\UI\Standard;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Element\ElementParentComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
@@ -35,10 +35,7 @@ class BasicFormComponent extends KineticComponent implements UiNode{
 
 	public function getDependencies() : Generator{
 		yield UiComponent::class;
-	}
-
-	public function acceptChildren(ChildNodeRouter $router) : void{
-
+		yield ElementParentComponent::class;
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{

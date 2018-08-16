@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
+use Generator;
 use InvalidArgumentException;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
@@ -30,6 +31,8 @@ use ReflectionClass;
 use ReflectionParameter;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Base\RootComponent;
+use SOFe\Libkinetic\Cont\ContCommand;
+use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Form\FormsAdapter;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
@@ -58,6 +61,9 @@ class KineticManager{
 
 	/** @var RootComponent */
 	protected $root;
+
+	/** @var callable a callable that returns a cont await generator */
+	protected $contAdapter;
 
 	/**
 	 * KineticManager constructor.
@@ -89,6 +95,21 @@ class KineticManager{
 		foreach($allNodes as $node){
 			$node->init();
 		}
+
+		if($root->getCont() !== null){
+			$names = [$root->getCont()->getName()];
+			foreach($root->getCont()->getAliases() as $alias){
+				$names[] = $alias->getText();
+			}
+			$this->contAdapter = ContCommand::registerOrAdapt($this, $names);
+		}else{
+			$this->contAdapter = function() : Generator{
+				if(false){
+					yield;
+				}
+				throw new FlowCancelledException();
+			};
+		}
 	}
 
 	protected function createParser(string $file) : KineticFileParser{
@@ -107,6 +128,14 @@ class KineticManager{
 
 	public function getFormsAdapter() : FormsAdapter{
 		return $this->formsAdapter;
+	}
+
+	public function getContAdapter() : callable{
+		return $this->contAdapter;
+	}
+
+	public function waitCont(CommandSender $sender, float $timeout) : Generator{
+		return ($this->contAdapter)($sender, $timeout);
 	}
 
 	public function translate(?CommandSender $context, ?string $identifier, array $args = []) : string{

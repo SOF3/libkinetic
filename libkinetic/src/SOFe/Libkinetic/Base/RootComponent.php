@@ -36,7 +36,7 @@ class RootComponent extends KineticComponent{
 	protected $namespace;
 	/** @var IncludeComponent[] */
 	protected $includes = [];
-	/** @var CommandComponent */
+	/** @var CommandComponent|null */
 	protected $cont = null;
 	/** @var WizardComponent[] */
 	protected $wizards = [];
@@ -59,6 +59,9 @@ class RootComponent extends KineticComponent{
 		return $this->namespace;
 	}
 
+	/**
+	 * @return IncludeComponent[]
+	 */
 	public function getIncludes() : array{
 		return $this->includes;
 	}
@@ -67,6 +70,9 @@ class RootComponent extends KineticComponent{
 		return $this->cont;
 	}
 
+	/**
+	 * @return WizardComponent[]
+	 */
 	public function getWizards() : array{
 		return $this->wizards;
 	}

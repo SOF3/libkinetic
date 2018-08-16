@@ -20,21 +20,12 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI;
+namespace SOFe\Libkinetic\Flow;
 
-class ReturningUiNodeOutcome extends UiNodeOutcome{
-	/** @var mixed[] */
-	protected $returns;
+use Exception;
 
-	public function __construct(array $returns, int $outcome = UiNodeOutcome::OUTCOME_SKIP, string $target = null){
-		parent::__construct($outcome, $target);
-		$this->returns = $returns;
-	}
-
-	/**
-	 * @return mixed[]
-	 */
-	public function getReturns() : array{
-		return $this->returns;
+class FlowCancelledException extends Exception{
+	public function __construct(){
+		parent::__construct("FlowCancelledException should be caught");
 	}
 }

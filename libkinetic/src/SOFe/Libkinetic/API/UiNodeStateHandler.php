@@ -36,13 +36,13 @@ interface UiNodeStateHandler{
 	public const STATE_EXIT = UiNodeOutcome::OUTCOME_EXIT;
 
 	public const ALL_STATES = [
-		self::STATE_START,
-		self::STATE_NIL,
-		self::STATE_EXECUTE,
-		self::STATE_COMPLETE,
-		self::STATE_SKIP,
-		self::STATE_BREAK,
-		self::STATE_EXIT,
+		"start" => self::STATE_START,
+		"nil" => self::STATE_NIL,
+		"execute" => self::STATE_EXECUTE,
+		"complete" => self::STATE_COMPLETE,
+		"skip" => self::STATE_SKIP,
+		"break" => self::STATE_BREAK,
+		"exit" => self::STATE_EXIT,
 	];
 
 	/**

@@ -22,11 +22,17 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Util;
 
+use InvalidArgumentException;
+
 final class ArrayUtil{
 	public static function indexByProperty(array $array, callable $toIndex) : array{
 		$output = [];
 		foreach($array as $value){
-			$output[$toIndex($value)] = $value;
+			$index = $toIndex($value);
+			if(isset($output[$index])){
+				throw new InvalidArgumentException("Duplicate index $index");
+			}
+			$output[$index] = $value;
 		}
 		return $output;
 	}

@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-use const PHP_INT_MAX;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
+use const PHP_INT_MAX;
 
 class ElementParentComponent extends KineticComponent{
 	/** @var bool */
@@ -48,9 +48,10 @@ class ElementParentComponent extends KineticComponent{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMultiArgs("label", LabelComponent::class, [$this->requiresId],$this->elements, $this->min, $this->max);
-		$router->acceptMultiArgs("label", LabelComponent::class, [$this->requiresId],$this->elements, $this->min, $this->max);
-		$router->acceptMultiArgs("label", LabelComponent::class, [$this->requiresId],$this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("label", LabelComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("input", InputComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("toggle", ToggleComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("slider", SliderComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
 	}
 
 	/**

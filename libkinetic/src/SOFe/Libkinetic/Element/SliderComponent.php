@@ -53,7 +53,7 @@ class SliderComponent extends KineticComponent implements ElementInterface{
 		if($this->step < 0){
 			$this->node->throw("step should be non-negative");
 		}
-		if($this->step > ($this->max - $this->min)){
+		if($this->step > $this->max - $this->min){
 			$this->node->throw("A step greater than the slider interval does not make sense");
 		}
 		if($this->min > $this->max){

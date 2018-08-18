@@ -39,6 +39,7 @@ class AlwaysOnCompleteComponent extends KineticComponent implements UiNodeStateH
 	}
 
 	public function onStartComplete(FlowContext $context) : Generator{
-		return GeneratorUtil::empty($this->action);
+		false && yield;
+		return $this->action;
 	}
 }

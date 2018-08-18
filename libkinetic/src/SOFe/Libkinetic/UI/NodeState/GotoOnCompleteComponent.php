@@ -39,6 +39,7 @@ class GotoOnCompleteComponent extends KineticComponent implements UiNodeStateHan
 	}
 
 	public function onStartComplete(FlowContext $context) : Generator{
-		return GeneratorUtil::empty([self::STATE_SKIP, $this->target]);
+		false && yield;
+		return [self::STATE_SKIP, $this->target];
 	}
 }

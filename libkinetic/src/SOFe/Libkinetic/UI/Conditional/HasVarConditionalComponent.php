@@ -40,6 +40,7 @@ class HasVarConditionalComponent extends KineticComponent implements Conditional
 	}
 
 	protected function testCondition(FlowContext $context) : Generator{
-		return GeneratorUtil::empty($context->getVariables()->getNestedVariable($this->name)->isSet());
+		false && yield;
+		return $context->getVariables()->getNestedVariable($this->name)->isSet();
 	}
 }

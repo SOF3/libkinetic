@@ -25,7 +25,7 @@ namespace SOFe\Libkinetic\Cont;
 use pocketmine\command\Command;
 use pocketmine\command\PluginIdentifiableCommand;
 use SOFe\Libkinetic\KineticManager;
-use SOFe\Libkinetic\libkinetic;
+use SOFe\Libkinetic\LibkineticMessages;
 use function array_slice;
 use function assert;
 use function count;
@@ -47,8 +47,8 @@ class ContCommand extends Command implements PluginIdentifiableCommand{
 			assert($shortest !== null);
 			$command = new ContCommand(
 				$missing[0],
-				$manager->translate(null, libkinetic::MESSAGE_CONT_DESC),
-				$manager->translate(null, libkinetic::MESSAGE_CONT_USAGE, ["alias" => $shortest]),
+				$manager->translate(null, LibkineticMessages::MESSAGE_CONT_DESC),
+				$manager->translate(null, LibkineticMessages::MESSAGE_CONT_USAGE, ["alias" => $shortest]),
 				array_slice($missing, 1)
 			);
 			$manager->getPlugin()->getServer()->getCommandMap()->register("libkinetic", $command);

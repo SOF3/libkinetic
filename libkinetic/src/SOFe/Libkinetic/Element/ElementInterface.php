@@ -22,6 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-interface ElementInterface{
+use Generator;
+use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowContext;
 
+interface ElementInterface{
+	public function requestCli(FlowContext $context, float $expiry) : Generator;
+
+	public function getNode() : KineticNode;
 }

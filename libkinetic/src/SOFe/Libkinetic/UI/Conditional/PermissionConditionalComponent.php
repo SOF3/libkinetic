@@ -40,6 +40,7 @@ class PermissionConditionalComponent extends KineticComponent implements Conditi
 	}
 
 	protected function testCondition(FlowContext $context) : Generator{
-		return GeneratorUtil::empty($context->getUser()->hasPermission($this->name));
+		false && yield;
+		return $context->getUser()->hasPermission($this->name);
 	}
 }

@@ -39,6 +39,7 @@ class BufferComponent extends KineticComponent implements UiNode{
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{
-		return GeneratorUtil::empty(new UiNodeOutcome);
+		false && yield;
+		return new UiNodeOutcome;
 	}
 }

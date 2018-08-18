@@ -29,12 +29,14 @@ use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\GenericFormComponent;
+use SOFe\Libkinetic\UI\GenericFormTrait;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
 
 class MuxComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
+	use GenericFormTrait;
 
 	/** @var string|null */
 	protected $var = null;
@@ -54,7 +56,7 @@ class MuxComponent extends KineticComponent implements UiNode{
 		$router->acceptMulti("option", MuxOptionComponent::class, $this->options, 2);
 	}
 
-	protected function executeNode(FlowContext $context) : Generator{
+	protected function executeFormNode(FlowContext $context) : Generator{
 		$choice = yield $this->whichOption($context);
 		return yield $this->options[$choice]->asUiParentComponent()->getChildren()[0]->execute($context);
 	}

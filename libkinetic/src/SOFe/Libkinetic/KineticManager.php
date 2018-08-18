@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic;
 
 use Generator;
 use InvalidArgumentException;
+use function is_array;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
@@ -62,6 +63,8 @@ class KineticManager{
 	/** @var RootComponent */
 	protected $root;
 
+	/** @var string */
+	protected $contName;
 	/** @var callable a callable that returns a cont await generator */
 	protected $contAdapter;
 
@@ -102,8 +105,10 @@ class KineticManager{
 			foreach($root->getCont()->getAliases() as $alias){
 				$names[] = $alias->getText();
 			}
+			$this->contName = "";
 			$this->contAdapter = ContCommand::registerOrAdapt($this, $names);
 		}else{
+			$this->contName = "(this feature is not available)";
 			$this->contAdapter = function() : Generator{
 				if(false){
 					yield;
@@ -131,6 +136,10 @@ class KineticManager{
 		return $this->formsAdapter;
 	}
 
+	public function getContName() : string{
+		return $this->contName;
+	}
+
 	public function getContAdapter() : callable{
 		return $this->contAdapter;
 	}
@@ -148,10 +157,10 @@ class KineticManager{
 			return $this->adapter->getMessage($context, $identifier, $args);
 		}catch(InvalidArgumentException $ex){
 			$locale = $context instanceof Player ? $context->getLocale() : "en_US";
-			if(isset(libkinetic::MESSAGES[$identifier][$locale])){
-				$message = libkinetic::MESSAGES[$identifier][$locale];
+			if(isset(LibkineticMessages::MESSAGES[$identifier][$locale])){
+				$message = LibkineticMessages::MESSAGES[$identifier][$locale];
 				foreach($args as $k => $v){
-					$message = str_replace("\${{$k}}", $v, $message);
+					$message = str_replace("\${{$k}}", is_array($v) ? implode(", ", $v) : (string) $v, $message);
 				}
 				return $message;
 			}

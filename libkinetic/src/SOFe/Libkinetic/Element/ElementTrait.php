@@ -24,12 +24,14 @@ namespace SOFe\Libkinetic\Element;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowContext;
+use function microtime;
 
 trait ElementTrait{
 	/** @var bool */
 	protected $requiresId;
 
-	protected abstract function getNode() : KineticNode;
+	public abstract function getNode() : KineticNode;
 
 	public function __construct(bool $requiresId){
 		$this->requiresId = $requiresId;
@@ -38,4 +40,17 @@ trait ElementTrait{
 	public function getDependencies() : Generator{
 		yield new ElementComponent($this->requiresId);
 	}
+
+	public function requestCli(FlowContext $context, float $expiry) : Generator{
+		while(true){
+			$value = yield $this->requestCliImpl($context, microtime(true) - $expiry);
+			if($this->parse($context, $value)){
+				return $value;
+			}
+		}
+	}
+
+	protected abstract function requestCliImpl(FlowContext $context, float $timeout) : Generator;
+
+	protected abstract function parse(FlowContext $context, &$value) : Generator;
 }

@@ -22,13 +22,22 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\FloatAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
+use function ceil;
+use function floor;
+use function fmod;
+use function is_numeric;
 
 class SliderComponent extends KineticComponent implements ElementInterface{
+	use ElementTrait;
+
 	/** @var UserString */
 	protected $text;
 	/** @var float */
@@ -36,7 +45,7 @@ class SliderComponent extends KineticComponent implements ElementInterface{
 	/** @var float */
 	protected $max;
 	/** @var float */
-	protected $step = 0;
+	protected $step = 0.0;
 
 	/** @var float */
 	protected $default = null;
@@ -64,5 +73,50 @@ class SliderComponent extends KineticComponent implements ElementInterface{
 		}elseif(!($this->min <= $this->default && $this->default <= $this->min)){
 			$this->node->throw("default should not be less than min or greater than max");
 		}
+	}
+
+	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_GENERIC, ["cont" => $context->getManager()->getContName()]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER, [
+			"min" => $this->min,
+			"max" => $this->max,
+			"step" => $this->step,
+			"default" => $this->default ?? "N/A",
+		]);
+		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
+	}
+
+	protected function parse(FlowContext $context, &$value) : Generator{
+		false && yield;
+		if($value === ""){
+			$value = $this->default;
+		}
+		if(!is_numeric($value)){
+			return false;
+		}
+		$value = (float) $value;
+		if($value < $this->min || $value > $this->max){
+			return false;
+		}
+		if($this->step > 0){
+			$diff = $value - $this->min;
+			$mod = fmod($diff, $this->step);
+			$corrected = false;
+			if($mod > 0.0 && $mod < $this->step / 2){
+				$corrected = true;
+				$value = $this->min + $this->step * floor($diff / $this->step);
+			}elseif($mod > $this->step / 2 && $mod < 1.0){
+				$corrected = true;
+				$value = $this->min + $this->step * ceil($diff / $this->step);
+			}
+			if($corrected){
+				$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED, [
+					"step" => $this->step,
+					"corrected" => $value,
+				]);
+			}
+		}
+		return true;
 	}
 }

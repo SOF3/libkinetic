@@ -22,7 +22,12 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Generator;
+use RuntimeException;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Form\InvalidFormResponseException;
+use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
@@ -39,5 +44,30 @@ class ToggleComponent extends KineticComponent implements ElementInterface{
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
 		$router->use("default", new BooleanAttribute(), $this->default, false);
+	}
+
+	public function requestCliImpl(FlowContext $context, float $timeout) : Generator{
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE, ["cont" => $context->getManager()->getContName()]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default ? "true" : "false"]);
+		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
+	}
+
+	protected function parse(FlowContext $context, &$value) : Generator{
+		false && yield;
+		$value = mb_strtolower($value);
+		if($value === ""){
+			$value = $this->default;
+			return true;
+		}
+		if($value === "true" || $value === "1" || $value === "i" || $value === "on" || $value === "y" || $value === "yes"){
+			$value = true;
+			return true;
+		}
+		if($value === "false" || $value === "0" || $value === "o" || $value === "off" || $value === "n" || $value === "no"){
+			$value = false;
+			return true;
+		}
+		return false;
 	}
 }

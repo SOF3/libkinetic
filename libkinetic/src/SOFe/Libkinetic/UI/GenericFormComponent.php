@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\UI;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Form\HybridForms;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
@@ -35,6 +36,11 @@ use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
 
 class GenericFormComponent extends KineticComponent{
+	public const ON_CANCEL_FALLTHROUGH = 4159231705;
+	public const ON_CANCEL_SKIP = UiNodeOutcome::OUTCOME_SKIP;
+	public const ON_CANCEL_BREAK = UiNodeOutcome::OUTCOME_BREAK;
+	public const ON_CANCEL_EXIT = UiNodeOutcome::OUTCOME_EXIT;
+
 	/** @var bool */
 	protected $cancellable;
 	/** @var bool */
@@ -47,7 +53,7 @@ class GenericFormComponent extends KineticComponent{
 	/** @var float */
 	protected $timeout = 60.0 * 10;
 	/** @var int */
-	protected $onCancel;
+	protected $onCancel = self::ON_CANCEL_FALLTHROUGH;
 	/** @var string|null */
 	protected $onCancelTarget = null;
 
@@ -75,7 +81,12 @@ class GenericFormComponent extends KineticComponent{
 		}
 		$router->use("timeout", new Configurable(new DurationAttribute(1.0)), $this->timeout, false);
 		if($this->cancellable){
-			$router->use("onCancel", new StringEnumAttribute(UiNodeOutcome::ALL_OUTCOMES, true), $this->onCancel, false);
+			$router->use("onCancel", new StringEnumAttribute([
+				"fallthrough" => self::ON_CANCEL_FALLTHROUGH,
+				"skip" => self::ON_CANCEL_SKIP,
+				"break" => self::ON_CANCEL_BREAK,
+				"exit" => self::ON_CANCEL_EXIT,
+			], true), $this->onCancel, false);
 			$router->use("onCancelTarget", new StringAttribute(), $this->onCancelTarget, false);
 		}
 	}
@@ -96,7 +107,23 @@ class GenericFormComponent extends KineticComponent{
 		return $this->onCancelTarget;
 	}
 
+	/**
+	 * @param FlowContext           $context
+	 * @param string[]|UserString[] $options
+	 *
+	 * @return Generator
+	 */
 	public function sendListForm(FlowContext $context, array $options) : Generator{
-		return HybridForms::list($context, $this->getTitle(), $this->synopsis, $options, $this->getTimeout());
+		return yield HybridForms::list($context, $this->title, $this->synopsis, $options, $this->getTimeout());
+	}
+
+	/**
+	 * @param FlowContext        $context
+	 * @param ElementInterface[] $elements
+	 *
+	 * @return Generator
+	 */
+	public function sendCustomForm(FlowContext $context, array $elements) : Generator{
+		return HybridForms::custom($context, $this->title, $elements, $this->getTimeout());
 	}
 }

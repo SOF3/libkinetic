@@ -49,7 +49,7 @@ trait UiNodeTrait{
 		}
 
 		$labels[UiNodeStateHandler::STATE_EXECUTE] = count($allHandlers);
-		$allHandlers[] = [$this, "executeNodeWrapper"];
+		$allHandlers[] = [$this, "executeNodeAndReturn"];
 		$labels[UiNodeStateHandler::STATE_COMPLETE] = count($allHandlers);
 
 		foreach($this->getNode()->asUiComponent()->getOnComplete()->asBaseUiNodeStateComponent()->getHandlers() as $handler){

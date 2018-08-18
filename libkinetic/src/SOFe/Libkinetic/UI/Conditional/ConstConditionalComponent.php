@@ -40,6 +40,7 @@ class ConstConditionalComponent extends KineticComponent implements ConditionalN
 	}
 
 	protected function testCondition(FlowContext $context) : Generator{
-		return GeneratorUtil::empty($this->value);
+		false && yield;
+		return $this->value;
 	}
 }

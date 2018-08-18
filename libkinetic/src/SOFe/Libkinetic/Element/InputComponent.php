@@ -22,7 +22,10 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
@@ -42,5 +45,22 @@ class InputComponent extends KineticComponent implements ElementInterface{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
 		$router->use("placeholder", new UserStringAttribute(), $this->placeholder, false);
 		$router->use("default", new StringAttribute(), $this->default, false);
+	}
+
+	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_INPUT, [
+			"cont" => $context->getManager()->getContName(),
+			"placeholder" => $context->translateUserString($this->placeholder)
+		]);
+		if($this->default !== ""){
+			$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default]);
+		}
+		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
+	}
+
+	protected function parse(FlowContext $context, &$value) : Generator{
+		false && yield;
+		return $value === "" ? $this->default : $value;
 	}
 }

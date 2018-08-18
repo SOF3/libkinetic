@@ -29,14 +29,24 @@ use SOFe\Libkinetic\Flow\FlowContext;
 trait GenericFormTrait{
 	protected abstract function asGenericFormComponent() : GenericFormComponent;
 
-	/**  */
-	protected abstract function executeFormNode() : Generator;
+	/**
+	 * Executes the actual form
+	 *
+	 * @param FlowContext $context
+	 *
+	 * @return Generator
+	 * @throws FlowCancelledException
+	 */
+	protected abstract function executeFormNode(FlowContext $context) : Generator;
 
-	public function executeNode(FlowContext $context) : Generator{
+	public final function executeNode(FlowContext $context) : Generator{
 		try{
-			return yield $this->executeFormNode();
+			return yield $this->executeFormNode($context);
 		}catch(FlowCancelledException $e){
 			$form = $this->asGenericFormComponent();
+			if($form->getOnCancel() === GenericFormComponent::ON_CANCEL_FALLTHROUGH){
+				throw $e;
+			}
 			return new UiNodeOutcome($form->getOnCancel(), $form->getOnCancelTarget());
 		}
 	}

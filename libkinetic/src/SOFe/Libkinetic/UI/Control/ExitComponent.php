@@ -39,6 +39,7 @@ class ExitComponent extends KineticComponent implements UiNode{
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{
-		return GeneratorUtil::empty(new UiNodeOutcome(UiNodeOutcome::OUTCOME_EXIT));
+		false && yield;
+		return new UiNodeOutcome(UiNodeOutcome::OUTCOME_EXIT);
 	}
 }

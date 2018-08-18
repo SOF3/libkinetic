@@ -24,14 +24,7 @@ namespace SOFe\Libkinetic\Util;
 
 use Generator;
 
-class GeneratorUtil{
-	public static function empty($ret = null) : Generator{
-		if(false){
-			yield;
-		}
-		return $ret;
-	}
-
+class GeneratorUtil extends \SOFe\AwaitGenerator\GeneratorUtil{
 	/**
 	 * @param Generator $generator
 	 * @param mixed[][] &$yields

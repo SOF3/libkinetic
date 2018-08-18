@@ -57,7 +57,7 @@ abstract class KineticComponent{
 	}
 
 	public function getDependencies() : Generator{
-		return GeneratorUtil::empty();
+		false && yield;
 	}
 
 	/**

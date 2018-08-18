@@ -22,10 +22,14 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
+use SOFe\Libkinetic\Util\GeneratorUtil;
 
 class LabelComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
@@ -35,5 +39,15 @@ class LabelComponent extends KineticComponent implements ElementInterface{
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
+	}
+
+	public function requestCliImpl(FlowContext $context, float $timeout) : Generator{
+		false && yield;
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_LABEL, ["text" => $context->translateUserString($this->text)]);
+	}
+
+	protected function parse(FlowContext $context, &$value) : Generator{
+		false && yield;
+		return true;
 	}
 }

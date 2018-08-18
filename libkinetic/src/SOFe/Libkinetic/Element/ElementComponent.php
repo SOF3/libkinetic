@@ -30,7 +30,7 @@ class ElementComponent extends KineticComponent{
 	/** @var bool */
 	protected $requiresId;
 
-	/** @var string */
+	/** @var string|null */
 	protected $id;
 
 	public function __construct(bool $requiresId){
@@ -39,5 +39,9 @@ class ElementComponent extends KineticComponent{
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("id", new StringAttribute(), $this->id, $this->requiresId);
+	}
+
+	public function getId() : ?string{
+		return $this->id;
 	}
 }

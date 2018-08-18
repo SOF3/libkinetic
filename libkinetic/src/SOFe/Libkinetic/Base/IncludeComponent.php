@@ -65,6 +65,7 @@ class IncludeComponent extends KineticComponent{
 	/**
 	 * @param KineticManager $manager
 	 * @param                $baseName
+	 *
 	 * @return resource
 	 */
 	public function openPath(KineticManager $manager, &$baseName){

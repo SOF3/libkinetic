@@ -32,6 +32,7 @@ class ControllerAttribute extends ResolvableNodeAttribute{
 
 	/**
 	 * Controller constructor.
+	 *
 	 * @param string     $interface FQN of the interface to implement
 	 * @param callable[] $adapters  an associative array. Each key is the FQN of another interface, and the value is a callable that maps an instance of the key to an instance of $interface.
 	 */

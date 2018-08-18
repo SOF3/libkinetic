@@ -27,7 +27,6 @@ use pocketmine\Player;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\libkinetic;
 use SOFe\Libkinetic\UserString;
-use SOFe\Libkinetic\Util\Await;
 use function array_combine;
 
 class HybridForms{
@@ -47,7 +46,7 @@ class HybridForms{
 		}
 
 		$user = $context->getUser();
-		$choice = yield Await::FROM => $user instanceof Player ?
+		$choice = yield $user instanceof Player ?
 			self::listPlayer($context, $user, $title, $synopsis, $displays, $timeout) :
 			self::listNonPlayer($context, $title, $synopsis, array_combine($mnemonics, $displays), $timeout);
 

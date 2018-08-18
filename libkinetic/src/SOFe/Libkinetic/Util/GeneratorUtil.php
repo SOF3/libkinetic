@@ -36,6 +36,7 @@ class GeneratorUtil{
 	 * @param Generator $generator
 	 * @param mixed[][] &$yields
 	 * @param null      $send
+	 *
 	 * @return mixed
 	 */
 	public static function resolveKeyValuePairs(Generator $generator, &$yields, $send = null){
@@ -52,6 +53,7 @@ class GeneratorUtil{
 	 * @param Generator $generator
 	 * @param mixed[]   &$yields
 	 * @param null      $send
+	 *
 	 * @return mixed
 	 */
 	public static function resolveKeys(Generator $generator, &$yields, $send = null){
@@ -67,6 +69,7 @@ class GeneratorUtil{
 	 * @param Generator $generator
 	 * @param mixed[]   &$yields
 	 * @param null      $send
+	 *
 	 * @return mixed
 	 */
 	public static function resolveValues(Generator $generator, &$yields, $send = null){

@@ -32,7 +32,6 @@ use SOFe\Libkinetic\UI\GenericFormComponent;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
-use SOFe\Libkinetic\Util\Await;
 
 class MuxComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
@@ -56,8 +55,8 @@ class MuxComponent extends KineticComponent implements UiNode{
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{
-		$choice = yield Await::FROM => $this->whichOption($context);
-		return yield Await::FROM => $this->options[$choice]->asUiParentComponent()->getChildren()[0]->execute($context);
+		$choice = yield $this->whichOption($context);
+		return yield $this->options[$choice]->asUiParentComponent()->getChildren()[0]->execute($context);
 	}
 
 	protected function whichOption(FlowContext $context) : Generator{
@@ -75,6 +74,6 @@ class MuxComponent extends KineticComponent implements UiNode{
 				$i,
 			];
 		}
-		return yield Await::FROM => $this->asGenericFormComponent()->sendListForm($context, $options);
+		return yield $this->asGenericFormComponent()->sendListForm($context, $options);
 	}
 }

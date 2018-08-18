@@ -67,6 +67,7 @@ abstract class KineticComponent{
 	 * $this, or return null to trigger an error.
 	 *
 	 * @param KineticComponent $that
+	 *
 	 * @return null|KineticComponent
 	 */
 	public function thisOrThat(KineticComponent $that) : ?KineticComponent{

@@ -32,6 +32,7 @@ class AttributeFieldPair{
 
 	/**
 	 * AttributeFieldPair constructor.
+	 *
 	 * @param ResolvableNodeAttribute $attribute
 	 * @param mixed                   &$fieldRef
 	 */

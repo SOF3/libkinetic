@@ -48,6 +48,7 @@ interface KineticAdapter{
 
 	/**
 	 * @param string $key
+	 *
 	 * @return mixed
 	 */
 	public function getKineticConfig(string $key);

@@ -37,10 +37,10 @@ final class libkinetic{
 
 	public const MESSAGES = [
 		self::MESSAGE_CONT_DESC => [
-			"en_US" =>  'A special command. You will be told to use this command when you need to.',
+			"en_US" => 'A special command. You will be told to use this command when you need to.',
 		],
-		self::MESSAGE_CONT_USAGE=> [
-			"en_US" =>'/${alias} <value>',
+		self::MESSAGE_CONT_USAGE => [
+			"en_US" => '/${alias} <value>',
 		],
 		self::MESSAGE_CONT_NIL => [
 			"en_US" => TextFormat::RED . 'You don\'t have anything to continue.',

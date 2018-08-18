@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Attribute;
 
-use function is_int;
 use SOFe\Libkinetic\Base\KineticNode;
 use function implode;
+use function is_int;
 use function mb_strtolower;
 
 class StringEnumAttribute extends NodeAttribute{

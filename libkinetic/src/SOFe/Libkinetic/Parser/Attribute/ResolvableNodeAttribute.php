@@ -28,6 +28,7 @@ abstract class ResolvableNodeAttribute extends NodeAttribute{
 	/**
 	 * @param KineticNode $node
 	 * @param mixed       $tempValue
+	 *
 	 * @return mixed
 	 */
 	public abstract function resolve(KineticNode $node, $tempValue);

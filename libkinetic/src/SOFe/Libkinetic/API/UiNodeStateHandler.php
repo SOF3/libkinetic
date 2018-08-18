@@ -50,6 +50,7 @@ interface UiNodeStateHandler{
 	 * article in the wiki for explanation.
 	 *
 	 * @param FlowContext $context
+	 *
 	 * @return Generator
 	 */
 	public function onStartComplete(FlowContext $context) : Generator;

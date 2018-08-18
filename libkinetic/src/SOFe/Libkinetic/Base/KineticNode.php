@@ -59,6 +59,7 @@ final class KineticNode{
 
 	/**
 	 * KineticNode constructor.
+	 *
 	 * @param KineticFileParser  $parser
 	 * @param string             $ns
 	 * @param string             $name

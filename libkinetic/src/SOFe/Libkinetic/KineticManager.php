@@ -67,6 +67,7 @@ class KineticManager{
 
 	/**
 	 * KineticManager constructor.
+	 *
 	 * @param Plugin         $plugin
 	 * @param KineticAdapter $adapter
 	 * @param string         $file

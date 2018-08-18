@@ -50,6 +50,7 @@ class ChildNodeRouter{
 	 * @param bool                  $optional
 	 * @param KineticNode|null      &$node
 	 * @param string                $ns
+	 *
 	 * @return ChildNodeRouter
 	 */
 	public function acceptSingle(string $name, string $componentClass, ?KineticComponent &$field, bool $optional, ?KineticNode &$node = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
@@ -75,6 +76,7 @@ class ChildNodeRouter{
 	 * @param int                $max
 	 * @param KineticNode[]|null &$nodes
 	 * @param string             $ns
+	 *
 	 * @return ChildNodeRouter
 	 */
 	public function acceptMulti(string $name, string $componentClass, array &$components, int $min, int $max = PHP_INT_MAX, ?array &$nodes = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
@@ -121,6 +123,7 @@ class ChildNodeRouter{
 	 *
 	 * @param string $ns
 	 * @param string $name
+	 *
 	 * @return KineticNode
 	 */
 	public function startChild(string $ns, string $name) : KineticNode{

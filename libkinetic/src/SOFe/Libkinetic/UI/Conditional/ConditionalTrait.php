@@ -26,7 +26,6 @@ use Generator;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\UI\NodeState\BaseUiNodeStateComponent;
-use SOFe\Libkinetic\Util\Await;
 use function assert;
 
 trait ConditionalTrait{
@@ -37,7 +36,7 @@ trait ConditionalTrait{
 	}
 
 	public final function onStartComplete(FlowContext $context) : Generator{
-		$bool = yield Await::FROM => $this->test($context);
+		$bool = yield $this->test($context);
 		$conditional = $this->getNode()->asConditionalComponent();
 		if($bool){
 			$state = $conditional->getOnTrue();
@@ -51,7 +50,7 @@ trait ConditionalTrait{
 	}
 
 	public final function test(FlowContext $context) : Generator{
-		$bool = yield Await::FROM => $this->testCondition($context);
+		$bool = yield $this->testCondition($context);
 		return $this->getNode()->asConditionalComponent()->applyNot($bool);
 	}
 

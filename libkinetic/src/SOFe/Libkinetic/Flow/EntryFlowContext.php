@@ -51,7 +51,7 @@ class EntryFlowContext extends FlowContext{
 	}
 
 	public function execute() : Generator{
-		$outcome = yield Await::FROM => $this->interface->execute($this);
+		$outcome = yield $this->interface->execute($this);
 		assert($outcome instanceof UiNodeOutcome);
 
 		if($outcome->getOutcome() === UiNodeOutcome::OUTCOME_EXIT){
@@ -69,7 +69,7 @@ class EntryFlowContext extends FlowContext{
 		}
 	}
 
-	public function executeCallback(?callable $callback = null) : void{
-		Await::func($this->execute(), $callback);
+	public function executeCallback(callable $callback, callable $onError) : void{
+		Await::g2c($this->execute(), $callback, $onError);
 	}
 }

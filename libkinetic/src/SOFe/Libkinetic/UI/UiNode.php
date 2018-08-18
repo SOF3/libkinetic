@@ -33,6 +33,7 @@ interface UiNode{
 	 * Executes the node fully and returns a UiNodeOutcome object.
 	 *
 	 * @param FlowContext $context
+	 *
 	 * @return Generator
 	 */
 	public function execute(FlowContext $context) : Generator;

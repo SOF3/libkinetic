@@ -28,7 +28,6 @@ use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\UI\Conditional\ConditionalParentComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalTrait;
-use SOFe\Libkinetic\Util\Await;
 use function assert;
 use function is_bool;
 
@@ -46,7 +45,7 @@ trait ConditionalGroupTrait{
 		/** @var ConditionalGroupComponent $group */
 		$group = $this->getNode()->getComponent(ConditionalGroupComponent::class);
 		foreach($parent->getPredicates() as $predicate){
-			$right = yield Await::FROM => $predicate->test($context);
+			$right = yield $predicate->test($context);
 			assert(is_bool($right));
 
 			if($left !== null){

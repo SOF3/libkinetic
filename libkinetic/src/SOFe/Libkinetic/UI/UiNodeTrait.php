@@ -26,7 +26,6 @@ use Generator;
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Util\Await;
 use UnexpectedValueException;
 use function array_keys;
 use function assert;
@@ -62,7 +61,7 @@ trait UiNodeTrait{
 			if(!isset($allHandlers[$i])){
 				return new UiNodeOutcome(UiNodeOutcome::OUTCOME_SKIP, null);
 			}
-			[$state, $target] = yield Await::FROM => $this->adaptStateHandler($context, $allHandlers[$i][0], $allHandlers[$i][1]);
+			[$state, $target] = yield $this->adaptStateHandler($context, $allHandlers[$i][0], $allHandlers[$i][1]);
 
 			if($state === UiNodeStateHandler::STATE_NIL){
 				++$i;
@@ -89,7 +88,7 @@ trait UiNodeTrait{
 	}
 
 	protected function adaptStateHandler(FlowContext $context, object $object, string $function) : Generator{
-		$ret = yield Await::FROM => $object->{$function}($context);
+		$ret = yield $object->{$function}($context);
 
 		if(is_array($ret)){
 			assert(array_keys($ret) === range(0, 1));
@@ -110,7 +109,7 @@ trait UiNodeTrait{
 	protected abstract function getNode() : KineticNode;
 
 	protected function executeNodeAndReturn(FlowContext $context) : Generator{
-		$outcome = yield Await::FROM => $this->executeNode($context);
+		$outcome = yield $this->executeNode($context);
 		assert($outcome instanceof UiNodeOutcome);
 		if($outcome instanceof ReturningUiNodeOutcome){
 			$returns = $outcome->getReturns();

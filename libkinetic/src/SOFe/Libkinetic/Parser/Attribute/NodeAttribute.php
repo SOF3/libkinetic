@@ -28,6 +28,7 @@ abstract class NodeAttribute{
 	/**
 	 * @param KineticNode $node
 	 * @param string      $value
+	 *
 	 * @return mixed
 	 */
 	public abstract function accept(KineticNode $node, string $value);

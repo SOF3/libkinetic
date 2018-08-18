@@ -26,7 +26,6 @@ use Generator;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeOutcome;
-use SOFe\Libkinetic\Util\Await;
 use UnexpectedValueException;
 use function array_flip;
 use function array_keys;
@@ -63,7 +62,7 @@ class GroupFlowContext extends FlowContext{
 
 		$nextIndex = 0;
 		while(true){
-			$outcome = yield Await::FROM => $list[$indexToKey[$nextIndex]]->execute($this);
+			$outcome = yield $list[$indexToKey[$nextIndex]]->execute($this);
 			assert($outcome instanceof UiNodeOutcome);
 			switch($outcome->getOutcome()){
 				case UiNodeOutcome::OUTCOME_SKIP:

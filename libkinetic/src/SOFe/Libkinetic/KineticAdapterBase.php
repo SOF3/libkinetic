@@ -36,6 +36,7 @@ trait KineticAdapterBase{
 
 	/**
 	 * @param Plugin $plugin
+	 *
 	 * @internal Only to be called by KineticManager
 	 */
 	public final function kinetic_setPlugin(Plugin $plugin) : void{

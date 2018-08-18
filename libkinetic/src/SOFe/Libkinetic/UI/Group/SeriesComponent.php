@@ -28,7 +28,6 @@ use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Flow\GroupFlowContext;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNodeTrait;
-use SOFe\Libkinetic\Util\Await;
 
 class SeriesComponent extends KineticComponent implements UiGroup{
 	use UiNodeTrait;
@@ -40,6 +39,6 @@ class SeriesComponent extends KineticComponent implements UiGroup{
 
 	protected function executeNode(FlowContext $context) : Generator{
 		$child = new GroupFlowContext($this, $context);
-		return yield Await::FROM => $child->execute();
+		return yield $child->execute();
 	}
 }

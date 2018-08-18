@@ -25,7 +25,6 @@ namespace SOFe\Libkinetic\UI;
 use Generator;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Util\Await;
 
 trait GenericFormTrait{
 	protected abstract function asGenericFormComponent() : GenericFormComponent;
@@ -35,7 +34,7 @@ trait GenericFormTrait{
 
 	public function executeNode(FlowContext $context) : Generator{
 		try{
-			return yield Await::FROM => $this->executeFormNode();
+			return yield $this->executeFormNode();
 		}catch(FlowCancelledException $e){
 			$form = $this->asGenericFormComponent();
 			return new UiNodeOutcome($form->getOnCancel(), $form->getOnCancelTarget());

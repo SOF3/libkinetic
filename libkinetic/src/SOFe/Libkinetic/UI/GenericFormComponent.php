@@ -48,8 +48,8 @@ class GenericFormComponent extends KineticComponent{
 	protected $timeout = 60.0 * 10;
 	/** @var int */
 	protected $onCancel;
-	/** @var string */
-	protected $onCancelTarget;
+	/** @var string|null */
+	protected $onCancelTarget = null;
 
 	public static function modalForm() : GenericFormComponent{
 		return new self(false, true);

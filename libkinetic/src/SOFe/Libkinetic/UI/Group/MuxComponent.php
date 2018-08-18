@@ -24,18 +24,14 @@ namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Form\HybridForms;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
-use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\GenericFormComponent;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
-use SOFe\Libkinetic\UserString;
 use SOFe\Libkinetic\Util\Await;
 
 class MuxComponent extends KineticComponent implements UiNode{
@@ -60,12 +56,8 @@ class MuxComponent extends KineticComponent implements UiNode{
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{
-		try{
-			$choice = yield Await::FROM => $this->whichOption($context);
-			return yield Await::FROM => $this->options[$choice]->asUiParentComponent()->getChildren()[0]->execute($context);
-		}catch(FlowCancelledException $e){
-
-		}
+		$choice = yield Await::FROM => $this->whichOption($context);
+		return yield Await::FROM => $this->options[$choice]->asUiParentComponent()->getChildren()[0]->execute($context);
 	}
 
 	protected function whichOption(FlowContext $context) : Generator{

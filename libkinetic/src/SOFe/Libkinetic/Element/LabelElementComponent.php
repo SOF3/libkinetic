@@ -29,9 +29,8 @@ use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
-use SOFe\Libkinetic\Util\GeneratorUtil;
 
-class LabelComponent extends KineticComponent implements ElementInterface{
+class LabelElementComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
 
 	/** @var UserString */

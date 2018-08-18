@@ -20,25 +20,8 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\Control;
+namespace SOFe\Libkinetic\API;
 
-use Generator;
-use SOFe\Libkinetic\Base\KineticComponent;
-use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\UI\UiComponent;
-use SOFe\Libkinetic\UI\UiNode;
-use SOFe\Libkinetic\UI\UiNodeOutcome;
-use SOFe\Libkinetic\UI\UiNodeTrait;
-
-class BufferComponent extends KineticComponent implements UiNode{
-	use UiNodeTrait;
-
-	public function getDependencies() : Generator{
-		yield UiComponent::class;
-	}
-
-	protected function executeNode(FlowContext $context) : Generator{
-		false && yield;
-		return new UiNodeOutcome;
-	}
+class Icon{
+	// TODO implement
 }

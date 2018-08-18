@@ -28,10 +28,12 @@ namespace SOFe\Libkinetic\Base;
 
 use SOFe\Libkinetic\Element\ElementComponent;
 use SOFe\Libkinetic\Element\ElementParentComponent;
-use SOFe\Libkinetic\Element\InputComponent;
-use SOFe\Libkinetic\Element\LabelComponent;
-use SOFe\Libkinetic\Element\SliderComponent;
-use SOFe\Libkinetic\Element\ToggleComponent;
+use SOFe\Libkinetic\Element\InputElementComponent;
+use SOFe\Libkinetic\Element\LabelElementComponent;
+use SOFe\Libkinetic\Element\SelectElementComponent;
+use SOFe\Libkinetic\Element\SelectOptionComponent;
+use SOFe\Libkinetic\Element\SliderElementComponent;
+use SOFe\Libkinetic\Element\ToggleElementComponent;
 use SOFe\Libkinetic\UI\Advanced\DynFormComponent;
 use SOFe\Libkinetic\UI\Advanced\RecurFormComponent;
 use SOFe\Libkinetic\UI\Conditional\ConditionalComponent;
@@ -178,12 +180,12 @@ trait ComponentAdapter{
 		return $this->getComponent(InfoFormComponent::class);
 	}
 
-	public final function asInputComponent() : InputComponent{
-		return $this->getComponent(InputComponent::class);
+	public final function asInputElementComponent() : InputElementComponent{
+		return $this->getComponent(InputElementComponent::class);
 	}
 
-	public final function asLabelComponent() : LabelComponent{
-		return $this->getComponent(LabelComponent::class);
+	public final function asLabelElementComponent() : LabelElementComponent{
+		return $this->getComponent(LabelElementComponent::class);
 	}
 
 	public final function asListFormComponent() : ListFormComponent{
@@ -230,16 +232,24 @@ trait ComponentAdapter{
 		return $this->getComponent(RootComponent::class);
 	}
 
+	public final function asSelectElementComponent() : SelectElementComponent{
+		return $this->getComponent(SelectElementComponent::class);
+	}
+
+	public final function asSelectOptionComponent() : SelectOptionComponent{
+		return $this->getComponent(SelectOptionComponent::class);
+	}
+
 	public final function asSeriesComponent() : SeriesComponent{
 		return $this->getComponent(SeriesComponent::class);
 	}
 
-	public final function asSliderComponent() : SliderComponent{
-		return $this->getComponent(SliderComponent::class);
+	public final function asSliderElementComponent() : SliderElementComponent{
+		return $this->getComponent(SliderElementComponent::class);
 	}
 
-	public final function asToggleComponent() : ToggleComponent{
-		return $this->getComponent(ToggleComponent::class);
+	public final function asToggleElementComponent() : ToggleElementComponent{
+		return $this->getComponent(ToggleElementComponent::class);
 	}
 
 	public final function asUiComponent() : UiComponent{

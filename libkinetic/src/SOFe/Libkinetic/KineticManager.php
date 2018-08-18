@@ -24,7 +24,6 @@ namespace SOFe\Libkinetic;
 
 use Generator;
 use InvalidArgumentException;
-use function is_array;
 use pocketmine\command\CommandSender;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
@@ -45,6 +44,7 @@ use function class_uses;
 use function explode;
 use function implode;
 use function in_array;
+use function is_array;
 use function mb_strpos;
 use function mb_substr;
 use function str_replace;

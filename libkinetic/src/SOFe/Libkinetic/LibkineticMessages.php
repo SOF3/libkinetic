@@ -44,7 +44,7 @@ class LibkineticMessages{
 	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE = "libkinetic.custom.cli.instruction.toggle";
 	public const MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC = "libkinetic.custom.cli.default.generic";
 	public const MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER = "libkinetic.custom.cli.default.slider";
-	public const MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED= "libkinetic.custom.cli.slider.step-corrected";
+	public const MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED = "libkinetic.custom.cli.slider.step-corrected";
 
 	public const MESSAGES = [
 		self::MESSAGE_CONT_DESC => [

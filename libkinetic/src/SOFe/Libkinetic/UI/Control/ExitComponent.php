@@ -29,7 +29,6 @@ use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeOutcome;
 use SOFe\Libkinetic\UI\UiNodeTrait;
-use SOFe\Libkinetic\Util\GeneratorUtil;
 
 class ExitComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;

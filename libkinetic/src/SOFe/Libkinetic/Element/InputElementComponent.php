@@ -23,51 +23,44 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Generator;
-use RuntimeException;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Form\InvalidFormResponseException;
 use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
-use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
 
-class ToggleComponent extends KineticComponent implements ElementInterface{
+class InputElementComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
 
 	/** @var UserString */
 	protected $text;
-	/** @var bool */
-	protected $default = false;
+	/** @var UserString|null */
+	protected $placeholder = null;
+	/** @var string */
+	protected $default = "";
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
-		$router->use("default", new BooleanAttribute(), $this->default, false);
+		$router->use("placeholder", new UserStringAttribute(), $this->placeholder, false);
+		$router->use("default", new StringAttribute(), $this->default, false);
 	}
 
-	public function requestCliImpl(FlowContext $context, float $timeout) : Generator{
+	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
 		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE, ["cont" => $context->getManager()->getContName()]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default ? "true" : "false"]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_INPUT, [
+			"cont" => $context->getManager()->getContName(),
+			"placeholder" => $context->translateUserString($this->placeholder)
+		]);
+		if($this->default !== ""){
+			$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default]);
+		}
 		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{
 		false && yield;
-		$value = mb_strtolower($value);
-		if($value === ""){
-			$value = $this->default;
-			return true;
-		}
-		if($value === "true" || $value === "1" || $value === "i" || $value === "on" || $value === "y" || $value === "yes"){
-			$value = true;
-			return true;
-		}
-		if($value === "false" || $value === "0" || $value === "o" || $value === "off" || $value === "n" || $value === "no"){
-			$value = false;
-			return true;
-		}
-		return false;
+		return $value === "" ? $this->default : $value;
 	}
 }

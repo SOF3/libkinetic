@@ -35,7 +35,7 @@ use function floor;
 use function fmod;
 use function is_numeric;
 
-class SliderComponent extends KineticComponent implements ElementInterface{
+class SliderElementComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
 
 	/** @var UserString */

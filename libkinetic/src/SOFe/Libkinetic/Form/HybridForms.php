@@ -43,17 +43,20 @@ class HybridForms{
 	 * @return Generator
 	 */
 	public static function list(FlowContext $context, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
+		/** @var string[] $mnemonics */
 		$mnemonics = [];
+		/** @var UserString[] $mnemonics */
 		$displays = [];
+		/** @var mixed[] $mnemonics */
 		$values = [];
 		/**
 		 * @var string     $mnemonic
-		 * @var UserString $key
-		 * @var string     $value
+		 * @var UserString $display
+		 * @var mixed      $value
 		 */
-		foreach($options as [$mnemonic, $key, $value]){
+		foreach($options as [$mnemonic, $display, $value]){
 			$mnemonics[] = $mnemonic;
-			$displays[] = $context->translateUserString($key);
+			$displays[] = $context->translateUserString($display);
 			$values[] = $value;
 		}
 
@@ -62,15 +65,26 @@ class HybridForms{
 			self::listPlayer($context, $user, $title, $synopsis, $displays, $timeout) :
 			self::listNonPlayer($context, $title, $synopsis, array_combine($mnemonics, $displays), $timeout);
 
-		return $choice !== null ? $values[$choice] : $choice;
+		return $values[$choice];
 	}
 
 	protected static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
 		return yield $context->getManager()->getFormsAdapter()->sendMenuForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $strings, $timeout);
 	}
 
-	protected static function listNonPlayer(FlowContext $context, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
-		$context->send(LibkineticMessages::MESSAGE_LIST_CLI_TITLE, ["title" => $context->translateUserString($title)]);
+	/**
+	 * @param FlowContext     $context
+	 * @param null|UserString $title
+	 * @param UserString      $synopsis
+	 * @param UserString[]    $strings
+	 * @param float           $timeout
+	 *
+	 * @return Generator
+	 */
+	public static function listNonPlayer(FlowContext $context, ?UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
+		if($title !== null){
+			$context->send(LibkineticMessages::MESSAGE_LIST_CLI_TITLE, ["title" => $context->translateUserString($title)]);
+		}
 		$context->send(LibkineticMessages::MESSAGE_LIST_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
 
 
@@ -116,10 +130,10 @@ class HybridForms{
 	}
 
 	/**
-	 * @param FlowContext $context
-	 * @param UserString  $title
-	 * @param ElementInterface[]  $elements
-	 * @param float       $timeout
+	 * @param FlowContext        $context
+	 * @param UserString         $title
+	 * @param ElementInterface[] $elements
+	 * @param float              $timeout
 	 *
 	 * @return Generator
 	 */

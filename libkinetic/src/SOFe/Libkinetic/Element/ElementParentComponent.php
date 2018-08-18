@@ -48,10 +48,11 @@ class ElementParentComponent extends KineticComponent{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMultiArgs("label", LabelComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
-		$router->acceptMultiArgs("input", InputComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
-		$router->acceptMultiArgs("toggle", ToggleComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
-		$router->acceptMultiArgs("slider", SliderComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("label", LabelElementComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("input", InputElementComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("toggle", ToggleElementComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("slider", SliderElementComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
+		$router->acceptMultiArgs("select", SelectElementComponent::class, [$this->requiresId], $this->elements, $this->min, $this->max);
 	}
 
 	/**

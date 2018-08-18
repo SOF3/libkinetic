@@ -20,26 +20,10 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\UI\Conditional;
+namespace SOFe\Libkinetic\API;
 
-use Generator;
-use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
-use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 
-class HasVarConditionalComponent extends KineticComponent implements ConditionalNodeInterface{
-	use ConditionalTrait;
-
-	/** @var string */
-	protected $name;
-
-	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("name", new StringAttribute(), $this->name, true);
-	}
-
-	protected function testCondition(FlowContext $context) : Generator{
-		false && yield;
-		return $context->getVariables()->getNestedVariable($this->name)->isSet();
-	}
+interface ListProvider{
+	public function provideList(FlowContext $context, ListFactory $factory) : void;
 }

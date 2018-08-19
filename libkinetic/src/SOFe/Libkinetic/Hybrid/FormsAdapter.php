@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Form;
+namespace SOFe\Libkinetic\Hybrid;
 
 use Generator;
 use pocketmine\Player;

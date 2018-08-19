@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Cont;
+namespace SOFe\Libkinetic\Hybrid;
 
 use pocketmine\command\Command;
 use pocketmine\command\PluginIdentifiableCommand;

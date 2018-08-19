@@ -26,7 +26,7 @@ use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Form\HybridForms;
+use SOFe\Libkinetic\Hybrid\HybridForms;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\Configurable;
 use SOFe\Libkinetic\Parser\Attribute\DurationAttribute;

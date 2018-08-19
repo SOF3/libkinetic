@@ -37,13 +37,19 @@ class LibkineticMessages{
 	public const MESSAGE_LIST_CLI_INSTRUCTION = "libkinetic.list.cli.instruction";
 
 	public const MESSAGE_CUSTOM_CLI_TITLE = "libkinetic.custom.cli.title";
+
 	public const MESSAGE_CUSTOM_CLI_TEXT_GENERIC = "libkinetic.custom.cli.text.generic";
 	public const MESSAGE_CUSTOM_CLI_TEXT_LABEL = "libkinetic.custom.cli.text.label";
+
 	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_GENERIC = "libkinetic.custom.cli.instruction.generic";
 	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_INPUT = "libkinetic.custom.cli.instruction.input";
 	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE = "libkinetic.custom.cli.instruction.toggle";
+	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT = "libkinetic.custom.cli.instruction.select";
+
 	public const MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC = "libkinetic.custom.cli.default.generic";
 	public const MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER = "libkinetic.custom.cli.default.slider";
+
+	public const MESSAGE_CUSTOM_CLI_SELECT_OPTION = "libkinetic.custom.cli.select.option";
 	public const MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED = "libkinetic.custom.cli.slider.step-corrected";
 
 	public const MESSAGES = [
@@ -77,12 +83,14 @@ class LibkineticMessages{
 		self::MESSAGE_CUSTOM_CLI_TITLE => [
 			"en_US" => TextFormat::BOLD . '${title}',
 		],
+
 		self::MESSAGE_CUSTOM_CLI_TEXT_GENERIC => [
 			"en_US" => '[?] ' . TextFormat::AQUA . '${text}',
 		],
 		self::MESSAGE_CUSTOM_CLI_TEXT_LABEL => [
 			"en_US" => '${text}',
 		],
+
 		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_GENERIC => [
 			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . '<answer>',
 		],
@@ -92,11 +100,19 @@ class LibkineticMessages{
 		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE => [
 			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . 'true|false',
 		],
+		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT => [
+			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . '<option>',
+		],
+
 		self::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC => [
 			"en_US" => 'Default: ' . TextFormat::LIGHT_PURPLE . '${default}',
 		],
 		self::MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER => [
 			"en_US" => 'Range: ${min}-${max} ' . TextFormat::LIGHT_PURPLE . '(default: ${default})',
+		],
+
+		self::MESSAGE_CUSTOM_CLI_SELECT_OPTION => [
+			"en_US" =>  TextFormat::LIGHT_PURPLE . '${mnemonic}' . TextFormat::GRAY . ' => ' . TextFormat::WHITE . '${display}',
 		],
 		self::MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED => [
 			"en_US" => TextFormat::YELLOW . 'Your input has been corrected to ${corrected} because the step is ${step}',

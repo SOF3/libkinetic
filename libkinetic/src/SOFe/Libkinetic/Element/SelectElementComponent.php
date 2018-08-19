@@ -27,7 +27,7 @@ use SOFe\Libkinetic\API\ListFactory;
 use SOFe\Libkinetic\API\ListProvider;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
-use SOFe\Libkinetic\Form\HybridForms;
+use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
 use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
@@ -69,19 +69,29 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$allOptions = yield $this->getOptions($context);
-		/** @var UserString[] $options */
-		$options = [];
-		foreach($allOptions as [$mnemonic, $display, $value]){
-			$options[$mnemonic] = $display;
+		$options = yield $this->getOptions($context);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT, ["cont" => $context->getManager()->getContName()]);
+		$valueMap = [];
+		foreach($options as [$mnemonic, $display, $value]){
+			$valueMap[$mnemonic] = $value;
+			$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_SELECT_OPTION, [
+				"mnemonic" => $mnemonic,
+				"display" => $context->translateUserString($display),
+			]);
 		}
-		$choice = yield HybridForms::listNonPlayer($context, null, $this->text, $options, $timeout);
-		return $options[$choice] ?? null;
+		$choice = yield $context->getManager()->waitCont($context->getUser(), $timeout);
+		return isset($valueMap[$choice]) ? [true, $valueMap[$choice]] : [false];
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{
 		yield from [];
-		return $value !== null;
+		if($value[0]){
+			$value = $value[1];
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	protected function getOptions(FlowContext $context) : Generator{

@@ -95,6 +95,10 @@ class GenericFormComponent extends KineticComponent{
 		return $this->title;
 	}
 
+	public function getSynopsis() : UserString{
+		return $this->synopsis;
+	}
+
 	public function getTimeout() : float{
 		return $this->timeout;
 	}

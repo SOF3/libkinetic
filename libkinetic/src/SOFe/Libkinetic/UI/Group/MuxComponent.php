@@ -33,6 +33,7 @@ use SOFe\Libkinetic\UI\GenericFormTrait;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
+use SOFe\Libkinetic\Util\ArrayUtil;
 
 class MuxComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
@@ -56,6 +57,12 @@ class MuxComponent extends KineticComponent implements UiNode{
 		$router->acceptMulti("option", MuxOptionComponent::class, $this->options, 2);
 	}
 
+	public function endElement() : void{
+		$this->options = ArrayUtil::indexByProperty($this->options, function(MuxOptionComponent $component, int $i) : string{
+			return $component->getCommandName() ?? (string) $i;
+		});
+	}
+
 	protected function executeFormNode(FlowContext $context) : Generator{
 		$choice = yield $this->whichOption($context);
 		return yield $this->options[$choice]->asUiParentComponent()->getChildren()[0]->execute($context);
@@ -65,14 +72,20 @@ class MuxComponent extends KineticComponent implements UiNode{
 		if($this->var !== null){
 			$var = $context->getVariables()->getNestedVariable($this->var);
 			if($var->isSet()){
-				return $var->getValue();
+				$choice = $var->getValue();
+
+				if(isset($this->options[$choice])){
+					return $choice;
+				}else{
+					$this->manager->getPlugin()->getLogger()->warning("[libkinetic] The $this->var variable contains an unknown choice $choice. This variable will be ignored, and the user will be asked to choose an option.");
+				}
 			}
 		}
 		$options = [];
 		foreach($this->options as $i => $component){
 			$options[] = [
-				$component->getCommandName() ?? (string) $i,
-				$component->getDisplayName() ?? "#$i",
+				$i,
+				$component->getDisplayName() ?? (string) $i,
 				$i,
 			];
 		}

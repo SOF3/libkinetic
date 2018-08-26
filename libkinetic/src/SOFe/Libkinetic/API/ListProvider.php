@@ -22,8 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
 
 interface ListProvider{
-	public function provideList(FlowContext $context, ListFactory $factory) : void;
+	public function provideList(FlowContext $context, ListFactory $factory) : Generator;
 }

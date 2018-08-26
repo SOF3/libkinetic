@@ -27,8 +27,9 @@ use InvalidArgumentException;
 final class ArrayUtil{
 	public static function indexByProperty(array $array, callable $toIndex) : array{
 		$output = [];
+		$i = 0;
 		foreach($array as $value){
-			$index = $toIndex($value);
+			$index = $toIndex($value, $i);
 			if(isset($output[$index])){
 				throw new InvalidArgumentException("Duplicate index $index");
 			}

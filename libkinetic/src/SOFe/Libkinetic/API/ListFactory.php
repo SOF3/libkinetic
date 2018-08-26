@@ -49,6 +49,10 @@ class ListFactory{
 		$this->default = $default;
 	}
 
+	public function getElements() : array{
+		return $this->elements;
+	}
+
 	public function toOptions() : array{
 		$defaultSet = false;
 		$elements = [];

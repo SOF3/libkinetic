@@ -22,8 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use Generator;
 use SOFe\Libkinetic\Flow\FlowContext;
 
 interface IconListProvider{
-	public function provideIconList(FlowContext $context, IconListFactory $factory) : void;
+	public function provideIconList(FlowContext $context, IconListFactory $factory) : Generator;
 }

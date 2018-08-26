@@ -22,10 +22,17 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use InvalidArgumentException;
 use SOFe\Libkinetic\UserString;
 
 class IconListFactory extends ListFactory{
 	public function addIconElement($value, UserString $displayName, string $commandName, Icon $icon, bool $default = false) : void{
-		// TODO implement
+		$this->elements[] = [$commandName, $displayName, $value, $icon];
+		if($default){
+			if(isset($this->default)){
+				throw new InvalidArgumentException("Duplicate default value");
+			}
+			$this->default = $commandName;
+		}
 	}
 }

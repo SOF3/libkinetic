@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Variable;
 
-use function assert;
+use InvalidArgumentException;
 use function gettype;
 
 class ScalarVariable extends Variable{
@@ -44,7 +44,9 @@ class ScalarVariable extends Variable{
 	}
 
 	public function setValueImpl($value) : void{
-		assert(gettype($value) === $this->value);
+		if(gettype($value) !== $this->value){
+			throw new InvalidArgumentException("Attempt to assign a " . gettype($value) . " value to a $this->type variable");
+		}
 		$this->value = $value;
 	}
 }

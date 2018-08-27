@@ -34,6 +34,7 @@ use SOFe\Libkinetic\UI\ReturningUiNodeOutcome;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
+use SOFe\Libkinetic\Variable\Variable;
 
 class BasicFormComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
@@ -49,7 +50,7 @@ class BasicFormComponent extends KineticComponent implements UiNode{
 	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("var", new VarRefAttribute(), $this->var, false);
+		$router->use("var", new VarRefAttribute(Variable::TYPE_OBJECT), $this->var, false);
 	}
 
 	protected function executeFormNode(FlowContext $context) : Generator{

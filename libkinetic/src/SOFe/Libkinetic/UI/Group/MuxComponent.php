@@ -34,6 +34,7 @@ use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
 use SOFe\Libkinetic\Util\ArrayUtil;
+use SOFe\Libkinetic\Variable\Variable;
 
 class MuxComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
@@ -50,7 +51,7 @@ class MuxComponent extends KineticComponent implements UiNode{
 	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("var", new VarRefAttribute(), $this->var, false);
+		$router->use("var", new VarRefAttribute(Variable::TYPE_STRING), $this->var, false);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{

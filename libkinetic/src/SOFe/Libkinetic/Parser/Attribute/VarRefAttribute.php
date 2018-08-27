@@ -22,11 +22,19 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Attribute;
 
+use function assert;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use function explode;
 
 class VarRefAttribute extends ResolvableNodeAttribute{
+	/** @var null|string */
+	private $type;
+
+	public function __construct(?string $type = null){
+		$this->type = $type;
+	}
+
 	public function accept(KineticNode $node, string $value) : string{
 		return $value;
 	}
@@ -48,7 +56,11 @@ class VarRefAttribute extends ResolvableNodeAttribute{
 		}
 
 		if(!$ok){
-			$leaf->throw("Unresolved variable $tempValue");
+			throw $leaf->throw("Unresolved variable $tempValue");
+		}
+		assert(isset($var));
+		if($this->type !== null && $this->type !== $var->getType()){
+			throw $leaf->throw("Expected reference to variable of type $this->type, got {$var->getType()}");
 		}
 
 		return $tempValue;

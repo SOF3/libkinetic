@@ -25,9 +25,9 @@ namespace SOFe\Libkinetic\Variable;
 use LogicException;
 
 abstract class Variable{
-	public const TYPE_BOOL = "bool";
-	public const TYPE_INT = "int";
-	public const TYPE_FLOAT = "float";
+	public const TYPE_BOOL = "boolean";
+	public const TYPE_INT = "integer";
+	public const TYPE_FLOAT = "double";
 	public const TYPE_STRING = "string";
 	public const TYPE_OBJECT = "object";
 

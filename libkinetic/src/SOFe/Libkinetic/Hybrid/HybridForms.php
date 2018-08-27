@@ -68,7 +68,7 @@ class HybridForms{
 		return $values[$choice];
 	}
 
-	protected static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
+	public static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
 		return yield $context->getManager()->getFormsAdapter()->sendMenuForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $strings, $timeout);
 	}
 
@@ -107,6 +107,7 @@ class HybridForms{
 		}
 	}
 
+
 	/**
 	 * @param FlowContext        $context
 	 * @param UserString         $title
@@ -125,7 +126,7 @@ class HybridForms{
 		return $data;
 	}
 
-	protected static function customPlayer(FlowContext $context, Player $player, UserString $title, array $elements, float $timeout) : Generator{
+	public static function customPlayer(FlowContext $context, Player $player, UserString $title, array $elements, float $timeout) : Generator{
 		return yield $context->getManager()->getFormsAdapter()->sendCustomForm($player, $context->translateUserString($title), $elements, $timeout);
 	}
 
@@ -137,7 +138,7 @@ class HybridForms{
 	 *
 	 * @return Generator
 	 */
-	protected static function customNonPlayer(FlowContext $context, UserString $title, array $elements, float $timeout) : Generator{
+	public static function customNonPlayer(FlowContext $context, UserString $title, array $elements, float $timeout) : Generator{
 		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TITLE, ["title" => $context->translateUserString($title)]);
 		$expiry = microtime(true) + $timeout;
 
@@ -151,5 +152,48 @@ class HybridForms{
 		}
 
 		return $data;
+	}
+
+
+	public static function modal(FlowContext $context, UserString $title, UserString $synopsis, ?string $yesCommand, ?UserString $yesDisplay, ?string $noCommand, ?UserString $noDisplay, float $timeout) : Generator{
+		$yesCommand = $yesCommand ?? "y";
+		$yesDisplay = $yesDisplay ?? new UserString(LibkineticMessages::MESSAGE_MODAL_YES);
+		$noCommand = $noCommand ?? "n";
+		$noDisplay = $noDisplay ?? new UserString(LibkineticMessages::MESSAGE_MODAL_NO);
+
+		$user = $context->getUser();
+		if($user instanceof Player){
+			$data = yield self::modalPlayer($context, $user, $title, $synopsis, $yesDisplay, $noDisplay, $timeout);
+		}else{
+			$data = yield self::modalNonPlayer($context, $title, $synopsis, $yesCommand, $yesDisplay, $noCommand, $noDisplay, $timeout);
+		}
+		return $data;
+	}
+
+	public static function modalPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, UserString $yesDisplay, UserString $noDisplay, float $timeout) : Generator{
+		return yield $context->getManager()->getFormsAdapter()->sendModalForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $context->translateUserString($yesDisplay), $context->translateUserString($noDisplay), $timeout);
+	}
+
+	public static function modalNonPlayer(FlowContext $context, UserString $title, UserString $synopsis, string $yesCommand, UserString $yesDisplay, string $noCommand, UserString $noDisplay, float $timeout) : Generator{
+		$context->send(LibkineticMessages::MESSAGE_MODAL_CLI_TITLE, ["title" => $context->translateUserString($title)]);
+		$context->send(LibkineticMessages::MESSAGE_MODAL_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
+		while(true){
+			$context->send(LibkineticMessages::MESSAGE_MODAL_CLI_INSTRUCTION, [
+				"cont" => $context->getManager()->getContName(),
+				"yesCommand" => $yesCommand,
+				"yesDisplay" => $context->translateUserString($yesDisplay),
+				"noCommand" => $noCommand,
+				"noDisplay" => $context->translateUserString($noDisplay),
+			]);
+			$value = yield $context->getManager()->waitCont($context->getUser(), $timeout);
+			if($value === $yesCommand){
+				return true;
+			}
+			if($value === $noCommand){
+				return false;
+			}
+
+			$context->send(LibkineticMessages::MESSAGE_CLI_WRONG_INPUT);
+		}
 	}
 }

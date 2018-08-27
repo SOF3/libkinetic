@@ -31,6 +31,12 @@ class LibkineticMessages{
 
 	public const MESSAGE_CLI_WRONG_INPUT = "libkinetic.cli.wrong-input";
 
+	public const MESSAGE_MODAL_YES = "libkinetic.modal.yes";
+	public const MESSAGE_MODAL_NO = "libkinetic.modal.no";
+	public const MESSAGE_MODAL_CLI_TITLE = "libkinetic.modal.cli.title";
+	public const MESSAGE_MODAL_CLI_SYNOPSIS = "libkinetic.modal.cli.synopsis";
+	public const MESSAGE_MODAL_CLI_INSTRUCTION = "libkinetic.modal.cli.instruction";
+
 	public const MESSAGE_LIST_CLI_TITLE = "libkinetic.list.cli.title";
 	public const MESSAGE_LIST_CLI_SYNOPSIS = "libkinetic.list.cli.synopsis";
 	public const MESSAGE_LIST_CLI_OPTION = "libkinetic.list.cli.option";
@@ -65,6 +71,22 @@ class LibkineticMessages{
 
 		self::MESSAGE_CLI_WRONG_INPUT => [
 			"en_US" => TextFormat::RED . 'Invalid input!',
+		],
+
+		self::MESSAGE_MODAL_YES => [
+			"en_US" => "Yes",
+		],
+		self::MESSAGE_MODAL_NO => [
+			"en_US" => "No",
+		],
+		self::MESSAGE_MODAL_CLI_TITLE => [
+			"en_US" => TextFormat::BOLD . '${title}',
+		],
+		self::MESSAGE_MODAL_CLI_SYNOPSIS => [
+			"en_US" => '${synopsis}',
+		],
+		self::MESSAGE_MODAL_CLI_INSTRUCTION => [
+			"en_US" => 'Answer with ' . TextFormat::GOLD . '/${cont} ${yesCommand}' . TextFormat::LIGHT_PURPLE . ' (${yesDisplay}) ' . TextFormat::WHITE . ' or ' . TextFormat::GOLD . '/${cont} ${noCommand}' . TextFormat::LIGHT_PURPLE . ' (${noDisplay}) ',
 		],
 
 		self::MESSAGE_LIST_CLI_TITLE => [
@@ -112,7 +134,7 @@ class LibkineticMessages{
 		],
 
 		self::MESSAGE_CUSTOM_CLI_SELECT_OPTION => [
-			"en_US" =>  TextFormat::LIGHT_PURPLE . '${mnemonic}' . TextFormat::GRAY . ' => ' . TextFormat::WHITE . '${display}',
+			"en_US" => TextFormat::LIGHT_PURPLE . '${mnemonic}' . TextFormat::GRAY . ' => ' . TextFormat::WHITE . '${display}',
 		],
 		self::MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED => [
 			"en_US" => TextFormat::YELLOW . 'Your input has been corrected to ${corrected} because the step is ${step}',

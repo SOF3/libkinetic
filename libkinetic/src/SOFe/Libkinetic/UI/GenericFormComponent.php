@@ -128,6 +128,10 @@ class GenericFormComponent extends KineticComponent{
 	 * @return Generator
 	 */
 	public function sendCustomForm(FlowContext $context, array $elements) : Generator{
-		return HybridForms::custom($context, $this->title, $elements, $this->getTimeout());
+		return yield HybridForms::custom($context, $this->title, $elements, $this->getTimeout());
+	}
+
+	public function sendModalForm(FlowContext $context, ?string $yesCommand, ?UserString $yesDisplay, ?string $noCommand, ?UserString $noDisplay) : Generator{
+		return yield HybridForms::modal($context, $this->title, $this->synopsis, $yesCommand, $yesDisplay, $noCommand, $noDisplay, $this->getTimeout());
 	}
 }

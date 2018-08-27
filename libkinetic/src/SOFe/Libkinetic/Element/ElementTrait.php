@@ -23,15 +23,13 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Generator;
-use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
 use function microtime;
 
 trait ElementTrait{
 	/** @var bool */
 	protected $requiresId;
-
-	public abstract function getNode() : KineticNode;
 
 	public function __construct(bool $requiresId){
 		$this->requiresId = $requiresId;
@@ -43,7 +41,11 @@ trait ElementTrait{
 
 	public function requestCli(FlowContext $context, float $expiry) : Generator{
 		while(true){
-			$value = yield $this->requestCliImpl($context, microtime(true) - $expiry);
+			$timeout = microtime(true) - $expiry;
+			if($timeout <= 0.0){
+				throw new FlowCancelledException();
+			}
+			$value = yield $this->requestCliImpl($context, $timeout);
 			if($this->parse($context, $value)){
 				return $value;
 			}

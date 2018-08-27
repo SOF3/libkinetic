@@ -22,13 +22,16 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Standard;
 
+use function count;
 use Generator;
 use SOFe\Libkinetic\API\IconListFactory;
 use SOFe\Libkinetic\API\IconListProvider;
 use SOFe\Libkinetic\API\ListProvider;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\BooleanAttribute;
 use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
 use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
@@ -54,6 +57,8 @@ class ListFormComponent extends KineticComponent implements UiNode{
 	protected $before = [];
 	/** @var MuxOptionComponent[] */
 	protected $after = [];
+	/** @var bool */
+	protected $autoSelect = false;
 
 	public function getDependencies() : Generator{
 		yield UiComponent::class;
@@ -79,6 +84,7 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		]), $this->provider, true);
 		$router->use("target", new VarRefAttribute(), $this->target, false);
 		$router->use("defaultVar", new VarRefAttribute(), $this->defaultVar, false);
+		$router->use("autoSelect", new BooleanAttribute(), $this->autoSelect, false);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
@@ -110,6 +116,16 @@ class ListFormComponent extends KineticComponent implements UiNode{
 
 		$factory = new IconListFactory();
 		yield $this->provider->provideIconList($context, $factory);
+
+		if($this->autoSelect){
+			$count = $factory->getElements();
+			if($count === 1){
+				return [false, $factory->getElements()[0][2]];
+			}
+			if($count === 0){
+				throw new FlowCancelledException();
+			}
+		}
 
 		$options = [];
 		foreach($this->before as $component){

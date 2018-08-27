@@ -141,6 +141,15 @@
     </xs:attribute>
   </xs:complexType>
 
+  <xs:complexType name="VarDeclaration">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="field" type="VarDeclaration" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+
+    <xs:attribute name="name" type="VarName"/>
+    <xs:attribute name="type" type="VarType"/>
+  </xs:complexType>
+
   <!-- UiNode stuff -->
   <xs:group name="UiNode">
     <xs:annotation>
@@ -373,15 +382,6 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="VarDeclaration">
-    <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="field" type="VarDeclaration" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:choice>
-
-    <xs:attribute name="name" type="VarName"/>
-    <xs:attribute name="type" type="VarType"/>
-  </xs:complexType>
-
   <xs:complexType name="CommandArg">
     <xs:attribute name="name" type="UserString" use="required"/>
     <xs:attribute name="type" use="optional" default="string">
@@ -408,25 +408,17 @@
     <xs:complexContent>
       <xs:extension base="UiNode">
         <xs:sequence>
-          <xs:element name="option" minOccurs="2" maxOccurs="unbounded">
-            <xs:complexType>
-              <xs:group ref="UiNode"/>
-              <xs:attribute name="displayName" type="UserString"/>
-              <xs:attribute name="commandName" type="xs:string"/>
-            </xs:complexType>
-          </xs:element>
+          <xs:element name="option" type="MuxOptionNode" minOccurs="2" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="var" type="VarName"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
-  <xs:complexType name="IndexNode">
-    <xs:complexContent>
-      <xs:extension base="UiNode">
-        <xs:group ref="UiNode"/>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:complexType name="MuxOptionNode">
+    <xs:group ref="UiNode"/>
+    <xs:attribute name="displayName" type="UserString"/>
+    <xs:attribute name="commandName" type="xs:string"/>
   </xs:complexType>
 
   <xs:complexType name="BasicFormNode">
@@ -440,18 +432,12 @@
     <xs:complexContent>
       <xs:extension base="UiNode">
         <xs:all>
-          <xs:element name="before">
-            <xs:complexType>
-              <xs:group ref="UiNode"/>
-            </xs:complexType>
-          </xs:element>
-          <xs:element name="after">
-            <xs:complexType>
-              <xs:group ref="UiNode"/>
-            </xs:complexType>
-          </xs:element>
+          <xs:element name="before" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="after" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
         </xs:all>
         <xs:attribute name="provider" type="ControllerName"/>
+        <xs:attribute name="defaultVar" type="VarName"/>
+        <xs:attribute name="target" type="VarName"/>
         <xs:attribute name="autoSelect" type="xs:boolean" default="true"/>
       </xs:extension>
     </xs:complexContent>
@@ -460,6 +446,11 @@
   <xs:complexType name="InfoFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+        <xs:all>
+          <xs:element name="yes" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="no" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
+        </xs:all>
+        <xs:attribute name="defaultVar" type="VarName"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -478,7 +469,7 @@
     </xs:complexContent>
   </xs:complexType>
 
-  <!-- element implementation -->
+  <!-- Element implementations -->
   <xs:complexType name="ElementNode" abstract="true">
     <xs:attribute name="id" use="optional">
       <xs:annotation>

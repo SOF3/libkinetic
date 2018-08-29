@@ -55,7 +55,7 @@ trait KineticAdapterBase{
 		}, array_keys($parameters)), array_values($parameters), $identifier);
 	}
 
-	public function getInstantiable(string $name) : object{
+	public function getController(string $name) : object{
 		throw new InvalidArgumentException("Nonexistent instantiable \"$name\"");
 	}
 

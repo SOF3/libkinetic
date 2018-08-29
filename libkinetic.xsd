@@ -421,16 +421,37 @@
     <xs:attribute name="commandName" type="xs:string"/>
   </xs:complexType>
 
-  <xs:complexType name="BasicFormNode">
+  <xs:complexType name="GenericFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+        <xs:attribute name="title" type="UserString" use="required"/>
+        <xs:attribute name="synopsis" type="UserString" use="required"/>
+        <xs:attribute name="timeout" type="xs:double" use="optional" default="600"/>
+        <xs:attribute name="onCancel" use="optional" default="fallthrough">
+          <xs:simpleType>
+            <xs:restriction>
+              <xs:enumeration value="fallthrough"/>
+              <xs:enumeration value="skip"/>
+              <xs:enumeration value="break"/>
+              <xs:enumeration value="exit"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="BasicFormNode">
+    <xs:complexContent>
+      <xs:extension base="GenericFormNode">
+        <xs:attribute name="synopsis" type="UserString" use="prohibited"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="ListFormNode">
     <xs:complexContent>
-      <xs:extension base="UiNode">
+      <xs:extension base="GenericFormNode">
         <xs:all>
           <xs:element name="before" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
           <xs:element name="after" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
@@ -438,14 +459,14 @@
         <xs:attribute name="provider" type="ControllerName"/>
         <xs:attribute name="defaultVar" type="VarName"/>
         <xs:attribute name="target" type="VarName"/>
-        <xs:attribute name="autoSelect" type="xs:boolean" default="true"/>
+        <xs:attribute name="autoSelect" type="xs:boolean" default="false"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 
   <xs:complexType name="InfoFormNode">
     <xs:complexContent>
-      <xs:extension base="UiNode">
+      <xs:extension base="GenericFormNode">
         <xs:all>
           <xs:element name="yes" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
           <xs:element name="no" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>

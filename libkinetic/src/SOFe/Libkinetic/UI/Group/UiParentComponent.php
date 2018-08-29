@@ -72,8 +72,8 @@ class UiParentComponent extends KineticComponent{
 
 	public function endElement() : void{
 		$i = 0;
-		$this->children = ArrayUtil::indexByProperty($this->children, function(UiGroup $group) use (&$i): string{
-			return $group->getNode()->asIdComponent()->getId() ?? "libkinetic.internal.unnamedComponent#" . ($i++);
+		$this->children = ArrayUtil::indexByProperty($this->children, function(UiNode $node) use (&$i): string{
+			return $node->getNode()->asIdComponent()->getId() ?? "libkinetic.internal.unnamedComponent#" . ($i++);
 		});
 	}
 

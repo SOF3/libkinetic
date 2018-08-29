@@ -80,15 +80,15 @@ class GenericFormComponent extends KineticComponent{
 			$router->use("synopsis", new UserStringAttribute(), $this->synopsis, true);
 		}
 		$router->use("timeout", new Configurable(new DurationAttribute(1.0)), $this->timeout, false);
-		if($this->cancellable){
-			$router->use("onCancel", new StringEnumAttribute([
-				"fallthrough" => self::ON_CANCEL_FALLTHROUGH,
-				"skip" => self::ON_CANCEL_SKIP,
-				"break" => self::ON_CANCEL_BREAK,
-				"exit" => self::ON_CANCEL_EXIT,
-			], true), $this->onCancel, false);
-			$router->use("onCancelTarget", new StringAttribute(), $this->onCancelTarget, false);
-		}
+//		if($this->cancellable){
+		$router->use("onCancel", new StringEnumAttribute([
+			"fallthrough" => self::ON_CANCEL_FALLTHROUGH,
+			"skip" => self::ON_CANCEL_SKIP,
+			"break" => self::ON_CANCEL_BREAK,
+			"exit" => self::ON_CANCEL_EXIT,
+		], true), $this->onCancel, false);
+		$router->use("onCancelTarget", new StringAttribute(), $this->onCancelTarget, false);
+//		}
 	}
 
 	public function getTitle() : UserString{

@@ -20,15 +20,18 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Hybrid;
+namespace SOFe\Libkinetic\Cont;
 
 use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\plugin\Plugin;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\LibkineticMessages;
 use function array_slice;
 use function assert;
 use function count;
+use SOFe\Libkinetic\Util\CallbackTask;
 use function strlen;
 
 class ContCommand extends Command implements PluginIdentifiableCommand{
@@ -49,9 +52,31 @@ class ContCommand extends Command implements PluginIdentifiableCommand{
 				$missing[0],
 				$manager->translate(null, LibkineticMessages::MESSAGE_CONT_DESC),
 				$manager->translate(null, LibkineticMessages::MESSAGE_CONT_USAGE, ["alias" => $shortest]),
-				array_slice($missing, 1)
+				array_slice($missing, 1),
+				$manager
 			);
 			$manager->getPlugin()->getServer()->getCommandMap()->register("libkinetic", $command);
 		}
+
+		$listener = new ContListener($manager, $names);
+		$manager->getPlugin()->getScheduler()->scheduleDelayedTask(new CallbackTask([$listener, "cleanup"]), 200);
+
+		return [$listener, "waitFor"];
+	}
+
+	/** @var KineticManager */
+	private $manager;
+
+	public function __construct(string $name, string $desc, string $usage, array $aliases, KineticManager $manager){
+		$this->manager = $manager;
+		parent::__construct($name, $desc, $usage, $aliases);
+	}
+
+	public function execute(CommandSender $sender, string $commandLabel, array $args){
+		$sender->sendMessage($this->manager->translate($sender, LibkineticMessages::MESSAGE_CONT_NIL));
+	}
+
+	public function getPlugin() : Plugin{
+		return $this->manager->getPlugin();
 	}
 }

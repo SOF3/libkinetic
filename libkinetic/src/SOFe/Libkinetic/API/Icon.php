@@ -23,5 +23,20 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\API;
 
 class Icon{
-	// TODO implement
+	public const TYPE_PATH = "path";
+	public const TYPE_URL = "url";
+
+	/** @var string */
+	protected $type;
+
+	/** @var string */
+	protected $path;
+
+	public function getType() : string{
+		return $this->type;
+	}
+
+	public function getPath() : string{
+		return $this->path;
+	}
 }

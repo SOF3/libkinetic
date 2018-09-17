@@ -25,10 +25,11 @@ namespace SOFe\Libkinetic\Parser\Attribute;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticNode;
 use function assert;
+use function strpos;
 
 class IdAttribute extends NodeAttribute{
 	public function accept(KineticNode $node, string $value) : string{
-		if($value{0} === "."){
+		if(strpos($value, ".") === 0){
 			$parent = $node->getParent();
 			assert($parent !== null);
 			$idComp = $parent->getComponent(IdComponent::class);

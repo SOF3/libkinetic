@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Generator;
+use jojoe77777\FormAPI\CustomForm;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
@@ -85,6 +86,11 @@ class SliderElementComponent extends KineticComponent implements ElementInterfac
 			"default" => $this->default ?? "N/A",
 		]);
 		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
+	}
+
+	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
+		false && yield;
+		$form->addSlider($context->translateUserString($this->text), $this->min, $this->max, $this->step === 0.0 ? -1 : $this->step, $this->default ?? -1);
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{

@@ -67,8 +67,7 @@ class XmlFileParser extends KineticFileParser{
 		xml_set_element_handler($parser, "startElement", "endElement");
 		xml_set_character_data_handler($parser, "parseText");
 		try{
-			while(!feof($this->fh)){
-				$buffer = fgets($this->fh);
+			while(!feof($this->fh) && ($buffer = fgets($this->fh)) !== false){
 				if(xml_parse($parser, $buffer, feof($this->fh)) === 0){
 					$errorCode = xml_get_error_code($parser);
 					throw new ParseException(xml_error_string($errorCode));

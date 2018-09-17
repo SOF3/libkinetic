@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Standard;
 
-use function count;
 use Generator;
 use SOFe\Libkinetic\API\IconListFactory;
 use SOFe\Libkinetic\API\IconListProvider;
@@ -131,8 +130,8 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		foreach($this->before as $component){
 			$options[] = [$component->getCommandName(), $component->getDisplayName(), [true, $component]];
 		}
-		foreach($factory->getElements() as [$mnemonic, $display, $value]){
-			$options[] = [$mnemonic, $display, [false, $value]];
+		foreach($factory->getElements() as [$mnemonic, $display, $value, $icon]){
+			$options[] = [$mnemonic, $display, [false, $value], $icon];
 		}
 		foreach($this->after as $component){
 			$options[] = [$component->getCommandName(), $component->getDisplayName(), [true, $component]];

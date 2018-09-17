@@ -31,12 +31,18 @@ use ReflectionClass;
 use ReflectionParameter;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Base\RootComponent;
+use SOFe\Libkinetic\Cont\ContCommand;
+use SOFe\Libkinetic\Flow\EntryFlowContext;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
-use SOFe\Libkinetic\Hybrid\ContCommand;
+use SOFe\Libkinetic\Hybrid\FormAPIAdapter;
 use SOFe\Libkinetic\Hybrid\FormsAdapter;
 use SOFe\Libkinetic\Parser\JsonFileParser;
 use SOFe\Libkinetic\Parser\KineticFileParser;
 use SOFe\Libkinetic\Parser\XmlFileParser;
+use SOFe\Libkinetic\UI\UiComponent;
+use SOFe\Libkinetic\UI\UiNode;
+use SOFe\Libkinetic\Util\Await;
+use SOFe\Libkinetic\Util\CallbackTask;
 use function array_keys;
 use function array_merge;
 use function assert;
@@ -48,6 +54,7 @@ use function is_array;
 use function mb_strpos;
 use function mb_substr;
 use function str_replace;
+use function strpos;
 use function substr;
 
 class KineticManager{
@@ -62,11 +69,24 @@ class KineticManager{
 
 	/** @var RootComponent */
 	protected $root;
+	/** @var UiNode[] */
+	protected $uiNodes = [];
 
 	/** @var string */
 	protected $contName;
 	/** @var callable a callable that returns a cont await generator */
 	protected $contAdapter;
+
+	public function execute(string $id, CommandSender $user, ?callable $callback = null, $onError = []) : void{
+		$node = $this->uiNodes[$id];
+		$context = new EntryFlowContext($node, $user);
+		$context->executeCallback($callback, $onError);
+	}
+	public function executeG(string $id, CommandSender $user) : Generator{
+		$node = $this->uiNodes[$id];
+		$context = new EntryFlowContext($node, $user);
+		return $context->execute();
+	}
 
 	/**
 	 * KineticManager constructor.
@@ -98,7 +118,18 @@ class KineticManager{
 		}
 		foreach($allNodes as $node){
 			$node->init();
+			if($node->hasComponent(UiComponent::class) && $node->asIdComponent()->getId() !== null){
+				foreach($node->getComponents() as $c){
+					if($c instanceof UiNode){
+						$component = $c;
+					}
+				}
+				assert(isset($component));
+				$this->uiNodes[$node->asIdComponent()->getId()] = $component;
+			}
 		}
+
+		$this->formsAdapter = new FormAPIAdapter($this);
 
 		if($root->getCont() !== null){
 			$names = [$root->getCont()->getName()];
@@ -136,6 +167,7 @@ class KineticManager{
 		return $this->formsAdapter;
 	}
 
+
 	public function getContName() : string{
 		return $this->contName;
 	}
@@ -145,7 +177,7 @@ class KineticManager{
 	}
 
 	public function waitCont(CommandSender $sender, float $timeout) : Generator{
-		return ($this->contAdapter)($sender, $timeout);
+		return yield ($this->contAdapter)($sender, yield, yield Await::REJECT, $timeout) => Await::ONCE;
 	}
 
 	public function translate(?CommandSender $context, ?string $identifier, array $args = []) : string{
@@ -181,7 +213,7 @@ class KineticManager{
 			return null;
 		}
 
-		if($fqn{0} === '$'){
+		if(strpos($fqn, '$') === 0){
 			$object = $this->adapter->getController(substr($fqn, 1));
 			$output = self::adaptObject($object, $interface, $adapters);
 			if($output === null){
@@ -201,7 +233,7 @@ class KineticManager{
 
 		if($fqn{0} === "\\"){
 			$class = substr($fqn, 1);
-		}elseif($fqn{0} === "!"){
+		}elseif(strpos($fqn, "!") === 0){
 			$class = libkinetic::getNamespace() . "\\Defaults\\" . substr($fqn, 1);
 		}else{
 			$class = $namespace . $fqn;
@@ -289,5 +321,11 @@ class KineticManager{
 			}
 		}
 		return null;
+	}
+
+
+	public function sleep(int $ticks) : Generator{
+		$this->getPlugin()->getScheduler()->scheduleDelayedTask(new CallbackTask(yield), $ticks);
+		yield Await::ONCE;
 	}
 }

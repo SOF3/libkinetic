@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\Hybrid;
 
 use Generator;
 use pocketmine\Player;
+use SOFe\Libkinetic\API\Icon;
 use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
@@ -45,18 +46,22 @@ class HybridForms{
 	public static function list(FlowContext $context, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
 		/** @var string[] $mnemonics */
 		$mnemonics = [];
-		/** @var UserString[] $mnemonics */
+		/** @var string[][]|Icon[][]|null[][] $displays */
 		$displays = [];
 		/** @var mixed[] $mnemonics */
 		$values = [];
-		/**
-		 * @var string     $mnemonic
-		 * @var UserString $display
-		 * @var mixed      $value
-		 */
-		foreach($options as [$mnemonic, $display, $value]){
+		foreach($options as $option){
+			/**
+			 * @var string     $mnemonic
+			 * @var UserString $display
+			 * @var mixed      $value
+			 * @var Icon|null  $icon
+			 */
+			[$mnemonic, $display, $value] = $option;
+			$icon = $option[3] ?? null;
+
 			$mnemonics[] = $mnemonic;
-			$displays[] = $context->translateUserString($display);
+			$displays[] = [$context->translateUserString($display), $icon];
 			$values[] = $value;
 		}
 
@@ -68,8 +73,8 @@ class HybridForms{
 		return $values[$choice];
 	}
 
-	public static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
-		return yield $context->getManager()->getFormsAdapter()->sendMenuForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $strings, $timeout);
+	public static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
+		return yield $context->getManager()->getFormsAdapter()->sendMenuForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $options, $timeout);
 	}
 
 	/**
@@ -127,7 +132,7 @@ class HybridForms{
 	}
 
 	public static function customPlayer(FlowContext $context, Player $player, UserString $title, array $elements, float $timeout) : Generator{
-		return yield $context->getManager()->getFormsAdapter()->sendCustomForm($player, $context->translateUserString($title), $elements, $timeout);
+		return yield $context->getManager()->getFormsAdapter()->sendCustomForm($context, $player, $context->translateUserString($title), $elements, $timeout);
 	}
 
 	/**

@@ -106,7 +106,7 @@ trait UiNodeTrait{
 		return [$state, $target];
 	}
 
-	protected abstract function getNode() : KineticNode;
+	public abstract function getNode() : KineticNode;
 
 	protected function executeNodeAndReturn(FlowContext $context) : Generator{
 		$outcome = yield $this->executeNode($context);

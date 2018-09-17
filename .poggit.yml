@@ -7,3 +7,6 @@ projects:
     - src: SOF3/await-generator/await-generator
       version: ^2.0.0
       epitope: .sha
+    - src: SOF3/FormAPI/FormAPI
+      version: ^101.4.0
+      epitope: .sha

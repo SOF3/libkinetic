@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Generator;
+use jojoe77777\FormAPI\CustomForm;
 use SOFe\Libkinetic\API\ListFactory;
 use SOFe\Libkinetic\API\ListProvider;
 use SOFe\Libkinetic\Base\KineticComponent;
@@ -69,7 +70,7 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$options = yield $this->getOptions($context);
+		$options = yield $this->getOptions($context, $defaultOption);
 		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
 		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT, ["cont" => $context->getManager()->getContName()]);
 		$valueMap = [];
@@ -81,7 +82,20 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 			]);
 		}
 		$choice = yield $context->getManager()->waitCont($context->getUser(), $timeout);
+		if($choice === ""){
+			$choice = $defaultOption;
+		}
 		return isset($valueMap[$choice]) ? [true, $valueMap[$choice]] : [false];
+	}
+
+	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
+		$options = yield $this->getOptions($context, $defaultOption);
+
+		if($this->mode === self::DROPDOWN){
+			$form->addDropdown($context->translateUserString($this->text), $options, $defaultOption);
+		}else{
+			$form->addStepSlider($context->translateUserString($this->text), $options, $defaultOption);
+		}
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{
@@ -94,16 +108,22 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 		}
 	}
 
-	protected function getOptions(FlowContext $context) : Generator{
+	protected function getOptions(FlowContext $context, &$defaultOption) : Generator{
 		if($this->provider !== null){
 			$factory = new ListFactory();
 			yield $this->provider->provideList($context, $factory);
-			return $factory->toOptions();
+			$options = $factory->toOptions();
+			foreach($options as $i => $option){
+				if($option[3]){
+					$defaultOption = $i;
+				}
+			}
+			return $options;
 		}
 
 		$options = [];
 		foreach($this->optionNodes as $option){
-			$options[] = [$option->getCommandName(), $option->getDisplayName(), $option->getValue()];
+			$options[] = [$option->getCommandName(), $option->getDisplayName(), $option->getValue(), $option->isDefault()];
 		}
 		return $options;
 	}

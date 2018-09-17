@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Generator;
+use jojoe77777\FormAPI\CustomForm;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
@@ -49,6 +50,11 @@ class ToggleElementComponent extends KineticComponent implements ElementInterfac
 		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE, ["cont" => $context->getManager()->getContName()]);
 		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default ? "true" : "false"]);
 		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
+	}
+
+	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
+		false && yield;
+		$form->addToggle($context->translateUserString($this->text), $this->default);
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{

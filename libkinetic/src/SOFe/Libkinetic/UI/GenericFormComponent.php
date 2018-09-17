@@ -112,8 +112,8 @@ class GenericFormComponent extends KineticComponent{
 	}
 
 	/**
-	 * @param FlowContext           $context
-	 * @param string[]|UserString[] $options
+	 * @param FlowContext               $context
+	 * @param string[][]|UserString[][] $options
 	 *
 	 * @return Generator
 	 */

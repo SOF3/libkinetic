@@ -23,11 +23,14 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Element;
 
 use Generator;
+use jojoe77777\FormAPI\CustomForm;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Flow\FlowContext;
 
 interface ElementInterface{
 	public function requestCli(FlowContext $context, float $expiry) : Generator;
+
+	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator;
 
 	public function getNode() : KineticNode;
 }

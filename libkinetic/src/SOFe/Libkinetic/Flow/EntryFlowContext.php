@@ -69,7 +69,7 @@ class EntryFlowContext extends FlowContext{
 		}
 	}
 
-	public function executeCallback(callable $callback, callable $onError) : void{
+	public function executeCallback(?callable $callback = null, $onError = []) : void{
 		Await::g2c($this->execute(), $callback, $onError);
 	}
 }

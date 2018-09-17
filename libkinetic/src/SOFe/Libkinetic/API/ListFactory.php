@@ -64,8 +64,8 @@ class ListFactory{
 			$elements[] = [$mnemonic, $display, $value, $isDefault];
 		}
 		if(!$defaultSet){
-			throw new UnexpectedValueException("Invalid default key $this->default: not such key in eleemnts");
+			throw new UnexpectedValueException("Invalid default key $this->default: not such key in elements");
 		}
-		return $this->elements;
+		return $elements;
 	}
 }

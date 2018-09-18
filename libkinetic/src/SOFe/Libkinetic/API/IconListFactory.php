@@ -26,7 +26,7 @@ use InvalidArgumentException;
 use SOFe\Libkinetic\UserString;
 
 class IconListFactory extends ListFactory{
-	public function addIconElement($value, UserString $displayName, string $commandName, Icon $icon, bool $default = false) : void{
+	public function addIconElement($value, UserString $displayName, string $commandName, ?Icon $icon = null, bool $default = false) : void{
 		$this->elements[] = [$commandName, $displayName, $value, $icon];
 		if($default){
 			if(isset($this->default)){

@@ -28,10 +28,10 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\plugin\Plugin;
 use SOFe\Libkinetic\KineticManager;
 use SOFe\Libkinetic\LibkineticMessages;
+use SOFe\Libkinetic\Util\CallbackTask;
 use function array_slice;
 use function assert;
 use function count;
-use SOFe\Libkinetic\Util\CallbackTask;
 use function strlen;
 
 class ContCommand extends Command implements PluginIdentifiableCommand{

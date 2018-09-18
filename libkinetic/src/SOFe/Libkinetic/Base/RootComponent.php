@@ -66,7 +66,7 @@ class RootComponent extends KineticComponent{
 		return $this->includes;
 	}
 
-	public function getCont() : CommandComponent{
+	public function getCont() : ?CommandComponent{
 		return $this->cont;
 	}
 

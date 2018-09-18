@@ -44,7 +44,8 @@ trait UiNodeTrait{
 			UiNodeStateHandler::STATE_START => 0,
 		];
 
-		foreach($this->getNode()->asUiComponent()->getOnStart()->asBaseUiNodeStateComponent()->getHandlers() as $handler){
+		$onStart = $this->getNode()->asUiComponent()->getOnStart();
+		foreach($onStart === null ? [] : $onStart->asBaseUiNodeStateComponent()->getHandlers() as $handler){
 			$allHandlers[] = [$handler, "onStartComplete"];
 		}
 
@@ -52,7 +53,8 @@ trait UiNodeTrait{
 		$allHandlers[] = [$this, "executeNodeAndReturn"];
 		$labels[UiNodeStateHandler::STATE_COMPLETE] = count($allHandlers);
 
-		foreach($this->getNode()->asUiComponent()->getOnComplete()->asBaseUiNodeStateComponent()->getHandlers() as $handler){
+		$onComplete = $this->getNode()->asUiComponent()->getOnComplete();
+		foreach($onComplete === null ? [] : $onComplete->asBaseUiNodeStateComponent()->getHandlers() as $handler){
 			$allHandlers[] = [$handler, "onStartComplete"];
 		}
 

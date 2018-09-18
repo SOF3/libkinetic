@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-use function htmlspecialchars;
 use InvalidArgumentException;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Parser\XmlFileParser;
@@ -36,6 +35,7 @@ use function explode;
 use function fopen;
 use function fwrite;
 use function get_class;
+use function htmlspecialchars;
 use function implode;
 use function is_file;
 use function json_encode;

@@ -22,9 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Standard;
 
-use function assert;
 use Generator;
-use function is_bool;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
@@ -38,6 +36,8 @@ use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeOutcome;
 use SOFe\Libkinetic\UI\UiNodeTrait;
 use SOFe\Libkinetic\Variable\Variable;
+use function assert;
+use function is_bool;
 
 class InfoFormComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
@@ -78,7 +78,7 @@ class InfoFormComponent extends KineticComponent implements UiNode{
 		}
 
 		$option = $choice ? $this->yes : $this->no;
-		if($option!==null){
+		if($option !== null){
 			return $option->asUiParentComponent()->getChildren()[0]->execute($context);
 		}
 		return new UiNodeOutcome;

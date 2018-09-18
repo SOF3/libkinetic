@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Parser\Attribute;
 
-use function assert;
 use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
+use function assert;
 use function explode;
 
 class VarRefAttribute extends ResolvableNodeAttribute{

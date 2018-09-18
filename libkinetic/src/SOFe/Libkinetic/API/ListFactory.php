@@ -29,7 +29,7 @@ use UnexpectedValueException;
 class ListFactory{
 	/** @var string */
 	protected $default;
-	/** @var string[]|UserString[]|mixed[] */
+	/** @var string[][]|UserString[][]|mixed[][]|Icon[][]|null[][] */
 	protected $elements = [];
 
 	public function addElement(string $commandName, UserString $displayName, $value, bool $default = false) : void{
@@ -56,12 +56,13 @@ class ListFactory{
 	public function toOptions() : array{
 		$defaultSet = false;
 		$elements = [];
-		foreach($this->elements as $i => [$mnemonic, $display, $value]){
+		foreach($this->elements as $i => $element){
+			[$mnemonic, $display, $value] = $element;
 			$isDefault = (!isset($this->default) && $i === 0) || $mnemonic === $this->default;
 			if($isDefault){
 				$defaultSet = true;
 			}
-			$elements[] = [$mnemonic, $display, $value, $isDefault];
+			$elements[] = [$mnemonic, $display, $value, $isDefault, $element[3] ?? null];
 		}
 		if(!$defaultSet){
 			throw new UnexpectedValueException("Invalid default key $this->default: not such key in elements");

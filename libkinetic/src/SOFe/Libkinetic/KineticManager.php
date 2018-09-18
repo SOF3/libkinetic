@@ -51,6 +51,7 @@ use function explode;
 use function implode;
 use function in_array;
 use function is_array;
+use function is_subclass_of;
 use function mb_strpos;
 use function mb_substr;
 use function str_replace;
@@ -82,6 +83,7 @@ class KineticManager{
 		$context = new EntryFlowContext($node, $user);
 		$context->executeCallback($callback, $onError);
 	}
+
 	public function executeG(string $id, CommandSender $user) : Generator{
 		$node = $this->uiNodes[$id];
 		$context = new EntryFlowContext($node, $user);
@@ -236,6 +238,9 @@ class KineticManager{
 		}elseif(strpos($fqn, "!") === 0){
 			$class = libkinetic::getNamespace() . "\\Defaults\\" . substr($fqn, 1);
 		}else{
+			if(substr($namespace, -1) !== "\\"){
+				$namespace .= "\\";
+			}
 			$class = $namespace . $fqn;
 		}
 
@@ -299,7 +304,7 @@ class KineticManager{
 	}
 
 	protected static function isClassApplicableToAdapter(string $class, string $interface, array $adapters) : bool{
-		if($class instanceof $interface){
+		if(is_subclass_of($class, $interface)){
 			return true;
 		}
 		foreach($adapters as $inter => $adapter){

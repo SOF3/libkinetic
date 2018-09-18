@@ -62,7 +62,8 @@ class GroupFlowContext extends FlowContext{
 
 		$nextIndex = 0;
 		while(true){
-			$outcome = yield $list[$indexToKey[$nextIndex]]->execute($this);
+			$next = $list[$indexToKey[$nextIndex]];
+			$outcome = yield $next->execute($this);
 			assert($outcome instanceof UiNodeOutcome);
 			switch($outcome->getOutcome()){
 				case UiNodeOutcome::OUTCOME_SKIP:

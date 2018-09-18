@@ -47,11 +47,11 @@ class UiComponent extends KineticComponent{
 		yield IdComponent::class;
 	}
 
-	public function getOnStart() : OnStartComponent{
+	public function getOnStart() : ?OnStartComponent{
 		return $this->onStart;
 	}
 
-	public function getOnComplete() : OnCompleteComponent{
+	public function getOnComplete() : ?OnCompleteComponent{
 		return $this->onComplete;
 	}
 

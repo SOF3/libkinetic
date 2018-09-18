@@ -130,8 +130,9 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		foreach($this->before as $component){
 			$options[] = [$component->getCommandName(), $component->getDisplayName(), [true, $component]];
 		}
-		foreach($factory->getElements() as [$mnemonic, $display, $value, $icon]){
-			$options[] = [$mnemonic, $display, [false, $value], $icon];
+		foreach($factory->getElements() as $element){
+			[$mnemonic, $display, $value] = $element;
+			$options[] = [$mnemonic, $display, [false, $value], $element[3] ?? null];
 		}
 		foreach($this->after as $component){
 			$options[] = [$component->getCommandName(), $component->getDisplayName(), [true, $component]];

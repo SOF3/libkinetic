@@ -23,50 +23,60 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\API;
 
 use InvalidArgumentException;
+use SOFe\Libkinetic\UI\Standard\ListEntry;
 use SOFe\Libkinetic\UserString;
-use UnexpectedValueException;
 
 class ListFactory{
-	/** @var string */
-	protected $default;
-	/** @var string[][]|UserString[][]|mixed[][]|Icon[][]|null[][] */
-	protected $elements = [];
+	/** @var ListEntry[] */
+	protected $entries = [];
+	/** @var ListEntry|null */
+	protected $default = null;
 
-	public function addElement(string $commandName, UserString $displayName, $value, bool $default = false) : void{
-		$this->elements[] = [$commandName, $displayName, $value];
+	public function add(string $commandName, UserString $displayName, $value, bool $default = false) : void{
+		$this->entries[] = $entry = new ListEntry($commandName, $displayName, $value);
+
 		if($default){
-			if(isset($this->default)){
+			if($this->default !== null){
 				throw new InvalidArgumentException("Duplicate default value");
 			}
-			$this->default = $commandName;
+
+			$this->default = $entry;
+			$entry->setDefault(true);
 		}
 	}
 
-	public function setDefault(string $default) : void{
-		if(isset($this->default)){
+	public function getDefault() : ?ListEntry{
+		if($this->default === null){
+			if(empty($this->entries)){
+				return null;
+			}
+			$this->default = $this->entries[0];
+			$this->default->setDefault(true);
+		}
+		return $this->default;
+	}
+
+	public function setDefault(string $commandName) : void{
+		if($this->default !== null){
 			throw new InvalidArgumentException("Default value already set");
 		}
-		$this->default = $default;
-	}
 
-	public function getElements() : array{
-		return $this->elements;
-	}
-
-	public function toOptions() : array{
-		$defaultSet = false;
-		$elements = [];
-		foreach($this->elements as $i => $element){
-			[$mnemonic, $display, $value] = $element;
-			$isDefault = (!isset($this->default) && $i === 0) || $mnemonic === $this->default;
-			if($isDefault){
-				$defaultSet = true;
+		foreach($this->entries as $entry){
+			if($entry->getCommandName() === $commandName){
+				$this->default = $entry;
+				$entry->setDefault(true);
+				return;
 			}
-			$elements[] = [$mnemonic, $display, $value, $isDefault, $element[3] ?? null];
 		}
-		if(!$defaultSet){
-			throw new UnexpectedValueException("Invalid default key $this->default: not such key in elements");
-		}
-		return $elements;
+
+		throw new InvalidArgumentException("No entries with the mnemonic $commandName");
+	}
+
+	/**
+	 * @return ListEntry[]
+	 */
+	public function getEntries() : array{
+		$this->getDefault(); // set default if null
+		return $this->entries;
 	}
 }

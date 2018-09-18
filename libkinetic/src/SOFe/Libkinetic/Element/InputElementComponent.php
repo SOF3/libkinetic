@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\Element;
 
 use Generator;
 use jojoe77777\FormAPI\CustomForm;
+use pocketmine\form\FormValidationException;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
@@ -31,6 +32,7 @@ use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
+use function is_string;
 
 class InputElementComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
@@ -49,13 +51,13 @@ class InputElementComponent extends KineticComponent implements ElementInterface
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_INPUT, [
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_INPUT, [
 			"cont" => $context->getManager()->getContName(),
 			"placeholder" => $context->translateUserString($this->placeholder)
 		]);
 		if($this->default !== ""){
-			$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default]);
+			$context->send(LibkineticMessages::CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default]);
 		}
 		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
 	}
@@ -63,6 +65,13 @@ class InputElementComponent extends KineticComponent implements ElementInterface
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
 		$form->addInput($context->translateUserString($this->text), $this->placeholder !== null ? $context->translateUserString($this->placeholder) : "", $this->default);
+	}
+
+	public function parseFormResponse(FlowContext $context, $response, $temp) : string{
+		if(!is_string($response)){
+			throw new FormValidationException("Got non-string response for input");
+		}
+		return $response;
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{

@@ -22,8 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use function assert;
 use Generator;
+use function is_bool;
 use jojoe77777\FormAPI\CustomForm;
+use pocketmine\form\FormValidationException;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
@@ -46,15 +49,21 @@ class ToggleElementComponent extends KineticComponent implements ElementInterfac
 	}
 
 	public function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE, ["cont" => $context->getManager()->getContName()]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default ? "true" : "false"]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_TOGGLE, ["cont" => $context->getManager()->getContName()]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default ? "true" : "false"]);
 		return yield $context->getManager()->waitCont($context->getUser(), $timeout);
 	}
 
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
 		$form->addToggle($context->translateUserString($this->text), $this->default);
+	}
+	public function parseFormResponse(FlowContext $context, $response, $temp) : bool{
+		if(!is_bool($response)){
+			throw new FormValidationException("Got non-bool response for toggle");
+		}
+		return $response;
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{

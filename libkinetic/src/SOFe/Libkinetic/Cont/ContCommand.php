@@ -50,8 +50,8 @@ class ContCommand extends Command implements PluginIdentifiableCommand{
 			assert($shortest !== null);
 			$command = new ContCommand(
 				$missing[0],
-				$manager->translate(null, LibkineticMessages::MESSAGE_CONT_DESC),
-				$manager->translate(null, LibkineticMessages::MESSAGE_CONT_USAGE, ["alias" => $shortest]),
+				$manager->translate(null, LibkineticMessages::CONT_DESC),
+				$manager->translate(null, LibkineticMessages::CONT_USAGE, ["alias" => $shortest]),
 				array_slice($missing, 1),
 				$manager
 			);
@@ -73,7 +73,7 @@ class ContCommand extends Command implements PluginIdentifiableCommand{
 	}
 
 	public function execute(CommandSender $sender, string $commandLabel, array $args){
-		$sender->sendMessage($this->manager->translate($sender, LibkineticMessages::MESSAGE_CONT_NIL));
+		$sender->sendMessage($this->manager->translate($sender, LibkineticMessages::CONT_NIL));
 	}
 
 	public function getPlugin() : Plugin{

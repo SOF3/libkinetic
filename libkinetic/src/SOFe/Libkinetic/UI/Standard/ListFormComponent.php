@@ -25,6 +25,7 @@ namespace SOFe\Libkinetic\UI\Standard;
 use Generator;
 use SOFe\Libkinetic\API\IconListFactory;
 use SOFe\Libkinetic\API\IconListProvider;
+use SOFe\Libkinetic\API\ListFactoryIconAdapter;
 use SOFe\Libkinetic\API\ListProvider;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
@@ -41,6 +42,8 @@ use SOFe\Libkinetic\UI\ReturningUiNodeOutcome;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
+use function assert;
+use function count;
 
 class ListFormComponent extends KineticComponent implements UiNode{
 	use UiNodeTrait;
@@ -67,18 +70,7 @@ class ListFormComponent extends KineticComponent implements UiNode{
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("provider", new ControllerAttribute(IconListProvider::class, [
 			ListProvider::class => function(ListProvider $provider) : IconListProvider{
-				return new class($provider) implements IconListProvider{
-					/** @var ListProvider */
-					private $provider;
-
-					public function __construct(ListProvider $provider){
-						$this->provider = $provider;
-					}
-
-					public function provideIconList(FlowContext $context, IconListFactory $factory) : Generator{
-						return yield $this->provider->provideList($context, $factory);
-					}
-				};
+				return new ListFactoryIconAdapter($provider);
 			}
 		]), $this->provider, true);
 		$router->use("target", new VarRefAttribute(), $this->target, false);
@@ -95,7 +87,7 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		[$mux, $value] = yield $this->chooseValue($context);
 
 		if($mux){
-			/** @var MuxOptionComponent $value */
+			assert($value instanceof MuxOptionComponent);
 			return $value->asUiParentComponent()->getChildren()[0]->execute($context);
 		}else{
 			$context->getVariables()->setNested($this->target, $value);
@@ -117,9 +109,9 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		yield $this->provider->provideIconList($context, $factory);
 
 		if($this->autoSelect){
-			$count = $factory->getElements();
+			$count = count($factory->getEntries());
 			if($count === 1){
-				return [false, $factory->getElements()[0][2]];
+				return [false, $factory->getEntries()[0][2]];
 			}
 			if($count === 0){
 				throw new FlowCancelledException();
@@ -128,14 +120,15 @@ class ListFormComponent extends KineticComponent implements UiNode{
 
 		$options = [];
 		foreach($this->before as $component){
-			$options[] = [$component->getCommandName(), $component->getDisplayName(), [true, $component]];
+			$options[] = new IconListEntry($component->getCommandName(), $component->getDisplayName(), [true, $component], null); // TODO icon
 		}
-		foreach($factory->getElements() as $element){
-			[$mnemonic, $display, $value] = $element;
-			$options[] = [$mnemonic, $display, [false, $value], $element[3] ?? null];
+		foreach($factory->getEntries() as $entry){
+			$option = clone $entry;
+			$option->setValue([false, $entry->getValue()]);
+			$options[] = $option;
 		}
 		foreach($this->after as $component){
-			$options[] = [$component->getCommandName(), $component->getDisplayName(), [true, $component]];
+			$options[] = new IconListEntry($component->getCommandName(), $component->getDisplayName(), [true, $component], null); // TODO icon
 		}
 
 		return yield $this->asGenericFormComponent()->sendListForm($context, $options);

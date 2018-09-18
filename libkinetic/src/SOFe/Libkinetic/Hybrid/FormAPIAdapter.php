@@ -23,18 +23,24 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Hybrid;
 
 use Generator;
+use function is_int;
 use jojoe77777\FormAPI\CustomForm;
 use jojoe77777\FormAPI\Form;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
+use pocketmine\form\FormValidationException;
 use pocketmine\Player;
 use SOFe\Libkinetic\API\Icon;
 use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\KineticManager;
+use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\Util\Await;
 use SOFe\Libkinetic\Util\CallbackTask;
+use function array_values;
+use function count;
+use function is_array;
 
 class FormAPIAdapter implements FormsAdapter{
 	/** @var KineticManager */
@@ -57,16 +63,24 @@ class FormAPIAdapter implements FormsAdapter{
 		yield from $this->sendForm($player, $form, $timeout);
 	}
 
-	public function sendMenuForm(Player $player, string $title, string $text, array $options, float $timeout) : Generator{
+	/**
+	 * @param FlowContext     $context
+	 * @param Player          $player
+	 * @param string          $title
+	 * @param string          $text
+	 * @param IconListEntry[] $options
+	 * @param float           $timeout
+	 *
+	 * @return Generator
+	 */
+	public function sendMenuForm(FlowContext $context, Player $player, string $title, string $text, array $options, float $timeout) : Generator{
 		$form = new SimpleForm(null);
 		$form->setTitle($title);
 		$form->setContent($text);
-		/**
-		 * @var string    $string
-		 * @var Icon|null $icon
-		 */
-		foreach($options as [$string, $icon]){
+		$values = [];
+		foreach($options as $entry){
 			$type = -1;
+			$icon = $entry->getIcon();
 			if($icon !== null){
 				if($icon->getType() === Icon::TYPE_PATH){
 					$type = SimpleForm::IMAGE_TYPE_PATH;
@@ -74,19 +88,40 @@ class FormAPIAdapter implements FormsAdapter{
 					$type = SimpleForm::IMAGE_TYPE_URL;
 				}
 			}
-			$form->addButton($string, $type, $icon !== null ? $icon->getPath() : "");
+			$form->addButton($context->translateUserString($entry->getDisplay()), $type, $icon !== null ? $icon->getPath() : "");
+			$values[] = $entry->getValue();
 		}
-		yield from $this->sendForm($player, $form, $timeout);
+		$response = yield $this->sendForm($player, $form, $timeout);
+		if(!is_int($response)){
+			throw new FormValidationException("Got non-int response for list form");
+		}
+		if($response < 0 || $response >= count($values)){
+			throw new FormValidationException("Got out-of-bounds response for list form");
+		}
+		return $values[$response];
 	}
 
 	public function sendCustomForm(FlowContext $context, Player $player, string $title, array $elements, float $timeout) : Generator{
+		$elements = array_values($elements);
+
 		$form = new CustomForm(null);
 		$form->setTitle($title);
+		$temp = [];
 		/** @var ElementInterface $element */
-		foreach($elements as $element){
-			$element->addToFormAPI($context, $form);
+		foreach($elements as $i => $element){
+			$temp[$i] = $element->addToFormAPI($context, $form);
 		}
-		yield from $this->sendForm($player, $form, $timeout);
+		$response = yield $this->sendForm($player, $form, $timeout);
+		if(!is_array($response)){
+			throw new FormValidationException("Got non-array response for custom form");
+		}
+		if(count($response) !== count($temp)){
+			throw new FormValidationException("Got out-of-bounds response size for custom form");
+		}
+
+		foreach($elements as $i => $element){
+			$element->parseFormResponse($context, $response[$i], $temp[$i]);
+		}
 	}
 
 	protected function sendForm(Player $player, Form $form, float $timeout) : Generator{
@@ -94,7 +129,7 @@ class FormAPIAdapter implements FormsAdapter{
 		$player->sendForm($form);
 		yield;
 		$this->timeout(yield Await::REJECT, new FlowCancelledException(), $timeout);
-		yield Await::RACE;
+		return yield Await::RACE;
 	}
 
 	protected function timeout(callable $yield, $ret, float $seconds) : void{

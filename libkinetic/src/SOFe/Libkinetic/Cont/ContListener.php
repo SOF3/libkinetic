@@ -64,7 +64,7 @@ class ContListener implements Listener{
 
 		$sender = $event->getSender();
 		if(!isset($this->handlers[$sender])){
-			$sender->sendMessage($this->manager->translate($sender, LibkineticMessages::MESSAGE_CONT_NIL));
+			$sender->sendMessage($this->manager->translate($sender, LibkineticMessages::CONT_NIL));
 			return;
 		}
 

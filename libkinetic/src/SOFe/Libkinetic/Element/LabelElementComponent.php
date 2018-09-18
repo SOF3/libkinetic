@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\Element;
 
 use Generator;
 use jojoe77777\FormAPI\CustomForm;
+use pocketmine\form\FormValidationException;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
@@ -43,12 +44,19 @@ class LabelElementComponent extends KineticComponent implements ElementInterface
 
 	public function requestCliImpl(FlowContext $context, float $timeout) : Generator{
 		false && yield;
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_LABEL, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_LABEL, ["text" => $context->translateUserString($this->text)]);
 	}
 
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
 		$form->addLabel($context->translateUserString($this->text));
+	}
+
+	public function parseFormResponse(FlowContext $context, $response, $temp) : ?object{ // just a constant null
+		if($response !== null){
+			throw new FormValidationException("Got non-null response for label");
+		}
+		return null;
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{

@@ -20,19 +20,25 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\API;
 
 use Generator;
-use jojoe77777\FormAPI\CustomForm;
-use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\Flow\FlowContext;
 
-interface ElementInterface{
-	public function requestCli(FlowContext $context, float $expiry) : Generator;
+class ListFactoryIconAdapter implements IconListProvider{
+	/** @var ListProvider */
+	protected $delegate;
 
-	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator;
+	public function __construct(ListProvider $provider){
+		$this->delegate = $provider;
+	}
 
-	public function parseFormResponse(FlowContext $context, $response, $temp);
-
-	public function getNode() : KineticNode;
+	public function provideIconList(FlowContext $context, IconListFactory $factory) : Generator{
+		$delegateFactory = new ListFactory();
+		yield $this->delegate->provideList($context, $delegateFactory);
+		foreach($delegateFactory->getEntries() as $entry){
+			$factory->add($entry->getCommandName(), $entry->getDisplayName(), $entry->getValue());
+		}
+		$factory->setDefault($delegateFactory->getDefault()->getCommandName());
+	}
 }

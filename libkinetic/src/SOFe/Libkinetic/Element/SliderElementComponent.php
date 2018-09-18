@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\Element;
 
 use Generator;
 use jojoe77777\FormAPI\CustomForm;
+use pocketmine\form\FormValidationException;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
@@ -34,6 +35,8 @@ use SOFe\Libkinetic\UserString;
 use function ceil;
 use function floor;
 use function fmod;
+use function is_float;
+use function is_int;
 use function is_numeric;
 
 class SliderElementComponent extends KineticComponent implements ElementInterface{
@@ -77,9 +80,9 @@ class SliderElementComponent extends KineticComponent implements ElementInterfac
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_GENERIC, ["cont" => $context->getManager()->getContName()]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER, [
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_GENERIC, ["cont" => $context->getManager()->getContName()]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_DEFAULT_SLIDER, [
 			"min" => $this->min,
 			"max" => $this->max,
 			"step" => $this->step,
@@ -91,6 +94,17 @@ class SliderElementComponent extends KineticComponent implements ElementInterfac
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
 		$form->addSlider($context->translateUserString($this->text), $this->min, $this->max, $this->step === 0.0 ? -1 : $this->step, $this->default ?? -1);
+	}
+
+	public function parseFormResponse(FlowContext $context, $response, $temp) : float{
+		if(!is_float($response) && !is_int($response)){
+			throw new FormValidationException("Got non-numeric response for slider");
+		}
+		if($response < $this->min || $response > $this->max){
+			throw new FormValidationException("Got out-of-bounds response for slider");
+		}
+
+		return (float) $response;
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{
@@ -117,7 +131,7 @@ class SliderElementComponent extends KineticComponent implements ElementInterfac
 				$value = $this->min + $this->step * ceil($diff / $this->step);
 			}
 			if($corrected){
-				$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED, [
+				$context->send(LibkineticMessages::CUSTOM_CLI_SLIDER_STEP_CORRECTED, [
 					"step" => $this->step,
 					"corrected" => $value,
 				]);

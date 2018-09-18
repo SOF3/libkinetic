@@ -25,11 +25,22 @@ namespace SOFe\Libkinetic\Hybrid;
 use Generator;
 use pocketmine\Player;
 use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\UI\Standard\IconListEntry;
 
 interface FormsAdapter{
 	public function sendModalForm(Player $player, string $title, string $text, string $trueText, string $falseText, float $timeout) : Generator;
 
-	public function sendMenuForm(Player $player, string $title, string $text, array $options, float $timeout) : Generator;
+	/**
+	 * @param FlowContext     $context
+	 * @param Player          $player
+	 * @param string          $title
+	 * @param string          $text
+	 * @param IconListEntry[] $options
+	 * @param float           $timeout
+	 *
+	 * @return Generator
+	 */
+	public function sendMenuForm(FlowContext $context, Player $player, string $title, string $text, array $options, float $timeout) : Generator;
 
 	public function sendCustomForm(FlowContext $context, Player $player, string $title, array $elements, float $timeout) : Generator;
 }

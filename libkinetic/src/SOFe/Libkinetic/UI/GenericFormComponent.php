@@ -33,6 +33,7 @@ use SOFe\Libkinetic\Parser\Attribute\DurationAttribute;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
+use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\UserString;
 
 class GenericFormComponent extends KineticComponent{
@@ -112,8 +113,8 @@ class GenericFormComponent extends KineticComponent{
 	}
 
 	/**
-	 * @param FlowContext               $context
-	 * @param string[][]|UserString[][] $options
+	 * @param FlowContext     $context
+	 * @param IconListEntry[] $options
 	 *
 	 * @return Generator
 	 */

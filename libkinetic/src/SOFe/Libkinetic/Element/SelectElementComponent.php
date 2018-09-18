@@ -22,8 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
+use function count;
 use Generator;
+use function is_int;
 use jojoe77777\FormAPI\CustomForm;
+use pocketmine\form\FormValidationException;
 use SOFe\Libkinetic\API\ListFactory;
 use SOFe\Libkinetic\API\ListProvider;
 use SOFe\Libkinetic\Base\KineticComponent;
@@ -34,7 +37,9 @@ use SOFe\Libkinetic\Parser\Attribute\ControllerAttribute;
 use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
+use SOFe\Libkinetic\UI\Standard\ListEntry;
 use SOFe\Libkinetic\UserString;
+use function assert;
 
 class SelectElementComponent extends KineticComponent implements ElementInterface{
 	use ElementTrait;
@@ -71,19 +76,21 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
 		$options = yield $this->getOptions($context, $defaultOption);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT, ["cont" => $context->getManager()->getContName()]);
+		assert($defaultOption instanceof ListEntry);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_SELECT, ["cont" => $context->getManager()->getContName()]);
 		$valueMap = [];
-		foreach($options as [$mnemonic, $display, $value]){
-			$valueMap[$mnemonic] = $value;
-			$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_SELECT_OPTION, [
-				"mnemonic" => $mnemonic,
-				"display" => $context->translateUserString($display),
+		foreach($options as $option){
+			assert($option instanceof ListEntry);
+			$valueMap[$option->getCommandName()] = $option->getValue();
+			$context->send(LibkineticMessages::CUSTOM_CLI_SELECT_OPTION, [
+				"mnemonic" => $option->getCommandName(),
+				"display" => $context->translateUserString($option->getDisplayName()),
 			]);
 		}
 		$choice = yield $context->getManager()->waitCont($context->getUser(), $timeout);
 		if($choice === ""){
-			$choice = $defaultOption;
+			$choice = $defaultOption->getCommandName();
 		}
 		return isset($valueMap[$choice]) ? [true, $valueMap[$choice]] : [false];
 	}
@@ -94,8 +101,22 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 		if($this->mode === self::DROPDOWN){
 			$form->addDropdown($context->translateUserString($this->text), $options, $defaultOption);
 		}else{
+			assert($this->mode === self::STEP_SLIDER);
 			$form->addStepSlider($context->translateUserString($this->text), $options, $defaultOption);
 		}
+
+		return count($options);
+	}
+
+	public function parseFormResponse(FlowContext $context, $response, $temp){
+		if(!is_int($response)){
+			throw new FormValidationException("Got non-int response for dropdown/stepSlider");
+		}
+		if($response < 0 || $response >= $temp){
+			throw new FormValidationException("Got out-of-bounds response for dropdown/stepSlider");
+		}
+
+		return $response;
 	}
 
 	protected function parse(FlowContext $context, &$value) : Generator{
@@ -108,22 +129,20 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 		}
 	}
 
-	protected function getOptions(FlowContext $context, &$defaultOption) : Generator{
+	protected function getOptions(FlowContext $context, ?ListEntry &$defaultOption) : Generator{
 		if($this->provider !== null){
 			$factory = new ListFactory();
 			yield $this->provider->provideList($context, $factory);
-			$options = $factory->toOptions();
-			foreach($options as $i => $option){
-				if($option[3]){
-					$defaultOption = $i;
-				}
-			}
-			return $options;
+			return $factory->getEntries();
 		}
 
 		$options = [];
 		foreach($this->optionNodes as $option){
-			$options[] = [$option->getCommandName(), $option->getDisplayName(), $option->getValue(), $option->isDefault()];
+			$options[] = $entry = new ListEntry($option->getCommandName(), $option->getDisplayName(), $option->getValue());
+			if($option->isDefault()){
+				$entry->setDefault($option->isDefault());
+				$defaultOption = $entry;
+			}
 		}
 		return $options;
 	}

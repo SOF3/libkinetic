@@ -25,14 +25,17 @@ namespace SOFe\Libkinetic\UI\Group;
 use Generator;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\GenericFormComponent;
 use SOFe\Libkinetic\UI\GenericFormTrait;
+use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\UI\UiComponent;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UI\UiNodeTrait;
+use SOFe\Libkinetic\UserString;
 use SOFe\Libkinetic\Util\ArrayUtil;
 use SOFe\Libkinetic\Variable\Variable;
 
@@ -83,12 +86,8 @@ class MuxComponent extends KineticComponent implements UiNode{
 			}
 		}
 		$options = [];
-		foreach($this->options as $i => $component){
-			$options[] = [
-				$i,
-				$component->getDisplayName() ?? (string) $i,
-				$i,
-			];
+		foreach($this->options as $mnemonic => $component){
+			$options[] = new IconListEntry($mnemonic, $component->getDisplayName() ?? new UserString(LibkineticMessages::LIST_FORM_DUMMY_OPTION), $mnemonic, null);
 		}
 		return yield $this->asGenericFormComponent()->sendListForm($context, $options);
 	}

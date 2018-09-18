@@ -23,16 +23,60 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\API;
 
 use InvalidArgumentException;
+use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\UserString;
 
-class IconListFactory extends ListFactory{
-	public function addIconElement($value, UserString $displayName, string $commandName, ?Icon $icon = null, bool $default = false) : void{
-		$this->elements[] = [$commandName, $displayName, $value, $icon];
+class IconListFactory{
+	/** @var IconListEntry[] */
+	protected $entries = [];
+	/** @var IconListEntry|null */
+	protected $default = null;
+
+	public function add(string $commandName, UserString $displayName, $value, ?Icon $icon = null, bool $default = false) : void{
+		$this->entries[] = $entry = new IconListEntry($commandName, $displayName, $value, $icon);
+
 		if($default){
-			if(isset($this->default)){
+			if($this->default !== null){
 				throw new InvalidArgumentException("Duplicate default value");
 			}
-			$this->default = $commandName;
+
+			$this->default = $entry;
+			$entry->setDefault(true);
 		}
+	}
+
+	public function getDefault() : ?IconListEntry{
+		if($this->default === null){
+			if(empty($this->entries)){
+				return null;
+			}
+			$this->default = $this->entries[0];
+			$this->default->setDefault(true);
+		}
+		return $this->default;
+	}
+
+	public function setDefault(string $commandName) : void{
+		if($this->default !== null){
+			throw new InvalidArgumentException("Duplicate default value");
+		}
+
+		foreach($this->entries as $entry){
+			if($entry->getMnemonic() === $commandName){
+				$this->default = $entry;
+				$entry->setDefault(true);
+				return;
+			}
+		}
+
+		throw new InvalidArgumentException("No entries with the mnemonic $commandName");
+	}
+
+	/**
+	 * @return IconListEntry[]
+	 */
+	public function getEntries() : array{
+		$this->getDefault(); // set default if null
+		return $this->entries;
 	}
 }

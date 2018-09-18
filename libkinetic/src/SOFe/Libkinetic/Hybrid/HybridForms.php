@@ -24,91 +24,66 @@ namespace SOFe\Libkinetic\Hybrid;
 
 use Generator;
 use pocketmine\Player;
-use SOFe\Libkinetic\API\Icon;
 use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
+use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\UserString;
-use function array_combine;
 use function microtime;
 
 class HybridForms{
 	/**
-	 * @param FlowContext           $context
-	 * @param UserString            $title
-	 * @param UserString            $synopsis
-	 * @param string[]|UserString[] $options an array of [string mnemonic, UserString key, string value]
-	 * @param float                 $timeout
+	 * @param FlowContext     $context
+	 * @param UserString      $title
+	 * @param UserString      $synopsis
+	 * @param IconListEntry[] $options
+	 * @param float           $timeout
 	 *
 	 * @return Generator
 	 */
 	public static function list(FlowContext $context, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
-		/** @var string[] $mnemonics */
-		$mnemonics = [];
-		/** @var string[][]|Icon[][]|null[][] $displays */
-		$displays = [];
-		/** @var mixed[] $mnemonics */
-		$values = [];
-		foreach($options as $option){
-			/**
-			 * @var string     $mnemonic
-			 * @var UserString $display
-			 * @var mixed      $value
-			 * @var Icon|null  $icon
-			 */
-			[$mnemonic, $display, $value] = $option;
-			$icon = $option[3] ?? null;
-
-			$mnemonics[] = $mnemonic;
-			$displays[] = [$context->translateUserString($display), $icon];
-			$values[] = $value;
-		}
-
 		$user = $context->getUser();
 		$choice = yield $user instanceof Player ?
-			self::listPlayer($context, $user, $title, $synopsis, $displays, $timeout) :
-			self::listNonPlayer($context, $title, $synopsis, array_combine($mnemonics, $displays), $timeout);
-
-		return $values[$choice];
+			self::listPlayer($context, $user, $title, $synopsis, $options, $timeout) :
+			self::listNonPlayer($context, $title, $synopsis, $options, $timeout);
 	}
 
 	public static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
-		return yield $context->getManager()->getFormsAdapter()->sendMenuForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $options, $timeout);
+		return yield $context->getManager()->getFormsAdapter()->sendMenuForm(, $player, $context->translateUserString($title), $context->translateUserString($synopsis), $options, $timeout);
 	}
 
 	/**
 	 * @param FlowContext     $context
 	 * @param null|UserString $title
 	 * @param UserString      $synopsis
-	 * @param UserString[]    $strings
+	 * @param IconListEntry[] $strings
 	 * @param float           $timeout
 	 *
 	 * @return Generator
 	 */
 	public static function listNonPlayer(FlowContext $context, ?UserString $title, UserString $synopsis, array $strings, float $timeout) : Generator{
 		if($title !== null){
-			$context->send(LibkineticMessages::MESSAGE_LIST_CLI_TITLE, ["title" => $context->translateUserString($title)]);
+			$context->send(LibkineticMessages::LIST_CLI_TITLE, ["title" => $context->translateUserString($title)]);
 		}
-		$context->send(LibkineticMessages::MESSAGE_LIST_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
+		$context->send(LibkineticMessages::LIST_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
 
 
 		while(true){
-			$context->send(LibkineticMessages::MESSAGE_LIST_CLI_INSTRUCTION, ["cont" => $context->getManager()->getContName()]);
+			$context->send(LibkineticMessages::LIST_CLI_INSTRUCTION, ["cont" => $context->getManager()->getContName()]);
 			$choices = [];
-			$i = 0;
-			foreach($strings as $mnemonic => $display){
-				$choices[$mnemonic] = $i++;
-				$context->send(LibkineticMessages::MESSAGE_LIST_CLI_OPTION, [
-					"mnemonic" => $mnemonic,
-					"display" => $display,
+			foreach($strings as $entry){
+				$choices[$entry->getMnemonic()] = $entry->getValue();
+				$context->send(LibkineticMessages::LIST_CLI_OPTION, [
+					"mnemonic" => $entry->getMnemonic(),
+					"display" => $entry->getDisplay(),
 				]);
 			}
 			$choice = yield $context->getManager()->waitCont($context->getUser(), $timeout);
 			if(isset($choices[$choice])){
 				return $choices[$choice];
 			}
-			$context->send(LibkineticMessages::MESSAGE_CLI_WRONG_INPUT);
+			$context->send(LibkineticMessages::CLI_WRONG_INPUT);
 		}
 	}
 
@@ -144,7 +119,7 @@ class HybridForms{
 	 * @return Generator
 	 */
 	public static function customNonPlayer(FlowContext $context, UserString $title, array $elements, float $timeout) : Generator{
-		$context->send(LibkineticMessages::MESSAGE_CUSTOM_CLI_TITLE, ["title" => $context->translateUserString($title)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TITLE, ["title" => $context->translateUserString($title)]);
 		$expiry = microtime(true) + $timeout;
 
 		$data = [];
@@ -162,9 +137,9 @@ class HybridForms{
 
 	public static function modal(FlowContext $context, UserString $title, UserString $synopsis, ?string $yesCommand, ?UserString $yesDisplay, ?string $noCommand, ?UserString $noDisplay, float $timeout) : Generator{
 		$yesCommand = $yesCommand ?? "y";
-		$yesDisplay = $yesDisplay ?? new UserString(LibkineticMessages::MESSAGE_MODAL_YES);
+		$yesDisplay = $yesDisplay ?? new UserString(LibkineticMessages::MODAL_YES);
 		$noCommand = $noCommand ?? "n";
-		$noDisplay = $noDisplay ?? new UserString(LibkineticMessages::MESSAGE_MODAL_NO);
+		$noDisplay = $noDisplay ?? new UserString(LibkineticMessages::MODAL_NO);
 
 		$user = $context->getUser();
 		if($user instanceof Player){
@@ -180,10 +155,10 @@ class HybridForms{
 	}
 
 	public static function modalNonPlayer(FlowContext $context, UserString $title, UserString $synopsis, string $yesCommand, UserString $yesDisplay, string $noCommand, UserString $noDisplay, float $timeout) : Generator{
-		$context->send(LibkineticMessages::MESSAGE_MODAL_CLI_TITLE, ["title" => $context->translateUserString($title)]);
-		$context->send(LibkineticMessages::MESSAGE_MODAL_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
+		$context->send(LibkineticMessages::MODAL_CLI_TITLE, ["title" => $context->translateUserString($title)]);
+		$context->send(LibkineticMessages::MODAL_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
 		while(true){
-			$context->send(LibkineticMessages::MESSAGE_MODAL_CLI_INSTRUCTION, [
+			$context->send(LibkineticMessages::MODAL_CLI_INSTRUCTION, [
 				"cont" => $context->getManager()->getContName(),
 				"yesCommand" => $yesCommand,
 				"yesDisplay" => $context->translateUserString($yesDisplay),
@@ -198,7 +173,7 @@ class HybridForms{
 				return false;
 			}
 
-			$context->send(LibkineticMessages::MESSAGE_CLI_WRONG_INPUT);
+			$context->send(LibkineticMessages::CLI_WRONG_INPUT);
 		}
 	}
 }

@@ -25,118 +25,122 @@ namespace SOFe\Libkinetic;
 use pocketmine\utils\TextFormat;
 
 class LibkineticMessages{
-	public const MESSAGE_CONT_DESC = "libkinetic.cont.desc";
-	public const MESSAGE_CONT_USAGE = "libkinetic.cont.usage";
-	public const MESSAGE_CONT_NIL = "libkinetic.cont.nil";
+	public const CONT_DESC = "libkinetic.cont.desc";
+	public const CONT_USAGE = "libkinetic.cont.usage";
+	public const CONT_NIL = "libkinetic.cont.nil";
 
-	public const MESSAGE_CLI_WRONG_INPUT = "libkinetic.cli.wrong-input";
+	public const CLI_WRONG_INPUT = "libkinetic.cli.wrong-input";
 
-	public const MESSAGE_MODAL_YES = "libkinetic.modal.yes";
-	public const MESSAGE_MODAL_NO = "libkinetic.modal.no";
-	public const MESSAGE_MODAL_CLI_TITLE = "libkinetic.modal.cli.title";
-	public const MESSAGE_MODAL_CLI_SYNOPSIS = "libkinetic.modal.cli.synopsis";
-	public const MESSAGE_MODAL_CLI_INSTRUCTION = "libkinetic.modal.cli.instruction";
+	public const MODAL_YES = "libkinetic.modal.yes";
+	public const MODAL_NO = "libkinetic.modal.no";
+	public const MODAL_CLI_TITLE = "libkinetic.modal.cli.title";
+	public const MODAL_CLI_SYNOPSIS = "libkinetic.modal.cli.synopsis";
+	public const MODAL_CLI_INSTRUCTION = "libkinetic.modal.cli.instruction";
 
-	public const MESSAGE_LIST_CLI_TITLE = "libkinetic.list.cli.title";
-	public const MESSAGE_LIST_CLI_SYNOPSIS = "libkinetic.list.cli.synopsis";
-	public const MESSAGE_LIST_CLI_OPTION = "libkinetic.list.cli.option";
-	public const MESSAGE_LIST_CLI_INSTRUCTION = "libkinetic.list.cli.instruction";
+	public const LIST_FORM_DUMMY_OPTION = "libkinetic.list.form.dummy-option";
+	public const LIST_CLI_TITLE = "libkinetic.list.cli.title";
+	public const LIST_CLI_SYNOPSIS = "libkinetic.list.cli.synopsis";
+	public const LIST_CLI_OPTION = "libkinetic.list.cli.option";
+	public const LIST_CLI_INSTRUCTION = "libkinetic.list.cli.instruction";
 
-	public const MESSAGE_CUSTOM_CLI_TITLE = "libkinetic.custom.cli.title";
+	public const CUSTOM_CLI_TITLE = "libkinetic.custom.cli.title";
 
-	public const MESSAGE_CUSTOM_CLI_TEXT_GENERIC = "libkinetic.custom.cli.text.generic";
-	public const MESSAGE_CUSTOM_CLI_TEXT_LABEL = "libkinetic.custom.cli.text.label";
+	public const CUSTOM_CLI_TEXT_GENERIC = "libkinetic.custom.cli.text.generic";
+	public const CUSTOM_CLI_TEXT_LABEL = "libkinetic.custom.cli.text.label";
 
-	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_GENERIC = "libkinetic.custom.cli.instruction.generic";
-	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_INPUT = "libkinetic.custom.cli.instruction.input";
-	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE = "libkinetic.custom.cli.instruction.toggle";
-	public const MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT = "libkinetic.custom.cli.instruction.select";
+	public const CUSTOM_CLI_INSTRUCTION_GENERIC = "libkinetic.custom.cli.instruction.generic";
+	public const CUSTOM_CLI_INSTRUCTION_INPUT = "libkinetic.custom.cli.instruction.input";
+	public const CUSTOM_CLI_INSTRUCTION_TOGGLE = "libkinetic.custom.cli.instruction.toggle";
+	public const CUSTOM_CLI_INSTRUCTION_SELECT = "libkinetic.custom.cli.instruction.select";
 
-	public const MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC = "libkinetic.custom.cli.default.generic";
-	public const MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER = "libkinetic.custom.cli.default.slider";
+	public const CUSTOM_CLI_DEFAULT_GENERIC = "libkinetic.custom.cli.default.generic";
+	public const CUSTOM_CLI_DEFAULT_SLIDER = "libkinetic.custom.cli.default.slider";
 
-	public const MESSAGE_CUSTOM_CLI_SELECT_OPTION = "libkinetic.custom.cli.select.option";
-	public const MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED = "libkinetic.custom.cli.slider.step-corrected";
+	public const CUSTOM_CLI_SELECT_OPTION = "libkinetic.custom.cli.select.option";
+	public const CUSTOM_CLI_SLIDER_STEP_CORRECTED = "libkinetic.custom.cli.slider.step-corrected";
 
 	public const MESSAGES = [
-		self::MESSAGE_CONT_DESC => [
+		self::CONT_DESC => [
 			"en_US" => 'A special command. You will be told to use this command when you need to.',
 		],
-		self::MESSAGE_CONT_USAGE => [
+		self::CONT_USAGE => [
 			"en_US" => '/${alias} <value>',
 		],
-		self::MESSAGE_CONT_NIL => [
+		self::CONT_NIL => [
 			"en_US" => TextFormat::RED . 'You can\'t run this command right now.',
 		],
 
-		self::MESSAGE_CLI_WRONG_INPUT => [
+		self::CLI_WRONG_INPUT => [
 			"en_US" => TextFormat::RED . 'Invalid input!',
 		],
 
-		self::MESSAGE_MODAL_YES => [
+		self::MODAL_YES => [
 			"en_US" => "Yes",
 		],
-		self::MESSAGE_MODAL_NO => [
+		self::MODAL_NO => [
 			"en_US" => "No",
 		],
-		self::MESSAGE_MODAL_CLI_TITLE => [
+		self::MODAL_CLI_TITLE => [
 			"en_US" => TextFormat::BOLD . '${title}',
 		],
-		self::MESSAGE_MODAL_CLI_SYNOPSIS => [
+		self::MODAL_CLI_SYNOPSIS => [
 			"en_US" => '${synopsis}',
 		],
-		self::MESSAGE_MODAL_CLI_INSTRUCTION => [
+		self::MODAL_CLI_INSTRUCTION => [
 			"en_US" => 'Answer with ' . TextFormat::GOLD . '/${cont} ${yesCommand}' . TextFormat::LIGHT_PURPLE . ' (${yesDisplay}) ' . TextFormat::WHITE . ' or ' . TextFormat::GOLD . '/${cont} ${noCommand}' . TextFormat::LIGHT_PURPLE . ' (${noDisplay}) ',
 		],
 
-		self::MESSAGE_LIST_CLI_TITLE => [
+		self::LIST_FORM_DUMMY_OPTION => [
+			"en_US" => '#${i}',
+		],
+		self::LIST_CLI_TITLE => [
 			"en_US" => TextFormat::BOLD . '${title}',
 		],
-		self::MESSAGE_LIST_CLI_SYNOPSIS => [
+		self::LIST_CLI_SYNOPSIS => [
 			"en_US" => '${synopsis}',
 		],
-		self::MESSAGE_LIST_CLI_INSTRUCTION => [
+		self::LIST_CLI_INSTRUCTION => [
 			"en_US" => 'Choose one option below and type ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . '<option>',
 		],
-		self::MESSAGE_LIST_CLI_OPTION => [
+		self::LIST_CLI_OPTION => [
 			"en_US" => TextFormat::LIGHT_PURPLE . '${mnemonic}' . TextFormat::GRAY . ' => ' . TextFormat::WHITE . '${display}',
 		],
 
-		self::MESSAGE_CUSTOM_CLI_TITLE => [
+		self::CUSTOM_CLI_TITLE => [
 			"en_US" => TextFormat::BOLD . '${title}',
 		],
 
-		self::MESSAGE_CUSTOM_CLI_TEXT_GENERIC => [
+		self::CUSTOM_CLI_TEXT_GENERIC => [
 			"en_US" => '[?] ' . TextFormat::AQUA . '${text}',
 		],
-		self::MESSAGE_CUSTOM_CLI_TEXT_LABEL => [
+		self::CUSTOM_CLI_TEXT_LABEL => [
 			"en_US" => '${text}',
 		],
 
-		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_GENERIC => [
+		self::CUSTOM_CLI_INSTRUCTION_GENERIC => [
 			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . '<answer>',
 		],
-		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_INPUT => [
+		self::CUSTOM_CLI_INSTRUCTION_INPUT => [
 			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . '<${placeholder}>',
 		],
-		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_TOGGLE => [
+		self::CUSTOM_CLI_INSTRUCTION_TOGGLE => [
 			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . 'true|false',
 		],
-		self::MESSAGE_CUSTOM_CLI_INSTRUCTION_SELECT => [
+		self::CUSTOM_CLI_INSTRUCTION_SELECT => [
 			"en_US" => 'Answer with the command ' . TextFormat::GOLD . '/${cont} ' . TextFormat::LIGHT_PURPLE . '<option>',
 		],
 
-		self::MESSAGE_CUSTOM_CLI_DEFAULT_GENERIC => [
+		self::CUSTOM_CLI_DEFAULT_GENERIC => [
 			"en_US" => 'Default: ' . TextFormat::LIGHT_PURPLE . '${default}',
 		],
-		self::MESSAGE_CUSTOM_CLI_DEFAULT_SLIDER => [
+		self::CUSTOM_CLI_DEFAULT_SLIDER => [
 			"en_US" => 'Range: ${min}-${max} ' . TextFormat::LIGHT_PURPLE . '(default: ${default})',
 		],
 
-		self::MESSAGE_CUSTOM_CLI_SELECT_OPTION => [
+		self::CUSTOM_CLI_SELECT_OPTION => [
 			"en_US" => TextFormat::LIGHT_PURPLE . '${mnemonic}' . TextFormat::GRAY . ' => ' . TextFormat::WHITE . '${display}',
 		],
-		self::MESSAGE_CUSTOM_CLI_SLIDER_STEP_CORRECTED => [
+		self::CUSTOM_CLI_SLIDER_STEP_CORRECTED => [
 			"en_US" => TextFormat::YELLOW . 'Your input has been corrected to ${corrected} because the step is ${step}',
 		],
 	];

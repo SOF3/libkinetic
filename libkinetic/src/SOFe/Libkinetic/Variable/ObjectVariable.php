@@ -51,7 +51,7 @@ class ObjectVariable extends Variable implements IObjectVariable{
 		}
 	}
 
-	public function get(string $key) : ?Variable{
+	public function getShallow(string $key) : ?Variable{
 		return $this->values[$key] ?? null;
 	}
 

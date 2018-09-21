@@ -23,4 +23,9 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Util;
 
 class Await extends \SOFe\AwaitGenerator\Await{
+	public const RESOLVE = parent::RESOLVE;
+	public const REJECT = parent::REJECT;
+	public const ONCE = parent::ONCE;
+	public const ALL = parent::ALL;
+	public const RACE = parent::RACE;
 }

@@ -57,9 +57,9 @@ class SelectOptionComponent extends KineticComponent{
 		switch($type){
 			case "bool":
 				return new BooleanAttribute();
-			case "int":
+			case "integer":
 				return new IntAttribute();
-			case "float":
+			case "double":
 				return new FloatAttribute();
 			case "string":
 				return new StringAttribute();

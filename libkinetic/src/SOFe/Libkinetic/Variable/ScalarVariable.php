@@ -44,7 +44,7 @@ class ScalarVariable extends Variable{
 	}
 
 	public function setValueImpl($value) : void{
-		if(gettype($value) !== $this->value){
+		if(gettype($value) !== $this->type){
 			throw new InvalidArgumentException("Attempt to assign a " . gettype($value) . " value to a $this->type variable");
 		}
 		$this->value = $value;

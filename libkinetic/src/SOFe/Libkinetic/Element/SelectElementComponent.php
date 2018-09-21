@@ -64,8 +64,8 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 		$router->use("provider", new ControllerAttribute(ListProvider::class, []), $this->provider, false);
 		$router->use("valueType", new StringEnumAttribute([
 			"bool",
-			"int",
-			"float",
+			"integer",
+			"double",
 			"string",
 		], true), $this->valueType, false);
 	}

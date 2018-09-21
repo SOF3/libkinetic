@@ -46,8 +46,8 @@ class ArgComponent extends KineticComponent{
 		$router->use("required", new BooleanAttribute(), $this->required, false);
 		$router->use("type", new StringEnumAttribute([
 			"string",
-			"int",
-			"float",
+			"integer",
+			"double",
 			"bool",
 		], true), $this->type, false);
 		$router->use("adapter", new ControllerAttribute(StringInputAdapter::class, []), $this->adapter, false);

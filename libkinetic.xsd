@@ -51,8 +51,8 @@
   <xs:simpleType name="ScalarVarType">
     <xs:restriction>
       <xs:enumeration value="bool"/>
-      <xs:enumeration value="int"/>
-      <xs:enumeration value="float"/>
+      <xs:enumeration value="integer"/>
+      <xs:enumeration value="double"/>
       <xs:enumeration value="string"/>
     </xs:restriction>
   </xs:simpleType>
@@ -61,20 +61,20 @@
       <xs:simpleType>
         <xs:restriction>
           <xs:enumeration value="bool"/>
-          <xs:enumeration value="int"/>
-          <xs:enumeration value="float"/>
+          <xs:enumeration value="integer"/>
+          <xs:enumeration value="double"/>
           <xs:enumeration value="string"/>
           <xs:enumeration value="object"/>
           <xs:enumeration value="list:bool"/>
-          <xs:enumeration value="list:int"/>
-          <xs:enumeration value="list:float"/>
+          <xs:enumeration value="list:integer"/>
+          <xs:enumeration value="list:double"/>
           <xs:enumeration value="list:string"/>
           <xs:enumeration value="list:object"/>
         </xs:restriction>
       </xs:simpleType>
       <xs:simpleType>
         <xs:restriction>
-          <xs:pattern value="(list:)*(bool|int|float|string|object)"/>
+          <xs:pattern value="(list:)*(bool|integer|double|string|object)"/>
         </xs:restriction>
       </xs:simpleType>
     </xs:union>
@@ -388,8 +388,8 @@
       <xs:simpleType>
         <xs:restriction>
           <xs:enumeration value="string"/>
-          <xs:enumeration value="int"/>
-          <xs:enumeration value="float"/>
+          <xs:enumeration value="integer"/>
+          <xs:enumeration value="double"/>
           <xs:enumeration value="boolean"/>
         </xs:restriction>
       </xs:simpleType>

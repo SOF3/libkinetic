@@ -64,7 +64,7 @@ class VariableScope implements IObjectVariable{
 		throw new InvalidArgumentException("Key $key not found");
 	}
 
-	public function get(string $key) : ?Variable{
+	public function getShallow(string $key) : ?Variable{
 		return $this->variables[$key] ?? null;
 	}
 
@@ -76,7 +76,7 @@ class VariableScope implements IObjectVariable{
 			if(!($object instanceof IObjectVariable)){
 				throw new InvalidArgumentException("$part resolves to be a " . get_class($object) . ", not an object");
 			}
-			$object = $object->get($part);
+			$object = $object->getShallow($part);
 		}
 
 		return $object;

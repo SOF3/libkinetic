@@ -25,5 +25,5 @@ namespace SOFe\Libkinetic\Flow;
 use SOFe\Libkinetic\Variable\Variable;
 
 interface IObjectVariable{
-	public function get(string $key) : ?Variable;
+	public function getShallow(string $key) : ?Variable;
 }

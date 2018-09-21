@@ -27,12 +27,15 @@ use pocketmine\command\CommandSender;
 class UserString{
 	/** @var string */
 	protected $id;
+	/** @var mixed[] */
+	protected $baseArgs = [];
 
-	public function __construct(string $id){
+	public function __construct(string $id, array $baseArgs = []){
 		$this->id = $id;
+		$this->baseArgs = $baseArgs;
 	}
 
 	public function translate(KineticManager $manager, CommandSender $user, array $args = []) : string{
-		return $manager->translate($user, $this->id, $args);
+		return $manager->translate($user, $this->id, $this->baseArgs + $args);
 	}
 }

@@ -41,7 +41,7 @@ class StringEnumAttribute extends NodeAttribute{
 		}
 	}
 
-	public function accept(KineticNode $node, string $value) : string{
+	public function accept(KineticNode $node, string $value){
 		$corrected = $this->noCase ? mb_strtolower($value) : $value;
 		if(!isset($this->enum[$corrected])){
 			throw $node->throw("$value is not one of [" . implode(", ", $this->enum) . "]");

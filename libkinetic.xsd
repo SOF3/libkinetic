@@ -146,8 +146,8 @@
       <xs:element name="field" type="VarDeclaration" minOccurs="0" maxOccurs="unbounded"/>
     </xs:choice>
 
-    <xs:attribute name="name" type="VarName"/>
-    <xs:attribute name="type" type="VarType"/>
+    <xs:attribute name="name" type="VarName" use="required"/>
+    <xs:attribute name="type" type="VarType" use="required"/>
   </xs:complexType>
 
   <!-- UiNode stuff -->
@@ -456,7 +456,7 @@
           <xs:element name="before" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
           <xs:element name="after" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
         </xs:all>
-        <xs:attribute name="provider" type="ControllerName"/>
+        <xs:attribute name="provider" type="ControllerName" use="required"/>
         <xs:attribute name="defaultVar" type="VarName"/>
         <xs:attribute name="target" type="VarName"/>
         <xs:attribute name="autoSelect" type="xs:boolean" default="false"/>

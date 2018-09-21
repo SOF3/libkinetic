@@ -30,6 +30,7 @@ use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use function array_merge;
 use function count;
 use function in_array;
+use SOFe\Libkinetic\Util\ArrayUtil;
 use function strpos;
 use function substr;
 
@@ -68,6 +69,9 @@ class VarDeclarationComponent extends KineticComponent{
 			if(count($this->fields) === 0){
 				throw $this->node->throw("Objects should have at least one field");
 			}
+			$this->fields = ArrayUtil::indexByProperty($this->fields, function(VarDeclarationComponent $component):string{
+				return $component->getName();
+			});
 		}elseif(count($this->fields) > 0){
 			throw $this->node->throw("Fields are not allowed in non-object variables");
 		}

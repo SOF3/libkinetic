@@ -51,7 +51,12 @@ class EntryFlowContext extends FlowContext{
 	}
 
 	public function execute() : Generator{
-		$outcome = yield $this->interface->execute($this);
+		try{
+			$outcome = yield $this->interface->execute($this);
+		}catch(FlowCancelledException $e){
+			// operation cancelled, nothing to do
+			return;
+		}
 		assert($outcome instanceof UiNodeOutcome);
 
 		if($outcome->getOutcome() === UiNodeOutcome::OUTCOME_EXIT){

@@ -57,7 +57,7 @@ class RecurFormComponent extends KineticComponent implements UiNode{
 
 	public function getDependencies() : Generator{
 		yield UiComponent::class;
-		yield GenericFormComponent::listForm();
+		yield GenericFormComponent::customForm();
 	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{

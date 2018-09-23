@@ -236,7 +236,7 @@
 
   <xs:complexType name="NodeStateControllerList">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="controller"  minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="controller" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>FQN of an OnStartHandler controller</xs:documentation>
         </xs:annotation>
@@ -447,7 +447,7 @@
   <xs:complexType name="BasicFormNode">
     <xs:complexContent>
       <xs:extension base="GenericFormNode">
-        <xs:attribute name="synopsis" type="UserString" use="prohibited"/>
+        <xs:attribute name="synopsis" use="prohibited"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -488,6 +488,7 @@
           <xs:element name="each" type="RecurFormSectionNode"/>
         </xs:choice>
         <xs:attribute name="provider" type="ControllerName" use="required"/>
+        <xs:attribute name="synopsis" use="prohibited"/>
         <xs:attribute name="onEmpty" use="optional">
           <xs:simpleType>
             <xs:restriction>
@@ -501,11 +502,8 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="RecurFormSectionNode">
-    <xs:complexContent>
-      <xs:extension base="ElementParentNode">
-        <xs:attribute name="var" type="VarName" use="optional"/>
-      </xs:extension>
-    </xs:complexContent>
+    <xs:group ref="ElementNode" minOccurs="1" maxOccurs="unbounded"/>
+    <xs:attribute name="var" type="VarName" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="DynFormNode">
@@ -516,15 +514,15 @@
   </xs:complexType>
 
   <!-- Element implementations -->
-  <xs:complexType name="ElementParentNode">
-    <xs:choice minOccurs="0" maxOccurs="unbounded">
+  <xs:group name="ElementNode">
+    <xs:choice>
       <xs:element name="label" type="LabelElementNode"/>
       <xs:element name="input" type="InputElementNode"/>
       <xs:element name="toggle" type="ToggleElementNode"/>
       <xs:element name="slider" type="SliderElementNode"/>
       <xs:element name="select" type="SelectElementNode"/>
     </xs:choice>
-  </xs:complexType>
+  </xs:group>
   <xs:complexType name="ElementNode" abstract="true">
     <xs:attribute name="id" use="optional">
       <xs:annotation>

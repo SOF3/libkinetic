@@ -119,9 +119,9 @@ class RecurFormComponent extends KineticComponent implements UiNode{
 			foreach($this->each->asElementParentComponent()->getElements() as $element){
 				$datum[$element->getNode()->asElementComponent()->getId()] = $responses[$i++];
 			}
-			$bodyData[$k] = $datum;
+			$bodyData[] = $datum;
 		}
-		if($this->each->getVar()!==null){
+		if($this->each->getVar() !== null){
 			$context->getVariables()->setNested($this->each->getVar(), $bodyData);
 		}
 

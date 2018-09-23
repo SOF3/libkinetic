@@ -26,13 +26,17 @@ use SOFe\Libkinetic\Base\KineticNode;
 use SOFe\Libkinetic\UI\Group\UiGroupComponent;
 use function assert;
 use function explode;
+use function str_repeat;
 
 class VarRefAttribute extends ResolvableNodeAttribute{
 	/** @var null|string */
 	private $type;
+	/** @var int */
+	private $listLevels;
 
-	public function __construct(?string $type = null){
+	public function __construct(?string $type = null, int $listLevels = 0){
 		$this->type = $type;
+		$this->listLevels = $listLevels;
 	}
 
 	public function accept(KineticNode $node, string $value) : string{
@@ -59,8 +63,11 @@ class VarRefAttribute extends ResolvableNodeAttribute{
 			throw $leaf->throw("Unresolved variable $tempValue");
 		}
 		assert(isset($var));
-		if($this->type !== null && $this->type !== $var->getType()){
-			throw $leaf->throw("Expected reference to variable of type $this->type, got {$var->getType()}");
+		if($this->type !== null){
+			if($this->type !== $var->getType() || $this->listLevels !== $var->getListLevels()){
+				$type = str_repeat("list:", $this->listLevels) . $this->type;
+				throw $leaf->throw("Expected reference to variable of type $type, got {$var->getType()}");
+			}
 		}
 
 		return $tempValue;

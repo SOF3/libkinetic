@@ -20,21 +20,24 @@
 
 declare(strict_types=1);
 
-namespace SOFe\Libkinetic\Element;
+namespace SOFe\Libkinetic\UI\Advanced;
 
 use Generator;
-use jojoe77777\FormAPI\CustomForm;
-use SOFe\Libkinetic\Base\KineticNode;
-use SOFe\Libkinetic\Flow\FlowContext;
+use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Element\ElementParentComponent;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
+use SOFe\Libkinetic\Variable\Variable;
 
-interface ElementInterface{
-	public function requestCli(FlowContext $context, float $expiry) : Generator;
+class RecurFormEachComponent extends KineticComponent{
+	/** @var string|null */
+	protected $var = null;
 
-	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator;
+	public function getDependencies() : Generator{
+		yield new ElementParentComponent(true);
+	}
 
-	public function parseFormResponse(FlowContext $context, $response, $temp);
-
-	public function getNode() : KineticNode;
-
-	public function attachArgs(array $args) : ElementInterface;
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("var", new VarRefAttribute(Variable::TYPE_OBJECT, 1), $this->var, true);
+	}
 }

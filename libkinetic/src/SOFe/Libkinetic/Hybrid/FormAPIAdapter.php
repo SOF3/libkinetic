@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Hybrid;
 
 use Generator;
-use function is_int;
 use jojoe77777\FormAPI\CustomForm;
 use jojoe77777\FormAPI\Form;
 use jojoe77777\FormAPI\ModalForm;
@@ -41,6 +40,7 @@ use SOFe\Libkinetic\Util\CallbackTask;
 use function array_values;
 use function count;
 use function is_array;
+use function is_int;
 
 class FormAPIAdapter implements FormsAdapter{
 	/** @var KineticManager */

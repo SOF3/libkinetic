@@ -25,7 +25,6 @@ namespace SOFe\Libkinetic\Element;
 use Generator;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\form\FormValidationException;
-use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
@@ -39,7 +38,7 @@ use function is_float;
 use function is_int;
 use function is_numeric;
 
-class SliderElementComponent extends KineticComponent implements ElementInterface{
+class SliderElementComponent extends BaseElement{
 	use ElementTrait;
 
 	/** @var UserString */
@@ -80,7 +79,7 @@ class SliderElementComponent extends KineticComponent implements ElementInterfac
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text, $this->args)]);
 		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_GENERIC, ["cont" => $context->getManager()->getContName()]);
 		$context->send(LibkineticMessages::CUSTOM_CLI_DEFAULT_SLIDER, [
 			"min" => $this->min,
@@ -93,7 +92,7 @@ class SliderElementComponent extends KineticComponent implements ElementInterfac
 
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
-		$form->addSlider($context->translateUserString($this->text), $this->min, $this->max, $this->step === 0.0 ? -1 : $this->step, $this->default ?? -1);
+		$form->addSlider($context->translateUserString($this->text, $this->args), $this->min, $this->max, $this->step === 0.0 ? -1 : $this->step, $this->default ?? -1);
 	}
 
 	public function parseFormResponse(FlowContext $context, $response, $temp) : float{

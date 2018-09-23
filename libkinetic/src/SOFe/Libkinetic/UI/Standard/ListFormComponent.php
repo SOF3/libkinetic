@@ -108,10 +108,11 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		$factory = new IconListFactory();
 		yield $this->provider->provideIconList($context, $factory);
 
+		$entries = $factory->getEntries();
 		if($this->autoSelect){
-			$count = count($factory->getEntries());
+			$count = count($entries);
 			if($count === 1){
-				return [false, $factory->getEntries()[0][2]];
+				return [false, $entries[0][2]];
 			}
 			if($count === 0){
 				throw new FlowCancelledException();
@@ -122,7 +123,7 @@ class ListFormComponent extends KineticComponent implements UiNode{
 		foreach($this->before as $component){
 			$options[] = new IconListEntry($component->getCommandName(), $component->getDisplayName(), [true, $component], null); // TODO icon
 		}
-		foreach($factory->getEntries() as $entry){
+		foreach($entries as $entry){
 			$option = clone $entry;
 			$option->setValue([false, $entry->getValue()]);
 			$options[] = $option;

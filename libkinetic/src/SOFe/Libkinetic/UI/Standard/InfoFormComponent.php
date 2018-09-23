@@ -45,6 +45,8 @@ class InfoFormComponent extends KineticComponent implements UiNode{
 
 	/** @var string|null */
 	protected $defaultVar = null;
+	/** @var string|null */
+	protected $var = null;
 	/** @var MuxOptionComponent|null */
 	protected $yes = null;
 	/** @var MuxOptionComponent|null */
@@ -57,6 +59,7 @@ class InfoFormComponent extends KineticComponent implements UiNode{
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("defaultVar", new VarRefAttribute(Variable::TYPE_BOOL), $this->defaultVar, false);
+		$router->use("target", new VarRefAttribute(Variable::TYPE_BOOL), $this->var, false);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
@@ -77,6 +80,9 @@ class InfoFormComponent extends KineticComponent implements UiNode{
 			$choice = yield $this->asGenericFormComponent()->sendModalForm($context, $this->yes->getCommandName(), $this->yes->getDisplayName(), $this->no->getCommandName(), $this->no->getDisplayName());
 		}
 
+		if($this->var !== null){
+			$context->getVariables()->setNested($this->var, $choice);
+		}
 		$option = $choice ? $this->yes : $this->no;
 		if($option !== null){
 			return $option->asUiParentComponent()->getChildren()[0]->execute($context);

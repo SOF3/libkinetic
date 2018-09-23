@@ -44,12 +44,12 @@ class ChildNodeRouter{
 	/**
 	 * API for KineticComponents to declare an accepted child node, which can only appear once.
 	 *
-	 * @param string                $name
-	 * @param string                $componentClass
+	 * @param string                 $name
+	 * @param string                 $componentClass
 	 * @param KineticComponent|null &$field
-	 * @param bool                  $optional
+	 * @param bool                   $optional
 	 * @param KineticNode|null      &$node
-	 * @param string                $ns
+	 * @param string                 $ns
 	 *
 	 * @return ChildNodeRouter
 	 */
@@ -69,13 +69,13 @@ class ChildNodeRouter{
 	/**
 	 * API for KineticComponents to declare an accepted child node, which can appear multiple times.
 	 *
-	 * @param string             $name
-	 * @param string             $componentClass
+	 * @param string              $name
+	 * @param string              $componentClass
 	 * @param KineticComponent[] &$components
-	 * @param int                $min
-	 * @param int                $max
+	 * @param int                 $min
+	 * @param int                 $max
 	 * @param KineticNode[]|null &$nodes
-	 * @param string             $ns
+	 * @param string              $ns
 	 *
 	 * @return ChildNodeRouter
 	 */

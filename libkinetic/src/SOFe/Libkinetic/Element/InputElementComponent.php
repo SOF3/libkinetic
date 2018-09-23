@@ -25,7 +25,6 @@ namespace SOFe\Libkinetic\Element;
 use Generator;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\form\FormValidationException;
-use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
@@ -34,7 +33,7 @@ use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
 use function is_string;
 
-class InputElementComponent extends KineticComponent implements ElementInterface{
+class InputElementComponent extends BaseElement{
 	use ElementTrait;
 
 	/** @var UserString */
@@ -51,10 +50,12 @@ class InputElementComponent extends KineticComponent implements ElementInterface
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
-		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, [
+			"text" => $context->translateUserString($this->text, $this->args),
+		]);
 		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_INPUT, [
 			"cont" => $context->getManager()->getContName(),
-			"placeholder" => $context->translateUserString($this->placeholder)
+			"placeholder" => $context->translateUserString($this->placeholder, $this->args),
 		]);
 		if($this->default !== ""){
 			$context->send(LibkineticMessages::CUSTOM_CLI_DEFAULT_GENERIC, ["default" => $this->default]);
@@ -64,7 +65,10 @@ class InputElementComponent extends KineticComponent implements ElementInterface
 
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
-		$form->addInput($context->translateUserString($this->text), $this->placeholder !== null ? $context->translateUserString($this->placeholder) : "", $this->default);
+		$form->addInput(
+			$context->translateUserString($this->text, $this->args),
+			$this->placeholder !== null ? $context->translateUserString($this->placeholder, $this->args) : "",
+			$this->default);
 	}
 
 	public function parseFormResponse(FlowContext $context, $response, $temp) : string{

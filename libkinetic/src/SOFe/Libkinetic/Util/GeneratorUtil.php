@@ -26,9 +26,9 @@ use Generator;
 
 class GeneratorUtil extends \SOFe\AwaitGenerator\GeneratorUtil{
 	/**
-	 * @param Generator $generator
+	 * @param Generator  $generator
 	 * @param mixed[][] &$yields
-	 * @param null      $send
+	 * @param null       $send
 	 *
 	 * @return mixed
 	 */
@@ -43,9 +43,9 @@ class GeneratorUtil extends \SOFe\AwaitGenerator\GeneratorUtil{
 	}
 
 	/**
-	 * @param Generator $generator
+	 * @param Generator  $generator
 	 * @param mixed[]   &$yields
-	 * @param null      $send
+	 * @param null       $send
 	 *
 	 * @return mixed
 	 */
@@ -59,9 +59,9 @@ class GeneratorUtil extends \SOFe\AwaitGenerator\GeneratorUtil{
 	}
 
 	/**
-	 * @param Generator $generator
+	 * @param Generator  $generator
 	 * @param mixed[]   &$yields
-	 * @param null      $send
+	 * @param null       $send
 	 *
 	 * @return mixed
 	 */

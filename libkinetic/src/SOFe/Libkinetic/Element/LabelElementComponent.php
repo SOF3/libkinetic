@@ -25,18 +25,25 @@ namespace SOFe\Libkinetic\Element;
 use Generator;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\form\FormValidationException;
-use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UserString;
 
-class LabelElementComponent extends KineticComponent implements ElementInterface{
+class LabelElementComponent extends BaseElement{
 	use ElementTrait;
 
+	/** @var array */
+	protected $args = [];
 	/** @var UserString */
 	protected $text;
+
+	public function attachArgs(array $args) : ElementInterface{
+		$clone = clone $this;
+		$clone->args = [];
+		return $clone;
+	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);
@@ -44,12 +51,12 @@ class LabelElementComponent extends KineticComponent implements ElementInterface
 
 	public function requestCliImpl(FlowContext $context, float $timeout) : Generator{
 		false && yield;
-		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_LABEL, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_LABEL, ["text" => $context->translateUserString($this->text, $this->args)]);
 	}
 
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		false && yield;
-		$form->addLabel($context->translateUserString($this->text));
+		$form->addLabel($context->translateUserString($this->text, $this->args));
 	}
 
 	public function parseFormResponse(FlowContext $context, $response, $temp) : ?object{ // just a constant null

@@ -31,7 +31,7 @@ class ListEntry{
 	protected $displayName;
 	/** @var mixed */
 	protected $value;
-	/** @var bool  */
+	/** @var bool */
 	protected $default = false;
 
 	public function __construct(string $commandName, UserString $displayName, $value){

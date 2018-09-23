@@ -22,14 +22,11 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Element;
 
-use function count;
 use Generator;
-use function is_int;
 use jojoe77777\FormAPI\CustomForm;
 use pocketmine\form\FormValidationException;
 use SOFe\Libkinetic\API\ListFactory;
 use SOFe\Libkinetic\API\ListProvider;
-use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Flow\FlowContext;
 use SOFe\Libkinetic\LibkineticMessages;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
@@ -39,9 +36,12 @@ use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Standard\ListEntry;
 use SOFe\Libkinetic\UserString;
+use function array_map;
 use function assert;
+use function count;
+use function is_int;
 
-class SelectElementComponent extends KineticComponent implements ElementInterface{
+class SelectElementComponent extends BaseElement{
 	use ElementTrait;
 
 	public const DROPDOWN = "dropdown";
@@ -77,7 +77,7 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{
 		$options = yield $this->getOptions($context, $defaultOption);
 		assert($defaultOption instanceof ListEntry);
-		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text)]);
+		$context->send(LibkineticMessages::CUSTOM_CLI_TEXT_GENERIC, ["text" => $context->translateUserString($this->text, $this->args)]);
 		$context->send(LibkineticMessages::CUSTOM_CLI_INSTRUCTION_SELECT, ["cont" => $context->getManager()->getContName()]);
 		$valueMap = [];
 		foreach($options as $option){
@@ -85,7 +85,7 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 			$valueMap[$option->getCommandName()] = $option->getValue();
 			$context->send(LibkineticMessages::CUSTOM_CLI_SELECT_OPTION, [
 				"mnemonic" => $option->getCommandName(),
-				"display" => $context->translateUserString($option->getDisplayName()),
+				"display" => $context->translateUserString($option->getDisplayName(), $this->args),
 			]);
 		}
 		$choice = yield $context->getManager()->waitCont($context->getUser(), $timeout);
@@ -98,11 +98,16 @@ class SelectElementComponent extends KineticComponent implements ElementInterfac
 	public function addToFormAPI(FlowContext $context, CustomForm $form) : Generator{
 		$options = yield $this->getOptions($context, $defaultOption);
 
+		$text = $context->translateUserString($this->text, $this->args);
 		if($this->mode === self::DROPDOWN){
-			$form->addDropdown($context->translateUserString($this->text), $options, $defaultOption);
+			$form->addDropdown($text, array_map(function(ListEntry $entry) use ($context) : string{
+				return $context->translateUserString($entry->getDisplayName(), $this->args);
+			}, $options), $defaultOption);
 		}else{
 			assert($this->mode === self::STEP_SLIDER);
-			$form->addStepSlider($context->translateUserString($this->text), $options, $defaultOption);
+			$form->addStepSlider($text, array_map(function(ListEntry $entry) use ($context) : string{
+				return $context->translateUserString($entry->getDisplayName(), $this->args);
+			}, $options), $defaultOption);
 		}
 
 		return count($options);

@@ -33,7 +33,7 @@ class AttributeFieldPair{
 	/**
 	 * AttributeFieldPair constructor.
 	 *
-	 * @param ResolvableNodeAttribute $attribute
+	 * @param ResolvableNodeAttribute  $attribute
 	 * @param mixed                   &$fieldRef
 	 */
 	public function __construct(ResolvableNodeAttribute $attribute, &$fieldRef){

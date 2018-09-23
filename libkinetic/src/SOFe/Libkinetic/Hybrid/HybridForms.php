@@ -50,7 +50,7 @@ class HybridForms{
 	}
 
 	public static function listPlayer(FlowContext $context, Player $player, UserString $title, UserString $synopsis, array $options, float $timeout) : Generator{
-		return yield $context->getManager()->getFormsAdapter()->sendMenuForm(, $player, $context->translateUserString($title), $context->translateUserString($synopsis), $options, $timeout);
+		return yield $context->getManager()->getFormsAdapter()->sendMenuForm($context, $player, $context->translateUserString($title), $context->translateUserString($synopsis), $options, $timeout);
 	}
 
 	/**

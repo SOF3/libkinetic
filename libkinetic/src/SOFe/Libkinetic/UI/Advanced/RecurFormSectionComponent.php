@@ -30,15 +30,21 @@ use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
 use SOFe\Libkinetic\Variable\Variable;
 
 class RecurFormSectionComponent extends KineticComponent{
+	/** @var bool */
+	protected $isBody;
 	/** @var string|null */
 	protected $var = null;
+
+	public function __construct(bool $isBody){
+		$this->isBody = $isBody;
+	}
 
 	public function getDependencies() : Generator{
 		yield new ElementParentComponent(true);
 	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("var", new VarRefAttribute(Variable::TYPE_OBJECT, 1), $this->var, false);
+		$router->use("var", new VarRefAttribute(Variable::TYPE_OBJECT, $this->isBody ? 1 : 0), $this->var, false);
 	}
 
 	public function getVar() : ?string{

@@ -70,9 +70,9 @@ class RecurFormComponent extends KineticComponent implements UiNode{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptSingle("before", RecurFormSectionComponent::class, $this->before, true);
-		$router->acceptSingle("each", RecurFormSectionComponent::class, $this->each, false);
-		$router->acceptSingle("after", RecurFormSectionComponent::class, $this->after, true);
+		$router->acceptSingleArgs("before", RecurFormSectionComponent::class, [false], $this->before, true);
+		$router->acceptSingleArgs("each", RecurFormSectionComponent::class, [true], $this->each, false);
+		$router->acceptSingleArgs("after", RecurFormSectionComponent::class, [false], $this->after, true);
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{

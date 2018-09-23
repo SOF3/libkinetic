@@ -61,6 +61,14 @@ class ChildNodeRouter{
 		}, $optional, $node, $ns);
 	}
 
+	public function acceptSingleArgs(string $name, string $componentClass, array $constructorArgs, ?KineticComponent &$field, bool $optional, ?KineticNode &$node = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
+		return $this->acceptSingleFunc($name, function() use ($constructorArgs, $componentClass, &$field){
+			$field = new $componentClass(...$constructorArgs);
+			assert($field instanceof KineticComponent);
+			return [$field];
+		}, $optional, $node, $ns);
+	}
+
 	public function acceptSingleFunc(string $name, callable $componentsProvider, bool $optional, ?KineticNode &$node = null, string $ns = KineticFileParser::XMLNS_DEFAULT) : ChildNodeRouter{
 		$this->accepts["$ns:" . mb_strtoupper($name)] = new ChildNodeAccept($this->parent, $ns, $name, $node, false, $optional ? 0 : 1, 1, $componentsProvider);
 		return $this;

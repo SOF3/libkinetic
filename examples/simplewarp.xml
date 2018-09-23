@@ -32,7 +32,8 @@
   <wizard id="simplewarp.selectPos">
     <return name="loc" type="location"/>
     <index id="simplewarp.selectPos">
-      <list id="simplewarp.selectPos.player" indexName="At player's position" var="loc" provider="PlayerListProvider?meTop=true"/>
+      <list id="simplewarp.selectPos.player" indexName="At player's position" var="loc"
+            provider="PlayerListProvider?meTop=true"/>
       <form id="simplewarp.selectPos.form" indexName="Enter coordinates" onComplete="FormToLocationAdapter?var=loc">
         <input id="x" text="X"/>
         <input id="y" text="Y"/>

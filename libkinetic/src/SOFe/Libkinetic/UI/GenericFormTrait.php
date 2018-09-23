@@ -40,14 +40,6 @@ trait GenericFormTrait{
 	protected abstract function executeFormNode(FlowContext $context) : Generator;
 
 	public final function executeNode(FlowContext $context) : Generator{
-		try{
-			return yield $this->executeFormNode($context);
-		}catch(FlowCancelledException $e){
-			$form = $this->asGenericFormComponent();
-			if($form->getOnCancel() === GenericFormComponent::ON_CANCEL_FALLTHROUGH){
-				throw $e;
-			}
-			return new UiNodeOutcome($form->getOnCancel(), $form->getOnCancelTarget());
-		}
+		return yield $this->executeFormNode($context);
 	}
 }

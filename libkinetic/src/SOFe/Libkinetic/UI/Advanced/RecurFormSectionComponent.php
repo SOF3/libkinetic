@@ -29,7 +29,7 @@ use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\VarRefAttribute;
 use SOFe\Libkinetic\Variable\Variable;
 
-class RecurFormEachComponent extends KineticComponent{
+class RecurFormSectionComponent extends KineticComponent{
 	/** @var string|null */
 	protected $var = null;
 
@@ -38,6 +38,10 @@ class RecurFormEachComponent extends KineticComponent{
 	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
-		$router->use("var", new VarRefAttribute(Variable::TYPE_OBJECT, 1), $this->var, true);
+		$router->use("var", new VarRefAttribute(Variable::TYPE_OBJECT, 1), $this->var, false);
+	}
+
+	public function getVar() : ?string{
+		return $this->var;
 	}
 }

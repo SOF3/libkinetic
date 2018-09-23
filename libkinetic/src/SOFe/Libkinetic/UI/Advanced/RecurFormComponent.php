@@ -48,11 +48,11 @@ class RecurFormComponent extends KineticComponent implements UiNode{
 	protected $eachAs = "it";
 	/** @var string */
 	protected $onEmpty = "execute";
-	/** @var RecurFormMarginComponent|null */
+	/** @var RecurFormSectionComponent|null */
 	protected $before = null;
-	/** @var RecurFormEachComponent */
+	/** @var RecurFormSectionComponent */
 	protected $each;
-	/** @var RecurFormMarginComponent|null */
+	/** @var RecurFormSectionComponent|null */
 	protected $after = null;
 
 	public function getDependencies() : Generator{
@@ -70,9 +70,9 @@ class RecurFormComponent extends KineticComponent implements UiNode{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptSingle("before", RecurFormMarginComponent::class, $this->before, true);
-		$router->acceptSingle("each", RecurFormEachComponent::class, $this->each, false);
-		$router->acceptSingle("after", RecurFormMarginComponent::class, $this->after, true);
+		$router->acceptSingle("before", RecurFormSectionComponent::class, $this->before, true);
+		$router->acceptSingle("each", RecurFormSectionComponent::class, $this->each, false);
+		$router->acceptSingle("after", RecurFormSectionComponent::class, $this->after, true);
 	}
 
 	protected function executeNode(FlowContext $context) : Generator{
@@ -120,6 +120,9 @@ class RecurFormComponent extends KineticComponent implements UiNode{
 				$datum[$element->getNode()->asElementComponent()->getId()] = $responses[$i++];
 			}
 			$bodyData[$k] = $datum;
+		}
+		if($this->each->getVar()!==null){
+			$context->getVariables()->setNested($this->each->getVar(), $bodyData);
 		}
 
 		$afterData = [];

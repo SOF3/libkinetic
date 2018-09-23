@@ -222,14 +222,27 @@
       </xs:element>
     </xs:choice>
     <xs:attribute name="id" type="IdString"/>
+    <xs:attribute name="onCancel" use="optional" default="fallthrough">
+      <xs:simpleType>
+        <xs:restriction>
+          <xs:enumeration value="fallthrough"/>
+          <xs:enumeration value="skip"/>
+          <xs:enumeration value="break"/>
+          <xs:enumeration value="exit"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
   </xs:complexType>
 
   <xs:complexType name="NodeStateControllerList">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="controller" type="ControllerName" minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="controller"  minOccurs="0" maxOccurs="unbounded">
         <xs:annotation>
           <xs:documentation>FQN of an OnStartHandler controller</xs:documentation>
         </xs:annotation>
+        <xs:complexType>
+          <xs:attribute name="class" type="ControllerName" use="required"/>
+        </xs:complexType>
       </xs:element>
       <xs:group ref="ConditionalHandler" minOccurs="0" maxOccurs="unbounded"/>
     </xs:choice>
@@ -427,16 +440,6 @@
         <xs:attribute name="title" type="UserString" use="required"/>
         <xs:attribute name="synopsis" type="UserString" use="required"/>
         <xs:attribute name="timeout" type="xs:double" use="optional" default="600"/>
-        <xs:attribute name="onCancel" use="optional" default="fallthrough">
-          <xs:simpleType>
-            <xs:restriction>
-              <xs:enumeration value="fallthrough"/>
-              <xs:enumeration value="skip"/>
-              <xs:enumeration value="break"/>
-              <xs:enumeration value="exit"/>
-            </xs:restriction>
-          </xs:simpleType>
-        </xs:attribute>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -478,7 +481,29 @@
 
   <xs:complexType name="RecurFormNode">
     <xs:complexContent>
-      <xs:extension base="UiNode">
+      <xs:extension base="GenericFormNode">
+        <xs:choice minOccurs="1" maxOccurs="3">
+          <xs:element name="before" type="RecurFormSectionNode"/>
+          <xs:element name="after" type="RecurFormSectionNode"/>
+          <xs:element name="each" type="RecurFormSectionNode"/>
+        </xs:choice>
+        <xs:attribute name="provider" type="ControllerName" use="required"/>
+        <xs:attribute name="onEmpty" use="optional">
+          <xs:simpleType>
+            <xs:restriction>
+              <xs:enumeration value="execute"/>
+              <xs:enumeration value="skip"/>
+              <xs:enumeration value="cancel"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="RecurFormSectionNode">
+    <xs:complexContent>
+      <xs:extension base="ElementParentNode">
+        <xs:attribute name="var" type="VarName" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -491,6 +516,15 @@
   </xs:complexType>
 
   <!-- Element implementations -->
+  <xs:complexType name="ElementParentNode">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" type="LabelElementNode"/>
+      <xs:element name="input" type="InputElementNode"/>
+      <xs:element name="toggle" type="ToggleElementNode"/>
+      <xs:element name="slider" type="SliderElementNode"/>
+      <xs:element name="select" type="SelectElementNode"/>
+    </xs:choice>
+  </xs:complexType>
   <xs:complexType name="ElementNode" abstract="true">
     <xs:attribute name="id" use="optional">
       <xs:annotation>

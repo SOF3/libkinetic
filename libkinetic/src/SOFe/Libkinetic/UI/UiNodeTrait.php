@@ -25,6 +25,7 @@ namespace SOFe\Libkinetic\UI;
 use Generator;
 use SOFe\Libkinetic\API\UiNodeStateHandler;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
 use UnexpectedValueException;
 use function array_keys;
@@ -38,7 +39,31 @@ use function is_int;
 use function range;
 
 trait UiNodeTrait{
+	/**
+	 * @param FlowContext $context
+	 *
+	 * @return Generator
+	 * @throws FlowCancelledException
+	 */
 	public function execute(FlowContext $context) : Generator{
+		try{
+			yield  $this->executeImpl($context);
+		}catch(FlowCancelledException $e){
+			$comp = $this->getNode()->asUiComponent();
+			if($comp->getOnCancel() === UiComponent::ON_CANCEL_FALLTHROUGH){
+				throw $e;
+			}
+			return new UiNodeOutcome($comp->getOnCancel(), $comp->getOnCancelTarget());
+		}
+	}
+
+	/**
+	 * @param FlowContext $context
+	 *
+	 * @return Generator
+	 * @throws FlowCancelledException
+	 */
+	protected function executeImpl(FlowContext $context) : Generator{
 		$allHandlers = [];
 		$labels = [
 			UiNodeStateHandler::STATE_START => 0,
@@ -89,6 +114,17 @@ trait UiNodeTrait{
 		}
 	}
 
+	/**
+	 * @noinspection PhpDocRedundantThrowsInspection
+	 *
+	 * @param FlowContext $context
+	 * @param object      $object
+	 * @param string      $function
+	 *
+	 * @return Generator
+	 * @throws UnexpectedValueException
+	 * @throws FlowCancelledException
+	 */
 	protected function adaptStateHandler(FlowContext $context, object $object, string $function) : Generator{
 		$ret = yield $object->{$function}($context);
 

@@ -25,6 +25,9 @@ namespace SOFe\Libkinetic\UI;
 use Generator;
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
+use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
+use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
+use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Entry\EntryCommandComponent;
 use SOFe\Libkinetic\UI\NodeState\OnCompleteComponent;
@@ -32,6 +35,11 @@ use SOFe\Libkinetic\UI\NodeState\OnStartComponent;
 use SOFe\Libkinetic\Variable\ReturnComponent;
 
 class UiComponent extends KineticComponent{
+	public const ON_CANCEL_FALLTHROUGH = 4159231705;
+	public const ON_CANCEL_SKIP = UiNodeOutcome::OUTCOME_SKIP;
+	public const ON_CANCEL_BREAK = UiNodeOutcome::OUTCOME_BREAK;
+	public const ON_CANCEL_EXIT = UiNodeOutcome::OUTCOME_EXIT;
+
 	/** @var OnStartComponent */
 	protected $onStart;
 	/** @var OnCompleteComponent */
@@ -39,6 +47,10 @@ class UiComponent extends KineticComponent{
 
 	/** @var ReturnComponent[] */
 	protected $returns = [];
+	/** @var int */
+	protected $onCancel = self::ON_CANCEL_FALLTHROUGH;
+	/** @var string|null */
+	protected $onCancelTarget = null;
 
 	/** @var EntryCommandComponent[] */
 	protected $entryCommands = [];
@@ -60,6 +72,24 @@ class UiComponent extends KineticComponent{
 	 */
 	public function getReturns() : array{
 		return $this->returns;
+	}
+
+	public function getOnCancel() : int{
+		return $this->onCancel;
+	}
+
+	public function getOnCancelTarget() : string{
+		return $this->onCancelTarget;
+	}
+
+	public function acceptAttributes(AttributeRouter $router) : void{
+		$router->use("onCancel", new StringEnumAttribute([
+			"fallthrough" => self::ON_CANCEL_FALLTHROUGH,
+			"skip" => self::ON_CANCEL_SKIP,
+			"break" => self::ON_CANCEL_BREAK,
+			"exit" => self::ON_CANCEL_EXIT,
+		], true), $this->onCancel, false);
+		$router->use("onCancelTarget", new StringAttribute(), $this->onCancelTarget, false);
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{

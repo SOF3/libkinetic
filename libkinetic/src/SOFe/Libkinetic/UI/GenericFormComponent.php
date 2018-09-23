@@ -30,17 +30,11 @@ use SOFe\Libkinetic\Hybrid\HybridForms;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\Configurable;
 use SOFe\Libkinetic\Parser\Attribute\DurationAttribute;
-use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
-use SOFe\Libkinetic\Parser\Attribute\StringEnumAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
 use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\UserString;
 
 class GenericFormComponent extends KineticComponent{
-	public const ON_CANCEL_FALLTHROUGH = 4159231705;
-	public const ON_CANCEL_SKIP = UiNodeOutcome::OUTCOME_SKIP;
-	public const ON_CANCEL_BREAK = UiNodeOutcome::OUTCOME_BREAK;
-	public const ON_CANCEL_EXIT = UiNodeOutcome::OUTCOME_EXIT;
 
 	/** @var bool */
 	protected $cancellable;
@@ -53,10 +47,6 @@ class GenericFormComponent extends KineticComponent{
 	protected $synopsis;
 	/** @var float */
 	protected $timeout = 60.0 * 10;
-	/** @var int */
-	protected $onCancel = self::ON_CANCEL_FALLTHROUGH;
-	/** @var string|null */
-	protected $onCancelTarget = null;
 
 	public static function modalForm() : GenericFormComponent{
 		return new self(false, true);
@@ -81,15 +71,6 @@ class GenericFormComponent extends KineticComponent{
 			$router->use("synopsis", new UserStringAttribute(), $this->synopsis, true);
 		}
 		$router->use("timeout", new Configurable(new DurationAttribute(1.0)), $this->timeout, false);
-//		if($this->cancellable){
-		$router->use("onCancel", new StringEnumAttribute([
-			"fallthrough" => self::ON_CANCEL_FALLTHROUGH,
-			"skip" => self::ON_CANCEL_SKIP,
-			"break" => self::ON_CANCEL_BREAK,
-			"exit" => self::ON_CANCEL_EXIT,
-		], true), $this->onCancel, false);
-		$router->use("onCancelTarget", new StringAttribute(), $this->onCancelTarget, false);
-//		}
 	}
 
 	public function getTitle() : UserString{
@@ -102,14 +83,6 @@ class GenericFormComponent extends KineticComponent{
 
 	public function getTimeout() : float{
 		return $this->timeout;
-	}
-
-	public function getOnCancel() : int{
-		return $this->onCancel;
-	}
-
-	public function getOnCancelTarget() : string{
-		return $this->onCancelTarget;
 	}
 
 	/**

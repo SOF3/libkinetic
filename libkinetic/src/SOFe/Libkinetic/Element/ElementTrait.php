@@ -25,11 +25,14 @@ namespace SOFe\Libkinetic\Element;
 use Generator;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
+use function assert;
 use function microtime;
 
 trait ElementTrait{
 	/** @var bool */
 	protected $requiresId;
+	/** @var array */
+	protected $args = [];
 
 	public function __construct(bool $requiresId){
 		$this->requiresId = $requiresId;
@@ -50,6 +53,13 @@ trait ElementTrait{
 				return $value;
 			}
 		}
+	}
+
+	public function attachArgs(array $args) : ElementInterface{
+		$clone = clone $this;
+		assert($clone instanceof ElementInterface);
+		$clone->args = $args;
+		return $clone;
 	}
 
 	protected abstract function requestCliImpl(FlowContext $context, float $timeout) : Generator;

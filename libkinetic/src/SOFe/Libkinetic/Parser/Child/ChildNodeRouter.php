@@ -95,7 +95,7 @@ class ChildNodeRouter{
 			$nodes = [];
 		}
 		return $this->acceptMultiFunc($name, function() use ($constructorArgs, $componentClass, &$components) : array{
-			$comp = new $componentClass($constructorArgs);
+			$comp = new $componentClass(...$constructorArgs);
 			$components[] = $comp;
 			return [$comp];
 		}, $nodes, $min, $max, $ns);

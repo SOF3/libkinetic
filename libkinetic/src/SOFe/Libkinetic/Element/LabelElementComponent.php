@@ -34,16 +34,8 @@ use SOFe\Libkinetic\UserString;
 class LabelElementComponent extends BaseElement{
 	use ElementTrait;
 
-	/** @var array */
-	protected $args = [];
 	/** @var UserString */
 	protected $text;
-
-	public function attachArgs(array $args) : ElementInterface{
-		$clone = clone $this;
-		$clone->args = [];
-		return $clone;
-	}
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);

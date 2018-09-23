@@ -22,24 +22,20 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic;
 
-/**
- * Some translations are temporarily hardcoded in this class. They are not part of the API, and plugins must not use them. They are not valid user strings in the kinetic file.
- */
 final class libkinetic{
-
 	public const GH_RAW = "https://raw.githubusercontent.com/SOF3/libkinetic/master/";
 
-	private static $raw;
+	private static $shaded;
 
 	/**
 	 * @return bool
 	 */
 	public static function isShaded() : bool{
-		return self::$raw;
+		return self::$shaded;
 	}
 
 	public static function internalInit() : void{
-		self::$raw = self::class !== "SOFe\\lib" . "kinetic\\libkinetic";
+		self::$shaded = self::class !== "SOFe\\Lib" . "kinetic\\libkinetic";
 	}
 
 	public static function getNamespace() : string{

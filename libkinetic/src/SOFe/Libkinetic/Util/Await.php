@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\Util;
 
+use SOFe\Libkinetic\libkinetic;
+
 class Await extends \SOFe\AwaitGenerator\Await{
 	public const RESOLVE = parent::RESOLVE;
 	public const REJECT = parent::REJECT;
@@ -29,3 +31,5 @@ class Await extends \SOFe\AwaitGenerator\Await{
 	public const ALL = parent::ALL;
 	public const RACE = parent::RACE;
 }
+
+\SOFe\AwaitGenerator\Await::$debug = !libkinetic::isShaded();

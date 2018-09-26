@@ -419,7 +419,7 @@
 
   <xs:complexType name="MuxNode">
     <xs:complexContent>
-      <xs:extension base="UiNode">
+      <xs:extension base="GenericFormNode">
         <xs:sequence>
           <xs:element name="option" type="MuxOptionNode" minOccurs="2" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -427,7 +427,6 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-
   <xs:complexType name="MuxOptionNode">
     <xs:group ref="UiNode"/>
     <xs:attribute name="displayName" type="UserString"/>

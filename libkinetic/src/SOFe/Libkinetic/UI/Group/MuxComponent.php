@@ -46,7 +46,7 @@ class MuxComponent extends KineticComponent implements UiNode{
 	/** @var string|null */
 	protected $var = null;
 	/** @var MuxOptionComponent[] */
-	protected $options;
+	protected $options = [];
 
 	public function getDependencies() : Generator{
 		yield UiComponent::class;

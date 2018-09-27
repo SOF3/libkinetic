@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\UI\Group;
 
+use function count;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\Advanced\DynFormComponent;
@@ -66,12 +67,15 @@ class UiParentComponent extends KineticComponent{
 		];
 
 		foreach($components as $name => $class){
-			$router->acceptMulti($name, $class, $this->children, $this->min, $this->max);
+			$router->acceptMulti($name, $class, $this->children, 0, $this->max);
 		}
 	}
 
 	public function endElement() : void{
 		$i = 0;
+		if(count($this->children) < $this->min || count($this->children) > $this->max){
+			throw $this->node->throw("There must be at least $this->min child UiNode and at most $this->max child UiNode");
+		}
 		$this->children = ArrayUtil::indexByProperty($this->children, function(UiNode $node) use (&$i): string{
 			return $node->getNode()->asIdComponent()->getId() ?? "libkinetic.internal.unnamedComponent#" . ($i++);
 		});

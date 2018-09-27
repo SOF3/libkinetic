@@ -446,6 +446,7 @@
   <xs:complexType name="BasicFormNode">
     <xs:complexContent>
       <xs:extension base="GenericFormNode">
+        <xs:group ref="ElementNode"/>
         <xs:attribute name="synopsis" use="prohibited"/>
       </xs:extension>
     </xs:complexContent>

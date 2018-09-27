@@ -187,3 +187,5 @@ function toUpperCase(string $string) : string{
 	}
 	return $ret;
 }
+
+exit(0);

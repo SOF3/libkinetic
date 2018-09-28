@@ -24,22 +24,23 @@ namespace SOFe\Libkinetic\Parser\Attribute;
 
 use SOFe\Libkinetic\Base\IdComponent;
 use SOFe\Libkinetic\Base\KineticNode;
-use function assert;
+use function array_reverse;
+use function implode;
 use function strpos;
+use function substr;
 
 class IdAttribute extends NodeAttribute{
 	public function accept(KineticNode $node, string $value) : string{
-		if(strpos($value, ".") === 0){
-			$parent = $node->getParent();
-			assert($parent !== null);
-			$idComp = $parent->getComponent(IdComponent::class);
-			if($parent === null ||
-				!($idComp instanceof IdComponent) ||
-				$idComp->getId() === null){
-				throw $node->throw("Extending IDs (IDs starting with a dot) are only allowed in child elements of a node with a parent ");
-			}
-			return $idComp->getId() . $value;
+		if(strpos($value, ".") !== 0){
+			return $value;
 		}
-		return $value;
+
+		$parts = [substr($value, 1)];
+		for($parent = $node->getParent(); $parent !== null; $parent = $parent->getParent()){
+			if($parent->hasComponent(IdComponent::class) && $parent->asIdComponent()->getId() !== null){
+				$parts[] = $parent->asIdComponent()->getId();
+			}
+		}
+		return implode(".", array_reverse($parts));
 	}
 }

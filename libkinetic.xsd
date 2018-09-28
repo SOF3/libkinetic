@@ -109,7 +109,8 @@
           </xs:documentation>
         </xs:annotation>
       </xs:element>
-      <xs:group ref="UiNode"/>
+      <xs:group ref="UiNode" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="wizard" type="WizardNode" minOccurs="0" maxOccurs="unbounded"/>
     </xs:choice>
     <xs:attribute name="namespace" use="required">
       <xs:annotation>
@@ -199,6 +200,8 @@
         </xs:complexType>
       </xs:element>
 
+      <xs:element name="return" type="ReturnNode" minOccurs="0" maxOccurs="unbounded"/>
+
       <xs:element name="onStart" type="NodeStateControllerList" minOccurs="1" maxOccurs="1"/>
       <xs:element name="onComplete" minOccurs="1" maxOccurs="1">
         <xs:complexType>
@@ -232,6 +235,10 @@
         </xs:restriction>
       </xs:simpleType>
     </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="ReturnNode">
+    <xs:attribute name="name" type="IdString"/>
+    <xs:attribute name="as" type="VarName"/>
   </xs:complexType>
 
   <xs:complexType name="NodeStateControllerList">
@@ -510,6 +517,19 @@
   <xs:complexType name="DynFormNode">
     <xs:complexContent>
       <xs:extension base="UiNode">
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- Wizard -->
+  <xs:complexType name="WizardNode">
+    <xs:complexContent>
+      <xs:extension base="UiGroupNode">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="param" type="VarDeclaration"/>
+          <xs:element name="return" type="VarDeclaration"/>
+        </xs:choice>
+        <xs:attribute name="id" type="IdString" use="required"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

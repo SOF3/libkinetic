@@ -71,7 +71,7 @@ class SelectElementComponent extends BaseElement{
 	}
 
 	public function acceptChildren(ChildNodeRouter $router) : void{
-		$router->acceptMulti("select", SelectOptionComponent::class, $this->optionNodes, 0);
+		$router->acceptMulti("option", SelectOptionComponent::class, $this->optionNodes, 0);
 	}
 
 	protected function requestCliImpl(FlowContext $context, float $timeout) : Generator{

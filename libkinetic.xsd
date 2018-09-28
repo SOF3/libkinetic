@@ -448,6 +448,7 @@
       <xs:extension base="GenericFormNode">
         <xs:group ref="ElementNode"/>
         <xs:attribute name="synopsis" use="prohibited"/>
+        <xs:attribute name="var" type="VarName"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

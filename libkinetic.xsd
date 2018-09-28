@@ -543,7 +543,7 @@
     <xs:complexContent>
       <xs:extension base="ElementNode">
         <xs:attribute name="text" type="UserString" use="required"/>
-        <xs:attribute name="placeholder" type="UserString" use="required"/>
+        <xs:attribute name="placeholder" type="UserString" use="optional"/>
         <xs:attribute name="default" type="xs:string" use="optional" default=""/>
       </xs:extension>
     </xs:complexContent>

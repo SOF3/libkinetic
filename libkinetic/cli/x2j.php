@@ -71,3 +71,5 @@ xml_parse($parser, file_get_contents($xml), true);
 xml_parser_free($parser);
 
 file_put_contents($json, json_encode($last, (isset($argv[4]) && $argv[4] === "min" ? 0 : JSON_PRETTY_PRINT) | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . "\n");
+
+exit(0);

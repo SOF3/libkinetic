@@ -56,7 +56,7 @@ class SelectElementComponent extends BaseElement{
 	/** @var SelectOptionComponent[] */
 	protected $optionNodes = [];
 	/** @var string */
-	protected $valueType;
+	protected $valueType = "string";
 
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("text", new UserStringAttribute(), $this->text, true);

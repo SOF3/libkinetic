@@ -38,7 +38,7 @@ class GroupFlowContext extends FlowContext{
 	protected $parent;
 
 	public function __construct(UiNode $interface, FlowContext $parent){
-		parent::__construct($interface, $parent->user);
+		parent::__construct($parent->user, $interface->getNode()->asIdComponent()->getId(), $parent->getManager());
 		$this->group = $interface->getNode()->asUiGroupComponent();
 		$this->parent = $parent;
 
@@ -54,7 +54,18 @@ class GroupFlowContext extends FlowContext{
 	}
 
 	public function execute() : Generator{
-		$list = $this->group->asUiParentComponent()->getChildren();
+		return yield self::executeNodes($this, $this->id, $this->group->asUiParentComponent()->getChildren());
+	}
+
+	/**
+	 * @param FlowContext $context
+	 * @param string      $id
+	 * @param UiNode[]    $list
+	 *
+	 * @return Generator
+	 * @throws FlowCancelledException
+	 */
+	public static function executeNodes(FlowContext $context, string $id, array $list) : Generator{
 		/** @var string[] $indexToKey */
 		$indexToKey = array_keys($list);
 		/** @var int[] $keyToIndex */
@@ -63,7 +74,7 @@ class GroupFlowContext extends FlowContext{
 		$nextIndex = 0;
 		while(true){
 			$next = $list[$indexToKey[$nextIndex]];
-			$outcome = yield $next->execute($this);
+			$outcome = yield $next->execute($context);
 			assert($outcome instanceof UiNodeOutcome);
 			switch($outcome->getOutcome()){
 				case UiNodeOutcome::OUTCOME_SKIP:
@@ -84,7 +95,7 @@ class GroupFlowContext extends FlowContext{
 					}
 
 				case UiNodeOutcome::OUTCOME_BREAK:
-					if($outcome->getTarget() === null || $outcome->getTarget() === $this->getId()){
+					if($outcome->getTarget() === null || $outcome->getTarget() === $id){
 						return $outcome;
 					}else{
 						return new UiNodeOutcome(UiNodeOutcome::OUTCOME_SKIP, null);

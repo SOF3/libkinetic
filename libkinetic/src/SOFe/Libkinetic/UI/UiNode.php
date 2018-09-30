@@ -24,6 +24,7 @@ namespace SOFe\Libkinetic\UI;
 
 use Generator;
 use SOFe\Libkinetic\Base\KineticNode;
+use SOFe\Libkinetic\Flow\FlowCancelledException;
 use SOFe\Libkinetic\Flow\FlowContext;
 
 interface UiNode{
@@ -35,6 +36,7 @@ interface UiNode{
 	 * @param FlowContext $context
 	 *
 	 * @return Generator
+	 * @throws FlowCancelledException
 	 */
 	public function execute(FlowContext $context) : Generator;
 }

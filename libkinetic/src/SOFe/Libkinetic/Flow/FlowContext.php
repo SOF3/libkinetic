@@ -24,28 +24,27 @@ namespace SOFe\Libkinetic\Flow;
 
 use pocketmine\command\CommandSender;
 use SOFe\Libkinetic\KineticManager;
-use SOFe\Libkinetic\UI\UiComponent;
-use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UserString;
 
 abstract class FlowContext{
-	/** @var UiNode */
-	protected $interface;
-	/** @var UiComponent */
-	protected $component;
 	/** @var CommandSender */
 	protected $user;
+	/** @var string */
+	protected $id;
+	/** @var KineticManager */
+	protected $manager;
+
 	/** @var VariableScope */
 	protected $variableScope;
 
-	protected function __construct(UiNode $interface, CommandSender $user){
-		$this->interface = $interface;
-		$this->component = $interface->getNode()->asUiComponent();
+	protected function __construct(CommandSender $user, string $id, KineticManager $manager){
 		$this->user = $user;
+		$this->id = $id;
+		$this->manager = $manager;
 	}
 
 	public function getId() : ?string{
-		return $this->component->asIdComponent()->getId();
+		return $this->id;
 	}
 
 	public function getUser() : CommandSender{
@@ -65,7 +64,7 @@ abstract class FlowContext{
 	}
 
 	public function translate(string $message, array $extraArgs = []) : string{
-		return $this->component->getManager()->translate($this->getUser(), $message, $this->getVarsAsArgs($extraArgs));
+		return $this->manager->translate($this->getUser(), $message, $this->getVarsAsArgs($extraArgs));
 	}
 
 	public function translateUserString(UserString $message, array $extraArgs = []) : string{
@@ -73,7 +72,7 @@ abstract class FlowContext{
 	}
 
 	public function getManager() : KineticManager{
-		return $this->component->getManager();
+		return $this->manager;
 	}
 
 	public function getVarsAsArgs(array $extraArgs = []) : array{

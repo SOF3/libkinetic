@@ -42,11 +42,13 @@
   </xs:simpleType>
   <xs:simpleType name="IdString">
     <xs:restriction base="xs:string">
-      <xs:pattern value="\w+(\.\w+)+"/>
+      <xs:pattern value="(\.\w+)+"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="VarName">
-    <xs:restriction base="xs:string"/>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="\w+(\.\w+)*"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="ScalarVarType">
     <xs:restriction>
@@ -131,7 +133,7 @@
           <xs:documentation>An alias of the command, without the leading slash</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:attribute name="name" type="CommandName"/>
+          <xs:attribute name="name" type="CommandName" use="required"/>
         </xs:complexType>
       </xs:element>
     </xs:choice>
@@ -160,6 +162,7 @@
       <xs:element name="exit" type="ExitNode"/>
       <xs:element name="buffer" type="BufferNode"/>
       <xs:element name="noOp" type="BufferNode"/>
+      <xs:element name="call" type="CallNode"/>
 
       <xs:element name="series" type="SeriesNode"/>
       <xs:element name="mux" type="MuxNode"/>
@@ -382,6 +385,22 @@
     </xs:complexContent>
   </xs:complexType>
 
+  <xs:complexType name="CallNode">
+    <xs:complexContent>
+      <xs:extension base="UiNode">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="param">
+            <xs:complexType>
+              <xs:attribute name="var" type="VarName" use="required"/>
+              <xs:attribute name="as" type="IdString" use="required"/>
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+        <xs:attribute name="target" type="IdString" use="required"/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
   <xs:complexType name="UiParentNode" abstract="true">
     <xs:complexContent>
       <xs:extension base="UiNode">
@@ -430,14 +449,14 @@
         <xs:sequence>
           <xs:element name="option" type="MuxOptionNode" minOccurs="2" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="var" type="VarName"/>
+        <xs:attribute name="var" type="VarName" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="MuxOptionNode">
     <xs:group ref="UiNode"/>
-    <xs:attribute name="displayName" type="UserString"/>
-    <xs:attribute name="commandName" type="xs:string"/>
+    <xs:attribute name="displayName" type="UserString" use="optional"/>
+    <xs:attribute name="commandName" type="xs:string" use="optional"/>
   </xs:complexType>
 
   <xs:complexType name="GenericFormNode">
@@ -455,7 +474,7 @@
       <xs:extension base="GenericFormNode">
         <xs:group ref="ElementNode"/>
         <xs:attribute name="synopsis" use="prohibited"/>
-        <xs:attribute name="var" type="VarName"/>
+        <xs:attribute name="var" type="VarName" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -468,9 +487,9 @@
           <xs:element name="after" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
         </xs:all>
         <xs:attribute name="provider" type="ControllerName" use="required"/>
-        <xs:attribute name="defaultVar" type="VarName"/>
-        <xs:attribute name="target" type="VarName"/>
-        <xs:attribute name="autoSelect" type="xs:boolean" default="false"/>
+        <xs:attribute name="defaultVar" type="VarName" use="optional"/>
+        <xs:attribute name="target" type="VarName" use="optional"/>
+        <xs:attribute name="autoSelect" type="xs:boolean" use="optional" default="false"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
@@ -482,7 +501,7 @@
           <xs:element name="yes" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
           <xs:element name="no" type="MuxOptionNode" minOccurs="0" maxOccurs="1"/>
         </xs:all>
-        <xs:attribute name="defaultVar" type="VarName"/>
+        <xs:attribute name="defaultVar" type="VarName" use="optional"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>

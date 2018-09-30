@@ -32,8 +32,12 @@ use SOFe\Libkinetic\Util\Await;
 use function assert;
 
 class EntryFlowContext extends FlowContext{
+	/** @var UiNode */
+	protected $interface;
+
 	public function __construct(UiNode $interface, CommandSender $user){
-		parent::__construct($interface, $user);
+		parent::__construct($user, $interface->getNode()->asIdComponent()->getId(), $interface->getNode()->getManager());
+		$this->interface = $interface;
 
 		$vars = [];
 		for($node = $interface->getNode(); $node !== null; $node = $node->getParent()){

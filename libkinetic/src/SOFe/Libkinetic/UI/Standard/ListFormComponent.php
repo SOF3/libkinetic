@@ -121,7 +121,7 @@ class ListFormComponent extends KineticComponent implements UiNode{
 
 		$options = [];
 		foreach($this->before as $component){
-			$options[] = new IconListEntry($component->getCommandName(), $component->getDisplayName(), [true, $component], null); // TODO icon
+			$options[] = new IconListEntry($component->getCommandName(), $component->getAliases(), $component->getDisplayName(), [true, $component], null); // TODO icon
 		}
 		foreach($entries as $entry){
 			$option = clone $entry;
@@ -129,7 +129,7 @@ class ListFormComponent extends KineticComponent implements UiNode{
 			$options[] = $option;
 		}
 		foreach($this->after as $component){
-			$options[] = new IconListEntry($component->getCommandName(), $component->getDisplayName(), [true, $component], null); // TODO icon
+			$options[] = new IconListEntry($component->getCommandName(), $component->getAliases(), $component->getDisplayName(), [true, $component], null); // TODO icon
 		}
 
 		return yield $this->asGenericFormComponent()->sendListForm($context, $options);

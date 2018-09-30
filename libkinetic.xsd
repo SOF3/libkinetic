@@ -454,7 +454,14 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:complexType name="MuxOptionNode">
-    <xs:group ref="UiNode"/>
+    <xs:sequence>
+      <xs:group ref="UiNode"/>
+      <xs:element name="alias">
+        <xs:complexType>
+          <xs:attribute name="name" type="CommandName" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
     <xs:attribute name="displayName" type="UserString" use="optional"/>
     <xs:attribute name="commandName" type="xs:string" use="optional"/>
   </xs:complexType>

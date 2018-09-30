@@ -105,7 +105,7 @@ class GenericFormComponent extends KineticComponent{
 		return yield HybridForms::custom($context, $this->title, $elements, $this->getTimeout());
 	}
 
-	public function sendModalForm(FlowContext $context, ?string $yesCommand, ?UserString $yesDisplay, ?string $noCommand, ?UserString $noDisplay) : Generator{
-		return yield HybridForms::modal($context, $this->title, $this->synopsis, $yesCommand, $yesDisplay, $noCommand, $noDisplay, $this->getTimeout());
+	public function sendModalForm(FlowContext $context, ?string $yesCommand, array $yesAliases, ?UserString $yesDisplay, ?string $noCommand, array $noAliases, ?UserString $noDisplay) : Generator{
+		return yield HybridForms::modal($context, $this->title, $this->synopsis, $yesCommand, $yesAliases, $yesDisplay, $noCommand, $noAliases, $noDisplay, $this->getTimeout());
 	}
 }

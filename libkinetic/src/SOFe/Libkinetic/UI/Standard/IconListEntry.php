@@ -28,6 +28,8 @@ use SOFe\Libkinetic\UserString;
 class IconListEntry{
 	/** @var string */
 	protected $mnemonic;
+	/** @var string[] */
+	protected $aliases;
 	/** @var UserString */
 	protected $display;
 	/** @var mixed */
@@ -37,8 +39,9 @@ class IconListEntry{
 	/** @var bool */
 	protected $default = false;
 
-	public function __construct(string $mnemonic, UserString $display, $value, ?Icon $icon){
+	public function __construct(string $mnemonic, array $aliases, UserString $display, $value, ?Icon $icon){
 		$this->mnemonic = $mnemonic;
+		$this->aliases = $aliases;
 		$this->display = $display;
 		$this->value = $value;
 		$this->icon = $icon;
@@ -46,6 +49,13 @@ class IconListEntry{
 
 	public function getMnemonic() : string{
 		return $this->mnemonic;
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getAliases() : array{
+		return $this->aliases;
 	}
 
 	public function getDisplay() : UserString{

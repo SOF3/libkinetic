@@ -79,7 +79,7 @@ class MuxComponent extends KineticComponent implements UiNode{
 				$choice = $var->getValue();
 
 				if(isset($this->options[$choice])){
-					return $choice;
+					return $this->options[$choice]->getCommandName();
 				}else{
 					$this->manager->getPlugin()->getLogger()->warning("[libkinetic] The $this->var variable contains an unknown choice $choice. This variable will be ignored, and the user will be asked to choose an option.");
 				}
@@ -87,7 +87,9 @@ class MuxComponent extends KineticComponent implements UiNode{
 		}
 		$options = [];
 		foreach($this->options as $mnemonic => $component){
-			$options[] = new IconListEntry($mnemonic, $component->getDisplayName() ?? new UserString(LibkineticMessages::LIST_FORM_DUMMY_OPTION), $mnemonic, null);
+			if($component->getCommandName() === $mnemonic){
+				$options[] = new IconListEntry($mnemonic, $component->getAliases(), $component->getDisplayName() ?? new UserString(LibkineticMessages::LIST_FORM_DUMMY_OPTION), $mnemonic, null);
+			}
 		}
 		return yield $this->asGenericFormComponent()->sendListForm($context, $options);
 	}

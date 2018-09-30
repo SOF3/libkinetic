@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\Hybrid;
 
 use Generator;
+use function in_array;
 use pocketmine\Player;
 use SOFe\Libkinetic\Element\ElementInterface;
 use SOFe\Libkinetic\Flow\FlowCancelledException;
@@ -74,8 +75,12 @@ class HybridForms{
 			$choices = [];
 			foreach($strings as $entry){
 				$choices[$entry->getMnemonic()] = $entry->getValue();
+				foreach($entry->getAliases() as $alias){
+					$choices[$alias] = $entry->getValue();
+				}
 				$context->send(LibkineticMessages::LIST_CLI_OPTION, [
 					"mnemonic" => $entry->getMnemonic(),
+					"aliases" => $entry->getAliases(),
 					"display" => $entry->getDisplay(),
 				]);
 			}
@@ -135,7 +140,7 @@ class HybridForms{
 	}
 
 
-	public static function modal(FlowContext $context, UserString $title, UserString $synopsis, ?string $yesCommand, ?UserString $yesDisplay, ?string $noCommand, ?UserString $noDisplay, float $timeout) : Generator{
+	public static function modal(FlowContext $context, UserString $title, UserString $synopsis, ?string $yesCommand, array $yesAliases, ?UserString $yesDisplay, ?string $noCommand, array $noAliases, ?UserString $noDisplay, float $timeout) : Generator{
 		$yesCommand = $yesCommand ?? "y";
 		$yesDisplay = $yesDisplay ?? new UserString(LibkineticMessages::MODAL_YES);
 		$noCommand = $noCommand ?? "n";
@@ -145,7 +150,7 @@ class HybridForms{
 		if($user instanceof Player){
 			$data = yield self::modalPlayer($context, $user, $title, $synopsis, $yesDisplay, $noDisplay, $timeout);
 		}else{
-			$data = yield self::modalNonPlayer($context, $title, $synopsis, $yesCommand, $yesDisplay, $noCommand, $noDisplay, $timeout);
+			$data = yield self::modalNonPlayer($context, $title, $synopsis, $yesCommand, $yesAliases, $yesDisplay, $noCommand, $noAliases, $noDisplay, $timeout);
 		}
 		return $data;
 	}
@@ -154,7 +159,7 @@ class HybridForms{
 		return yield $context->getManager()->getFormsAdapter()->sendModalForm($player, $context->translateUserString($title), $context->translateUserString($synopsis), $context->translateUserString($yesDisplay), $context->translateUserString($noDisplay), $timeout);
 	}
 
-	public static function modalNonPlayer(FlowContext $context, UserString $title, UserString $synopsis, string $yesCommand, UserString $yesDisplay, string $noCommand, UserString $noDisplay, float $timeout) : Generator{
+	public static function modalNonPlayer(FlowContext $context, UserString $title, UserString $synopsis, string $yesCommand, array $yesAliases, UserString $yesDisplay, string $noCommand, array $noAliases, UserString $noDisplay, float $timeout) : Generator{
 		$context->send(LibkineticMessages::MODAL_CLI_TITLE, ["title" => $context->translateUserString($title)]);
 		$context->send(LibkineticMessages::MODAL_CLI_SYNOPSIS, ["synopsis" => $context->translateUserString($synopsis)]);
 		while(true){
@@ -166,10 +171,10 @@ class HybridForms{
 				"noDisplay" => $context->translateUserString($noDisplay),
 			]);
 			$value = yield $context->getManager()->waitCont($context->getUser(), $timeout);
-			if($value === $yesCommand){
+			if($value === $yesCommand || in_array($value, $yesAliases, true)){
 				return true;
 			}
-			if($value === $noCommand){
+			if($value === $noCommand || in_array($value, $noAliases, true)){
 				return false;
 			}
 

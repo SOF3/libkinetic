@@ -23,18 +23,25 @@ declare(strict_types=1);
 namespace SOFe\Libkinetic\UI\Group;
 
 use Generator;
+use SOFe\Libkinetic\Base\CommandAliasComponent;
 use SOFe\Libkinetic\Base\KineticComponent;
 use SOFe\Libkinetic\Parser\Attribute\AttributeRouter;
 use SOFe\Libkinetic\Parser\Attribute\StringAttribute;
 use SOFe\Libkinetic\Parser\Attribute\UserStringAttribute;
+use SOFe\Libkinetic\Parser\Child\ChildNodeRouter;
 use SOFe\Libkinetic\UI\UiNode;
 use SOFe\Libkinetic\UserString;
+use function array_map;
 
 class MuxOptionComponent extends KineticComponent{
 	/** @var UserString|null */
 	protected $displayName;
 	/** @var string|null */
 	protected $commandName;
+	/** @var string[] */
+	protected $aliases = [];
+
+	// TODO icon
 
 	public function getDependencies() : Generator{
 		yield new UiParentComponent(1, 1);
@@ -43,6 +50,16 @@ class MuxOptionComponent extends KineticComponent{
 	public function acceptAttributes(AttributeRouter $router) : void{
 		$router->use("displayName", new UserStringAttribute(), $this->displayName, false);
 		$router->use("commandName", new StringAttribute(), $this->commandName, false);
+	}
+
+	public function acceptChildren(ChildNodeRouter $router) : void{
+		$router->acceptMulti("alias", CommandAliasComponent::class, $this->aliases, 0);
+	}
+
+	public function endElement() : void{
+		$this->aliases = array_map(function(CommandAliasComponent $component) : string{
+			return $component->getText();
+		}, $this->aliases);
 	}
 
 	public function getDisplayName() : ?UserString{
@@ -55,5 +72,12 @@ class MuxOptionComponent extends KineticComponent{
 
 	public function getChild() : UiNode{
 		return $this->asUiParentComponent()->getChildren()[0];
+	}
+
+	/**
+	 * @return string[]
+	 */
+	public function getAliases() : array{
+		return $this->aliases;
 	}
 }

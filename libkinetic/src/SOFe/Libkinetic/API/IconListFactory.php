@@ -22,6 +22,7 @@ declare(strict_types=1);
 
 namespace SOFe\Libkinetic\API;
 
+use function in_array;
 use InvalidArgumentException;
 use SOFe\Libkinetic\UI\Standard\IconListEntry;
 use SOFe\Libkinetic\UserString;
@@ -32,8 +33,8 @@ class IconListFactory{
 	/** @var IconListEntry|null */
 	protected $default = null;
 
-	public function add(string $commandName, UserString $displayName, $value, ?Icon $icon = null, bool $default = false) : void{
-		$this->entries[] = $entry = new IconListEntry($commandName, $displayName, $value, $icon);
+	public function add(string $commandName, UserString $displayName, $value, ?Icon $icon = null, array $aliases = [], bool $default = false) : void{
+		$this->entries[] = $entry = new IconListEntry($commandName, $aliases, $displayName, $value, $icon);
 
 		if($default){
 			if($this->default !== null){
@@ -62,7 +63,7 @@ class IconListFactory{
 		}
 
 		foreach($this->entries as $entry){
-			if($entry->getMnemonic() === $commandName){
+			if($entry->getMnemonic() === $commandName || in_array($commandName, $entry->getAliases(), true)){
 				$this->default = $entry;
 				$entry->setDefault(true);
 				return;

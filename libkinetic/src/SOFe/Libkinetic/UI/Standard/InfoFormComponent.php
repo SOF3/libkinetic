@@ -77,7 +77,7 @@ class InfoFormComponent extends KineticComponent implements UiNode{
 		}
 
 		if(!isset($choice)){
-			$choice = yield $this->asGenericFormComponent()->sendModalForm($context, $this->yes->getCommandName(), $this->yes->getDisplayName(), $this->no->getCommandName(), $this->no->getDisplayName());
+			$choice = yield $this->asGenericFormComponent()->sendModalForm($context, $this->yes->getCommandName(), $this->yes->getAliases(), $this->yes->getDisplayName(), $this->no->getCommandName(), $this->no->getAliases(), $this->no->getDisplayName());
 		}
 
 		if($this->var !== null){
